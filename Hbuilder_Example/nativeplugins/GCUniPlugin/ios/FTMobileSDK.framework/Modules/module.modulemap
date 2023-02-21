@@ -1,0 +1,6 @@
+framework module FTMobileSDK {
+  umbrella header "FTMobileSDK-umbrella.h"
+
+  export *
+  module * { export * }
+}

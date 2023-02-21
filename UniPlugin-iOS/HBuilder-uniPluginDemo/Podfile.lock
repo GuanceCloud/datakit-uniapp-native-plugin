@@ -1,0 +1,30 @@
+PODS:
+  - FTMobileSDK (1.3.10-beta.2):
+    - FTMobileSDK/Core (= 1.3.10-beta.2)
+  - FTMobileSDK/Common (1.3.10-beta.2)
+  - FTMobileSDK/Core (1.3.10-beta.2):
+    - FTMobileSDK/Common
+    - FTMobileSDK/FTMobileAgent
+  - FTMobileSDK/FTMobileAgent (1.3.10-beta.2):
+    - FTMobileSDK/Common
+  - Guance-UniPlugin-App (0.1.0):
+    - FTMobileSDK (= 1.3.10-beta.2)
+
+DEPENDENCIES:
+  - Guance-UniPlugin-App (from `./Guance-UniPlugin-App`)
+
+SPEC REPOS:
+  trunk:
+    - FTMobileSDK
+
+EXTERNAL SOURCES:
+  Guance-UniPlugin-App:
+    :path: "./Guance-UniPlugin-App"
+
+SPEC CHECKSUMS:
+  FTMobileSDK: f2dbc7395401a0f5c590a302a1c34b163e55276c
+  Guance-UniPlugin-App: e44af9e89e35a0cbccb1c184f6046996c6e3f68d
+
+PODFILE CHECKSUM: 513d50ce33dab0f7fab8ff0160a5400dfbac6b2a
+
+COCOAPODS: 1.11.3

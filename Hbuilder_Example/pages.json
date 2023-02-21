@@ -1,0 +1,109 @@
+{
+	"pages": [{
+		"path": "pages/index/index",
+		"style": {
+			"navigationBarTitleText": "Home"
+		}
+	}, {
+		"path": "pages/rum/rum",
+		"style": {
+			"navigationBarTitleText": "RUM数据采集",
+			"enablePullDownRefresh": false
+		}
+
+		}, {
+			"path": "pages/rum/rum-view-mixin",
+			"style": {
+				"navigationBarTitleText": "View mixin 方式采集",
+				"enablePullDownRefresh": false
+			}
+
+		}
+		, {
+			"path": "pages/tracing/tracing",
+			"style": {
+				"navigationBarTitleText": "网络链路追踪",
+				"enablePullDownRefresh": false
+			}
+
+	}, {
+		"path": "pages/logging/logging",
+		"style": {
+			"navigationBarTitleText": "日志输出",
+			"enablePullDownRefresh": false
+		}
+
+	}, {
+		"path": "pages/routertest/tab2",
+		"style": {
+			"navigationBarTitleText": "tab2",
+			"enablePullDownRefresh": false
+		}
+
+	}, {
+		"path": "pages/routertest/tab3",
+		"style": {
+			"navigationBarTitleText": "tab3",
+			"enablePullDownRefresh": false
+		}
+
+	}, {
+		"path": "pages/routertest/tab4",
+		"style": {
+			"navigationBarTitleText": "tab4",
+			"enablePullDownRefresh": false
+		}
+	}, {
+		"path": "pages/routertest/page",
+		"style": {
+			"navigationBarTitleText": "page",
+			"enablePullDownRefresh": false
+		}
+	},{
+		"path": "pages/routertest/page2",
+		"style": {
+			"navigationBarTitleText": "page2",
+			"enablePullDownRefresh": false
+		}
+	}],
+	"tabBar": {
+		"color": "#7A7E83",
+		"selectedColor": "#1296db",
+		"borderStyle": "black",
+		"backgroundColor": "#ffffff",
+		"list": [{
+				"pagePath": "pages/index/index",
+				"text": "SDK USE"
+			},
+			{
+				"pagePath": "pages/routertest/tab2",
+				"text": "TAB2"
+			},
+			{
+				"pagePath": "pages/routertest/tab3",
+				"text": "TAB3"
+			},
+			{
+				"pagePath": "pages/routertest/tab4",
+				"text": "TAB4"
+			}
+		]
+	},
+	"globalStyle": {
+		"navigationBarTextStyle": "black",
+		"navigationBarTitleText": "uni-app",
+		"navigationBarBackgroundColor": "#F8F8F8",
+		"backgroundColor": "#F8F8F8"
+	},
+	"uniIdRouter": {},
+	"condition" : { //模式配置，仅开发期间生效
+		"current": 0, //当前激活的模式(list 的索引项)
+		"list": [
+			{
+				"name": "", //模式名称
+				"path": "", //启动页面，必选
+				"query": "" //启动参数，在页面的onLoad函数里面得到
+			}
+		]
+	}
+}

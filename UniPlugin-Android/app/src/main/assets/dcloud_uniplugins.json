@@ -1,0 +1,28 @@
+{
+  "nativePlugins": [
+    {
+      "plugins": [
+        {
+          "type": "module",
+          "name": "GCUniPlugin-Logger",
+          "class": "com.ft.sdk.uniapp.FTLogModule"
+        },
+        {
+          "type": "module",
+          "name": "GCUniPlugin-RUM",
+          "class": "com.ft.sdk.uniapp.FTRUMModule"
+        },
+        {
+          "type": "module",
+          "name": "GCUniPlugin-MobileAgent",
+          "class": "com.ft.sdk.uniapp.FTSDKUniModule"
+        },
+        {
+          "type": "module",
+          "name": "GCUniPlugin-Tracer",
+          "class": "com.ft.sdk.uniapp.FTTracerModule"
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,73 @@
+{
+	"name": "Guance UniPlugin",
+	"id": "GCUniPlugin",
+	"version": "0.1.0",
+	"description": "观测云 UniApp 原生应用集成库",
+	"_dp_type": "nativeplugin",
+	"_dp_nativeplugin": {
+		"ios": {
+			"plugins": [{
+					"type": "module",
+					"name": "GCUniPlugin-MobileAgent",
+					"class": "FTMobileUniModule"
+				},
+				{
+					"type": "module",
+					"name": "GCUniPlugin-RUM",
+					"class": "FTRUMModule"
+				},
+				{
+					"type": "module",
+					"name": "GCUniPlugin-Logger",
+					"class": "FTLogModule"
+				},
+				{
+					"type": "module",
+					"name": "GCUniPlugin-Tracer",
+					"class": "FTTracerModule"
+				}
+			],
+			"integrateType": "framework",
+			"embedSwift": false,
+			"deploymentTarget": "11.0",
+			"validArchitectures": [
+				"arm64"
+			]
+		},
+		"android": {
+			"plugins": [{
+					"type": "module",
+					"name": "GCUniPlugin-Logger",
+					"class": "com.ft.sdk.uniapp.FTLogModule"
+				},
+				{
+					"type": "module",
+					"name": "GCUniPlugin-RUM",
+					"class": "com.ft.sdk.uniapp.FTRUMModule"
+				},
+				{
+					"type": "module",
+					"name": "GCUniPlugin-MobileAgent",
+					"class": "com.ft.sdk.uniapp.FTSDKUniModule"
+				},
+				{
+					"type": "module",
+					"name": "GCUniPlugin-Tracer",
+					"class": "com.ft.sdk.uniapp.FTTracerModule"
+				}
+			],
+			"integrateType": "aar",
+			"dependencies": [
+				"com.google.code.gson:gson:2.8.9"
+			],
+			"compileOptions":{
+				"sourceCompatibility":"1.8",
+				"targetCompatibility":"1.8"
+			},
+			"permissions":[
+				"android.permission.INTERNET",
+				"android.permission.READ_PHONE_STATE"
+			]
+		}
+	}
+}
