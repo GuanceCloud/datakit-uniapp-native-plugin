@@ -1,7 +1,7 @@
 {
 	"name": "Guance UniPlugin",
 	"id": "GCUniPlugin",
-	"version": "0.1.0",
+	"version": "0.1.1",
 	"description": "观测云 UniApp 原生应用集成库",
 	"_dp_type": "nativeplugin",
 	"_dp_nativeplugin": {
