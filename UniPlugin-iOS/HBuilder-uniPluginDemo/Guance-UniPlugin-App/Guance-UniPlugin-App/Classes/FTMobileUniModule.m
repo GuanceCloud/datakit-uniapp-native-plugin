@@ -18,24 +18,8 @@ UNI_EXPORT_METHOD_SYNC(@selector(sdkConfig:))
         if([params.allKeys containsObject:@"debug"]){
             config.enableSDKDebugLog = params[@"debug"];
         }
-        
-        if ([params.allKeys containsObject:@"datakitUUID"]) {
-            config.XDataKitUUID = params[@"datakitUUID"];
-        }
-        if([params.allKeys containsObject:@"envType"]){
-            NSString *envType = params[@"envType"];
-            //`prod`线上（默认）、`gray`灰度、`pre`预发、`common`日常、`local`本地
-            if([envType isEqualToString:@"prod"]){
-                config.env = FTEnvProd;
-            }else if([envType isEqualToString:@"gray"]){
-                config.env = FTEnvGray;
-            }else if([envType isEqualToString:@"pre"]){
-                config.env = FTEnvPre;
-            }else if([envType isEqualToString:@"common"]){
-                config.env = FTEnvCommon;
-            }else if([envType isEqualToString:@"local"]){
-                config.env = FTEnvLocal;
-            }
+        if([params.allKeys containsObject:@"env"]){
+            config.env = params[@"env"];
         }
         if ([params.allKeys containsObject:@"globalContext"]) {
             config.globalContext = params[@"globalContext"];
