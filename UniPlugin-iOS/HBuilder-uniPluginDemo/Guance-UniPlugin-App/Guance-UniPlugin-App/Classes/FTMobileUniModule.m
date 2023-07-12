@@ -19,9 +19,6 @@ UNI_EXPORT_METHOD_SYNC(@selector(sdkConfig:))
             config.enableSDKDebugLog = params[@"debug"];
         }
         
-        if ([params.allKeys containsObject:@"datakitUUID"]) {
-            config.XDataKitUUID = params[@"datakitUUID"];
-        }
         if([params.allKeys containsObject:@"envType"]){
             NSString *envType = params[@"envType"];
             //`prod`线上（默认）、`gray`灰度、`pre`预发、`common`日常、`local`本地
