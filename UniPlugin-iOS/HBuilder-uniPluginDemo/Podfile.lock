@@ -42,7 +42,7 @@ PODS:
   - FTMobileSDK/FTSDKCore/URLSessionAutoInstrumentation (1.4.4-beta.1):
     - FTMobileSDK/FTSDKCore/BaseUtils/Swizzle
     - FTMobileSDK/FTSDKCore/Protocol
-  - Guance-UniPlugin-App (0.1.1):
+  - Guance-UniPlugin-App (0.1.2):
     - FTMobileSDK (= 1.4.4-beta.1)
 
 DEPENDENCIES:
@@ -58,7 +58,7 @@ EXTERNAL SOURCES:
 
 SPEC CHECKSUMS:
   FTMobileSDK: 871ecf67d5c9fb86e34e650e588e847a52c6b791
-  Guance-UniPlugin-App: 0915c986459261dc987fc23bd85ac1518f44f0bc
+  Guance-UniPlugin-App: 7f0868ae998c1002a2f495b5144d4892035ff294
 
 PODFILE CHECKSUM: cda35500afc95655fa52ee26e178177eff81dba7
 
