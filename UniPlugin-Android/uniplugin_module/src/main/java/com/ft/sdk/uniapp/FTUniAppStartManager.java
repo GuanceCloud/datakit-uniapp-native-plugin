@@ -10,6 +10,9 @@ import com.ft.sdk.garble.utils.Utils;
 
 import java.io.RandomAccessFile;
 
+/**
+ *  UniApp 无法使用 gradle plugin，所以使用这种方式进
+ */
 public class FTUniAppStartManager {
     private static class SingletonHolder {
         private static final FTUniAppStartManager INSTANCE = new FTUniAppStartManager();
