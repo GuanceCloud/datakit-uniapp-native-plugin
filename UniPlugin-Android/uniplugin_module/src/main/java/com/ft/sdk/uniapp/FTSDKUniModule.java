@@ -1,7 +1,6 @@
 package com.ft.sdk.uniapp;
 
 import com.alibaba.fastjson.JSONObject;
-import com.ft.sdk.EnvType;
 import com.ft.sdk.FTSDKConfig;
 import com.ft.sdk.FTSdk;
 import com.ft.sdk.garble.bean.UserData;
@@ -22,7 +21,7 @@ public class FTSDKUniModule extends UniModule {
             config.setDebug(data.getBooleanValue("debug"));
             String env = data.getString("env");
             if (env != null) {
-                config.setEnv(EnvType.valueOf(env.toUpperCase()));
+                config.setEnv(env);
             }
 
             JSONObject globalContext = data.getJSONObject("globalContext");
