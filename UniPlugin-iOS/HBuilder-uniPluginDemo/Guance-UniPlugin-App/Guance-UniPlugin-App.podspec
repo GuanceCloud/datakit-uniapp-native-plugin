@@ -42,6 +42,6 @@ Pod::Spec.new do |s|
   
   # s.public_header_files = 'Pod/Classes/**/*.h'
   # s.frameworks = 'UIKit', 'MapKit'
-  s.dependency 'FTMobileSDK', '1.4.4-beta.1'
+  s.dependency 'FTMobileSDK', '1.4.7-alpha.1'
   
 end

@@ -86,7 +86,6 @@
 		2FDE6A56297147F2004C7701 /* DCloud.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FDE6A55297147F2004C7701 /* DCloud.swift */; };
 		4FA53F7C26E5D14400BAD6A0 /* uni-jsframework-vue3.js in Resources */ = {isa = PBXBuildFile; fileRef = 4FA53F7B26E5D14400BAD6A0 /* uni-jsframework-vue3.js */; };
 		4FE3666A254FE5FC00DCD173 /* libuchardet.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 4FE36669254FE5FB00DCD173 /* libuchardet.a */; };
-		52E5B2D0111D24763CB27E7E /* libPods-HBuilder.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 38294438559EDEAC7C3C38CF /* libPods-HBuilder.a */; };
 		67065F3A2243868400DC71CA /* Default-896h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 67065F1E2243868300DC71CA /* Default-896h@2x.png */; };
 		67065F3B2243868400DC71CA /* Default-Landscape-812h@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 67065F1F2243868300DC71CA /* Default-Landscape-812h@3x.png */; };
 		67065F3C2243868400DC71CA /* Default-Landscape-896h@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 67065F202243868300DC71CA /* Default-Landscape-896h@3x.png */; };
@@ -184,6 +183,7 @@
 		95DA22F1276A0B1E00071681 /* UMDevice.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 95DA22EF276A0B1E00071681 /* UMDevice.framework */; };
 		97D33A5D24750907004DDFB5 /* liblibPDRCore.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 247F85DA1FA32B2C006ECAC6 /* liblibPDRCore.a */; };
 		97D33A5E24750907004DDFB5 /* liblibWeex.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 2FDE1569215F468000588710 /* liblibWeex.a */; };
+		EAD8D88245DA0882EC0AC342 /* Pods_HBuilder.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 710327A53A7EC983E8F01EB5 /* Pods_HBuilder.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -303,7 +303,6 @@
 		2FDE6A52297147E1004C7701 /* GTSDK.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = GTSDK.xcframework; path = ../SDK/Libs/GTSDK.xcframework; sourceTree = "<group>"; };
 		2FDE6A54297147F2004C7701 /* HBuilder-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "HBuilder-Bridging-Header.h"; sourceTree = "<group>"; };
 		2FDE6A55297147F2004C7701 /* DCloud.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DCloud.swift; sourceTree = "<group>"; };
-		38294438559EDEAC7C3C38CF /* libPods-HBuilder.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-HBuilder.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		4FA53F7B26E5D14400BAD6A0 /* uni-jsframework-vue3.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = "uni-jsframework-vue3.js"; sourceTree = "<group>"; };
 		4FE36669254FE5FB00DCD173 /* libuchardet.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libuchardet.a; path = ../SDK/Libs/libuchardet.a; sourceTree = "<group>"; };
 		4FF0AB46259062C700A54D59 /* UIImage+ExtendedCacheData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+ExtendedCacheData.h"; sourceTree = "<group>"; };
@@ -491,6 +490,7 @@
 		67E9CDCE22968D2E0076E0FB /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/Localizable.strings"; sourceTree = "<group>"; };
 		67E9CDD022968D350076E0FB /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
 		6DCFD29CD2B6272A3358FEFD /* Pods-HBuilder.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-HBuilder.debug.xcconfig"; path = "Target Support Files/Pods-HBuilder/Pods-HBuilder.debug.xcconfig"; sourceTree = "<group>"; };
+		710327A53A7EC983E8F01EB5 /* Pods_HBuilder.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_HBuilder.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		7A1967C2212536EC00B330A9 /* libmp3lame.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libmp3lame.a; path = ../SDK/Libs/libmp3lame.a; sourceTree = "<group>"; };
 		7A1967C42125371000B330A9 /* storage.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = storage.framework; path = ../SDK/Libs/storage.framework; sourceTree = "<group>"; };
 		7A1967C621253B5F00B330A9 /* libWeChatSDK_pay.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libWeChatSDK_pay.a; path = ../SDK/Libs/libWeChatSDK_pay.a; sourceTree = "<group>"; };
@@ -737,7 +737,7 @@
 				8EED6416198A2635000A4449 /* CoreVideo.framework in Frameworks */,
 				8EED6414198A262C000A4449 /* CoreMedia.framework in Frameworks */,
 				8EED6412198A2622000A4449 /* MobileCoreServices.framework in Frameworks */,
-				52E5B2D0111D24763CB27E7E /* libPods-HBuilder.a in Frameworks */,
+				EAD8D88245DA0882EC0AC342 /* Pods_HBuilder.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1159,7 +1159,7 @@
 				8EED6411198A2622000A4449 /* MobileCoreServices.framework */,
 				8EED641B198A2654000A4449 /* SystemConfiguration.framework */,
 				8EED629F198A1D13000A4449 /* UIKit.framework */,
-				38294438559EDEAC7C3C38CF /* libPods-HBuilder.a */,
+				710327A53A7EC983E8F01EB5 /* Pods_HBuilder.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -1344,6 +1344,7 @@
 				8EED6295198A1D13000A4449 /* Frameworks */,
 				8EED6296198A1D13000A4449 /* Resources */,
 				7A4980F42126ADAD00D20880 /* Embed Frameworks */,
+				75ECE69AEAAF922D7029B194 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -1447,6 +1448,24 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
+		75ECE69AEAAF922D7029B194 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-HBuilder/Pods-HBuilder-frameworks.sh",
+				"${BUILT_PRODUCTS_DIR}/FTMobileSDK/FTMobileSDK.framework",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/FTMobileSDK.framework",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-HBuilder/Pods-HBuilder-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
 		AC63B59EF7A4139852FE4209 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -1606,6 +1625,8 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "HBuilder-Hello/HBuilder-uniPlugin-Prefix.pch";
 				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
+					"COCOAPODS=1",
 					PDR_PLUS_MAP,
 					PDR_PLUS_GETUI,
 					PDR_PLUS_UMENG,
@@ -1652,8 +1673,8 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 101;
 				DEVELOPMENT_TEAM = BW62V33GLH;
-				ENABLE_BITCODE = NO;
-				ENABLE_NS_ASSERTIONS = YES;
+				ENABLE_NS_ASSERTIONS = NO;
+				"EXCLUDED_ARCHS[sdk=iphonesimulator*]" = arm64;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"${PODS_CONFIGURATION_BUILD_DIR}/FTMobileSDK\"",
@@ -1665,6 +1686,8 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "HBuilder-Hello/HBuilder-uniPlugin-Prefix.pch";
 				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
+					"COCOAPODS=1",
 					PDR_PLUS_MAP,
 					PDR_PLUS_GETUI,
 					PDR_PLUS_UMENG,
@@ -1681,6 +1704,7 @@
 					"$(PROJECT_DIR)",
 				);
 				MARKETING_VERSION = 1.0.0;
+				ONLY_ACTIVE_ARCH = NO;
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-ObjC",

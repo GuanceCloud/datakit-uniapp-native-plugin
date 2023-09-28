@@ -1,0 +1,6 @@
+framework module Guance_UniPlugin_App {
+  umbrella header "Guance_UniPlugin_App.h"
+  export *
+
+  module * { export * }
+}
