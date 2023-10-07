@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		174F8B402A5D4D0B000CC5AA /* Pandora in Resources */ = {isa = PBXBuildFile; fileRef = 174F8B3F2A5D4D0B000CC5AA /* Pandora */; };
 		17788C18298D22170007B47F /* BDSClientEASRResources in Resources */ = {isa = PBXBuildFile; fileRef = 17788C17298D22170007B47F /* BDSClientEASRResources */; };
 		240905031C200AEF0070786F /* CoreBluetooth.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 240905021C200AEF0070786F /* CoreBluetooth.framework */; };
 		242725CB1D2666ED00EBD79E /* JavaScriptCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 242725CA1D2666ED00EBD79E /* JavaScriptCore.framework */; };
@@ -169,7 +170,6 @@
 		8EED641E198A265F000A4449 /* CoreTelephony.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8EED641D198A265F000A4449 /* CoreTelephony.framework */; };
 		8EED6420198A2668000A4449 /* MediaPlayer.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8EED641F198A2668000A4449 /* MediaPlayer.framework */; };
 		8EED6422198A2678000A4449 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8EED6421198A2678000A4449 /* AudioToolbox.framework */; };
-		8EED6590198A3DF7000A4449 /* Pandora in Resources */ = {isa = PBXBuildFile; fileRef = 8EED658F198A3DF7000A4449 /* Pandora */; };
 		8EED6592198A5737000A4449 /* AddressBook.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8EED6591198A5737000A4449 /* AddressBook.framework */; };
 		8EED6594198A5743000A4449 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8EED6593198A5743000A4449 /* AVFoundation.framework */; };
 		8EED6596198A574C000A4449 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8EED6595198A574C000A4449 /* CoreLocation.framework */; };
@@ -183,7 +183,7 @@
 		95DA22F1276A0B1E00071681 /* UMDevice.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 95DA22EF276A0B1E00071681 /* UMDevice.framework */; };
 		97D33A5D24750907004DDFB5 /* liblibPDRCore.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 247F85DA1FA32B2C006ECAC6 /* liblibPDRCore.a */; };
 		97D33A5E24750907004DDFB5 /* liblibWeex.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 2FDE1569215F468000588710 /* liblibWeex.a */; };
-		AB400E3422D9D6E231D8D427 /* Pods_HBuilder.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9C523A6A6244260984B76FBC /* Pods_HBuilder.framework */; };
+		EAD8D88245DA0882EC0AC342 /* Pods_HBuilder.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 710327A53A7EC983E8F01EB5 /* Pods_HBuilder.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -200,6 +200,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		174F8B3F2A5D4D0B000CC5AA /* Pandora */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Pandora; sourceTree = "<group>"; };
 		17788C17298D22170007B47F /* BDSClientEASRResources */ = {isa = PBXFileReference; lastKnownFileType = folder; path = BDSClientEASRResources; sourceTree = "<group>"; };
 		240905021C200AEF0070786F /* CoreBluetooth.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreBluetooth.framework; path = System/Library/Frameworks/CoreBluetooth.framework; sourceTree = SDKROOT; };
 		242725CA1D2666ED00EBD79E /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
@@ -489,6 +490,7 @@
 		67E9CDCE22968D2E0076E0FB /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/Localizable.strings"; sourceTree = "<group>"; };
 		67E9CDD022968D350076E0FB /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
 		6DCFD29CD2B6272A3358FEFD /* Pods-HBuilder.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-HBuilder.debug.xcconfig"; path = "Target Support Files/Pods-HBuilder/Pods-HBuilder.debug.xcconfig"; sourceTree = "<group>"; };
+		710327A53A7EC983E8F01EB5 /* Pods_HBuilder.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_HBuilder.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		7A1967C2212536EC00B330A9 /* libmp3lame.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libmp3lame.a; path = ../SDK/Libs/libmp3lame.a; sourceTree = "<group>"; };
 		7A1967C42125371000B330A9 /* storage.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = storage.framework; path = ../SDK/Libs/storage.framework; sourceTree = "<group>"; };
 		7A1967C621253B5F00B330A9 /* libWeChatSDK_pay.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libWeChatSDK_pay.a; path = ../SDK/Libs/libWeChatSDK_pay.a; sourceTree = "<group>"; };
@@ -517,7 +519,6 @@
 		8EED641D198A265F000A4449 /* CoreTelephony.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreTelephony.framework; path = System/Library/Frameworks/CoreTelephony.framework; sourceTree = SDKROOT; };
 		8EED641F198A2668000A4449 /* MediaPlayer.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MediaPlayer.framework; path = System/Library/Frameworks/MediaPlayer.framework; sourceTree = SDKROOT; };
 		8EED6421198A2678000A4449 /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
-		8EED658F198A3DF7000A4449 /* Pandora */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Pandora; sourceTree = "<group>"; };
 		8EED6591198A5737000A4449 /* AddressBook.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AddressBook.framework; path = System/Library/Frameworks/AddressBook.framework; sourceTree = SDKROOT; };
 		8EED6593198A5743000A4449 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
 		8EED6595198A574C000A4449 /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
@@ -605,7 +606,6 @@
 		95D879FD2583A6A800244F71 /* WXBridgeProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WXBridgeProtocol.h; sourceTree = "<group>"; };
 		95DA22EE276A0B1E00071681 /* UMAPM.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UMAPM.framework; path = ../SDK/Libs/UMAPM.framework; sourceTree = "<group>"; };
 		95DA22EF276A0B1E00071681 /* UMDevice.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UMDevice.framework; path = ../SDK/Libs/UMDevice.framework; sourceTree = "<group>"; };
-		9C523A6A6244260984B76FBC /* Pods_HBuilder.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_HBuilder.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -737,7 +737,7 @@
 				8EED6416198A2635000A4449 /* CoreVideo.framework in Frameworks */,
 				8EED6414198A262C000A4449 /* CoreMedia.framework in Frameworks */,
 				8EED6412198A2622000A4449 /* MobileCoreServices.framework in Frameworks */,
-				AB400E3422D9D6E231D8D427 /* Pods_HBuilder.framework in Frameworks */,
+				EAD8D88245DA0882EC0AC342 /* Pods_HBuilder.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1159,7 +1159,7 @@
 				8EED6411198A2622000A4449 /* MobileCoreServices.framework */,
 				8EED641B198A2654000A4449 /* SystemConfiguration.framework */,
 				8EED629F198A1D13000A4449 /* UIKit.framework */,
-				9C523A6A6244260984B76FBC /* Pods_HBuilder.framework */,
+				710327A53A7EC983E8F01EB5 /* Pods_HBuilder.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -1170,7 +1170,7 @@
 				2F0BA3FA215B4A4100F67004 /* inc */,
 				8EED62AA198A1D13000A4449 /* AppDelegate.h */,
 				8EED62AB198A1D13000A4449 /* AppDelegate.m */,
-				8EED658F198A3DF7000A4449 /* Pandora */,
+				174F8B3F2A5D4D0B000CC5AA /* Pandora */,
 				8EED62EE198A2166000A4449 /* splash */,
 				8EED62A2198A1D13000A4449 /* Supporting Files */,
 				8EED62B3198A1D14000A4449 /* ViewController.h */,
@@ -1344,7 +1344,7 @@
 				8EED6295198A1D13000A4449 /* Frameworks */,
 				8EED6296198A1D13000A4449 /* Resources */,
 				7A4980F42126ADAD00D20880 /* Embed Frameworks */,
-				11FFFCBE2921C4F62B8FEF6F /* [CP] Embed Pods Frameworks */,
+				75ECE69AEAAF922D7029B194 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -1406,6 +1406,7 @@
 				67065F402243868400DC71CA /* Default-Portrait7@2x~ipad.png in Resources */,
 				67065F512243868400DC71CA /* Default-Portrait7-1112h@2x~ipad.png in Resources */,
 				2F0BA49C215B955300F67004 /* DCSVProgressHUD.bundle in Resources */,
+				174F8B402A5D4D0B000CC5AA /* Pandora in Resources */,
 				67414FA024333E320093CD65 /* uni-jsframework.js in Resources */,
 				4FA53F7C26E5D14400BAD6A0 /* uni-jsframework-vue3.js in Resources */,
 				67065F3F2243868400DC71CA /* Default-736h@3x.png in Resources */,
@@ -1437,7 +1438,6 @@
 				67065F422243868400DC71CA /* Default-Landscape-1366h@2x~ipad.png in Resources */,
 				67065F522243868400DC71CA /* Default-Portrait7~ipad.png in Resources */,
 				67065F462243868400DC71CA /* Default-568h@2x.png in Resources */,
-				8EED6590198A3DF7000A4449 /* Pandora in Resources */,
 				17788C18298D22170007B47F /* BDSClientEASRResources in Resources */,
 				67065F542243868400DC71CA /* Default-Landscape-896h@2x.png in Resources */,
 				2F0BA49E215B955300F67004 /* DCTZImagePickerController.bundle in Resources */,
@@ -1448,7 +1448,7 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		11FFFCBE2921C4F62B8FEF6F /* [CP] Embed Pods Frameworks */ = {
+		75ECE69AEAAF922D7029B194 /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -1609,9 +1609,9 @@
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_ARC = YES;
 				CODE_SIGN_IDENTITY = "Apple Development";
-				CODE_SIGN_STYLE = Automatic;
+				CODE_SIGN_STYLE = Manual;
 				CURRENT_PROJECT_VERSION = 101;
-				DEVELOPMENT_TEAM = BW62V33GLH;
+				DEVELOPMENT_TEAM = "";
 				ENABLE_BITCODE = NO;
 				"EXCLUDED_ARCHS[sdk=iphonesimulator*]" = arm64;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -1625,6 +1625,8 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "HBuilder-Hello/HBuilder-uniPlugin-Prefix.pch";
 				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
+					"COCOAPODS=1",
 					PDR_PLUS_MAP,
 					PDR_PLUS_GETUI,
 					PDR_PLUS_UMENG,
@@ -1671,7 +1673,8 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 101;
 				DEVELOPMENT_TEAM = BW62V33GLH;
-				ENABLE_BITCODE = NO;
+				ENABLE_NS_ASSERTIONS = NO;
+				"EXCLUDED_ARCHS[sdk=iphonesimulator*]" = arm64;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"${PODS_CONFIGURATION_BUILD_DIR}/FTMobileSDK\"",
@@ -1683,6 +1686,8 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "HBuilder-Hello/HBuilder-uniPlugin-Prefix.pch";
 				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
+					"COCOAPODS=1",
 					PDR_PLUS_MAP,
 					PDR_PLUS_GETUI,
 					PDR_PLUS_UMENG,
@@ -1699,6 +1704,7 @@
 					"$(PROJECT_DIR)",
 				);
 				MARKETING_VERSION = 1.0.0;
+				ONLY_ACTIVE_ARCH = NO;
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-ObjC",
