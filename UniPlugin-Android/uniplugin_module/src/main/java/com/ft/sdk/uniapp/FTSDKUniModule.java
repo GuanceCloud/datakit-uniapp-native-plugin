@@ -1,6 +1,7 @@
 package com.ft.sdk.uniapp;
 
 import com.alibaba.fastjson.JSONObject;
+import com.ft.sdk.EnvType;
 import com.ft.sdk.FTSDKConfig;
 import com.ft.sdk.FTSdk;
 import com.ft.sdk.garble.bean.UserData;
@@ -9,8 +10,11 @@ import java.util.HashMap;
 
 import io.dcloud.feature.uniapp.annotation.UniJSMethod;
 import io.dcloud.feature.uniapp.common.UniModule;
+import uni.dcloud.io.uniplugin_module.BuildConfig;
 
 public class FTSDKUniModule extends UniModule {
+
+    private final static String KEY_VERSION_SDK_PACKAGE_UNIAPP = "sdk_package_uniapp";
 
 
     @UniJSMethod(uiThread = false)
@@ -19,6 +23,12 @@ public class FTSDKUniModule extends UniModule {
         if (serverUrl != null) {
             FTSDKConfig config = FTSDKConfig.builder(serverUrl);
             config.setDebug(data.getBooleanValue("debug"));
+
+            String envType = data.getString("envType");
+            if (envType != null) {
+                config.setEnv(EnvType.valueOf(envType.toUpperCase()));
+            }
+
             String env = data.getString("env");
             if (env != null) {
                 config.setEnv(env);
@@ -30,6 +40,7 @@ public class FTSDKUniModule extends UniModule {
                     config.addGlobalContext(key, globalContext.getString(key));
                 }
             }
+            config.addGlobalContext(KEY_VERSION_SDK_PACKAGE_UNIAPP, BuildConfig.FT_UNI_APP_SDK_VERSION);
 
             String service = data.getString("service");
             if (service != null) {
