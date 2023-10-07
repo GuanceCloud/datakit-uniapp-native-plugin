@@ -36,12 +36,12 @@ public class FTRUMModule extends UniModule {
 
         Boolean enableNativeUserView = data.getBoolean("enableNativeUserView");
         if (enableNativeUserView != null) {
-            rumConfig.setEnableTraceUserAction(enableNativeUserView);
+            rumConfig.setEnableTraceUserView(enableNativeUserView);
         }
 
         Boolean enableNativeUserResource = data.getBoolean("enableNativeUserResource");
         if (enableNativeUserResource != null) {
-            rumConfig.setEnableTraceUserAction(enableNativeUserResource);
+            rumConfig.setEnableTraceUserResource(enableNativeUserResource);
         }
 
         Object errorType = data.get("errorMonitorType");
