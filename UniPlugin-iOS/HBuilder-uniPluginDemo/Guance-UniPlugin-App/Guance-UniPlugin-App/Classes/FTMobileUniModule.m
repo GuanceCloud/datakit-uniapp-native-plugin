@@ -6,6 +6,7 @@
 //
 
 #import "FTMobileUniModule.h"
+#import "Guance-UniPlugin-App-Version.h"
 #import <FTMobileSDK/FTMobileAgent.h>
 @implementation FTMobileUniModule
 #pragma mark --------- SDK INIT ----------
@@ -23,9 +24,14 @@ UNI_EXPORT_METHOD_SYNC(@selector(sdkConfig:))
                 config.env = env;
             }
         }
+        NSMutableDictionary *globalContext = [[NSMutableDictionary alloc]initWithDictionary:@{@"sdk_package_uniapp":Guance_UniPlugin_App_Version}];
         if ([params.allKeys containsObject:@"globalContext"]) {
-            config.globalContext = params[@"globalContext"];
+            NSDictionary *context = [params valueForKey:@"globalContext"];
+            if(context.allKeys.count>0){
+                [globalContext addEntriesFromDictionary:context];
+            }
         }
+        config.globalContext = globalContext;
         if ([params.allKeys containsObject:@"service"]) {
             config.service = params[@"service"];
         }
