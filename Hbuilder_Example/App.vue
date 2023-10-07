@@ -13,7 +13,7 @@
 			ftMobileSDK.sdkConfig({
 				'serverUrl': SDKConst.SERVER_URL,
 				'debug': true,
-				'env': 'common',
+				'envType': 'common',
 				'globalContext': {
 					'sdk_globalContext': 'custom_sdk_globalContext'
 				}
