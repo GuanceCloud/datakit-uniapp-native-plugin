@@ -23,7 +23,7 @@ Pod::Spec.new do |s|
   
   s.homepage         = 'https://github.com/hulilei/Guance-UniPlugin-App'
   # s.screenshots     = 'www.example.com/screenshots_1', 'www.example.com/screenshots_2'
-  s.license          = { :type => 'MIT', :file => 'LICENSE' }
+  # s.license          = { :type => 'MIT', :file => 'LICENSE' }
   s.author           = { 'hulilei' => 'huuuu1016@gmail.com' }
   s.source           = { :git => 'https://github.com/hulilei/Guance-UniPlugin-App.git', :tag => s.version.to_s }
   # s.social_media_url = 'https://twitter.com/<TWITTER_USERNAME>'
@@ -42,6 +42,8 @@ Pod::Spec.new do |s|
   
   # s.public_header_files = 'Pod/Classes/**/*.h'
   # s.frameworks = 'UIKit', 'MapKit'
+  # buildFramework.sh 用于在开发测试时自动更新代码中的版本号
+  s.script_phase = {:name => 'changesdkVersion',:script => 'sh ../Guance-UniPlugin-App/buildFramework.sh cocoapods',:execution_position => :before_compile }
   s.dependency 'FTMobileSDK', '1.4.7-alpha.1'
   
 end

@@ -136,7 +136,7 @@ UNI_EXPORT_METHOD(@selector(addResource:))
     NSString *message = [params objectForKey:@"message"];
     NSString *stack = [params objectForKey:@"stack"];
     NSDictionary *property = [params objectForKey:@"property"];
-    [[FTExternalDataManager sharedManager] addErrorWithType:@"uni_app" message:message stack:stack property:property];
+    [[FTExternalDataManager sharedManager] addErrorWithType:@"uni_app" state:FTAppStateRun message:message stack:stack property:property];
 }
 - (void)startResource:(NSDictionary *)params{
     NSString *key = [params objectForKey:@"key"];

@@ -6,6 +6,7 @@
 //
 
 #import "FTMobileUniModule.h"
+#import "Guance-UniPlugin-App-Version.h"
 #import <FTMobileSDK/FTMobileAgent.h>
 @implementation FTMobileUniModule
 #pragma mark --------- SDK INIT ----------
@@ -15,17 +16,23 @@ UNI_EXPORT_METHOD_SYNC(@selector(sdkConfig:))
         NSString *serverUrl = [params valueForKey:@"serverUrl"];
         FTMobileConfig *config = [[FTMobileConfig alloc]initWithMetricsUrl:serverUrl];
         if([params.allKeys containsObject:@"debug"]){
-            config.enableSDKDebugLog = params[@"debug"];
+            NSNumber *debug = params[@"debug"];
+            config.enableSDKDebugLog = [debug boolValue];
         }
-        if([params.allKeys containsObject:@"envType"]){
-            id env = params[@"envType"];
+        if([params.allKeys containsObject:@"env"]){
+            id env = params[@"env"];
             if([env isKindOfClass:NSString.class]){
                 config.env = env;
             }
         }
+        NSMutableDictionary *globalContext = [[NSMutableDictionary alloc]initWithDictionary:@{@"sdk_package_uniapp":UniPluginAppVersion}];
         if ([params.allKeys containsObject:@"globalContext"]) {
-            config.globalContext = params[@"globalContext"];
+            NSDictionary *context = [params valueForKey:@"globalContext"];
+            if(context.allKeys.count>0){
+                [globalContext addEntriesFromDictionary:context];
+            }
         }
+        config.globalContext = globalContext;
         if ([params.allKeys containsObject:@"service"]) {
             config.service = params[@"service"];
         }
