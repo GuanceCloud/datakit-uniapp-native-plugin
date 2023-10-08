@@ -20,13 +20,17 @@
 		<data>
 		nSR0+2pSmzdoAtDJIspT9F2u+dw=
 		</data>
+		<key>Headers/Guance-UniPlugin-App-Version.h</key>
+		<data>
+		iKv5LhtsuTI1dg87MyQOejMah+s=
+		</data>
 		<key>Headers/Guance_UniPlugin_App.h</key>
 		<data>
 		+Ni74qS/N7D+NQBOS3EyNVwk3ss=
 		</data>
 		<key>Info.plist</key>
 		<data>
-		nOxOVP852bN/zdODPh70jbrxXRQ=
+		Zq4QEXq7VRRdW9z+x42d5EdCMYQ=
 		</data>
 		<key>Modules/module.modulemap</key>
 		<data>
@@ -77,6 +81,17 @@
 			<key>hash2</key>
 			<data>
 			EUxpz+1vlC3m/9gV6gEJSO8+uipFUAuI6iyzT2V0x0U=
+			</data>
+		</dict>
+		<key>Headers/Guance-UniPlugin-App-Version.h</key>
+		<dict>
+			<key>hash</key>
+			<data>
+			iKv5LhtsuTI1dg87MyQOejMah+s=
+			</data>
+			<key>hash2</key>
+			<data>
+			COeO6kP5zXBKF5A6NwXaXcRSyTXJg62wFcH3pUFNTGU=
 			</data>
 		</dict>
 		<key>Headers/Guance_UniPlugin_App.h</key>
