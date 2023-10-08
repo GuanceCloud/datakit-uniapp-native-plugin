@@ -24,11 +24,6 @@ public class FTSDKUniModule extends UniModule {
             FTSDKConfig config = FTSDKConfig.builder(serverUrl);
             config.setDebug(data.getBooleanValue("debug"));
 
-            String envType = data.getString("envType");
-            if (envType != null) {
-                config.setEnv(EnvType.valueOf(envType.toUpperCase()));
-            }
-
             String env = data.getString("env");
             if (env != null) {
                 config.setEnv(env);

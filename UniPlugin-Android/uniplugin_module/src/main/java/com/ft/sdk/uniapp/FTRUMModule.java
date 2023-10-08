@@ -176,9 +176,14 @@ public class FTRUMModule extends UniModule {
     public void addError(JSONObject data) {
         String message = data.getString("message");
         String stack = data.getString("stack");
+        String state = data.getString("state");
+        AppState appState = AppState.UNKNOWN;
+        if (state != null) {
+            appState = AppState.getValueFrom(state);
+        }
         JSONObject property = data.getJSONObject("property");
         HashMap<String, Object> params = Utils.convertJSONtoHashMap(property);
-        FTRUMGlobalManager.get().addError(message, stack, ErrorType.JAVA, AppState.RUN, params);
+        FTRUMGlobalManager.get().addError(message, stack, ErrorType.JAVA, appState, params);
     }
 
 
