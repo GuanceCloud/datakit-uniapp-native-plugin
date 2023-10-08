@@ -135,8 +135,18 @@ UNI_EXPORT_METHOD(@selector(addResource:))
 - (void)addError:(NSDictionary *)params{
     NSString *message = [params objectForKey:@"message"];
     NSString *stack = [params objectForKey:@"stack"];
+    NSString *state = [params objectForKey:@"state"];
+    FTAppState appState = FTAppStateUnknown;
+    if(state && [state isKindOfClass:NSString.class] && state.length>0){
+        state = [state lowercaseString];
+        if([state isEqualToString:@"run"]){
+            appState = FTAppStateRun;
+        }else if ([state isEqualToString:@"startup"]){
+            appState = FTAppStateStartUp;
+        }
+    }
     NSDictionary *property = [params objectForKey:@"property"];
-    [[FTExternalDataManager sharedManager] addErrorWithType:@"uni_app" state:FTAppStateRun message:message stack:stack property:property];
+    [[FTExternalDataManager sharedManager] addErrorWithType:@"uni_app" state:appState message:message stack:stack property:property];
 }
 - (void)startResource:(NSDictionary *)params{
     NSString *key = [params objectForKey:@"key"];

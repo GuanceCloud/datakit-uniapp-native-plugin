@@ -6,14 +6,14 @@
 	var logger = uni.requireNativePlugin("GCUniPlugin-Logger");
 	var rum = uni.requireNativePlugin("GCUniPlugin-RUM");
 	var tracer = uni.requireNativePlugin("GCUniPlugin-Tracer");
-
+    export var appState = 'startup';
 	export default {
 		mixins:[WatchRouter],
 		onLaunch: function() {
 			ftMobileSDK.sdkConfig({
 				'serverUrl': SDKConst.SERVER_URL,
 				'debug': true,
-				'envType': 'common',
+				'env': 'common',
 				'globalContext': {
 					'sdk_globalContext': 'custom_sdk_globalContext'
 				}
@@ -45,6 +45,7 @@
 			})
 		},
 		onShow: function() {
+			appState = 'run'
 			console.log('App Show')
 		},
 		onHide: function() {
@@ -59,6 +60,7 @@
 					rum.addError({
 						'message': err.message,
 						'stack': err.stack,
+						'state': 'run',
 					})
 				}
 			} else if (err instanceof String) {
@@ -67,6 +69,7 @@
 					rum.addError({
 						'message': err,
 						'stack': err,
+						'state': 'run',
 					})
 				}
 			}
