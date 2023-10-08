@@ -17,6 +17,7 @@
 		172C86212AC44B89006DC13F /* FTRUMModule.h in Headers */ = {isa = PBXBuildFile; fileRef = 172C86182AC44B89006DC13F /* FTRUMModule.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		172C86222AC44B89006DC13F /* FTMobileUniModule.m in Sources */ = {isa = PBXBuildFile; fileRef = 172C86192AC44B89006DC13F /* FTMobileUniModule.m */; };
 		172C86272AC55D18006DC13F /* FTMobileSDK.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 172C86262AC55D18006DC13F /* FTMobileSDK.xcframework */; };
+		173ED24C2AD17F23007C95C0 /* Guance-UniPlugin-App-Version.h in Headers */ = {isa = PBXBuildFile; fileRef = 173ED24B2AD17F23007C95C0 /* Guance-UniPlugin-App-Version.h */; settings = {ATTRIBUTES = (Public, ); }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -31,6 +32,7 @@
 		172C86182AC44B89006DC13F /* FTRUMModule.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FTRUMModule.h; sourceTree = "<group>"; };
 		172C86192AC44B89006DC13F /* FTMobileUniModule.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FTMobileUniModule.m; sourceTree = "<group>"; };
 		172C86262AC55D18006DC13F /* FTMobileSDK.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = FTMobileSDK.xcframework; path = ../../../Hbuilder_Example/nativeplugins/GCUniPlugin/ios/FTMobileSDK.xcframework; sourceTree = "<group>"; };
+		173ED24B2AD17F23007C95C0 /* Guance-UniPlugin-App-Version.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Guance-UniPlugin-App-Version.h"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -74,6 +76,7 @@
 		172C86102AC44B89006DC13F /* Classes */ = {
 			isa = PBXGroup;
 			children = (
+				173ED24B2AD17F23007C95C0 /* Guance-UniPlugin-App-Version.h */,
 				172C86112AC44B89006DC13F /* FTRUMModule.m */,
 				172C86122AC44B89006DC13F /* FTLogModule.h */,
 				172C86132AC44B89006DC13F /* FTTracerModule.h */,
@@ -103,6 +106,7 @@
 			files = (
 				172C860A2AC44B64006DC13F /* Guance_UniPlugin_App.h in Headers */,
 				172C861E2AC44B89006DC13F /* FTMobileUniModule.h in Headers */,
+				173ED24C2AD17F23007C95C0 /* Guance-UniPlugin-App-Version.h in Headers */,
 				172C861B2AC44B89006DC13F /* FTLogModule.h in Headers */,
 				172C86212AC44B89006DC13F /* FTRUMModule.h in Headers */,
 				172C861C2AC44B89006DC13F /* FTTracerModule.h in Headers */,
@@ -120,6 +124,7 @@
 				172C86022AC44B64006DC13F /* Sources */,
 				172C86032AC44B64006DC13F /* Frameworks */,
 				172C86042AC44B64006DC13F /* Resources */,
+				173ED24A2AD17EE3007C95C0 /* ShellScript */,
 			);
 			buildRules = (
 			);
@@ -171,6 +176,27 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		173ED24A2AD17EE3007C95C0 /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 12;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "
+";
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		172C86022AC44B64006DC13F /* Sources */ = {

@@ -16,15 +16,16 @@ UNI_EXPORT_METHOD_SYNC(@selector(sdkConfig:))
         NSString *serverUrl = [params valueForKey:@"serverUrl"];
         FTMobileConfig *config = [[FTMobileConfig alloc]initWithMetricsUrl:serverUrl];
         if([params.allKeys containsObject:@"debug"]){
-            config.enableSDKDebugLog = params[@"debug"];
+            NSNumber *debug = params[@"debug"];
+            config.enableSDKDebugLog = [debug boolValue];
         }
-        if([params.allKeys containsObject:@"envType"]){
-            id env = params[@"envType"];
+        if([params.allKeys containsObject:@"env"]){
+            id env = params[@"env"];
             if([env isKindOfClass:NSString.class]){
                 config.env = env;
             }
         }
-        NSMutableDictionary *globalContext = [[NSMutableDictionary alloc]initWithDictionary:@{@"sdk_package_uniapp":Guance_UniPlugin_App_Version}];
+        NSMutableDictionary *globalContext = [[NSMutableDictionary alloc]initWithDictionary:@{@"sdk_package_uniapp":UniPluginAppVersion}];
         if ([params.allKeys containsObject:@"globalContext"]) {
             NSDictionary *context = [params valueForKey:@"globalContext"];
             if(context.allKeys.count>0){
