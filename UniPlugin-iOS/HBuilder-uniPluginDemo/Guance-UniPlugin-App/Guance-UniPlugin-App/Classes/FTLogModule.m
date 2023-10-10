@@ -74,7 +74,7 @@ UNI_EXPORT_METHOD(@selector(logging:))
             status = FTStatusError;
         }else if([statusStr isEqualToString:@"critical"]){
             status = FTStatusCritical;
-        }else if([statusStr isEqualToString:@"ok"]){
+        }else {
             status = FTStatusOk;
         }
         [[FTMobileAgent sharedInstance] logging:content status:status property:property];

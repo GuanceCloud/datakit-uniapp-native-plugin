@@ -1,7 +1,10 @@
 // Top-level build file where you can add configuration options common to all sub-projects/modules.
 
 buildscript {
-    
+    ext {
+        getDefaultProperties = this.&getDefaultProperties
+    }
+
     repositories {
         google()
         jcenter()
@@ -12,8 +15,8 @@ buildscript {
     }
     dependencies {
         classpath 'com.android.tools.build:gradle:4.1.1'
-        classpath 'com.cloudcare.ft.mobile.sdk.tracker.plugin:ft-plugin:1.1.2-beta01'
-        
+        classpath 'com.cloudcare.ft.mobile.sdk.tracker.plugin:ft-plugin-legacy:1.1.6-beta01'
+
 
         // NOTE: Do not place your application dependencies here; they belong
         // in the individual module build.gradle files
@@ -29,6 +32,16 @@ allprojects {
             url 'https://mvnrepo.jiagouyun.com/repository/maven-releases'
         }
     }
+}
+
+def getDefaultProperties() {
+
+    Properties properties = new Properties()
+    def file = project.rootProject.file('../.version')
+    if (file.exists()) {
+        properties.load(file.newDataInputStream())
+    }
+    return properties
 }
 
 task clean(type: Delete) {
