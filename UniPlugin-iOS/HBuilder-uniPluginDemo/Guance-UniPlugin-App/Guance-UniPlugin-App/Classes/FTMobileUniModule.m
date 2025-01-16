@@ -13,17 +13,58 @@
 UNI_EXPORT_METHOD_SYNC(@selector(sdkConfig:))
 - (void)sdkConfig:(NSDictionary *)params{
     dispatch_block_t block = ^(){
-        NSString *serverUrl = [params valueForKey:@"serverUrl"];
-        FTMobileConfig *config = [[FTMobileConfig alloc]initWithMetricsUrl:serverUrl];
+        NSString *datakitUrl = [params valueForKey:@"datakitUrl"];
+        NSString *dataWayUrl = [params valueForKey:@"datawayUrl"];
+        NSString *clientToken = [params valueForKey:@"clientToken"];
+        FTMobileConfig *config;
+        if(dataWayUrl && dataWayUrl.length>0 && clientToken && clientToken.length>0){
+            config = [[FTMobileConfig alloc]initWithDatawayUrl:dataWayUrl clientToken:clientToken];
+        }else if(datakitUrl && datakitUrl.length>0){
+            config = [[FTMobileConfig alloc]initWithDatakitUrl:datakitUrl];
+        }else{
+            return;
+        }
         if([params.allKeys containsObject:@"debug"]){
             NSNumber *debug = params[@"debug"];
             config.enableSDKDebugLog = [debug boolValue];
+        }
+        if ([params.allKeys containsObject:@"service"]) {
+            config.service = params[@"service"];
         }
         if([params.allKeys containsObject:@"env"]){
             id env = params[@"env"];
             if([env isKindOfClass:NSString.class]){
                 config.env = env;
             }
+        }
+        if ([params.allKeys containsObject:@"autoSync"]) {
+            config.autoSync = [params[@"autoSync"] boolValue];
+        }
+        if ([params.allKeys containsObject:@"syncPageSize"]) {
+            config.syncPageSize = [params[@"syncPageSize"] intValue];
+        }
+        if ([params.allKeys containsObject:@"syncSleepTime"]) {
+            config.syncSleepTime = [params[@"syncSleepTime"] intValue];
+        }
+        if ([params.allKeys containsObject:@"enableDataIntegerCompatible"]) {
+            config.enableDataIntegerCompatible = [params[@"enableDataIntegerCompatible"] boolValue];
+        }
+        if ([params.allKeys containsObject:@"compressIntakeRequests"]) {
+            config.compressIntakeRequests = [params[@"compressIntakeRequests"] boolValue];
+        }
+        if ([params.allKeys containsObject:@"dbDiscardStrategy"]){
+            NSString *type = params[@"dbDiscardType"];
+            if([type isEqualToString:@"discard"]){
+                config.dbDiscardType = FTDBDiscard;
+            }else if([type isEqualToString:@"discardOldest"]){
+                config.dbDiscardType = FTDBDiscardOldest;
+            }
+        }
+        if ([params.allKeys containsObject:@"enableLimitWithDbSize"]){
+            config.enableLimitWithDbSize = [params[@"enableLimitWithDbSize"] boolValue];
+        }
+        if ([params.allKeys containsObject:@"dbCacheLimit"]){
+            config.dbCacheLimit = [params[@"dbCacheLimit"] doubleValue];
         }
         NSMutableDictionary *globalContext = [[NSMutableDictionary alloc]initWithDictionary:@{@"sdk_package_uniapp":UniPluginAppVersion}];
         if ([params.allKeys containsObject:@"globalContext"]) {
@@ -33,9 +74,6 @@ UNI_EXPORT_METHOD_SYNC(@selector(sdkConfig:))
             }
         }
         config.globalContext = globalContext;
-        if ([params.allKeys containsObject:@"service"]) {
-            config.service = params[@"service"];
-        }
         [FTMobileAgent startWithConfigOptions:config];
     };
     if (NSThread.isMainThread) {
@@ -56,5 +94,30 @@ UNI_EXPORT_METHOD(@selector(unbindRUMUserData))
 }
 - (void)unbindRUMUserData{
     [[FTMobileAgent sharedInstance] unbindUser];
+}
+UNI_EXPORT_METHOD(@selector(appendGlobalContext:))
+UNI_EXPORT_METHOD(@selector(appendRUMGlobalContext:))
+UNI_EXPORT_METHOD(@selector(appendLogGlobalContext:))
+- (void)appendGlobalContext:(NSDictionary*)context{
+    [FTMobileAgent appendGlobalContext:context];
+}
+- (void)appendRUMGlobalContext:(NSDictionary*)context{
+    [FTMobileAgent appendRUMGlobalContext:context];
+}
+- (void)appendLogGlobalContext:(NSDictionary*)context{
+    [FTMobileAgent appendLogGlobalContext:context];
+}
+UNI_EXPORT_METHOD(@selector(flushSyncData))
+
+- (void)flushSyncData{
+    [[FTMobileAgent sharedInstance] flushSyncData];
+}
+UNI_EXPORT_METHOD(@selector(shutDown))
+- (void)shutDown{
+    [FTMobileAgent shutDown];
+}
+UNI_EXPORT_METHOD(@selector(clearAllData))
+- (void)clearAllData{
+    [FTMobileAgent clearAllData];
 }
 @end

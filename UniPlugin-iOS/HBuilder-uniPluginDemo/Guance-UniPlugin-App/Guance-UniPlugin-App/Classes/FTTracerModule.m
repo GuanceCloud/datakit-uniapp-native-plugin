@@ -12,8 +12,8 @@
 UNI_EXPORT_METHOD_SYNC(@selector(setConfig:))
 - (void)setConfig:(NSDictionary *)params{
     FTTraceConfig *trace = [[FTTraceConfig alloc]init];
-    if ([params.allKeys containsObject:@"samplerate"]) {
-        trace.samplerate =[params[@"samplerate"] doubleValue] * 100;
+    if ([params.allKeys containsObject:@"sampleRate"]) {
+        trace.samplerate =[params[@"sampleRate"] doubleValue] * 100;
     }
     if ([params.allKeys containsObject:@"traceType"]) {
         NSString *type =  params[@"traceType"];
@@ -42,9 +42,13 @@ UNI_EXPORT_METHOD_SYNC(@selector(getTraceHeader:))
     NSString *key = [params objectForKey:@"key"];
     NSString *urlStr = [params objectForKey:@"url"];
     NSURL *url = [NSURL URLWithString:urlStr];
-    if(key && url){
-        NSDictionary *header = [[FTTraceManager sharedInstance] getTraceHeaderWithKey:key url:url];
-        return header;
+    if(key ){
+        if(url){
+            NSDictionary *header = [[FTExternalDataManager sharedManager] getTraceHeaderWithKey:key url:url];
+            return header;
+        }else{
+            return [[FTExternalDataManager sharedManager] getTraceHeaderWithUrl:url];
+        }
     }
     return nil;
 }

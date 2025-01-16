@@ -13,8 +13,8 @@ UNI_EXPORT_METHOD_SYNC(@selector(setConfig:))
 - (void)setConfig:(NSDictionary *)params{
     NSString *rumAppId = [params objectForKey:@"iOSAppId"];
     FTRumConfig *rumConfig = [[FTRumConfig alloc]initWithAppid:rumAppId];
-    if ([params.allKeys containsObject:@"samplerate"]) {
-        rumConfig.samplerate = [params[@"samplerate"] doubleValue] * 100;
+    if ([params.allKeys containsObject:@"sampleRate"]) {
+        rumConfig.samplerate = [params[@"sampleRate"] doubleValue] * 100;
     }
     if ([params.allKeys containsObject:@"enableNativeUserAction"]) {
         rumConfig.enableTraceUserAction = params[@"enableNativeUserAction"];
@@ -97,6 +97,29 @@ UNI_EXPORT_METHOD_SYNC(@selector(setConfig:))
         }else if ([type isEqualToString:@"rare"]){
             rumConfig.monitorFrequency = FTMonitorFrequencyRare;
         }
+    }
+    if ([params.allKeys containsObject:@"enableResourceHostIP"]) {
+        rumConfig.enableResourceHostIP = [params[@"enableResourceHostIP"] boolValue];
+    }
+    if ([params.allKeys containsObject:@"enableTrackNativeCrash"]){
+      rumConfig.enableTrackAppCrash = [params[@"enableTrackNativeCrash"] boolValue];
+    }
+    if ([params.allKeys containsObject:@"enableTrackNativeFreeze"]){
+      rumConfig.enableTrackAppFreeze = [params[@"enableTrackNativeFreeze"] boolValue];
+    }
+    if ([params.allKeys containsObject:@"nativeFreezeDurationMs"]){
+        rumConfig.freezeDurationMs = [params[@"nativeFreezeDurationMs"] doubleValue];
+    }
+    if ([params.allKeys containsObject:@"rumDiscardStrategy"]) {
+        NSString *type = params[@"rumDiscardStrategy"];
+        if([type isEqualToString:@"discard"]){
+            rumConfig.rumDiscardType = FTRUMDiscard;
+        }else if ([type isEqualToString:@"discardOldest"]){
+            rumConfig.rumDiscardType = FTRUMDiscardOldest;
+        }
+    }
+    if ([params.allKeys containsObject:@"rumCacheLimitCount"]) {
+        rumConfig.rumCacheLimitCount = [params[@"rumCacheLimitCount"] intValue];
     }
     if ([params.allKeys containsObject:@"globalContext"]) {
         rumConfig.globalContext = params[@"globalContext"];
