@@ -2,16 +2,12 @@ package com.ft.sdk.uniapp;
 
 import static com.ft.sdk.FTApplication.getApplication;
 
-import android.os.Process;
-
 import com.ft.sdk.FTActivityLifecycleCallbacks;
 import com.ft.sdk.FTAutoTrack;
 import com.ft.sdk.garble.utils.Utils;
 
-import java.io.RandomAccessFile;
-
 /**
- *  UniApp 无法使用 gradle plugin，所以使用这种方式进
+ * UniApp 无法使用 gradle plugin，所以使用这种方式进
  */
 public class FTUniAppStartManager {
     private static class SingletonHolder {
@@ -27,51 +23,30 @@ public class FTUniAppStartManager {
     private final FTActivityLifecycleCallbacks lifecycleCallbacks = new FTActivityLifecycleCallbacks();
 
     long startTime = 0;
-    long upTimesNano = 0;
+    long installTime = 0;
 
     void start() {
         if (!alreadyColdLaunch) {
             getApplication().registerActivityLifecycleCallbacks(lifecycleCallbacks);
-            startTime = Utils.getCurrentNanoTime();
-            upTimesNano = getUpTimes() + System.nanoTime() % 1000000L;
+            startTime = Utils.getAppStartTimeNs();
+            installTime = Utils.getCurrentNanoTime();
             alreadyColdLaunch = true;
         }
     }
 
     void uploadColdBootTimeWhenManualStart() {
         if (startTime > 0) {
-            FTAutoTrack.putRUMLaunchPerformance(true, upTimesNano, startTime - upTimesNano);
+            FTAutoTrack.putRUMLaunchPerformance(true, startTime - installTime, startTime);
             startTime = 0;
-            upTimesNano = 0;
+            installTime = 0;
         }
     }
 
     void reset() {
         getApplication().unregisterActivityLifecycleCallbacks(lifecycleCallbacks);
         alreadyColdLaunch = false;
-        upTimesNano = 0;
         startTime = 0;
-    }
-
-
-    /**
-     * 进程启动到当前间隔时间 {@link Process#getStartUptimeMillis();}
-     *
-     * @return
-     */
-    long getUpTimes() {
-        long appTime = -1;
-        try {
-            RandomAccessFile appStatFile = new RandomAccessFile("/proc/"
-                    + android.os.Process.myPid() + "/stat", "r");
-            String appStatString = appStatFile.readLine();
-            String[] appStats = appStatString.split(" ");
-            appTime = Long.parseLong(appStats[19]);
-
-        } catch (Exception e) {
-
-        }
-        return appTime;
+        installTime = 0;
     }
 
 

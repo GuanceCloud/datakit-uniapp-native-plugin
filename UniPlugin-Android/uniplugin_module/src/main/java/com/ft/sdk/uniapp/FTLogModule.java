@@ -10,6 +10,7 @@ import com.ft.sdk.LogCacheDiscard;
 import com.ft.sdk.garble.bean.Status;
 
 import java.util.HashMap;
+import java.util.Map;
 
 import io.dcloud.feature.uniapp.annotation.UniJSMethod;
 import io.dcloud.feature.uniapp.common.UniModule;
@@ -19,38 +20,38 @@ public class FTLogModule extends UniModule {
 
     @UniJSMethod(uiThread = false)
     public void setConfig(JSONObject data) {
-        FTLoggerConfig config = new FTLoggerConfig();
+        Map<String, Object> map = Utils.convertJSONtoHashMap(data);
+        String discardStrategy = (String) (map.get("discardStrategy"));
+        Double sampleRate = (Double) map.get("samplerate");
+        JSONArray logTypeReadArr = (JSONArray) map.get("logLevelFilters");
+        Boolean enableLinkRumData = (Boolean) map.get("enableLinkRumData");
+        Boolean enableCustomLog = (Boolean) map.get("enableCustomLog");
+        Map<String, Object> globalContext = (Map<String, Object>) map.get("globalContext");
+        Integer logCacheLimitCount = (Integer) map.get("logCacheLimitCount");
 
-        Float sampleRate = data.getFloat("samplerate");
-        if (sampleRate != null) {
-            config.setSamplingRate(sampleRate);
-        }
-        Boolean enableLinkRumData = data.getBoolean("enableLinkRumData");
-        if (enableLinkRumData != null) {
-            config.setEnableLinkRumData(enableLinkRumData);
-        }
+        FTLoggerConfig logConfig = new FTLoggerConfig();
 
-        Boolean enableCustomLog = data.getBoolean("enableCustomLog");
         if (enableCustomLog != null) {
-            config.setEnableCustomLog(enableCustomLog);
+            logConfig.setEnableCustomLog(enableCustomLog);
+        }
+        if (sampleRate != null) {
+            logConfig.setSamplingRate(sampleRate.floatValue());
         }
 
-        String discardStrategy = data.getString("discardStrategy");
         if (discardStrategy != null) {
             if (discardStrategy.equals("discardOldest")) {
-                config.setLogCacheDiscardStrategy(LogCacheDiscard.DISCARD_OLDEST);
+                logConfig.setLogCacheDiscardStrategy(LogCacheDiscard.DISCARD_OLDEST);
             } else if (discardStrategy.equals("discard")) {
-                config.setLogCacheDiscardStrategy(LogCacheDiscard.DISCARD);
+                logConfig.setLogCacheDiscardStrategy(LogCacheDiscard.DISCARD);
             }
-
         }
-        JSONArray logLevelFilters = data.getJSONArray("logLevelFilters");
-        if (logLevelFilters != null) {
-            Status[] statuses = new Status[logLevelFilters.size()];
-            for (int i = 0; i < logLevelFilters.size(); i++) {
+
+        if (logTypeReadArr != null) {
+            Status[] statuses = new Status[logTypeReadArr.size()];
+            for (int i = 0; i < logTypeReadArr.size(); i++) {
                 Status logStatus = null;
                 for (Status value : Status.values()) {
-                    if (value.name.equals(logLevelFilters.getString(i))) {
+                    if (value.name.equals(logTypeReadArr.get(i))) {
                         logStatus = value;
                         break;
                     }
@@ -58,18 +59,29 @@ public class FTLogModule extends UniModule {
                 statuses[i] = logStatus;
             }
 
-            config.setLogLevelFilters(statuses);
+            logConfig.setLogLevelFilters(statuses);
 
         }
 
-        JSONObject globalContext = data.getJSONObject("globalContext");
+        if (enableLinkRumData != null) {
+            logConfig.setEnableLinkRumData(enableLinkRumData);
+        }
+
+        if (enableCustomLog != null) {
+            logConfig.setEnableCustomLog(enableCustomLog);
+        }
+
         if (globalContext != null) {
-            for (String key : globalContext.keySet()) {
-                config.addGlobalContext(key, globalContext.getString(key));
+            for (Map.Entry<String, Object> entry : globalContext.entrySet()) {
+                logConfig.addGlobalContext(entry.getKey(), entry.getValue().toString());
             }
         }
 
-        FTSdk.initLogWithConfig(config);
+        if (logCacheLimitCount != null) {
+            logConfig.setLogCacheLimitCount(logCacheLimitCount);
+        }
+
+        FTSdk.initLogWithConfig(logConfig);
 
     }
 
