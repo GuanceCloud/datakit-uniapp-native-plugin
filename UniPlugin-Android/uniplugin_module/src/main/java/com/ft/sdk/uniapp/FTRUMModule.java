@@ -178,6 +178,16 @@ public class FTRUMModule extends UniModule {
     }
 
     @UniJSMethod(uiThread = false)
+    public void addAction(JSONObject data) {
+        String actionName = data.getString("actionName");
+        String actionType = data.getString("actionType");
+        JSONObject property = data.getJSONObject("property");
+        HashMap<String, Object> params = Utils.convertJSONtoHashMap(property);
+        FTRUMGlobalManager.get().startAction(actionName, actionType, params);
+
+    }
+
+    @UniJSMethod(uiThread = false)
     public void onCreateView(JSONObject data) {
         String viewName = data.getString("viewName");
         long loadTime = data.getLong("loadTime");
