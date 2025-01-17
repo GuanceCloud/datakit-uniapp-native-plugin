@@ -137,33 +137,33 @@ public class FTSDKUniModule extends UniModule {
         FTSdk.flushSyncData();
     }
 
-    @UniJSMethod
+    @UniJSMethod(uiThread = false)
     public void appendGlobalContext(JSONObject extra) {
         if (extra != null) {
             FTSdk.appendGlobalContext(Utils.convertJSONtoHashMap(extra));
         }
     }
 
-    @UniJSMethod
+    @UniJSMethod(uiThread = false)
     public void appendLogGlobalContext(JSONObject extra) {
         if (extra != null) {
             FTSdk.appendLogGlobalContext(Utils.convertJSONtoHashMap(extra));
         }
     }
 
-    @UniJSMethod
+    @UniJSMethod(uiThread = false)
     public void appendRUMGlobalContext(JSONObject extra) {
         if (extra != null) {
             FTSdk.appendRUMGlobalContext(Utils.convertJSONtoHashMap(extra));
         }
     }
 
-    @UniJSMethod
+    @UniJSMethod(uiThread = false)
     public void shutDown() {
         FTSdk.shutDown();
     }
 
-    @UniJSMethod
+    @UniJSMethod(uiThread = false)
     public void clearAllData() {
         FTSdk.clearAllData();
     }
