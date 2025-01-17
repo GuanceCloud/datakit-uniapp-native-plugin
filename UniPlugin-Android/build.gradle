@@ -15,7 +15,7 @@ buildscript {
     }
     dependencies {
         classpath 'com.android.tools.build:gradle:4.1.1'
-        classpath 'com.cloudcare.ft.mobile.sdk.tracker.plugin:ft-plugin-legacy:1.1.6-beta01'
+        classpath 'com.cloudcare.ft.mobile.sdk.tracker.plugin:ft-plugin:1.3.4'
 
 
         // NOTE: Do not place your application dependencies here; they belong
