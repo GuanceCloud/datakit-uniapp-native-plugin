@@ -17,7 +17,7 @@ public class FTTracerModule extends UniModule {
     @UniJSMethod(uiThread = false)
     public void setConfig(JSONObject data) {
         Map<String, Object> map = Utils.convertJSONtoHashMap(data);
-        Double sampleRate = (Double) map.get("sampleRate");
+        Number sampleRate = (Number) map.get("sampleRate");
         Object traceType =  (map.get("traceType"));
         Boolean enableLinkRUMData = (Boolean) map.get("enableLinkRUMData");
         Boolean enableNativeAutoTrace = (Boolean) map.get("enableNativeAutoTrace");
