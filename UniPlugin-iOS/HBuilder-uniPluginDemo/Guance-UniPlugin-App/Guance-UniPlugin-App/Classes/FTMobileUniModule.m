@@ -13,7 +13,9 @@
 UNI_EXPORT_METHOD_SYNC(@selector(sdkConfig:))
 - (void)sdkConfig:(NSDictionary *)params{
     dispatch_block_t block = ^(){
+        NSString *serverUrl = [params valueForKey:@"serverUrl"];
         NSString *datakitUrl = [params valueForKey:@"datakitUrl"];
+        datakitUrl = datakitUrl ?:serverUrl;
         NSString *dataWayUrl = [params valueForKey:@"datawayUrl"];
         NSString *clientToken = [params valueForKey:@"clientToken"];
         FTMobileConfig *config;
@@ -53,7 +55,7 @@ UNI_EXPORT_METHOD_SYNC(@selector(sdkConfig:))
             config.compressIntakeRequests = [params[@"compressIntakeRequests"] boolValue];
         }
         if ([params.allKeys containsObject:@"dbDiscardStrategy"]){
-            NSString *type = params[@"dbDiscardType"];
+            NSString *type = params[@"dbDiscardStrategy"];
             if([type isEqualToString:@"discard"]){
                 config.dbDiscardType = FTDBDiscard;
             }else if([type isEqualToString:@"discardOldest"]){

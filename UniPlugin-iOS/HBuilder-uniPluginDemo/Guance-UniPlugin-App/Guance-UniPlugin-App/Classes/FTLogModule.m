@@ -12,8 +12,8 @@
 UNI_EXPORT_METHOD_SYNC(@selector(setConfig:))
 - (void)setConfig:(NSDictionary *)params{
     FTLoggerConfig *config = [[FTLoggerConfig alloc]init];
-    if ([params.allKeys containsObject:@"sampleRate"]) {
-        config.samplerate =[params[@"sampleRate"] doubleValue] * 100;
+    if ([params.allKeys containsObject:@"samplerate"]) {
+        config.samplerate =[params[@"samplerate"] doubleValue] * 100;
     }
     if ([params.allKeys containsObject:@"enableLinkRumData"]) {
         config.enableLinkRumData = params[@"enableLinkRumData"];
