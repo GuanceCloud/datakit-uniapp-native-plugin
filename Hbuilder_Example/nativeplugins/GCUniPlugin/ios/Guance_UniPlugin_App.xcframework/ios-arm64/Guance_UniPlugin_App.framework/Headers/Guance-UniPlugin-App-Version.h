@@ -8,6 +8,6 @@
 #ifndef Guance_UniPlugin_App_Version_h
 #define Guance_UniPlugin_App_Version_h
 
-#define UniPluginAppVersion @"0.1.2"
+#define UniPluginAppVersion @"0.2.0"
 
 #endif /* Guance_UniPlugin_App_Version_h */

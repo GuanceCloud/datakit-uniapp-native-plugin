@@ -6,23 +6,27 @@
 	<dict>
 		<key>Headers/FTExternalDataManager.h</key>
 		<data>
-		1ysaI7U2RytxXsgotweyjXubkQ8=
+		aTj4sk18BtmkSyMv2kgeBxZkCYw=
+		</data>
+		<key>Headers/FTLog.h</key>
+		<data>
+		OSsqQ8VU5vjf6z/azTTKpUcFe2Q=
 		</data>
 		<key>Headers/FTLogger.h</key>
 		<data>
-		EWQO53qei6q2yzvdZG5+Q8kocyI=
+		mXfy4INOZkllJlKG+U8B0OGxHb8=
 		</data>
 		<key>Headers/FTMobileAgent.h</key>
 		<data>
-		Y3m2dDfhlNiuKMiDWOyu/Gkxhvg=
+		OqYMhkZqP9lxChL5o4dcaw9XeVo=
 		</data>
 		<key>Headers/FTMobileConfig.h</key>
 		<data>
-		5HxmA7XWOMuzvjhR1MBNEftX5Cw=
+		cTvw6wOgpS/gHBaNhQL5HGB0w80=
 		</data>
 		<key>Headers/FTMobileSDK.h</key>
 		<data>
-		RJGZN42+eMAREdXpmyP1wGDV4pE=
+		1/LRyN8g97oerIAIsTlWPERrlHA=
 		</data>
 		<key>Headers/FTResourceContentModel.h</key>
 		<data>
@@ -30,11 +34,15 @@
 		</data>
 		<key>Headers/FTResourceMetricsModel.h</key>
 		<data>
-		any3w5C06lF3ixP6cBqC21YwZPo=
+		4cHLMVQiJcVyLDebQo22TYSJBh8=
 		</data>
 		<key>Headers/FTRumDatasProtocol.h</key>
 		<data>
-		n+ktJQZ0eV/d3MiZDtNubBZR5Ek=
+		v20/nuuaTQ9PLS3qLHo8rz6o2qU=
+		</data>
+		<key>Headers/FTTraceContext.h</key>
+		<data>
+		wtGXZBRbMtQ8Fpu/IMSjpqOMnm4=
 		</data>
 		<key>Headers/FTTraceManager.h</key>
 		<data>
@@ -42,15 +50,23 @@
 		</data>
 		<key>Headers/FTURLSessionDelegate.h</key>
 		<data>
-		up/MCC2rSV8tK31nOeTvvI3GxdI=
+		TciEr1iWOwBvP7fv0jIcfXKKJr4=
+		</data>
+		<key>Headers/FTURLSessionInterceptor.h</key>
+		<data>
+		H+DYjQeamxTBnbhg14JOIDeQEDk=
 		</data>
 		<key>Info.plist</key>
 		<data>
-		y0mg+aQ78reU2hBO672FRZFso2c=
+		cin3KpdUVGDDnHMxigrQpUOEKQc=
 		</data>
 		<key>Modules/module.modulemap</key>
 		<data>
 		/yUstZcz5R0S9f6LIv5XaidCSZA=
+		</data>
+		<key>PrivacyInfo.xcprivacy</key>
+		<data>
+		F8UW5hvB27bO+e8mnUgluByBLeo=
 		</data>
 	</dict>
 	<key>files2</key>
@@ -59,55 +75,66 @@
 		<dict>
 			<key>hash</key>
 			<data>
-			1ysaI7U2RytxXsgotweyjXubkQ8=
+			aTj4sk18BtmkSyMv2kgeBxZkCYw=
 			</data>
 			<key>hash2</key>
 			<data>
-			7I4vBuUlq4Z1/hP0FkvJnWpRPOEFNnT4UcDLQIumbDs=
+			Vl5Qh2h63P+83HLX17Q2mTm9R+dBH6K4xcag59e57Cg=
+			</data>
+		</dict>
+		<key>Headers/FTLog.h</key>
+		<dict>
+			<key>hash</key>
+			<data>
+			OSsqQ8VU5vjf6z/azTTKpUcFe2Q=
+			</data>
+			<key>hash2</key>
+			<data>
+			ZE25UXMnG2ZJL15j+N7UnpM1gtUmIcoPN+6kz0jwua4=
 			</data>
 		</dict>
 		<key>Headers/FTLogger.h</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			EWQO53qei6q2yzvdZG5+Q8kocyI=
+			mXfy4INOZkllJlKG+U8B0OGxHb8=
 			</data>
 			<key>hash2</key>
 			<data>
-			8M+GLRgM1kmZtV0FufSheAPkNMgiPGeMXXMGKBI327c=
+			ZfxvcyECmged2l8PQAgrgUC4H5ibYvYcIFBz1bG6rT0=
 			</data>
 		</dict>
 		<key>Headers/FTMobileAgent.h</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			Y3m2dDfhlNiuKMiDWOyu/Gkxhvg=
+			OqYMhkZqP9lxChL5o4dcaw9XeVo=
 			</data>
 			<key>hash2</key>
 			<data>
-			81HCA03m9eB7SSbf1Bd10xp7EPnNUEBnVnHLf3UeFNQ=
+			+N//VPW929EVJxQYX8Ti5kk5y0RkOrQ7EXww8e24oGk=
 			</data>
 		</dict>
 		<key>Headers/FTMobileConfig.h</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			5HxmA7XWOMuzvjhR1MBNEftX5Cw=
+			cTvw6wOgpS/gHBaNhQL5HGB0w80=
 			</data>
 			<key>hash2</key>
 			<data>
-			6DC44Fwf3n9Yqa2jEOzO7iruP42rwoWBbYguTo+dCbk=
+			uwZMbrKERw2wiXSIQXblEFSTPq+Cw8h+xqAqEiMVW1s=
 			</data>
 		</dict>
 		<key>Headers/FTMobileSDK.h</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			RJGZN42+eMAREdXpmyP1wGDV4pE=
+			1/LRyN8g97oerIAIsTlWPERrlHA=
 			</data>
 			<key>hash2</key>
 			<data>
-			FHPrwAkYSdrO0UlEY2zxIxk0D7VIkO0oNJNz4QH2ZMo=
+			anhpGoFdQ/TDkD1YEXLjlYl18ggXxF7vsayIQJvEO3w=
 			</data>
 		</dict>
 		<key>Headers/FTResourceContentModel.h</key>
@@ -125,22 +152,33 @@
 		<dict>
 			<key>hash</key>
 			<data>
-			any3w5C06lF3ixP6cBqC21YwZPo=
+			4cHLMVQiJcVyLDebQo22TYSJBh8=
 			</data>
 			<key>hash2</key>
 			<data>
-			hv4v/TgJwFsZyDrKpjcvF1lvf9TjATVMoMqlQVCWjpI=
+			1DFoU8PzosrGa4DNe0rcrUuUqCf2ZSY8HMj8thtwv88=
 			</data>
 		</dict>
 		<key>Headers/FTRumDatasProtocol.h</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			n+ktJQZ0eV/d3MiZDtNubBZR5Ek=
+			v20/nuuaTQ9PLS3qLHo8rz6o2qU=
 			</data>
 			<key>hash2</key>
 			<data>
-			XQI8vwfrI6TrLd86Sy79TnpIQnCWvjzslqKXW/Gtp9I=
+			t0bUA3QR7VNvCFze+4ibmoGrWPw3rO7GUxle2jciNZI=
+			</data>
+		</dict>
+		<key>Headers/FTTraceContext.h</key>
+		<dict>
+			<key>hash</key>
+			<data>
+			wtGXZBRbMtQ8Fpu/IMSjpqOMnm4=
+			</data>
+			<key>hash2</key>
+			<data>
+			SS6r0KZ7ACP1VwNtJsujt/cJC75At2Z6rwOgddvUIp4=
 			</data>
 		</dict>
 		<key>Headers/FTTraceManager.h</key>
@@ -158,11 +196,22 @@
 		<dict>
 			<key>hash</key>
 			<data>
-			up/MCC2rSV8tK31nOeTvvI3GxdI=
+			TciEr1iWOwBvP7fv0jIcfXKKJr4=
 			</data>
 			<key>hash2</key>
 			<data>
-			v52J/3w5RGbucWCqNPNHWN5BeFgamdG8VuHHFYQc2IU=
+			8vIr6ArkK/xLe+bPZuMkrmMKCji21lO++a/1+ebmcbI=
+			</data>
+		</dict>
+		<key>Headers/FTURLSessionInterceptor.h</key>
+		<dict>
+			<key>hash</key>
+			<data>
+			H+DYjQeamxTBnbhg14JOIDeQEDk=
+			</data>
+			<key>hash2</key>
+			<data>
+			9Eb+LC5RkW2rXzrRkw8sbeVz2jVhppNP16RPf2Yc78A=
 			</data>
 		</dict>
 		<key>Modules/module.modulemap</key>
@@ -174,6 +223,17 @@
 			<key>hash2</key>
 			<data>
 			x0baXyqw1ECeRUiOe3Ag7jktDt4k2XoIFDswX+bzEis=
+			</data>
+		</dict>
+		<key>PrivacyInfo.xcprivacy</key>
+		<dict>
+			<key>hash</key>
+			<data>
+			F8UW5hvB27bO+e8mnUgluByBLeo=
+			</data>
+			<key>hash2</key>
+			<data>
+			rvXNtRQzMH9bHHG/K1QFOkxboSg+WmYkj1QzijFfgFc=
 			</data>
 		</dict>
 	</dict>

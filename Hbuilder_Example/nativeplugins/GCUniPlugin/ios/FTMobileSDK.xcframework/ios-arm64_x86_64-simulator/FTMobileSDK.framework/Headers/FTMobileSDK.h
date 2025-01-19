@@ -22,7 +22,10 @@ FOUNDATION_EXPORT const unsigned char FTMobileSDKVersionString[];
 #import <FTMobileSDK/FTResourceMetricsModel.h>
 #import <FTMobileSDK/FTResourceContentModel.h>
 #import <FTMobileSDK/FTURLSessionDelegate.h>
+#import <FTMobileSDK/FTURLSessionInterceptor.h>
 #import <FTMobileSDK/FTTraceManager.h>
 #import <FTMobileSDK/FTLogger.h>
 #import <FTMobileSDK/FTMobileAgent.h>
 #import <FTMobileSDK/FTRumDatasProtocol.h>
+#import <FTMobileSDK/FTLog.h>
+#import <FTMobileSDK/FTTraceContext.h>
