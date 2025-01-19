@@ -53,6 +53,9 @@ UNI_EXPORT_METHOD_SYNC(@selector(setConfig:))
             config.logLevelFilter =  logLevelFilters;
         }
     }
+    if ([params.allKeys containsObject:@"logCacheLimitCount"]) {
+        config.logCacheLimitCount = [params[@"logCacheLimitCount"] intValue];
+    }
     if([params.allKeys containsObject:@"globalContext"]){
         config.globalContext = [params objectForKey:@"globalContext"];
     }
@@ -65,19 +68,7 @@ UNI_EXPORT_METHOD(@selector(logging:))
     NSString *statusStr = [params objectForKey:@"status"];
     NSDictionary *property = [params objectForKey:@"property"];
     if(content && statusStr){
-        FTLogStatus status;
-        if([statusStr isEqualToString:@"info"]){
-            status = FTStatusInfo;
-        }else if([statusStr isEqualToString:@"warning"]){
-            status = FTStatusWarning;
-        }else if([statusStr isEqualToString:@"error"]){
-            status = FTStatusError;
-        }else if([statusStr isEqualToString:@"critical"]){
-            status = FTStatusCritical;
-        }else {
-            status = FTStatusOk;
-        }
-        [[FTMobileAgent sharedInstance] logging:content status:status property:property];
+        [[FTLogger sharedInstance] log:content status:statusStr property:property];
     }
 }
 @end

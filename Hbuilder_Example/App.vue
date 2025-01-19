@@ -1,7 +1,8 @@
 <script>
 	import * as SDKConst from '@/utils.js'
 	import WatchRouter from '@/GCWatchRouter.js'
-
+    import {reqInterceptor} from '@/GCRequestInterceptor.js'
+	
 	var ftMobileSDK = uni.requireNativePlugin("GCUniPlugin-MobileAgent");
 	var logger = uni.requireNativePlugin("GCUniPlugin-Logger");
 	var rum = uni.requireNativePlugin("GCUniPlugin-RUM");
@@ -10,8 +11,17 @@
 	export default {
 		mixins:[WatchRouter],
 		onLaunch: function() {
+			reqInterceptor()
 			ftMobileSDK.sdkConfig({
-				'serverUrl': SDKConst.SERVER_URL,
+				'datakitUrl': SDKConst.SERVER_URL,
+				'autoSync': false,
+				'syncPageSize': 15,
+				'syncSleepTime': 15,
+				'enableDataIntegerCompatible':true,
+				'compressIntakeRequests':true,
+				'dbCacheLimit':30*1024,
+				'enableLimitWithDbSize':true,
+				'dbDiscardStrategy':'discard',
 				'debug': true,
 				'env': 'common',
 				'globalContext': {
@@ -23,6 +33,12 @@
 				'iOSAppId': SDKConst.IOS_APP_ID,
 				'errorMonitorType': ['cpu', 'memory'],
 				'deviceMonitorType': 'all',
+				'enableTrackNativeCrash':true,
+				'enableTrackNativeAppANR':true,
+				'enableTrackNativeFreeze':true,
+				'nativeFreezeDurationMs':400,
+				'rumDiscardStrategy':'discardOldest',
+				'rumCacheLimitCount': 10000,
 				'globalContext': {
 					'track_id': SDKConst.TRACK_ID,
 					'rum_globalContext': 'custom_rum_globalContext'
@@ -36,12 +52,14 @@
 					'warning',
 					'error'
 				],
+				'logCacheLimitCount':6000,
 				'globalContext': {
 					'logger_globalContext': 'custom_logger_globalContext'
 				}
 			})
 			tracer.setConfig({
-				'traceType': 'ddTrace'
+				'traceType': 'ddTrace',
+				'enableLinkRUMData':true,
 			})
 		},
 		onShow: function() {
