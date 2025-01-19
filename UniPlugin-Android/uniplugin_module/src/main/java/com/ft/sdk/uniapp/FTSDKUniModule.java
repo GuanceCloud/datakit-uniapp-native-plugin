@@ -31,14 +31,14 @@ public class FTSDKUniModule extends UniModule {
         String cliToken = (String) map.get("clientToken");
         Boolean debug = (Boolean) map.get("debug");
         Boolean autoSync = (Boolean) map.get("autoSync");
-        Integer syncPageSize = (Integer) map.get("syncPageSize");
-        Integer syncSleepTime = (Integer) map.get("syncSleepTime");
+        Number syncPageSize = (Number) map.get("syncPageSize");
+        Number syncSleepTime = (Number) map.get("syncSleepTime");
         Boolean enableDataIntegerCompatible = (Boolean) map.get("enableDataIntegerCompatible");
         Boolean compressIntakeRequests = (Boolean) map.get("compressIntakeRequests");
         String serviceName = (String) map.get("service");
         Map<String, Object> globalContext = (Map<String, Object>) map.get("globalContext");
         Boolean enableLimitWithDbSize = (Boolean) map.get("enableLimitWithDbSize");
-        Long dbCacheLimit = (Long) (map.get("dbCacheLimit"));
+        Number dbCacheLimit = (Number) (map.get("dbCacheLimit"));
         Object dbDiscardStrategy = map.get("dbDiscardStrategy");
 
         FTSDKConfig sdkConfig = (datakitUrl != null)
@@ -60,10 +60,10 @@ public class FTSDKUniModule extends UniModule {
             sdkConfig.setAutoSync(autoSync);
         }
         if (syncPageSize != null) {
-            sdkConfig.setCustomSyncPageSize(syncPageSize);
+            sdkConfig.setCustomSyncPageSize(syncPageSize.intValue());
         }
         if (syncSleepTime != null) {
-            sdkConfig.setSyncSleepTime(syncSleepTime);
+            sdkConfig.setSyncSleepTime(syncSleepTime.intValue());
         }
         if (enableDataIntegerCompatible != null && enableDataIntegerCompatible) {
             sdkConfig.enableDataIntegerCompatible();
@@ -78,7 +78,7 @@ public class FTSDKUniModule extends UniModule {
         }
         if (enableLimitWithDbSize != null && enableLimitWithDbSize) {
             if (dbCacheLimit != null) {
-                sdkConfig.enableLimitWithDbSize(dbCacheLimit);
+                sdkConfig.enableLimitWithDbSize(dbCacheLimit.longValue());
             } else {
                 sdkConfig.enableLimitWithDbSize();
             }

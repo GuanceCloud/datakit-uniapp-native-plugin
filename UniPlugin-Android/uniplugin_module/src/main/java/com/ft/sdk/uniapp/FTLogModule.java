@@ -22,12 +22,12 @@ public class FTLogModule extends UniModule {
     public void setConfig(JSONObject data) {
         Map<String, Object> map = Utils.convertJSONtoHashMap(data);
         String discardStrategy = (String) (map.get("discardStrategy"));
-        Double sampleRate = (Double) map.get("samplerate");
+        Number sampleRate = (Number) map.get("samplerate");
         JSONArray logTypeReadArr = (JSONArray) map.get("logLevelFilters");
         Boolean enableLinkRumData = (Boolean) map.get("enableLinkRumData");
         Boolean enableCustomLog = (Boolean) map.get("enableCustomLog");
         Map<String, Object> globalContext = (Map<String, Object>) map.get("globalContext");
-        Integer logCacheLimitCount = (Integer) map.get("logCacheLimitCount");
+        Number logCacheLimitCount = (Number) map.get("logCacheLimitCount");
 
         FTLoggerConfig logConfig = new FTLoggerConfig();
 
@@ -78,7 +78,7 @@ public class FTLogModule extends UniModule {
         }
 
         if (logCacheLimitCount != null) {
-            logConfig.setLogCacheLimitCount(logCacheLimitCount);
+            logConfig.setLogCacheLimitCount(logCacheLimitCount.intValue());
         }
 
         FTSdk.initLogWithConfig(logConfig);

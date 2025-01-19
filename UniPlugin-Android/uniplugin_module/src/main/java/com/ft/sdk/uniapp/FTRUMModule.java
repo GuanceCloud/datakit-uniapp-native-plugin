@@ -26,7 +26,7 @@ public class FTRUMModule extends UniModule {
     public void setConfig(JSONObject data) {
         Map<String, Object> map = Utils.convertJSONtoHashMap(data);
         String rumAppId = (String) map.get("androidAppId");
-        Double sampleRate = (Double) map.get("samplerate");
+        Number sampleRate = (Number) map.get("samplerate");
         Boolean enableNativeUserAction = (Boolean) map.get("enableNativeUserAction");
         Boolean enableNativeUserView = (Boolean) map.get("enableNativeUserView");
         Boolean enableNativeUserResource = (Boolean) map.get("enableNativeUserResource");
@@ -34,12 +34,12 @@ public class FTRUMModule extends UniModule {
         Boolean enableTrackNativeCrash = (Boolean) map.get("enableTrackNativeCrash");
         Boolean enableTrackNativeAppANR = (Boolean) map.get("enableTrackNativeAppANR");
         Boolean enableTrackNativeFreeze = (Boolean) map.get("enableTrackNativeFreeze");
-        Double nativeFreezeDurationMs = (Double) map.get("nativeFreezeDurationMs");
+        Number nativeFreezeDurationMs = (Number) map.get("nativeFreezeDurationMs");
         Object errorType =  map.get("errorMonitorType");
         Object deviceType =  map.get("deviceMonitorType");
         Object detectFrequencyStr =  map.get("detectFrequency");
         Map<String, Object> globalContext = (Map<String, Object>) map.get("globalContext");
-        Integer rumCacheLimitCount = (Integer) map.get("rumCacheLimitCount");
+        Number rumCacheLimitCount = (Number) map.get("rumCacheLimitCount");
         Object rumDiscardStrategy = map.get("rumDiscardStrategy");
         FTRUMConfig rumConfig = new FTRUMConfig().setRumAppId(rumAppId);
         if (sampleRate != null) {
@@ -154,7 +154,7 @@ public class FTRUMModule extends UniModule {
             }
         }
         if (rumCacheLimitCount != null) {
-            rumConfig.setRumCacheLimitCount(rumCacheLimitCount);
+            rumConfig.setRumCacheLimitCount(rumCacheLimitCount.intValue());
         }
         if (rumDiscardStrategy != null) {
             if (rumDiscardStrategy.equals("discardOldest")) {
