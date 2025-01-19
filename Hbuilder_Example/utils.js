@@ -27,6 +27,11 @@ export default {
 	},
 	rumRequest(requestUrl,method,header = {}){
 		    let key = this.getUUID();
+			var traceHeader = tracer.getTraceHeader({
+				'key': key,
+				'url': requestUrl,
+			})
+			traceHeader = Object.assign({},traceHeader, header)
 			rum.startResource({
 				'key':key,
 				'property':{
@@ -39,8 +44,9 @@ export default {
 			uni.request({
 				url: requestUrl,
 				method: method,
-				header: header,
+				header: traceHeader,
 				success: (res) => {
+					console.log('调用getTraceHeader:' + JSON.stringify(header))
 					responseHeader = res.header;
 					responseBody = res.data;
 					resourceStatus = res.statusCode;
@@ -69,5 +75,4 @@ export default {
 				}
 			});
 	}
-
 }
