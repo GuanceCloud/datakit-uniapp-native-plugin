@@ -8,43 +8,68 @@ import com.ft.sdk.ErrorMonitorType;
 import com.ft.sdk.FTRUMConfig;
 import com.ft.sdk.FTRUMGlobalManager;
 import com.ft.sdk.FTSdk;
+import com.ft.sdk.RUMCacheDiscard;
 import com.ft.sdk.garble.bean.AppState;
-import com.ft.sdk.garble.bean.ErrorType;
 import com.ft.sdk.garble.bean.NetStatusBean;
 import com.ft.sdk.garble.bean.ResourceParams;
 
 import java.util.HashMap;
+import java.util.Map;
 
 import io.dcloud.feature.uniapp.annotation.UniJSMethod;
 import io.dcloud.feature.uniapp.common.UniModule;
 
 public class FTRUMModule extends UniModule {
+    private static final String DEFAULT_ERROR_TYPE = "uniapp_crash";
 
     @UniJSMethod(uiThread = false)
     public void setConfig(JSONObject data) {
-        FTRUMConfig rumConfig = new FTRUMConfig();
-        String appId = data.getString("androidAppId");
-        rumConfig.setRumAppId(appId);
-        Float sampleRate = data.getFloat("samplerate");
+        Map<String, Object> map = Utils.convertJSONtoHashMap(data);
+        String rumAppId = (String) map.get("androidAppId");
+        Number sampleRate = (Number) map.get("samplerate");
+        Boolean enableNativeUserAction = (Boolean) map.get("enableNativeUserAction");
+        Boolean enableNativeUserView = (Boolean) map.get("enableNativeUserView");
+        Boolean enableNativeUserResource = (Boolean) map.get("enableNativeUserResource");
+        Boolean enableResourceHostIP = (Boolean) map.get("enableResourceHostIP");
+        Boolean enableTrackNativeCrash = (Boolean) map.get("enableTrackNativeCrash");
+        Boolean enableTrackNativeAppANR = (Boolean) map.get("enableTrackNativeAppANR");
+        Boolean enableTrackNativeFreeze = (Boolean) map.get("enableTrackNativeFreeze");
+        Number nativeFreezeDurationMs = (Number) map.get("nativeFreezeDurationMs");
+        Object errorType =  map.get("errorMonitorType");
+        Object deviceType =  map.get("deviceMonitorType");
+        Object detectFrequencyStr =  map.get("detectFrequency");
+        Map<String, Object> globalContext = (Map<String, Object>) map.get("globalContext");
+        Number rumCacheLimitCount = (Number) map.get("rumCacheLimitCount");
+        Object rumDiscardStrategy = map.get("rumDiscardStrategy");
+        FTRUMConfig rumConfig = new FTRUMConfig().setRumAppId(rumAppId);
         if (sampleRate != null) {
-            rumConfig.setSamplingRate(sampleRate);
+            rumConfig.setSamplingRate(sampleRate.floatValue());
         }
-        Boolean enableNativeUserAction = data.getBoolean("enableNativeUserAction");
         if (enableNativeUserAction != null) {
             rumConfig.setEnableTraceUserAction(enableNativeUserAction);
         }
-
-        Boolean enableNativeUserView = data.getBoolean("enableNativeUserView");
         if (enableNativeUserView != null) {
             rumConfig.setEnableTraceUserView(enableNativeUserView);
         }
-
-        Boolean enableNativeUserResource = data.getBoolean("enableNativeUserResource");
         if (enableNativeUserResource != null) {
             rumConfig.setEnableTraceUserResource(enableNativeUserResource);
         }
-
-        Object errorType = data.get("errorMonitorType");
+        if (enableResourceHostIP != null) {
+            rumConfig.setEnableResourceHostIP(enableResourceHostIP);
+        }
+        if (enableTrackNativeCrash != null) {
+            rumConfig.setEnableTrackAppCrash(enableTrackNativeCrash);
+        }
+        if (enableTrackNativeFreeze != null) {
+            if (nativeFreezeDurationMs != null) {
+                rumConfig.setEnableTrackAppUIBlock(enableTrackNativeFreeze, nativeFreezeDurationMs.longValue());
+            } else {
+                rumConfig.setEnableTrackAppUIBlock(enableTrackNativeFreeze);
+            }
+        }
+        if (enableTrackNativeAppANR != null) {
+            rumConfig.setEnableTrackAppANR(enableTrackNativeAppANR);
+        }
         if (errorType != null) {
             int errorMonitorType = ErrorMonitorType.NO_SET;
             if (errorType instanceof String) {
@@ -76,9 +101,7 @@ public class FTRUMModule extends UniModule {
 
         }
 
-        Object deviceType = data.get("deviceMonitorType");
         if (deviceType != null) {
-            String detectFrequencyStr = data.getString("detectFrequency");
 
             DetectFrequency detectFrequency = DetectFrequency.DEFAULT;
             if (detectFrequencyStr != null) {
@@ -125,19 +148,37 @@ public class FTRUMModule extends UniModule {
             rumConfig.setDeviceMetricsMonitorType(deviceMonitorType, detectFrequency);
         }
 
-        JSONObject globalContext = data.getJSONObject("globalContext");
         if (globalContext != null) {
-            for (String key : globalContext.keySet()) {
-                rumConfig.addGlobalContext(key, globalContext.getString(key));
+            for (Map.Entry<String, Object> entry : globalContext.entrySet()) {
+                rumConfig.addGlobalContext(entry.getKey(), entry.getValue().toString());
             }
         }
-
+        if (rumCacheLimitCount != null) {
+            rumConfig.setRumCacheLimitCount(rumCacheLimitCount.intValue());
+        }
+        if (rumDiscardStrategy != null) {
+            if (rumDiscardStrategy.equals("discardOldest")) {
+                rumConfig.setRumCacheDiscardStrategy(RUMCacheDiscard.DISCARD_OLDEST);
+            } else if (rumDiscardStrategy.equals("discard")) {
+                rumConfig.setRumCacheDiscardStrategy(RUMCacheDiscard.DISCARD);
+            }
+        }
         FTSdk.initRUMWithConfig(rumConfig);
         FTUniAppStartManager.get().uploadColdBootTimeWhenManualStart();
     }
 
     @UniJSMethod(uiThread = false)
     public void startAction(JSONObject data) {
+        String actionName = data.getString("actionName");
+        String actionType = data.getString("actionType");
+        JSONObject property = data.getJSONObject("property");
+        HashMap<String, Object> params = Utils.convertJSONtoHashMap(property);
+        FTRUMGlobalManager.get().startAction(actionName, actionType, params);
+
+    }
+
+    @UniJSMethod(uiThread = false)
+    public void addAction(JSONObject data) {
         String actionName = data.getString("actionName");
         String actionType = data.getString("actionType");
         JSONObject property = data.getJSONObject("property");
@@ -183,7 +224,7 @@ public class FTRUMModule extends UniModule {
         }
         JSONObject property = data.getJSONObject("property");
         HashMap<String, Object> params = Utils.convertJSONtoHashMap(property);
-        FTRUMGlobalManager.get().addError(message, stack, ErrorType.JAVA, appState, params);
+        FTRUMGlobalManager.get().addError(stack, message, DEFAULT_ERROR_TYPE, appState, params);
     }
 
 
@@ -201,7 +242,7 @@ public class FTRUMModule extends UniModule {
         String key = data.getString("key");
         JSONObject property = data.getJSONObject("property");
         HashMap<String, Object> params = Utils.convertJSONtoHashMap(property);
-        FTRUMGlobalManager.get().stopResource(key);
+        FTRUMGlobalManager.get().stopResource(key,params);
     }
 
     @UniJSMethod(uiThread = false)
@@ -219,6 +260,42 @@ public class FTRUMModule extends UniModule {
         params.responseBody = content.getString("responseBody");
         params.resourceStatus = content.getIntValue("resourceStatus");
         NetStatusBean netStatusBean = new NetStatusBean();
+        Long fetchStartTime = (Long) content.get("fetchStartTime");
+        Long tcpStartTime = (Long) content.get("tcpStartTime");
+        Long tcpEndTime = (Long) content.get("tcpEndTime");
+        Long dnsStartTime = (Long) content.get("dnsStartTime");
+        Long dnsEndTime = (Long) content.get("dnsEndTime");
+        Long responseStartTime = (Long) content.get("responseStartTime");
+        Long responseEndTime = (Long) content.get("responseEndTime");
+        Long sslStartTime = (Long) content.get("sslStartTime");
+        Long sslEndTime = (Long) content.get("sslEndTime");
+        if (fetchStartTime != null) {
+            netStatusBean.fetchStartTime = fetchStartTime;
+        }
+        if (tcpStartTime != null) {
+            netStatusBean.tcpStartTime = tcpStartTime;
+        }
+        if (tcpEndTime != null) {
+            netStatusBean.tcpEndTime = tcpEndTime;
+        }
+        if (dnsStartTime != null) {
+            netStatusBean.dnsStartTime = dnsStartTime;
+        }
+        if (dnsEndTime != null) {
+            netStatusBean.dnsEndTime = dnsEndTime;
+        }
+        if (responseStartTime != null) {
+            netStatusBean.responseStartTime = responseStartTime;
+        }
+        if (responseEndTime != null) {
+            netStatusBean.responseEndTime = responseEndTime;
+        }
+        if (sslStartTime != null) {
+            netStatusBean.sslStartTime = sslStartTime;
+        }
+        if (sslEndTime != null) {
+            netStatusBean.sslEndTime = sslEndTime;
+        }
         FTRUMGlobalManager.get().addResource(key, params, netStatusBean);
 
 

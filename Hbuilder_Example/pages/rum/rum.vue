@@ -6,7 +6,8 @@
 		<navigator url="../rum/rum-view-mixin">
 			<button type="primary">View Mixin 例子</button>
 		</navigator>
-		<button type="primary" @click="startAction()">Action 点击</button>
+		<button type="primary" @click="startAction()">Start Action</button>
+		<button type="primary" @click="addAction()">Add Action</button>
 		<button type="primary" @click="addError()">Add Error</button>
 		<button type="primary" @click="resource()">Resource Normal</button>
 		<button type="primary" @click="resourceError()">Resource Error</button>
@@ -55,6 +56,15 @@
 			startAction() {
 				rum.startAction({
 					'actionName': 'Button',
+					'actionType': 'click',
+					'property': {
+						'action_property': 'uni_test'
+					}
+				})
+			},
+			addAction() {
+				rum.addAction({
+					'actionName': 'addButton',
 					'actionType': 'click',
 					'property': {
 						'action_property': 'uni_test'

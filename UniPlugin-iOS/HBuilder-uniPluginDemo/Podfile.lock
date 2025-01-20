@@ -1,49 +1,43 @@
 PODS:
-  - FTMobileSDK (1.4.7-alpha.1):
-    - FTMobileSDK/FTMobileAgent (= 1.4.7-alpha.1)
-  - FTMobileSDK/FTMobileAgent (1.4.7-alpha.1):
+  - FTMobileSDK (1.5.9):
+    - FTMobileSDK/FTMobileAgent (= 1.5.9)
+  - FTMobileSDK/FTMobileAgent (1.5.9):
     - FTMobileSDK/FTSDKCore
-  - FTMobileSDK/FTSDKCore (1.4.7-alpha.1):
-    - FTMobileSDK/FTSDKCore/BaseUtils (= 1.4.7-alpha.1)
-    - FTMobileSDK/FTSDKCore/DataManager (= 1.4.7-alpha.1)
-    - FTMobileSDK/FTSDKCore/Exception (= 1.4.7-alpha.1)
-    - FTMobileSDK/FTSDKCore/FTRUM (= 1.4.7-alpha.1)
-    - FTMobileSDK/FTSDKCore/FTWKWebView (= 1.4.7-alpha.1)
-    - FTMobileSDK/FTSDKCore/Logger (= 1.4.7-alpha.1)
-    - FTMobileSDK/FTSDKCore/LongTask (= 1.4.7-alpha.1)
-    - FTMobileSDK/FTSDKCore/Protocol (= 1.4.7-alpha.1)
-    - FTMobileSDK/FTSDKCore/URLSessionAutoInstrumentation (= 1.4.7-alpha.1)
-  - FTMobileSDK/FTSDKCore/BaseUtils (1.4.7-alpha.1):
-    - FTMobileSDK/FTSDKCore/BaseUtils/Base (= 1.4.7-alpha.1)
-    - FTMobileSDK/FTSDKCore/BaseUtils/Swizzle (= 1.4.7-alpha.1)
-    - FTMobileSDK/FTSDKCore/BaseUtils/Thread (= 1.4.7-alpha.1)
-  - FTMobileSDK/FTSDKCore/BaseUtils/Base (1.4.7-alpha.1)
-  - FTMobileSDK/FTSDKCore/BaseUtils/Swizzle (1.4.7-alpha.1):
+  - FTMobileSDK/FTSDKCore (1.5.9):
+    - FTMobileSDK/FTSDKCore/BaseUtils (= 1.5.9)
+    - FTMobileSDK/FTSDKCore/DataManager (= 1.5.9)
+    - FTMobileSDK/FTSDKCore/FTRUM (= 1.5.9)
+    - FTMobileSDK/FTSDKCore/FTWKWebView (= 1.5.9)
+    - FTMobileSDK/FTSDKCore/Logger (= 1.5.9)
+    - FTMobileSDK/FTSDKCore/Protocol (= 1.5.9)
+    - FTMobileSDK/FTSDKCore/URLSessionAutoInstrumentation (= 1.5.9)
+  - FTMobileSDK/FTSDKCore/BaseUtils (1.5.9):
+    - FTMobileSDK/FTSDKCore/BaseUtils/Base (= 1.5.9)
+    - FTMobileSDK/FTSDKCore/BaseUtils/Swizzle (= 1.5.9)
+    - FTMobileSDK/FTSDKCore/BaseUtils/Thread (= 1.5.9)
+  - FTMobileSDK/FTSDKCore/BaseUtils/Base (1.5.9):
+    - FTMobileSDK/FTSDKCore/BaseUtils/Thread
+  - FTMobileSDK/FTSDKCore/BaseUtils/Swizzle (1.5.9):
     - FTMobileSDK/FTSDKCore/BaseUtils/Base
-  - FTMobileSDK/FTSDKCore/BaseUtils/Thread (1.4.7-alpha.1)
-  - FTMobileSDK/FTSDKCore/DataManager (1.4.7-alpha.1):
+  - FTMobileSDK/FTSDKCore/BaseUtils/Thread (1.5.9)
+  - FTMobileSDK/FTSDKCore/DataManager (1.5.9):
     - FTMobileSDK/FTSDKCore/BaseUtils/Base
     - FTMobileSDK/FTSDKCore/BaseUtils/Thread
-  - FTMobileSDK/FTSDKCore/Exception (1.4.7-alpha.1):
+  - FTMobileSDK/FTSDKCore/FTRUM (1.5.9):
     - FTMobileSDK/FTSDKCore/BaseUtils/Base
     - FTMobileSDK/FTSDKCore/Protocol
-  - FTMobileSDK/FTSDKCore/FTRUM (1.4.7-alpha.1):
-    - FTMobileSDK/FTSDKCore/BaseUtils/Base
-    - FTMobileSDK/FTSDKCore/BaseUtils/Thread
-    - FTMobileSDK/FTSDKCore/Protocol
-  - FTMobileSDK/FTSDKCore/FTWKWebView (1.4.7-alpha.1):
+  - FTMobileSDK/FTSDKCore/FTWKWebView (1.5.9):
     - FTMobileSDK/FTSDKCore/BaseUtils/Swizzle
     - FTMobileSDK/FTSDKCore/Protocol
-  - FTMobileSDK/FTSDKCore/Logger (1.4.7-alpha.1):
+  - FTMobileSDK/FTSDKCore/Logger (1.5.9):
     - FTMobileSDK/FTSDKCore/BaseUtils/Base
-  - FTMobileSDK/FTSDKCore/LongTask (1.4.7-alpha.1):
-    - FTMobileSDK/FTSDKCore/BaseUtils
-  - FTMobileSDK/FTSDKCore/Protocol (1.4.7-alpha.1)
-  - FTMobileSDK/FTSDKCore/URLSessionAutoInstrumentation (1.4.7-alpha.1):
+    - FTMobileSDK/FTSDKCore/Protocol
+  - FTMobileSDK/FTSDKCore/Protocol (1.5.9)
+  - FTMobileSDK/FTSDKCore/URLSessionAutoInstrumentation (1.5.9):
     - FTMobileSDK/FTSDKCore/BaseUtils/Swizzle
     - FTMobileSDK/FTSDKCore/Protocol
-  - Guance-UniPlugin-App (0.1.2):
-    - FTMobileSDK (= 1.4.7-alpha.1)
+  - Guance-UniPlugin-App (0.2.0):
+    - FTMobileSDK (= 1.5.9)
 
 DEPENDENCIES:
   - Guance-UniPlugin-App (from `./Guance-UniPlugin-App`)
@@ -57,9 +51,9 @@ EXTERNAL SOURCES:
     :path: "./Guance-UniPlugin-App"
 
 SPEC CHECKSUMS:
-  FTMobileSDK: b168444f8228cc5565286a0abd4c54046222d561
-  Guance-UniPlugin-App: c0bd95d814db707ad7154e3a78102db3450c4e04
+  FTMobileSDK: 1e31d5ab2d23ad8409df56cfd744ae9e6cf87570
+  Guance-UniPlugin-App: 8c219070234710540c8a71907c3ba77bab634ff4
 
 PODFILE CHECKSUM: 3b1ce419bde680a3118afff2f16151fb8eff7758
 
-COCOAPODS: 1.12.1
+COCOAPODS: 1.15.2

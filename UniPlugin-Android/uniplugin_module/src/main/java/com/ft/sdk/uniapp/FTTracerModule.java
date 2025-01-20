@@ -7,6 +7,7 @@ import com.ft.sdk.FTTraceManager;
 import com.ft.sdk.TraceType;
 
 import java.util.HashMap;
+import java.util.Map;
 
 import io.dcloud.feature.uniapp.annotation.UniJSMethod;
 import io.dcloud.feature.uniapp.common.UniModule;
@@ -15,38 +16,42 @@ public class FTTracerModule extends UniModule {
 
     @UniJSMethod(uiThread = false)
     public void setConfig(JSONObject data) {
-        FTTraceConfig config = new FTTraceConfig();
-        Float sampleRate = data.getFloat("samplerate");
+        Map<String, Object> map = Utils.convertJSONtoHashMap(data);
+        Number sampleRate = (Number) map.get("sampleRate");
+        Object traceType =  (map.get("traceType"));
+        Boolean enableLinkRUMData = (Boolean) map.get("enableLinkRUMData");
+        Boolean enableNativeAutoTrace = (Boolean) map.get("enableNativeAutoTrace");
+
+        FTTraceConfig traceConfig = new FTTraceConfig();
         if (sampleRate != null) {
-            config.setSamplingRate(sampleRate);
+            traceConfig.setSamplingRate(sampleRate.floatValue());
         }
 
-        String traceType = data.getString("traceType");
         if (traceType != null) {
             if (traceType.equals("ddTrace")) {
-                config.setTraceType(TraceType.DDTRACE);
+                traceConfig.setTraceType(TraceType.DDTRACE);
             } else if (traceType.equals("zipkinMultiHeader")) {
-                config.setTraceType(TraceType.ZIPKIN_MULTI_HEADER);
+                traceConfig.setTraceType(TraceType.ZIPKIN_MULTI_HEADER);
             } else if (traceType.equals("zipkinSingleHeader")) {
-                config.setTraceType(TraceType.ZIPKIN_SINGLE_HEADER);
+                traceConfig.setTraceType(TraceType.ZIPKIN_SINGLE_HEADER);
             } else if (traceType.equals("traceparent")) {
-                config.setTraceType(TraceType.TRACEPARENT);
+                traceConfig.setTraceType(TraceType.TRACEPARENT);
             } else if (traceType.equals("skywalking")) {
-                config.setTraceType(TraceType.SKYWALKING);
+                traceConfig.setTraceType(TraceType.SKYWALKING);
             } else if (traceType.equals("jaeger")) {
-                config.setTraceType(TraceType.JAEGER);
+                traceConfig.setTraceType(TraceType.JAEGER);
             }
         }
 
-        Boolean enableLinkRumData = data.getBoolean("enableLinkRUMData");
-        if (enableLinkRumData != null) {
-            config.setEnableLinkRUMData(enableLinkRumData);
+        if (enableLinkRUMData != null) {
+            traceConfig.setEnableLinkRUMData(enableLinkRUMData);
         }
-        Boolean enableAutoTrace = data.getBoolean("enableAutoTrace");
-        if (enableAutoTrace != null) {
-            config.setEnableAutoTrace(enableAutoTrace);
+
+        if (enableNativeAutoTrace != null) {
+            traceConfig.setEnableAutoTrace(enableNativeAutoTrace);
         }
-        FTSdk.initTraceWithConfig(config);
+
+        FTSdk.initTraceWithConfig(traceConfig);
     }
 
 

@@ -19,9 +19,16 @@
 
 
 #import <Foundation/Foundation.h>
+#import "FTTraceContext.h"
+/// 自定义 RUM 资源属性 Block
+typedef NSDictionary* _Nullable (^ResourcePropertyProvider)( NSURLRequest * _Nullable request, NSURLResponse * _Nullable response,NSData *_Nullable data, NSError *_Nullable error);
+/// 拦截 Request ，返回修改后的 Request，可用于自定义链路追踪
+typedef NSURLRequest*_Nonnull(^RequestInterceptor)(NSURLRequest *_Nonnull request);
 
+/// 支持自定义 trace, 确认拦截后，返回 TraceContext，不拦截返回 nil
+typedef FTTraceContext*_Nullable(^TraceInterceptor)(NSURLRequest *_Nonnull request);
 NS_ASSUME_NONNULL_BEGIN
-@class FTURLSessionDelegate,FTURLSessionAutoInstrumentation;
+@class FTURLSessionDelegate;
 
 /// 转发 'URLSessionDelegate' 调用到 'ftURLSessionDelegate'的接口协议。
 ///
@@ -40,8 +47,15 @@ NS_ASSUME_NONNULL_BEGIN
 ///
 /// 所有使用这个委托对象的 'URLSession' 所发出的请求都将被 SDK 拦截。
 @interface FTURLSessionDelegate : NSObject <NSURLSessionTaskDelegate,NSURLSessionDataDelegate,FTURLSessionDelegateProviding>
-/// 具体实现 采集 rum 数据 与 trace 功能的类
-@property (nonatomic, strong,readonly) FTURLSessionAutoInstrumentation *instrumentation;
+
+/// 拦截 Request 返回修改后的 Request，可用于自定义链路追踪
+@property (nonatomic,copy) RequestInterceptor requestInterceptor;
+
+/// 支持通过 URLRequest 判断是否进行自定义 trace,确认拦截后，返回 TraceContext，不拦截返回 nil
+@property (nonatomic,copy) TraceInterceptor traceInterceptor;
+
+/// 告诉拦截器需要自定义 RUM 资源属性。
+@property (nonatomic,copy) ResourcePropertyProvider provider;
 
 /// 实现拦截 url 请求过程的代理
 - (FTURLSessionDelegate *)ftURLSessionDelegate;

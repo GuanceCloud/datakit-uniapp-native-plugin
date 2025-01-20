@@ -1,4 +1,5 @@
 apply plugin: 'com.android.application'
+//apply plugin: 'ft-plugin'
 
 android {
     compileSdkVersion 31
@@ -13,7 +14,7 @@ android {
         versionName "1.0"
         multiDexEnabled true
         ndk {
-            abiFilters 'x86', 'armeabi-v7a'
+            abiFilters 'x86', 'armeabi-v7a',"arm64-v8a"
         }
         compileOptions {
             sourceCompatibility JavaVersion.VERSION_1_8

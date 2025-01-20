@@ -98,6 +98,29 @@ UNI_EXPORT_METHOD_SYNC(@selector(setConfig:))
             rumConfig.monitorFrequency = FTMonitorFrequencyRare;
         }
     }
+    if ([params.allKeys containsObject:@"enableResourceHostIP"]) {
+        rumConfig.enableResourceHostIP = [params[@"enableResourceHostIP"] boolValue];
+    }
+    if ([params.allKeys containsObject:@"enableTrackNativeCrash"]){
+      rumConfig.enableTrackAppCrash = [params[@"enableTrackNativeCrash"] boolValue];
+    }
+    if ([params.allKeys containsObject:@"enableTrackNativeFreeze"]){
+      rumConfig.enableTrackAppFreeze = [params[@"enableTrackNativeFreeze"] boolValue];
+    }
+    if ([params.allKeys containsObject:@"nativeFreezeDurationMs"]){
+        rumConfig.freezeDurationMs = [params[@"nativeFreezeDurationMs"] doubleValue];
+    }
+    if ([params.allKeys containsObject:@"rumDiscardStrategy"]) {
+        NSString *type = params[@"rumDiscardStrategy"];
+        if([type isEqualToString:@"discard"]){
+            rumConfig.rumDiscardType = FTRUMDiscard;
+        }else if ([type isEqualToString:@"discardOldest"]){
+            rumConfig.rumDiscardType = FTRUMDiscardOldest;
+        }
+    }
+    if ([params.allKeys containsObject:@"rumCacheLimitCount"]) {
+        rumConfig.rumCacheLimitCount = [params[@"rumCacheLimitCount"] intValue];
+    }
     if ([params.allKeys containsObject:@"globalContext"]) {
         rumConfig.globalContext = params[@"globalContext"];
     }
@@ -105,6 +128,7 @@ UNI_EXPORT_METHOD_SYNC(@selector(setConfig:))
 }
 #pragma mark --------- RUM DATA ADD ----------
 UNI_EXPORT_METHOD(@selector(startAction:))
+UNI_EXPORT_METHOD(@selector(addAction:))
 UNI_EXPORT_METHOD(@selector(onCreateView:))
 UNI_EXPORT_METHOD(@selector(startView:))
 UNI_EXPORT_METHOD(@selector(stopView:))
@@ -116,7 +140,13 @@ UNI_EXPORT_METHOD(@selector(addResource:))
     NSString *actionName = [params objectForKey:@"actionName"];
     NSString *actionType = [params objectForKey:@"actionType"];
     NSDictionary *property = [params objectForKey:@"property"];
-    [[FTExternalDataManager sharedManager] addActionName:actionName actionType:actionType property:property];
+    [[FTExternalDataManager sharedManager] startAction:actionName actionType:actionType property:property];
+}
+- (void)addAction:(NSDictionary *)params{
+    NSString *actionName = [params objectForKey:@"actionName"];
+    NSString *actionType = [params objectForKey:@"actionType"];
+    NSDictionary *property = [params objectForKey:@"property"];
+    [[FTExternalDataManager sharedManager] addAction:actionName actionType:actionType property:property];
 }
 - (void)onCreateView:(NSDictionary *)params{
     NSString *viewName = [params objectForKey:@"viewName"];
@@ -136,6 +166,7 @@ UNI_EXPORT_METHOD(@selector(addResource:))
     NSString *message = [params objectForKey:@"message"];
     NSString *stack = [params objectForKey:@"stack"];
     NSString *state = [params objectForKey:@"state"];
+    NSString *type = [params objectForKey:@"type"];
     FTAppState appState = FTAppStateUnknown;
     if(state && [state isKindOfClass:NSString.class] && state.length>0){
         state = [state lowercaseString];
@@ -145,8 +176,9 @@ UNI_EXPORT_METHOD(@selector(addResource:))
             appState = FTAppStateStartUp;
         }
     }
+    type = type?:@"uniapp_crash";
     NSDictionary *property = [params objectForKey:@"property"];
-    [[FTExternalDataManager sharedManager] addErrorWithType:@"uni_app" state:appState message:message stack:stack property:property];
+    [[FTExternalDataManager sharedManager] addErrorWithType:type state:appState message:message stack:stack property:property];
 }
 - (void)startResource:(NSDictionary *)params{
     NSString *key = [params objectForKey:@"key"];
