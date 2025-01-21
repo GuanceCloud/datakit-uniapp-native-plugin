@@ -8,6 +8,7 @@
 #import "FTMobileUniModule.h"
 #import "Guance-UniPlugin-App-Version.h"
 #import <FTMobileSDK/FTMobileAgent.h>
+#import <FTMobileSDK/FTMobileConfig+Private.h>
 @implementation FTMobileUniModule
 #pragma mark --------- SDK INIT ----------
 UNI_EXPORT_METHOD_SYNC(@selector(sdkConfig:))
@@ -68,7 +69,7 @@ UNI_EXPORT_METHOD_SYNC(@selector(sdkConfig:))
         if ([params.allKeys containsObject:@"dbCacheLimit"]){
             config.dbCacheLimit = [params[@"dbCacheLimit"] doubleValue];
         }
-        NSMutableDictionary *globalContext = [[NSMutableDictionary alloc]initWithDictionary:@{@"sdk_package_uniapp":UniPluginAppVersion}];
+        NSMutableDictionary *globalContext = [[NSMutableDictionary alloc]init];
         if ([params.allKeys containsObject:@"globalContext"]) {
             NSDictionary *context = [params valueForKey:@"globalContext"];
             if(context.allKeys.count>0){
@@ -76,6 +77,7 @@ UNI_EXPORT_METHOD_SYNC(@selector(sdkConfig:))
             }
         }
         config.globalContext = globalContext;
+        [config addPkgInfo:@"uniapp" value:UniPluginAppVersion];
         [FTMobileAgent startWithConfigOptions:config];
     };
     if (NSThread.isMainThread) {
