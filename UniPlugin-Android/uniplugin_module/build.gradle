@@ -47,7 +47,7 @@ dependencies {
     compileOnly 'androidx.appcompat:appcompat:1.0.0'
     implementation 'com.alibaba:fastjson:1.1.46.android'
     implementation 'com.facebook.fresco:fresco:1.13.0'
-    implementation 'com.cloudcare.ft.mobile.sdk.tracker.agent:ft-sdk:1.6.8-alpha01'
+    implementation 'com.cloudcare.ft.mobile.sdk.tracker.agent:ft-sdk:1.6.8'
     implementation 'com.google.code.gson:gson:2.8.5'
     implementation 'com.cloudcare.ft.mobile.sdk.tracker.agent:ft-native:1.1.1'
 

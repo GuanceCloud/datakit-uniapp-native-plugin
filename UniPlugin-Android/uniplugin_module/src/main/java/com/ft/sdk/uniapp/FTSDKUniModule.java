@@ -4,6 +4,7 @@ import com.alibaba.fastjson.JSONObject;
 import com.ft.sdk.DBCacheDiscard;
 import com.ft.sdk.FTSDKConfig;
 import com.ft.sdk.FTSdk;
+import com.ft.sdk.InnerClassProxy;
 import com.ft.sdk.garble.bean.UserData;
 
 import java.util.HashMap;
@@ -40,6 +41,7 @@ public class FTSDKUniModule extends UniModule {
         Boolean enableLimitWithDbSize = (Boolean) map.get("enableLimitWithDbSize");
         Number dbCacheLimit = (Number) (map.get("dbCacheLimit"));
         Object dbDiscardStrategy = map.get("dbDiscardStrategy");
+        String sdkPkgInfo = (String)map.get("pkgInfo");
 
         FTSDKConfig sdkConfig = (datakitUrl != null)
                 ? FTSDKConfig.builder(datakitUrl)
@@ -90,7 +92,9 @@ public class FTSDKUniModule extends UniModule {
                 sdkConfig.setDbCacheDiscard(DBCacheDiscard.DISCARD);
             }
         }
-        sdkConfig.addGlobalContext(KEY_VERSION_SDK_PACKAGE_UNIAPP, BuildConfig.FT_UNI_APP_SDK_VERSION);
+        if(sdkPkgInfo!=null){
+            InnerClassProxy.addPkgInfo(sdkConfig,"uniapp", BuildConfig.FT_UNI_APP_SDK_VERSION);
+        }
 
         FTSdk.install(sdkConfig);
 
