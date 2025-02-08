@@ -1,3 +1,9 @@
+# 0.2.1
+* Android 修正 offlinePackage 为 false 时，错误的启动时间规则
+* Android 修正纯 uniapp 项目开启 compressIntakeRequests 发生崩溃的问题
+
+
+---
 # 0.2.0
 * 适配 iOS 1.5.9
 * Android ft-sdk 1.6.7, ft-native:1.1.1, ft-plugin-legacy 1.1.8
