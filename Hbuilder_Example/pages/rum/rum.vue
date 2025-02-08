@@ -87,7 +87,7 @@
 				})
 			},
 			resource() {
-				Utils.rumRequest('https://www.baidu.com', 'GET', {
+				Utils.rumRequest('http://120.79.13.13:30007/api/user', 'GET', {
 					'Accept': 'application/json',
 					'Content-Type': 'application/json'
 				})

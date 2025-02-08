@@ -10,8 +10,9 @@
 		mixins:[WatchRouter],
 		onLaunch: function() {
 			ftMobileSDK.sdkConfig({
-				'datakitUrl': SDKConst.SERVER_URL,
-				'autoSync': false,
+				'datawayUrl': "https://rum-openway.guance.com",
+				'clientToken': "97b47ad519f643558a1ebf86d82a0544",
+				'autoSync': true,
 				'syncPageSize': 15,
 				'syncSleepTime': 15,
 				'enableDataIntegerCompatible':true,
