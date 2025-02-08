@@ -48,7 +48,7 @@ export default {
 			data:options.data,
 			timeout:options.timeout,
 			success: (res) => {
-				if(filter){
+				if(!filter){
 				  responseHeader = res.header;
 				  responseBody = res.data;
 				  resourceStatus = res.statusCode;
