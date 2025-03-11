@@ -41,7 +41,6 @@ public class FTSDKUniModule extends UniModule {
         Boolean enableLimitWithDbSize = (Boolean) map.get("enableLimitWithDbSize");
         Number dbCacheLimit = (Number) (map.get("dbCacheLimit"));
         Object dbDiscardStrategy = map.get("dbDiscardStrategy");
-        String sdkPkgInfo = (String)map.get("pkgInfo");
 
         FTSDKConfig sdkConfig = (datakitUrl != null)
                 ? FTSDKConfig.builder(datakitUrl)
@@ -92,9 +91,7 @@ public class FTSDKUniModule extends UniModule {
                 sdkConfig.setDbCacheDiscard(DBCacheDiscard.DISCARD);
             }
         }
-        if(sdkPkgInfo!=null){
-            InnerClassProxy.addPkgInfo(sdkConfig,"uniapp", BuildConfig.FT_UNI_APP_SDK_VERSION);
-        }
+        InnerClassProxy.addPkgInfo(sdkConfig, "uniapp", BuildConfig.FT_UNI_APP_SDK_VERSION);
 
         FTSdk.install(sdkConfig);
 

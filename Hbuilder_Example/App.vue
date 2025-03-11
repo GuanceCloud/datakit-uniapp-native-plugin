@@ -11,7 +11,7 @@
 		onLaunch: function() {
 			ftMobileSDK.sdkConfig({
 				'datakitUrl': SDKConst.SERVER_URL,
-				'autoSync': false,
+				'autoSync': true,
 				'syncPageSize': 15,
 				'syncSleepTime': 15,
 				'enableDataIntegerCompatible':true,

@@ -1,6 +1,6 @@
 export const SERVER_URL = 'http://127.0.0.1:9529'
-export const ANDROID_APP_ID = 'android_app_id'
-export const IOS_APP_ID = 'ios_app_id'
+export const ANDROID_APP_ID = 'guance_android_uniapp_id'
+export const IOS_APP_ID = 'guance_ios_uniapp_id'
 export const TRACK_ID = 'track_id'
 import gc from './GCRequest.js';
 export default {
