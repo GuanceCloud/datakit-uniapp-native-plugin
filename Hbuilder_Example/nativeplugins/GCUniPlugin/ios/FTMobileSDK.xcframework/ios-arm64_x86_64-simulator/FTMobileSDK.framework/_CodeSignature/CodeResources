@@ -20,9 +20,13 @@
 		<data>
 		OqYMhkZqP9lxChL5o4dcaw9XeVo=
 		</data>
+		<key>Headers/FTMobileConfig+Private.h</key>
+		<data>
+		4OK0mQXhwqmJLy1CbL5alpLTNMc=
+		</data>
 		<key>Headers/FTMobileConfig.h</key>
 		<data>
-		4FKRNyhxnrTycoKeLek/QX8z9zA=
+		yCA+qnQLc/nLX3LrcFpYoBByAxg=
 		</data>
 		<key>Headers/FTMobileSDK.h</key>
 		<data>
@@ -34,7 +38,7 @@
 		</data>
 		<key>Headers/FTResourceMetricsModel.h</key>
 		<data>
-		4cHLMVQiJcVyLDebQo22TYSJBh8=
+		aKL3ifL+kmEusR97ml4AU/aKEg0=
 		</data>
 		<key>Headers/FTRumDatasProtocol.h</key>
 		<data>
@@ -58,7 +62,7 @@
 		</data>
 		<key>Info.plist</key>
 		<data>
-		S40FcWoeqkjjXzTiemdsjEiD5us=
+		FyA7ImZTqMb05LpbsTB+J6aCPWE=
 		</data>
 		<key>Modules/module.modulemap</key>
 		<data>
@@ -115,15 +119,26 @@
 			+N//VPW929EVJxQYX8Ti5kk5y0RkOrQ7EXww8e24oGk=
 			</data>
 		</dict>
+		<key>Headers/FTMobileConfig+Private.h</key>
+		<dict>
+			<key>hash</key>
+			<data>
+			4OK0mQXhwqmJLy1CbL5alpLTNMc=
+			</data>
+			<key>hash2</key>
+			<data>
+			x/T/qVCDGcoOttKozcsvGkZnf1cLERJ1jT4Cp+UoJXw=
+			</data>
+		</dict>
 		<key>Headers/FTMobileConfig.h</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			4FKRNyhxnrTycoKeLek/QX8z9zA=
+			yCA+qnQLc/nLX3LrcFpYoBByAxg=
 			</data>
 			<key>hash2</key>
 			<data>
-			B8NrKuh7O150fdgxgVO5qL9D0q5Ykhg9oww3d8MCwwM=
+			YYTfi9ym+A20Ptk47tGMnJAEVkWL+BEG+qRjGPO8qbQ=
 			</data>
 		</dict>
 		<key>Headers/FTMobileSDK.h</key>
@@ -152,11 +167,11 @@
 		<dict>
 			<key>hash</key>
 			<data>
-			4cHLMVQiJcVyLDebQo22TYSJBh8=
+			aKL3ifL+kmEusR97ml4AU/aKEg0=
 			</data>
 			<key>hash2</key>
 			<data>
-			1DFoU8PzosrGa4DNe0rcrUuUqCf2ZSY8HMj8thtwv88=
+			twVBUSRWSud7MnuBpKAsHgpFuSFu70nl2BlSS6foJ7I=
 			</data>
 		</dict>
 		<key>Headers/FTRumDatasProtocol.h</key>
