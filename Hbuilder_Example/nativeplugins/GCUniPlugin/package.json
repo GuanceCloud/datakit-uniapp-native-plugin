@@ -58,7 +58,8 @@
 			],
 			"integrateType": "aar",
 			"dependencies": [
-				"com.google.code.gson:gson:2.8.9"
+				"com.google.code.gson:gson:2.8.9",
+				"com.squareup.okhttp3:okhttp:4.5.0"
 			],
 			"compileOptions":{
 				"sourceCompatibility":"1.8",

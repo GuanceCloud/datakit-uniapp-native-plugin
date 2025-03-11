@@ -36,7 +36,7 @@ public class FTUniAppStartManager {
 
     void uploadColdBootTimeWhenManualStart() {
         if (startTime > 0) {
-            FTAutoTrack.putRUMLaunchPerformance(true, startTime - installTime, startTime);
+            FTAutoTrack.putRUMLaunchPerformance(true, installTime - startTime, startTime);
             startTime = 0;
             installTime = 0;
         }
