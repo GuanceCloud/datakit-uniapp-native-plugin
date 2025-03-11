@@ -22,7 +22,7 @@
 		</data>
 		<key>Headers/Guance-UniPlugin-App-Version.h</key>
 		<data>
-		QcFUhyBBljUZsmDwCApoiQD3h1A=
+		tk27l5vDn1IINsFrVM8bkQJzKOg=
 		</data>
 		<key>Headers/Guance_UniPlugin_App.h</key>
 		<data>
@@ -30,7 +30,7 @@
 		</data>
 		<key>Info.plist</key>
 		<data>
-		poK5rSYlDCDuPJvjDIbdD0Tqz1k=
+		9wJ9GcXaBS3thvF0mZh6hSv8pJw=
 		</data>
 		<key>Modules/module.modulemap</key>
 		<data>
@@ -87,11 +87,11 @@
 		<dict>
 			<key>hash</key>
 			<data>
-			QcFUhyBBljUZsmDwCApoiQD3h1A=
+			tk27l5vDn1IINsFrVM8bkQJzKOg=
 			</data>
 			<key>hash2</key>
 			<data>
-			KqdJ0qdd6y9VLBPrLDWbcec6HwSrkrQbnYRf3IuHqHo=
+			yT2VP67ijCMNbOHIh33L+HODkt8y0lpCCCzJCJVExSQ=
 			</data>
 		</dict>
 		<key>Headers/Guance_UniPlugin_App.h</key>
