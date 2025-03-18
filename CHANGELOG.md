@@ -1,7 +1,9 @@
 # 0.2.1
 * Android 修正 offlinePackage 为 false 时，错误的启动时间规则
 * Android 修正纯 uniapp 项目开启 compressIntakeRequests 发生崩溃的问题
-
+* GCUniPlugin-MobileAgent enableDataIntegerCompatible 默认开启
+* 新增 RUM Resource 数据字段 resource_first_byte_time、resource_dns_time、resource_download_time、resource_connect_time、resource_ssl_time、resource_redirect_time，支持在观测云上 Resource 耗时增强展示，并在支持「应用性能监测」火焰图对齐时间轴
+* 适配 iOS 1.5.10, 1.5.11, 1.5.12, 1.5.13, 1.5.14，Android ft-sdk 1.6.8, 1.6.9 
 
 ---
 # 0.2.0
