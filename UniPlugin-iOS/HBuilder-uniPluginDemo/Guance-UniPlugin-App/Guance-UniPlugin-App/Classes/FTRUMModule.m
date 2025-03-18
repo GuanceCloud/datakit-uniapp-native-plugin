@@ -7,6 +7,8 @@
 
 #import "FTRUMModule.h"
 #import <FTMobileSDK/FTMobileAgent.h>
+#import "FTUniPluginUtils.h"
+
 @implementation FTRUMModule
 #pragma mark --------- INIT ----------
 UNI_EXPORT_METHOD_SYNC(@selector(setConfig:))
@@ -124,6 +126,9 @@ UNI_EXPORT_METHOD_SYNC(@selector(setConfig:))
     if ([params.allKeys containsObject:@"globalContext"]) {
         rumConfig.globalContext = params[@"globalContext"];
     }
+    rumConfig.resourceUrlHandler = ^BOOL(NSURL * _Nonnull url) {
+      return [FTUniPluginUtils filterBlackResource:url];
+    };
     [[FTMobileAgent sharedInstance] startRumWithConfigOptions:rumConfig];
 }
 #pragma mark --------- RUM DATA ADD ----------
