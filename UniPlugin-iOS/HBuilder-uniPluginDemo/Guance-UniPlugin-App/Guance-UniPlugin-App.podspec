@@ -44,6 +44,6 @@ Pod::Spec.new do |s|
   # s.frameworks = 'UIKit', 'MapKit'
   # buildFramework.sh 用于在开发测试时自动更新代码中的版本号
   s.script_phase = {:name => 'changesdkVersion',:script => 'sh ../Guance-UniPlugin-App/buildFramework.sh cocoapods',:execution_position => :before_compile }
-  s.dependency 'FTMobileSDK', '1.5.9'
+  s.dependency 'FTMobileSDK', '1.5.14'
   
 end

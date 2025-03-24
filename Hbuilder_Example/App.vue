@@ -1,8 +1,6 @@
 <script>
 	import * as SDKConst from '@/utils.js'
-	import WatchRouter from '@/GCWatchRouter.js'
-    import {reqInterceptor} from '@/GCRequestInterceptor.js'
-	
+	import WatchRouter from '@/GCWatchRouter.js'	
 	var ftMobileSDK = uni.requireNativePlugin("GCUniPlugin-MobileAgent");
 	var logger = uni.requireNativePlugin("GCUniPlugin-Logger");
 	var rum = uni.requireNativePlugin("GCUniPlugin-RUM");
@@ -11,10 +9,9 @@
 	export default {
 		mixins:[WatchRouter],
 		onLaunch: function() {
-			reqInterceptor()
 			ftMobileSDK.sdkConfig({
 				'datakitUrl': SDKConst.SERVER_URL,
-				'autoSync': false,
+				'autoSync': true,
 				'syncPageSize': 15,
 				'syncSleepTime': 15,
 				'enableDataIntegerCompatible':true,
@@ -33,6 +30,7 @@
 				'iOSAppId': SDKConst.IOS_APP_ID,
 				'errorMonitorType': ['cpu', 'memory'],
 				'deviceMonitorType': 'all',
+				'enableNativeUserResource':true,
 				'enableTrackNativeCrash':true,
 				'enableTrackNativeAppANR':true,
 				'enableTrackNativeFreeze':true,

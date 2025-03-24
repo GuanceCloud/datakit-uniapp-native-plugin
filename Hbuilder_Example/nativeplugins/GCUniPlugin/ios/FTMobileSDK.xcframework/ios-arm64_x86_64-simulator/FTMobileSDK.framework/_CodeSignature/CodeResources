@@ -20,9 +20,13 @@
 		<data>
 		OqYMhkZqP9lxChL5o4dcaw9XeVo=
 		</data>
+		<key>Headers/FTMobileConfig+Private.h</key>
+		<data>
+		4OK0mQXhwqmJLy1CbL5alpLTNMc=
+		</data>
 		<key>Headers/FTMobileConfig.h</key>
 		<data>
-		cTvw6wOgpS/gHBaNhQL5HGB0w80=
+		yCA+qnQLc/nLX3LrcFpYoBByAxg=
 		</data>
 		<key>Headers/FTMobileSDK.h</key>
 		<data>
@@ -30,11 +34,11 @@
 		</data>
 		<key>Headers/FTResourceContentModel.h</key>
 		<data>
-		x2qN/8KuaRIA8vGm0RfbVyMxIPY=
+		g3ivrqKt1ASrmJv2vUlgvov12W0=
 		</data>
 		<key>Headers/FTResourceMetricsModel.h</key>
 		<data>
-		4cHLMVQiJcVyLDebQo22TYSJBh8=
+		aKL3ifL+kmEusR97ml4AU/aKEg0=
 		</data>
 		<key>Headers/FTRumDatasProtocol.h</key>
 		<data>
@@ -50,7 +54,7 @@
 		</data>
 		<key>Headers/FTURLSessionDelegate.h</key>
 		<data>
-		TciEr1iWOwBvP7fv0jIcfXKKJr4=
+		rENrQCcloXKWQn2nei9pcRhfHNI=
 		</data>
 		<key>Headers/FTURLSessionInterceptor.h</key>
 		<data>
@@ -58,7 +62,7 @@
 		</data>
 		<key>Info.plist</key>
 		<data>
-		cin3KpdUVGDDnHMxigrQpUOEKQc=
+		FyA7ImZTqMb05LpbsTB+J6aCPWE=
 		</data>
 		<key>Modules/module.modulemap</key>
 		<data>
@@ -115,15 +119,26 @@
 			+N//VPW929EVJxQYX8Ti5kk5y0RkOrQ7EXww8e24oGk=
 			</data>
 		</dict>
+		<key>Headers/FTMobileConfig+Private.h</key>
+		<dict>
+			<key>hash</key>
+			<data>
+			4OK0mQXhwqmJLy1CbL5alpLTNMc=
+			</data>
+			<key>hash2</key>
+			<data>
+			x/T/qVCDGcoOttKozcsvGkZnf1cLERJ1jT4Cp+UoJXw=
+			</data>
+		</dict>
 		<key>Headers/FTMobileConfig.h</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			cTvw6wOgpS/gHBaNhQL5HGB0w80=
+			yCA+qnQLc/nLX3LrcFpYoBByAxg=
 			</data>
 			<key>hash2</key>
 			<data>
-			uwZMbrKERw2wiXSIQXblEFSTPq+Cw8h+xqAqEiMVW1s=
+			YYTfi9ym+A20Ptk47tGMnJAEVkWL+BEG+qRjGPO8qbQ=
 			</data>
 		</dict>
 		<key>Headers/FTMobileSDK.h</key>
@@ -141,22 +156,22 @@
 		<dict>
 			<key>hash</key>
 			<data>
-			x2qN/8KuaRIA8vGm0RfbVyMxIPY=
+			g3ivrqKt1ASrmJv2vUlgvov12W0=
 			</data>
 			<key>hash2</key>
 			<data>
-			ENT0HEhqJZWYzsAeJ6NpSehNCgE1BN3/wua3wadqIpc=
+			SY5N8Kh1Zk//a0+5P1GFe+IHt/+dZF2eMCCGr8fsTx0=
 			</data>
 		</dict>
 		<key>Headers/FTResourceMetricsModel.h</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			4cHLMVQiJcVyLDebQo22TYSJBh8=
+			aKL3ifL+kmEusR97ml4AU/aKEg0=
 			</data>
 			<key>hash2</key>
 			<data>
-			1DFoU8PzosrGa4DNe0rcrUuUqCf2ZSY8HMj8thtwv88=
+			twVBUSRWSud7MnuBpKAsHgpFuSFu70nl2BlSS6foJ7I=
 			</data>
 		</dict>
 		<key>Headers/FTRumDatasProtocol.h</key>
@@ -196,11 +211,11 @@
 		<dict>
 			<key>hash</key>
 			<data>
-			TciEr1iWOwBvP7fv0jIcfXKKJr4=
+			rENrQCcloXKWQn2nei9pcRhfHNI=
 			</data>
 			<key>hash2</key>
 			<data>
-			8vIr6ArkK/xLe+bPZuMkrmMKCji21lO++a/1+ebmcbI=
+			xi8wg+TvpEBXn48f9jLhbS/zv4T88YmPc2fqyckv9fU=
 			</data>
 		</dict>
 		<key>Headers/FTURLSessionInterceptor.h</key>

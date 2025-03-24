@@ -1,43 +1,43 @@
 PODS:
-  - FTMobileSDK (1.5.9):
-    - FTMobileSDK/FTMobileAgent (= 1.5.9)
-  - FTMobileSDK/FTMobileAgent (1.5.9):
+  - FTMobileSDK (1.5.14):
+    - FTMobileSDK/FTMobileAgent (= 1.5.14)
+  - FTMobileSDK/FTMobileAgent (1.5.14):
     - FTMobileSDK/FTSDKCore
-  - FTMobileSDK/FTSDKCore (1.5.9):
-    - FTMobileSDK/FTSDKCore/BaseUtils (= 1.5.9)
-    - FTMobileSDK/FTSDKCore/DataManager (= 1.5.9)
-    - FTMobileSDK/FTSDKCore/FTRUM (= 1.5.9)
-    - FTMobileSDK/FTSDKCore/FTWKWebView (= 1.5.9)
-    - FTMobileSDK/FTSDKCore/Logger (= 1.5.9)
-    - FTMobileSDK/FTSDKCore/Protocol (= 1.5.9)
-    - FTMobileSDK/FTSDKCore/URLSessionAutoInstrumentation (= 1.5.9)
-  - FTMobileSDK/FTSDKCore/BaseUtils (1.5.9):
-    - FTMobileSDK/FTSDKCore/BaseUtils/Base (= 1.5.9)
-    - FTMobileSDK/FTSDKCore/BaseUtils/Swizzle (= 1.5.9)
-    - FTMobileSDK/FTSDKCore/BaseUtils/Thread (= 1.5.9)
-  - FTMobileSDK/FTSDKCore/BaseUtils/Base (1.5.9):
+  - FTMobileSDK/FTSDKCore (1.5.14):
+    - FTMobileSDK/FTSDKCore/BaseUtils (= 1.5.14)
+    - FTMobileSDK/FTSDKCore/DataManager (= 1.5.14)
+    - FTMobileSDK/FTSDKCore/FTRUM (= 1.5.14)
+    - FTMobileSDK/FTSDKCore/FTWKWebView (= 1.5.14)
+    - FTMobileSDK/FTSDKCore/Logger (= 1.5.14)
+    - FTMobileSDK/FTSDKCore/Protocol (= 1.5.14)
+    - FTMobileSDK/FTSDKCore/URLSessionAutoInstrumentation (= 1.5.14)
+  - FTMobileSDK/FTSDKCore/BaseUtils (1.5.14):
+    - FTMobileSDK/FTSDKCore/BaseUtils/Base (= 1.5.14)
+    - FTMobileSDK/FTSDKCore/BaseUtils/Swizzle (= 1.5.14)
+    - FTMobileSDK/FTSDKCore/BaseUtils/Thread (= 1.5.14)
+  - FTMobileSDK/FTSDKCore/BaseUtils/Base (1.5.14):
     - FTMobileSDK/FTSDKCore/BaseUtils/Thread
-  - FTMobileSDK/FTSDKCore/BaseUtils/Swizzle (1.5.9):
+  - FTMobileSDK/FTSDKCore/BaseUtils/Swizzle (1.5.14):
     - FTMobileSDK/FTSDKCore/BaseUtils/Base
-  - FTMobileSDK/FTSDKCore/BaseUtils/Thread (1.5.9)
-  - FTMobileSDK/FTSDKCore/DataManager (1.5.9):
+  - FTMobileSDK/FTSDKCore/BaseUtils/Thread (1.5.14)
+  - FTMobileSDK/FTSDKCore/DataManager (1.5.14):
     - FTMobileSDK/FTSDKCore/BaseUtils/Base
     - FTMobileSDK/FTSDKCore/BaseUtils/Thread
-  - FTMobileSDK/FTSDKCore/FTRUM (1.5.9):
+  - FTMobileSDK/FTSDKCore/FTRUM (1.5.14):
     - FTMobileSDK/FTSDKCore/BaseUtils/Base
     - FTMobileSDK/FTSDKCore/Protocol
-  - FTMobileSDK/FTSDKCore/FTWKWebView (1.5.9):
+  - FTMobileSDK/FTSDKCore/FTWKWebView (1.5.14):
     - FTMobileSDK/FTSDKCore/BaseUtils/Swizzle
     - FTMobileSDK/FTSDKCore/Protocol
-  - FTMobileSDK/FTSDKCore/Logger (1.5.9):
+  - FTMobileSDK/FTSDKCore/Logger (1.5.14):
     - FTMobileSDK/FTSDKCore/BaseUtils/Base
     - FTMobileSDK/FTSDKCore/Protocol
-  - FTMobileSDK/FTSDKCore/Protocol (1.5.9)
-  - FTMobileSDK/FTSDKCore/URLSessionAutoInstrumentation (1.5.9):
+  - FTMobileSDK/FTSDKCore/Protocol (1.5.14)
+  - FTMobileSDK/FTSDKCore/URLSessionAutoInstrumentation (1.5.14):
     - FTMobileSDK/FTSDKCore/BaseUtils/Swizzle
     - FTMobileSDK/FTSDKCore/Protocol
   - Guance-UniPlugin-App (0.2.0):
-    - FTMobileSDK (= 1.5.9)
+    - FTMobileSDK (= 1.5.14)
 
 DEPENDENCIES:
   - Guance-UniPlugin-App (from `./Guance-UniPlugin-App`)
@@ -51,8 +51,8 @@ EXTERNAL SOURCES:
     :path: "./Guance-UniPlugin-App"
 
 SPEC CHECKSUMS:
-  FTMobileSDK: 1e31d5ab2d23ad8409df56cfd744ae9e6cf87570
-  Guance-UniPlugin-App: 8c219070234710540c8a71907c3ba77bab634ff4
+  FTMobileSDK: 77f2ee01bef478389199e3645a157c7cafcf1986
+  Guance-UniPlugin-App: 4ae73bd4ef40ae77121dc88cd2df51d79180f66f
 
 PODFILE CHECKSUM: 3b1ce419bde680a3118afff2f16151fb8eff7758
 

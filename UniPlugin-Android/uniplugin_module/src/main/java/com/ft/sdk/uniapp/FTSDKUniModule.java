@@ -4,6 +4,7 @@ import com.alibaba.fastjson.JSONObject;
 import com.ft.sdk.DBCacheDiscard;
 import com.ft.sdk.FTSDKConfig;
 import com.ft.sdk.FTSdk;
+import com.ft.sdk.InnerClassProxy;
 import com.ft.sdk.garble.bean.UserData;
 
 import java.util.HashMap;
@@ -90,7 +91,7 @@ public class FTSDKUniModule extends UniModule {
                 sdkConfig.setDbCacheDiscard(DBCacheDiscard.DISCARD);
             }
         }
-        sdkConfig.addGlobalContext(KEY_VERSION_SDK_PACKAGE_UNIAPP, BuildConfig.FT_UNI_APP_SDK_VERSION);
+        InnerClassProxy.addPkgInfo(sdkConfig, "uniapp", BuildConfig.FT_UNI_APP_SDK_VERSION);
 
         FTSdk.install(sdkConfig);
 
