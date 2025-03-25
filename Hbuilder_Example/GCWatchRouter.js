@@ -83,7 +83,7 @@ export default {
 		},
 		rumRecordNewView(url) {
 			loadStart = new Date().getTime() * 1000000
-			currentPage = url
+			currentPage = url.split('?')[0]
 		},
 		rumStopOldStartNew(addListener = true) {
 			if (currentPage) {
