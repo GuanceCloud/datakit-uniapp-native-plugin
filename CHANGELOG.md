@@ -1,7 +1,8 @@
 # 0.2.1
 * Android 修正 offlinePackage 为 false 时，错误的启动时间规则
 * Android 修正纯 uniapp 项目开启 compressIntakeRequests 发生崩溃的问题
-
+* GCUniPlugin-MobileAgent enableDataIntegerCompatible 默认开启
+* 适配 iOS 1.5.10, 1.5.11, 1.5.12, 1.5.13, 1.5.14，Android ft-sdk 1.6.8, 1.6.9 
 
 ---
 # 0.2.0
