@@ -19,7 +19,7 @@
 				// 'dbCacheLimit':30*1024,
 				// 'enableLimitWithDbSize':true,
 				// 'dbDiscardStrategy':'discard',
-				// 'debug': true,
+				'debug': true,
 				'env': 'common',
 				'globalContext': {
 					'sdk_globalContext': 'custom_sdk_globalContext'
