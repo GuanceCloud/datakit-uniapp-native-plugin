@@ -1,3 +1,6 @@
+/**
+ * 用于单个 View 数据采集，不与 GCWatchRouter.js 同时使用
+ */
 var rum = uni.requireNativePlugin("GCUniPlugin-RUM");
 var loadStart;
 export const rumViewMixin = {

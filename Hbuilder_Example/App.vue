@@ -11,14 +11,14 @@
 		onLaunch: function() {
 			ftMobileSDK.sdkConfig({
 				'datakitUrl': SDKConst.SERVER_URL,
-				'autoSync': true,
-				'syncPageSize': 15,
-				'syncSleepTime': 15,
-				'enableDataIntegerCompatible':true,
-				'compressIntakeRequests':true,
-				'dbCacheLimit':30*1024,
-				'enableLimitWithDbSize':true,
-				'dbDiscardStrategy':'discard',
+				// 'autoSync': true,
+				// 'syncPageSize': 15,
+				// 'syncSleepTime': 100,
+				// 'enableDataIntegerCompatible':true,
+				// 'compressIntakeRequests':true,
+				// 'dbCacheLimit':30*1024,
+				// 'enableLimitWithDbSize':true,
+				// 'dbDiscardStrategy':'discard',
 				'debug': true,
 				'env': 'common',
 				'globalContext': {
@@ -62,10 +62,8 @@
 		},
 		onShow: function() {
 			appState = 'run'
-			console.log('App Show')
 		},
 		onHide: function() {
-			console.log('App Hide')
 		},
 		onError: function(err) {
 			if (err instanceof Error) {

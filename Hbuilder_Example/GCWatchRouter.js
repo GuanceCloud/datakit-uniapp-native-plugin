@@ -1,7 +1,7 @@
 /**
  * 采集 RUM View Event
- * 注意： 由于 App 的生命周期 onLaunch、onShow 早于第一个 page 的生命周期之前，
- * 所以需要在 App 第一个显示的 page 内使用 GCPageMixin
+ * 注意： 由于 App 的生命周期 onLaunch、onShow 早于第一个 page 的生命周期之前
+ * 所以需要在 App 第一个显示的 page 内使用 GCPageMixin 补充页面信息，否则无法获取第一个页面的 viewName
  */
 var rum = uni.requireNativePlugin("GCUniPlugin-RUM");
 var loadStart;
@@ -27,7 +27,7 @@ export default {
 
 	},
 	onHide: function() {
-		console.log("onHide")
+		//console.log("onHide")
 		rum.stopView()
 	},
 	methods: {
