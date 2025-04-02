@@ -50,10 +50,10 @@ export default {
 			success: (res) => {
 				if(!filter){
 				  responseHeader = res.header;
-				  responseBody = res.data;
+				  responseBody = res.data.toString();
 				  resourceStatus = res.statusCode;
 				}
-				if(this.isEmpty(options.success)){
+				if(!this.isEmpty(options.success)){
 					options.success(res);
 				}
 			},
@@ -61,7 +61,7 @@ export default {
 				if(!filter){
 				  responseBody = err.errMsg;
 				}
-				if(this.isEmpty(options.fail)){
+				if(!this.isEmpty(options.fail)){
 					options.fail(err);
 				}
 			},
@@ -82,7 +82,7 @@ export default {
 				  	}
 				  })
 				}
-				if(this.isEmpty(options.complete)){
+				if (options.complete !== null || options.complete !== undefined){
 					options.complete();
 				}
 			}
