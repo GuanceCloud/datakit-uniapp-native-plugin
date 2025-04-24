@@ -42,11 +42,8 @@ export default {
 		var responseBody;
 		var resourceStatus;
 		return uni.request({
-			url: options.url,
-			method: options.method,
+			...options,
 			header: traceHeader,
-			data:options.data,
-			timeout:options.timeout,
 			success: (res) => {
 				if(!filter){
 				  responseHeader = res.header;
