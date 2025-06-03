@@ -27,6 +27,7 @@ public class FTRUMModule extends UniModule {
         Map<String, Object> map = Utils.convertJSONtoHashMap(data);
         String rumAppId = (String) map.get("androidAppId");
         Number sampleRate = (Number) map.get("samplerate");
+        Number sessionOnErrorSampleRate = (Number) map.get("sessionOnErrorSampleRate");
         Boolean enableNativeUserAction = (Boolean) map.get("enableNativeUserAction");
         Boolean enableNativeUserView = (Boolean) map.get("enableNativeUserView");
         Boolean enableNativeUserResource = (Boolean) map.get("enableNativeUserResource");
@@ -44,6 +45,9 @@ public class FTRUMModule extends UniModule {
         FTRUMConfig rumConfig = new FTRUMConfig().setRumAppId(rumAppId);
         if (sampleRate != null) {
             rumConfig.setSamplingRate(sampleRate.floatValue());
+        }
+        if (sessionOnErrorSampleRate != null) {
+            rumConfig.setSessionErrorSampleRate(sessionOnErrorSampleRate.floatValue());
         }
         if (enableNativeUserAction != null) {
             rumConfig.setEnableTraceUserAction(enableNativeUserAction);

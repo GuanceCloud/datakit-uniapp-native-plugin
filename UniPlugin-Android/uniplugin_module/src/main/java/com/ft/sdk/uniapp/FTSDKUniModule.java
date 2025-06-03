@@ -1,11 +1,15 @@
 package com.ft.sdk.uniapp;
 
+import com.ft.sdk.garble.utils.Constants;
+
 import com.alibaba.fastjson.JSONObject;
 import com.ft.sdk.DBCacheDiscard;
 import com.ft.sdk.FTSDKConfig;
 import com.ft.sdk.FTSdk;
 import com.ft.sdk.InnerClassProxy;
 import com.ft.sdk.garble.bean.UserData;
+import com.ft.sdk.DataModifier;
+import com.ft.sdk.LineDataModifier;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -41,6 +45,8 @@ public class FTSDKUniModule extends UniModule {
         Boolean enableLimitWithDbSize = (Boolean) map.get("enableLimitWithDbSize");
         Number dbCacheLimit = (Number) (map.get("dbCacheLimit"));
         Object dbDiscardStrategy = map.get("dbDiscardStrategy");
+        final Map<String, Object> dataModifier = (Map<String, Object>) map.get("dataModifier");
+        final Map<String, Map<String, Object>> lineDataModifier = (Map<String, Map<String, Object>>) map.get("lineDataModifier");
 
         FTSDKConfig sdkConfig = (datakitUrl != null)
                 ? FTSDKConfig.builder(datakitUrl)
@@ -93,6 +99,26 @@ public class FTSDKUniModule extends UniModule {
         }
         InnerClassProxy.addPkgInfo(sdkConfig, "uniapp", BuildConfig.FT_UNI_APP_SDK_VERSION);
 
+        if (dataModifier != null) {
+            sdkConfig.setDataModifier(new DataModifier() {
+                @Override
+                public Object modify(String key, Object value) {
+                    return dataModifier.get(key);
+                }
+            });
+        }
+        if (lineDataModifier != null) {
+            sdkConfig.setLineDataModifier(new LineDataModifier() {
+                @Override
+                public Map<String, Object> modify(String measurement, HashMap<String, Object> data) {
+                    if (measurement.equals(Constants.FT_LOG_DEFAULT_MEASUREMENT)) {
+                        return lineDataModifier.get("log");
+                    }else{
+                        return lineDataModifier.get(measurement);
+                    }
+                }
+            });
+        }
         FTSdk.install(sdkConfig);
 
 
