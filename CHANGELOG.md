@@ -1,3 +1,10 @@
+# 0.2.2
+* `GCUniPlugin-MobileAgent`
+  * 支持通过 dataModifier，lineDataModifier 进行数据写入替换，支持数据脱敏
+* `GCUniPlugin-RUM` 
+  * 支持通过 sessionOnErrorSampleRate 进行错误采样，在未被 samplerate 采样时，在发生错误时可以对 1 分钟前的 rum 的数据进行取样采集
+* 适配 iOS 1.5.15、 1.5.16，Android ft-sdk 1.6.10、1.6.11
+---
 # 0.2.1
 * Android 修正 offlinePackage 为 false 时，错误的启动时间规则
 * Android 修正纯 uniapp 项目开启 compressIntakeRequests 发生崩溃的问题
