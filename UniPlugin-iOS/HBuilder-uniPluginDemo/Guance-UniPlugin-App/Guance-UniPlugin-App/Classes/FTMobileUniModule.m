@@ -9,6 +9,7 @@
 #import "Guance-UniPlugin-App-Version.h"
 #import <FTMobileSDK/FTMobileAgent.h>
 #import <FTMobileSDK/FTMobileConfig+Private.h>
+#import <FTMobileSDK/FTConstants.h>
 @implementation FTMobileUniModule
 #pragma mark --------- SDK INIT ----------
 UNI_EXPORT_METHOD_SYNC(@selector(sdkConfig:))
@@ -69,14 +70,33 @@ UNI_EXPORT_METHOD_SYNC(@selector(sdkConfig:))
         if ([params.allKeys containsObject:@"dbCacheLimit"]){
             config.dbCacheLimit = [params[@"dbCacheLimit"] doubleValue];
         }
-        NSMutableDictionary *globalContext = [[NSMutableDictionary alloc]init];
         if ([params.allKeys containsObject:@"globalContext"]) {
-            NSDictionary *context = [params valueForKey:@"globalContext"];
-            if(context.allKeys.count>0){
-                [globalContext addEntriesFromDictionary:context];
-            }
+            NSDictionary *globalContext = [params valueForKey:@"globalContext"];
+            config.globalContext = globalContext;
         }
-        config.globalContext = globalContext;
+        if ([params.allKeys containsObject:@"dataModifier"] && [[params valueForKey:@"dataModifier"] isKindOfClass:NSDictionary.class]) {
+            NSDictionary *dataModifierDict = [[params valueForKey:@"dataModifier"] copy];
+            config.dataModifier = ^id _Nullable(NSString * _Nonnull key, id  _Nonnull value) {
+                if ([dataModifierDict.allKeys containsObject:key]) {
+                    return dataModifierDict[key];
+                }
+                return value;
+            };
+        }
+        if ([params.allKeys containsObject:@"lineDataModifier"] && [[params valueForKey:@"lineDataModifier"] isKindOfClass:NSDictionary.class]) {
+            NSDictionary *lineDataModifierDict = [[params valueForKey:@"lineDataModifier"] copy];
+            config.lineDataModifier = ^NSDictionary<NSString *,id> * _Nullable(NSString * _Nonnull measurement, NSDictionary<NSString *,id> * _Nonnull data) {
+                NSString *measurementKey = measurement;
+                if ([measurement isEqualToString:FT_LOGGER_SOURCE] || [measurement isEqualToString:FT_LOGGER_TVOS_SOURCE]) {
+                    measurementKey = @"log";
+                }
+                id returnData = [lineDataModifierDict valueForKey:measurementKey];
+                if (returnData && [returnData isKindOfClass:NSDictionary.class]) {
+                    return returnData;
+                }
+                return nil;
+            };
+        }
         [config addPkgInfo:@"uniapp" value:UniPluginAppVersion];
         [FTMobileAgent startWithConfigOptions:config];
     };

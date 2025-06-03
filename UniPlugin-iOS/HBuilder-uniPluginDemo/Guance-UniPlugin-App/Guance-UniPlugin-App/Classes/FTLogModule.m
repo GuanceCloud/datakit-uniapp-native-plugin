@@ -33,24 +33,7 @@ UNI_EXPORT_METHOD_SYNC(@selector(setConfig:))
     if ([params.allKeys containsObject:@"logLevelFilters"]) {
         NSArray *filters = params[@"logLevelFilters"];
         if(filters.count>0){
-            NSEnumerator *enumerator = filters.objectEnumerator;
-            NSString *level;
-            NSMutableArray *logLevelFilters = [NSMutableArray new];
-            while ((level = enumerator.nextObject)) {
-                //`info`提示、`warning`警告、`error`错误、`critical`、`ok`恢复
-                if([level isEqualToString:@"info"]){
-                    [logLevelFilters addObject:@(FTStatusInfo)];
-                }else if([level isEqualToString:@"warning"]){
-                    [logLevelFilters addObject:@(FTStatusWarning)];
-                }else if([level isEqualToString:@"error"]){
-                    [logLevelFilters addObject:@(FTStatusError)];
-                }else if([level isEqualToString:@"critical"]){
-                    [logLevelFilters addObject:@(FTStatusCritical)];
-                }else if([level isEqualToString:@"ok"]){
-                    [logLevelFilters addObject:@(FTStatusOk)];
-                }
-            }
-            config.logLevelFilter =  logLevelFilters;
+            config.logLevelFilter = filters;
         }
     }
     if ([params.allKeys containsObject:@"logCacheLimitCount"]) {

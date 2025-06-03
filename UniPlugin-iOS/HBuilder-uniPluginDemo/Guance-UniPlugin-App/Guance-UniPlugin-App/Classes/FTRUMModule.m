@@ -16,6 +16,9 @@ UNI_EXPORT_METHOD_SYNC(@selector(setConfig:))
     if ([params.allKeys containsObject:@"samplerate"]) {
         rumConfig.samplerate = [params[@"samplerate"] doubleValue] * 100;
     }
+    if ([params.allKeys containsObject:@"sessionOnErrorSampleRate"]) {
+        rumConfig.sessionOnErrorSampleRate = [params[@"sessionOnErrorSampleRate"] doubleValue] * 100;
+    }
     if ([params.allKeys containsObject:@"enableNativeUserAction"]) {
         rumConfig.enableTraceUserAction = params[@"enableNativeUserAction"];
     }
