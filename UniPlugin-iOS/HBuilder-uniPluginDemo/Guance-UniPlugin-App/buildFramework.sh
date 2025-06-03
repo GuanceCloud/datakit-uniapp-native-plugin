@@ -9,6 +9,6 @@ else
 sed  -i '' -e 's/MARKETING_VERSION \= [0-9].*\;/MARKETING_VERSION = '$SDK_VERSION';/' Guance-UniPlugin-App.xcodeproj/project.pbxproj
 sed  -i '' 's/UniPluginAppVersion.*/UniPluginAppVersion @"'$SDK_VERSION'"/g' Guance-UniPlugin-App/Classes/Guance-UniPlugin-App-Version.h
 #借助 carthage 进行打包 framework
-sh BuildXFramework.sh
+carthage build --platform iOS --no-skip-current --use-xcframeworks
 fi
 
