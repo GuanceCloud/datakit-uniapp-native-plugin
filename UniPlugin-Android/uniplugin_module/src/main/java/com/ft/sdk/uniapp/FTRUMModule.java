@@ -264,42 +264,42 @@ public class FTRUMModule extends UniModule {
         params.responseBody = content.getString("responseBody");
         params.resourceStatus = content.getIntValue("resourceStatus");
         NetStatusBean netStatusBean = new NetStatusBean();
-        Long fetchStartTime = (Long) content.get("fetchStartTime");
-        Long tcpStartTime = (Long) content.get("tcpStartTime");
-        Long tcpEndTime = (Long) content.get("tcpEndTime");
-        Long dnsStartTime = (Long) content.get("dnsStartTime");
-        Long dnsEndTime = (Long) content.get("dnsEndTime");
-        Long responseStartTime = (Long) content.get("responseStartTime");
-        Long responseEndTime = (Long) content.get("responseEndTime");
-        Long sslStartTime = (Long) content.get("sslStartTime");
-        Long sslEndTime = (Long) content.get("sslEndTime");
-        if (fetchStartTime != null) {
-            netStatusBean.fetchStartTime = fetchStartTime;
-        }
-        if (tcpStartTime != null) {
-            netStatusBean.tcpStartTime = tcpStartTime;
-        }
-        if (tcpEndTime != null) {
-            netStatusBean.tcpEndTime = tcpEndTime;
-        }
-        if (dnsStartTime != null) {
-            netStatusBean.dnsStartTime = dnsStartTime;
-        }
-        if (dnsEndTime != null) {
-            netStatusBean.dnsEndTime = dnsEndTime;
-        }
-        if (responseStartTime != null) {
-            netStatusBean.responseStartTime = responseStartTime;
-        }
-        if (responseEndTime != null) {
-            netStatusBean.responseEndTime = responseEndTime;
-        }
-        if (sslStartTime != null) {
-            netStatusBean.sslStartTime = sslStartTime;
-        }
-        if (sslEndTime != null) {
-            netStatusBean.sslEndTime = sslEndTime;
-        }
+//        Long fetchStartTime = (Long) content.get("fetchStartTime");
+//        Long tcpStartTime = (Long) content.get("tcpStartTime");
+//        Long tcpEndTime = (Long) content.get("tcpEndTime");
+//        Long dnsStartTime = (Long) content.get("dnsStartTime");
+//        Long dnsEndTime = (Long) content.get("dnsEndTime");
+//        Long responseStartTime = (Long) content.get("responseStartTime");
+//        Long responseEndTime = (Long) content.get("responseEndTime");
+//        Long sslStartTime = (Long) content.get("sslStartTime");
+//        Long sslEndTime = (Long) content.get("sslEndTime");
+//        if (fetchStartTime != null) {
+//            netStatusBean.fetchStartTime = fetchStartTime;
+//        }
+//        if (tcpStartTime != null) {
+//            netStatusBean.tcpStartTime = tcpStartTime;
+//        }
+//        if (tcpEndTime != null) {
+//            netStatusBean.tcpEndTime = tcpEndTime;
+//        }
+//        if (dnsStartTime != null) {
+//            netStatusBean.dnsStartTime = dnsStartTime;
+//        }
+//        if (dnsEndTime != null) {
+//            netStatusBean.dnsEndTime = dnsEndTime;
+//        }
+//        if (responseStartTime != null) {
+//            netStatusBean.responseStartTime = responseStartTime;
+//        }
+//        if (responseEndTime != null) {
+//            netStatusBean.responseEndTime = responseEndTime;
+//        }
+//        if (sslStartTime != null) {
+//            netStatusBean.sslStartTime = sslStartTime;
+//        }
+//        if (sslEndTime != null) {
+//            netStatusBean.sslEndTime = sslEndTime;
+//        }
         FTRUMGlobalManager.get().addResource(key, params, netStatusBean);
 
 
