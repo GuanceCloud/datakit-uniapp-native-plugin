@@ -3,6 +3,7 @@
   * 支持通过 dataModifier，lineDataModifier 进行数据写入替换，支持数据脱敏
 * `GCUniPlugin-RUM` 
   * 支持通过 sessionOnErrorSampleRate 进行错误采样，在未被 samplerate 采样时，在发生错误时可以对 1 分钟前的 rum 的数据进行取样采集
+* 在 iOS 端开启 RUM Resource 自动采集时，新增了过滤方法过滤 dcloud 内部请求，减少冗余数据
 * 适配 iOS 1.5.15、 1.5.16，Android ft-sdk 1.6.10、1.6.11
 ---
 # 0.2.1
