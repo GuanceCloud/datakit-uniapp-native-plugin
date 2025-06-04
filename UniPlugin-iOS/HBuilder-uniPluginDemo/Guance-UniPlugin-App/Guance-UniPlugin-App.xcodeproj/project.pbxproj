@@ -18,6 +18,8 @@
 		172C86222AC44B89006DC13F /* FTMobileUniModule.m in Sources */ = {isa = PBXBuildFile; fileRef = 172C86192AC44B89006DC13F /* FTMobileUniModule.m */; };
 		172C86272AC55D18006DC13F /* FTMobileSDK.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 172C86262AC55D18006DC13F /* FTMobileSDK.xcframework */; };
 		173ED24C2AD17F23007C95C0 /* Guance-UniPlugin-App-Version.h in Headers */ = {isa = PBXBuildFile; fileRef = 173ED24B2AD17F23007C95C0 /* Guance-UniPlugin-App-Version.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		179E1FEC2DF0141700F45BEB /* FTUniPluginUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = 179E1FEB2DF0141700F45BEB /* FTUniPluginUtils.m */; };
+		179E1FED2DF0141700F45BEB /* FTUniPluginUtils.h in Headers */ = {isa = PBXBuildFile; fileRef = 179E1FEA2DF0141700F45BEB /* FTUniPluginUtils.h */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -33,6 +35,8 @@
 		172C86192AC44B89006DC13F /* FTMobileUniModule.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FTMobileUniModule.m; sourceTree = "<group>"; };
 		172C86262AC55D18006DC13F /* FTMobileSDK.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = FTMobileSDK.xcframework; path = ../../../Hbuilder_Example/nativeplugins/GCUniPlugin/ios/FTMobileSDK.xcframework; sourceTree = "<group>"; };
 		173ED24B2AD17F23007C95C0 /* Guance-UniPlugin-App-Version.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Guance-UniPlugin-App-Version.h"; sourceTree = "<group>"; };
+		179E1FEA2DF0141700F45BEB /* FTUniPluginUtils.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FTUniPluginUtils.h; sourceTree = "<group>"; };
+		179E1FEB2DF0141700F45BEB /* FTUniPluginUtils.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FTUniPluginUtils.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -85,6 +89,8 @@
 				172C86172AC44B89006DC13F /* FTLogModule.m */,
 				172C86182AC44B89006DC13F /* FTRUMModule.h */,
 				172C86192AC44B89006DC13F /* FTMobileUniModule.m */,
+				179E1FEA2DF0141700F45BEB /* FTUniPluginUtils.h */,
+				179E1FEB2DF0141700F45BEB /* FTUniPluginUtils.m */,
 			);
 			path = Classes;
 			sourceTree = "<group>";
@@ -105,6 +111,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				172C860A2AC44B64006DC13F /* Guance_UniPlugin_App.h in Headers */,
+				179E1FED2DF0141700F45BEB /* FTUniPluginUtils.h in Headers */,
 				172C861E2AC44B89006DC13F /* FTMobileUniModule.h in Headers */,
 				173ED24C2AD17F23007C95C0 /* Guance-UniPlugin-App-Version.h in Headers */,
 				172C861B2AC44B89006DC13F /* FTLogModule.h in Headers */,
@@ -207,6 +214,7 @@
 				172C86202AC44B89006DC13F /* FTLogModule.m in Sources */,
 				172C86222AC44B89006DC13F /* FTMobileUniModule.m in Sources */,
 				172C861A2AC44B89006DC13F /* FTRUMModule.m in Sources */,
+				179E1FEC2DF0141700F45BEB /* FTUniPluginUtils.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
