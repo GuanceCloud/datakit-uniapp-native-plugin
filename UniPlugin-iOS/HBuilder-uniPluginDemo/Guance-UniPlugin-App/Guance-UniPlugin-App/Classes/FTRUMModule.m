@@ -22,13 +22,13 @@ UNI_EXPORT_METHOD_SYNC(@selector(setConfig:))
         rumConfig.sessionOnErrorSampleRate = [params[@"sessionOnErrorSampleRate"] doubleValue] * 100;
     }
     if ([params.allKeys containsObject:@"enableNativeUserAction"]) {
-        rumConfig.enableTraceUserAction = params[@"enableNativeUserAction"];
+        rumConfig.enableTraceUserAction = [params[@"enableNativeUserAction"] boolValue];
     }
     if ([params.allKeys containsObject:@"enableNativeUserView"]) {
-        rumConfig.enableTraceUserView = params[@"enableNativeUserView"];
+        rumConfig.enableTraceUserView = [params[@"enableNativeUserView"] boolValue];
     }
     if ([params.allKeys containsObject:@"enableNativeUserResource"]) {
-        rumConfig.enableTraceUserResource = params[@"enableNativeUserResource"];
+        rumConfig.enableTraceUserResource = [params[@"enableNativeUserResource"] boolValue];
     }
     if ([params.allKeys containsObject:@"errorMonitorType"]) {
         id type = params[@"errorMonitorType"];

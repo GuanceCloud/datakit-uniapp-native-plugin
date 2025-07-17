@@ -16,10 +16,10 @@ UNI_EXPORT_METHOD_SYNC(@selector(setConfig:))
         config.samplerate =[params[@"samplerate"] doubleValue] * 100;
     }
     if ([params.allKeys containsObject:@"enableLinkRumData"]) {
-        config.enableLinkRumData = params[@"enableLinkRumData"];
+        config.enableLinkRumData = [params[@"enableLinkRumData"] boolValue];
     }
     if ([params.allKeys containsObject:@"enableCustomLog"]) {
-        config.enableCustomLog = params[@"enableCustomLog"];
+        config.enableCustomLog = [params[@"enableCustomLog"] boolValue];
     }
     if ([params.allKeys containsObject:@"discardStrategy"]) {
         NSString *type = params[@"discardStrategy"];

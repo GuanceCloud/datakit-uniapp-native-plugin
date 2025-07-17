@@ -32,8 +32,12 @@ UNI_EXPORT_METHOD_SYNC(@selector(setConfig:))
             trace.networkTraceType = FTNetworkTraceTypeJaeger;
         }
     }
-    trace.enableLinkRumData = [params objectForKey:@"enableLinkRUMData"];
-    trace.enableAutoTrace = [params objectForKey:@"enableNativeAutoTrace"];
+    if ([params.allKeys containsObject:@"enableLinkRUMData"]) {
+        trace.enableLinkRumData = [params[@"enableLinkRUMData"] boolValue];
+    }
+    if ([params.allKeys containsObject:@"enableNativeAutoTrace"]) {
+        trace.enableAutoTrace = [params[@"enableNativeAutoTrace"] boolValue];
+    }
     [[FTMobileAgent sharedInstance] startTraceWithConfigOptions:trace];
 }
 #pragma mark --------- TRACE HEADER GET ----------
