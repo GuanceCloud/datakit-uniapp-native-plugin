@@ -112,6 +112,9 @@ UNI_EXPORT_METHOD_SYNC(@selector(setConfig:))
     if ([params.allKeys containsObject:@"enableTrackNativeFreeze"]){
       rumConfig.enableTrackAppFreeze = [params[@"enableTrackNativeFreeze"] boolValue];
     }
+    if ([params.allKeys containsObject:@"enableTrackNativeAppANR"]){
+        rumConfig.enableTrackAppANR = [params[@"enableTrackNativeAppANR"] boolValue];
+    }
     if ([params.allKeys containsObject:@"nativeFreezeDurationMs"]){
         rumConfig.freezeDurationMs = [params[@"nativeFreezeDurationMs"] doubleValue];
     }
