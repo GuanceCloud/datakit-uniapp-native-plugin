@@ -15,9 +15,9 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "172C86052AC44B64006DC13F"
-               BuildableName = "Guance_UniPlugin_App.framework"
-               BlueprintName = "Guance-UniPlugin-App"
-               ReferencedContainer = "container:Guance-UniPlugin-App.xcodeproj">
+               BuildableName = "GC_UniPlugin_App.framework"
+               BlueprintName = "GC-UniPlugin-App"
+               ReferencedContainer = "container:GC-UniPlugin-App.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -51,9 +51,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "172C86052AC44B64006DC13F"
-            BuildableName = "Guance_UniPlugin_App.framework"
-            BlueprintName = "Guance-UniPlugin-App"
-            ReferencedContainer = "container:Guance-UniPlugin-App.xcodeproj">
+            BuildableName = "GC_UniPlugin_App.framework"
+            BlueprintName = "GC-UniPlugin-App"
+            ReferencedContainer = "container:GC-UniPlugin-App.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
    </ProfileAction>

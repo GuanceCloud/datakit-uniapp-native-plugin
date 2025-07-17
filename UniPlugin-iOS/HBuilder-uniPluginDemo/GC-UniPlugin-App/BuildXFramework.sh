@@ -2,7 +2,7 @@
 # buildFramework.sh 脚本里有替换 version 操作,借助 carthage 进行打包
 buildFrameWorkWithName(){
 
-FRAMEWORK_NAME="Guance-UniPlugin-App"
+FRAMEWORK_NAME="GC-UniPlugin-App"
 WORK_DIR='./build'
 rm -r ${WORK_DIR}
 
@@ -23,9 +23,9 @@ xcodebuild archive \
 
 
 xcodebuild -create-xcframework \
-  -framework "${WORK_DIR}/ios.xcarchive/Products/Library/Frameworks/Guance_UniPlugin_App.framework" \
-  -framework "${WORK_DIR}/ios-sim.xcarchive/Products/Library/Frameworks/Guance_UniPlugin_App.framework" \
-  -output "${WORK_DIR}/Guance_UniPlugin_App.xcframework"
+  -framework "${WORK_DIR}/ios.xcarchive/Products/Library/Frameworks/GC_UniPlugin_App.framework" \
+  -framework "${WORK_DIR}/ios-sim.xcarchive/Products/Library/Frameworks/GC_UniPlugin_App.framework" \
+  -output "${WORK_DIR}/GC_UniPlugin_App.xcframework"
 
 
 

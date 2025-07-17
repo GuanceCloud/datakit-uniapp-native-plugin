@@ -1,12 +1,12 @@
 //
 //  FTMobileUniModule.m
-//  Guance-UniPlugin-App
+//  GC-UniPlugin-App
 //
 //  Created by hulilei on 2023/2/3.
 //
 
 #import "FTMobileUniModule.h"
-#import "Guance-UniPlugin-App-Version.h"
+#import "GC-UniPlugin-App-Version.h"
 #import <FTMobileSDK/FTMobileAgent.h>
 #import <FTMobileSDK/FTMobileConfig+Private.h>
 #import <FTMobileSDK/FTConstants.h>

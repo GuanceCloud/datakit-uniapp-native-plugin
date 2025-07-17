@@ -1,6 +1,6 @@
 //
 //  FTUniPluginUtils.h
-//  Guance-UniPlugin-App
+//  GC-UniPlugin-App
 //
 //  Created by hulilei on 2025/3/18.
 //

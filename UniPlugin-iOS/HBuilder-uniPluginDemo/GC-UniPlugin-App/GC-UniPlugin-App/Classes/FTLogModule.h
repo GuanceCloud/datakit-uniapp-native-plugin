@@ -1,6 +1,6 @@
 //
 //  FTLogModule.h
-//  Guance-UniPlugin-App
+//  GC-UniPlugin-App
 //
 //  Created by hulilei on 2023/2/3.
 //

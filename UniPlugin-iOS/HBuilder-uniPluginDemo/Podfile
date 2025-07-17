@@ -6,7 +6,7 @@ target 'HBuilder' do
   # Comment the next line if you don't want to use dynamic frameworks
   use_frameworks!
   # Pods for HBuilder
-  pod 'Guance-UniPlugin-App', :path=>'./Guance-UniPlugin-App'
+  pod 'GC-UniPlugin-App', :path=>'./GC-UniPlugin-App'
 end
 
 # 关闭bitcode

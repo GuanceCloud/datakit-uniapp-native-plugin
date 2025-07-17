@@ -37,24 +37,24 @@ PODS:
   - FTMobileSDK/FTSDKCore/URLSessionAutoInstrumentation (1.5.16):
     - FTMobileSDK/FTSDKCore/BaseUtils/Swizzle
     - FTMobileSDK/FTSDKCore/Protocol
-  - Guance-UniPlugin-App (0.2.2):
+  - GC-UniPlugin-App (0.2.3):
     - FTMobileSDK (= 1.5.16)
 
 DEPENDENCIES:
-  - Guance-UniPlugin-App (from `./Guance-UniPlugin-App`)
+  - GC-UniPlugin-App (from `./GC-UniPlugin-App`)
 
 SPEC REPOS:
   trunk:
     - FTMobileSDK
 
 EXTERNAL SOURCES:
-  Guance-UniPlugin-App:
-    :path: "./Guance-UniPlugin-App"
+  GC-UniPlugin-App:
+    :path: "./GC-UniPlugin-App"
 
 SPEC CHECKSUMS:
   FTMobileSDK: 39afb4bb6dd8612b20e5a9ef43962f5158819e7e
-  Guance-UniPlugin-App: f6e7bcbf4188dabfd3a3c828132c0e0f17c81b7b
+  GC-UniPlugin-App: 5b1df9a61af16b88edfbb5a346b75bfb7850d83e
 
-PODFILE CHECKSUM: 3b1ce419bde680a3118afff2f16151fb8eff7758
+PODFILE CHECKSUM: 0e9fbb1078b8b5f6fcbf1e25cd075814a29a3b31
 
 COCOAPODS: 1.15.2
