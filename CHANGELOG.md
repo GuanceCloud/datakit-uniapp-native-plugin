@@ -1,3 +1,9 @@
+# 0.2.3
+* Fixed the issue where assigning `false` to the following parameters failed on iOS:
+  RUM parameters (`enableNativeUserAction`, `enableNativeUserView`, `enableNativeUserResource`),
+  Log parameters (`enableLinkRumData`, `enableCustomLog`),
+  and Trace parameter (`enableAutoTrace`).
+---
 # 0.2.2
 * `GCUniPlugin-MobileAgent`
   * 支持通过 dataModifier，lineDataModifier 进行数据写入替换，支持数据脱敏
