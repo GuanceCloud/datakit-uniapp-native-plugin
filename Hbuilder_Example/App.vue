@@ -92,7 +92,7 @@
 </script>
 
 <style>
-	/*每个页面公共css */
+	/* Common CSS for each page */
 	.btn-list {
 		padding: 0px 30px;
 	}

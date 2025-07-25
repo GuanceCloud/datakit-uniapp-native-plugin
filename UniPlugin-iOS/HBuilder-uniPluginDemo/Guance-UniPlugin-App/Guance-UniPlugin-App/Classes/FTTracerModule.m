@@ -17,7 +17,7 @@ UNI_EXPORT_METHOD_SYNC(@selector(setConfig:))
     }
     if ([params.allKeys containsObject:@"traceType"]) {
         NSString *type =  params[@"traceType"];
-        //`ddTrace`（默认）、`zipkinMultiHeader`、`zipkinSingleHeader`、`traceparent`、`skywalking`、`jaeger`
+        //`ddTrace`（default）、`zipkinMultiHeader`、`zipkinSingleHeader`、`traceparent`、`skywalking`、`jaeger`
         if([type isEqualToString:@"ddTrace"]){
             trace.networkTraceType = FTNetworkTraceTypeDDtrace;
         }else if ([type isEqualToString:@"zipkinMultiHeader"]){

@@ -1,7 +1,7 @@
 /**
- * 采集 RUM View Event
- * 注意： 由于 App 的生命周期 onLaunch、onShow 早于第一个 page 的生命周期之前
- * 所以需要在 App 第一个显示的 page 内使用 GCPageMixin 补充页面信息，否则无法获取第一个页面的 viewName
+ * Collect RUM View Event
+ * Note: Since the App lifecycle onLaunch, onShow occurs before the first page lifecycle
+ * So you need to use GCPageMixin in the first displayed page of the App to supplement page information, otherwise you cannot get the viewName of the first page
  */
 var rum = uni.requireNativePlugin("GCUniPlugin-RUM");
 var loadStart;

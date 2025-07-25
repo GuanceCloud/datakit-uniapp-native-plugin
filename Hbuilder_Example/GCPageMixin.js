@@ -1,5 +1,5 @@
 /**
- * 用于补充 WatchRouter 在第一个页面的数据信息
+ * Used to supplement WatchRouter data information on the first page
  */
 var rum = uni.requireNativePlugin("GCUniPlugin-RUM");
 var loadStart;

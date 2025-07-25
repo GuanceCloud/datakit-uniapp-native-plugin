@@ -1,6 +1,6 @@
 <template>
 	<view class="btn-list">
-		<button type="primary" @click="tracing()">网络链路追踪</button>
+		<button type="primary" @click="tracing()">Network Link Tracing</button>
 	</view>
 </template>
 
@@ -22,7 +22,7 @@
 					'key': key,
 					'url': requestUrl,
 				})
-				console.log('调用getTraceHeader:' + header)
+				console.log('Calling getTraceHeader:' + header)
 				Utils.request(requestUrl, header)
 			}
 		},

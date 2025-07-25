@@ -108,25 +108,25 @@
 		<true/>
 	</dict>
 	<key>NSCameraUsageDescription</key>
-	<string>照相机</string>
+	<string>Camera</string>
 	<key>NSContactsUsageDescription</key>
-	<string>通讯录</string>
+	<string>Contacts</string>
 	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
-	<string>始终允许获取你的位置信息</string>
+	<string>Always allow access to your location information</string>
 	<key>NSLocationAlwaysUsageDescription</key>
-	<string>总是获取</string>
+	<string>Always access</string>
 	<key>NSLocationWhenInUseDescription</key>
 	<string></string>
 	<key>NSLocationWhenInUseUsageDescription</key>
 	<string></string>
 	<key>NSLocationWhenInUseUsageDescription - 2</key>
-	<string>用户使用时期定位</string>
+	<string>Location during user usage</string>
 	<key>NSMicrophoneUsageDescription</key>
-	<string>访问麦克风</string>
+	<string>Access microphone</string>
 	<key>NSPhotoLibraryUsageDescription</key>
-	<string>相册</string>
+	<string>Photo library</string>
 	<key>NSUserTrackingUsageDescription</key>
-	<string>请放心，开启权限不会获取您在其他站点的隐私信息，该权限仅用于标识设备并保障服务安全与提示浏览体验</string>
+	<string>Please rest assured that enabling this permission will not collect your privacy information from other sites. This permission is only used to identify devices and ensure service security and browsing experience</string>
 	<key>StatusBarBackground</key>
 	<string>#FFFFFF</string>
 	<key>UIApplicationShortcutItems</key>
@@ -135,9 +135,9 @@
 			<key>UIApplicationShortcutItemIconType</key>
 			<string>UIApplicationShortcutIconTypeShare</string>
 			<key>UIApplicationShortcutItemSubtitle</key>
-			<string>分享到微信、微博、QQ</string>
+			<string>Share to WeChat, Weibo, QQ</string>
 			<key>UIApplicationShortcutItemTitle</key>
-			<string>分 享</string>
+			<string>Share</string>
 			<key>UIApplicationShortcutItemType</key>
 			<string>share</string>
 		</dict>
@@ -147,7 +147,7 @@
 			<key>UIApplicationShortcutItemSubtitle</key>
 			<string>www.dcloud.io</string>
 			<key>UIApplicationShortcutItemTitle</key>
-			<string>关 于</string>
+			<string>About</string>
 			<key>UIApplicationShortcutItemType</key>
 			<string>about</string>
 			<key>UIApplicationShortcutItemUserInfo</key>

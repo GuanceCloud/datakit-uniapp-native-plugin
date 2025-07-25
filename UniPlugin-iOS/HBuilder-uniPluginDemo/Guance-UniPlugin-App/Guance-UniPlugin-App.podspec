@@ -41,8 +41,8 @@ Pod::Spec.new do |s|
   # }
   
   # s.public_header_files = 'Pod/Classes/**/*.h'
-  # s.frameworks = 'UIKit', 'MapKit'
-  # buildFramework.sh 用于在开发测试时自动更新代码中的版本号
+  # s.frameworks = 'UIKit', 'MapKit'  
+  # buildFramework.sh is used to automatically update the version number in the code during development and testing
   s.script_phase = {:name => 'changesdkVersion',:script => 'sh ../Guance-UniPlugin-App/buildFramework.sh cocoapods',:execution_position => :before_compile }
   s.dependency 'FTMobileSDK', '1.5.16'
   

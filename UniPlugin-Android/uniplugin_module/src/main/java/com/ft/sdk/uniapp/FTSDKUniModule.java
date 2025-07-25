@@ -29,7 +29,7 @@ public class FTSDKUniModule extends UniModule {
         String serverUrl = (String) map.get("serverUrl");
         String datakitUrl = (String) map.get("datakitUrl");
         if (datakitUrl == null) {
-            //兼容旧版本
+            //Compatible with old version
             datakitUrl = serverUrl;
         }
         String datawayUrl = (String) map.get("datawayUrl");
@@ -196,7 +196,7 @@ public class FTSDKUniModule extends UniModule {
     }
 
     /**
-     * 手动设置应用启动时间
+     * Manually set application startup time
      */
     @UniJSMethod(uiThread = true)
     public void manuallySetApplicationStart() {

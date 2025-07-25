@@ -7,14 +7,14 @@
 	}, {
 		"path": "pages/rum/rum",
 		"style": {
-			"navigationBarTitleText": "RUM数据采集",
+			"navigationBarTitleText": "RUM Data Collection",
 			"enablePullDownRefresh": false
 		}
 
 		}, {
 			"path": "pages/rum/rum-view-mixin",
 			"style": {
-				"navigationBarTitleText": "View mixin 方式采集",
+				"navigationBarTitleText": "View Mixin Collection Method",
 				"enablePullDownRefresh": false
 			}
 
@@ -22,14 +22,14 @@
 		, {
 			"path": "pages/tracing/tracing",
 			"style": {
-				"navigationBarTitleText": "网络链路追踪",
+				"navigationBarTitleText": "Network Link Tracing",
 				"enablePullDownRefresh": false
 			}
 
 	}, {
 		"path": "pages/logging/logging",
 		"style": {
-			"navigationBarTitleText": "日志输出",
+			"navigationBarTitleText": "Log Output",
 			"enablePullDownRefresh": false
 		}
 
@@ -96,13 +96,13 @@
 		"backgroundColor": "#F8F8F8"
 	},
 	"uniIdRouter": {},
-	"condition" : { //模式配置，仅开发期间生效
-		"current": 0, //当前激活的模式(list 的索引项)
+	"condition" : { //Mode configuration, only effective during development
+		"current": 0, //Currently active mode (index item of list)
 		"list": [
 			{
-				"name": "", //模式名称
-				"path": "", //启动页面，必选
-				"query": "" //启动参数，在页面的onLoad函数里面得到
+				"name": "", //Mode name
+				"path": "", //Start page, required
+				"query": "" //Start parameters, obtained in the onLoad function of the page
 			}
 		]
 	}

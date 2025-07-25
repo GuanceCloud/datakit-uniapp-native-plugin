@@ -23,7 +23,7 @@ UNI_EXPORT_METHOD_SYNC(@selector(setConfig:))
     }
     if ([params.allKeys containsObject:@"discardStrategy"]) {
         NSString *type = params[@"discardStrategy"];
-        //`discard`丢弃新数据（默认）、`discardOldest`
+        // `discard` discards new data (default), `discardOldest` discards the oldest data
         if([type isEqualToString:@"discardOldest"]){
             config.discardType = FTDiscardOldest;
         }else{

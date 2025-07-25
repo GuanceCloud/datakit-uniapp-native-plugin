@@ -1,6 +1,6 @@
 var rum = uni.requireNativePlugin("GCUniPlugin-RUM");
 var tracer = uni.requireNativePlugin("GCUniPlugin-Tracer");
-// 获取平台信息
+// Get platform information
 const platform = uni.getSystemInfoSync().platform;
 
 export default {
@@ -14,10 +14,10 @@ export default {
     isEmpty(value) {
 	    return value === null || value === undefined;
 	},
-	/// 通过 filterPlatform 参数进行平台过滤，当开启 `enableNativeUserResource` 时，
-	//  由于 uniapp 的网络请求在 iOS 端是使用系统 API 实现的，iOS 所有 resource 数据能够一并采集，
-	/// 此时请屏蔽 iOS 端 uniapp 中手动采集，以防止数据重复采集。
-	/// 例:["ios"], iOS 端设置不进行 trace 追踪与 RUM 采集。
+	/// Filter platforms through the filterPlatform parameter. When `enableNativeUserResource` is enabled,
+	//  Since uniapp network requests on iOS are implemented using system APIs, all resource data on iOS can be collected together,
+	/// At this time, please disable manual collection in uniapp on iOS to prevent duplicate data collection.
+	/// Example: ["ios"], iOS side is set not to perform trace tracking and RUM collection.
     request(options){ 
 		let key = this.getUUID();
 		var filter;
@@ -28,7 +28,7 @@ export default {
 		}
 		var traceHeader = {}
 		if(filter == false){
-		  // trace 关联 RUM
+		  // trace association RUM
 		  var traceHeader = tracer.getTraceHeader({
 		  	'key': key,
 		  	'url': options.url,

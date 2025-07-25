@@ -7,10 +7,10 @@
 	<meta name="MobileOptimized" content="320"/>
 	<title>Error</title>
 	<script type="text/javascript">
-// H5 plus事件处理
+// H5 plus event handling
 var ws=null;
 function plusReady(){
-	// Android处理返回键
+	// Android back button handling
 	plus.key.addEventListener('backbutton',function(){
 		(history.length==1)&&ws.close();
 		var c=setTimeout(function(){
@@ -31,14 +31,14 @@ if(window.plus){
 document.addEventListener('touchstart',function(){
     return false;
 },true);
-// 禁止选择
+// Disable selection
 document.oncontextmenu=function(){
 	return false;
 };
-// 获取错误信息
+// Get error information
 document.addEventListener("error",function(e){
-	info.innerText="请求的页面（"+e.url+"）无法打开";
-	console.log("请求的页面无法打开："+e.href);
+	info.innerText="The requested page ("+e.url+") cannot be opened";
+	console.log("The requested page cannot be opened: "+e.href);
 },false);
 	</script>
 	<style>

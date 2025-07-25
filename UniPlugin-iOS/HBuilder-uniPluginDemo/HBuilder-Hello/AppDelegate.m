@@ -3,7 +3,7 @@
 //  Pandora
 //
 //  Created by Mac Pro_C on 12-12-26.
-//  Copyright (c) 2012年 __MyCompanyName__. All rights reserved.
+//  Copyright (c) 2012 __MyCompanyName__. All rights reserved.
 //
 
 #import "AppDelegate.h"
@@ -25,7 +25,7 @@
 #pragma mark -
 #pragma mark app lifecycle
 /*
- * @Summary:程序启动时收到push消息
+ * @Summary: Received push message when program starts
  */
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
@@ -126,7 +126,7 @@
 }
 
 /*
- * @Summary:程序被第三方调用，传入参数启动
+ * @Summary: Program is called by third party, started with incoming parameters
  *
  */
 - (BOOL)application:(UIApplication *)application handleOpenURL:(NSURL *)url
@@ -139,7 +139,7 @@
     return YES;
 }
 /*
- * @Summary:远程push注册成功收到DeviceToken回调
+ * @Summary: Remote push registration successful, received DeviceToken callback
  *
  */
 - (void)application:(UIApplication *)application didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken
@@ -149,7 +149,7 @@
 }
 
 /*
- * @Summary: 远程push注册失败
+ * @Summary: Remote push registration failed
  */
 - (void)application:(UIApplication *)application didFailToRegisterForRemoteNotificationsWithError:(NSError *)error
 {
@@ -169,7 +169,7 @@ fetchCompletionHandler:(void (^)(UIBackgroundFetchResult result))completionHandl
 
 
 /*
- * @Summary:程序收到本地消息
+ * @Summary: Program received local message
  */
 - (void)application:(UIApplication *)application didReceiveLocalNotification:(UILocalNotification *)notification
 {

@@ -1,12 +1,12 @@
-# 当前脚本仅编译 xcframework 推荐使用 buildFramework.sh
-# buildFramework.sh 脚本里有替换 version 操作,借助 carthage 进行打包
+# This script only compiles xcframework, it is recommended to use buildFramework.sh
+# The buildFramework.sh script has a replace version operation, and uses carthage to package
 buildFrameWorkWithName(){
 
 FRAMEWORK_NAME="Guance-UniPlugin-App"
 WORK_DIR='./build'
 rm -r ${WORK_DIR}
 
-##xcodebuild打包
+##xcodebuild package
 xcodebuild archive \
   -scheme ${FRAMEWORK_NAME} \
   -archivePath "${WORK_DIR}/ios.xcarchive" \

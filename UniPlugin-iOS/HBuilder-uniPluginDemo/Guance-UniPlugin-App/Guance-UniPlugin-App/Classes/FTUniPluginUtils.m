@@ -13,13 +13,13 @@
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
         NSError *error = nil;
-        // 正则表达式：允许任意子域名，主域名为 dcloud.net.cn
+        // Regular expression: allow any subdomain, the main domain is dcloud.net.cn
         NSString *pattern =
-        @"^https?://"                // 协议头（http 或 https）
-        @"([a-zA-Z0-9-]+\\.)?"       // 任意子域名（例如 s2、t1、bs1 或其他）
-        @"dcloud\\.net\\.cn"          // 固定主域名
-        @"(:\\d+)?"                  // 可选端口（例如 :8080）
-        @"/.*";                      // 任意路径
+        @"^https?://"                // Protocol header (http or https)
+        @"([a-zA-Z0-9-]+\\.)?"       // Any subdomain (such as s2, t1, bs1, etc.)
+        @"dcloud\\.net\\.cn"          // Fixed main domain
+        @"(:\\d+)?"                  // Optional port (e.g., :8080)
+        @"/.*";                      // Any path
         regex =
         [NSRegularExpression regularExpressionWithPattern:pattern
                                                   options:0

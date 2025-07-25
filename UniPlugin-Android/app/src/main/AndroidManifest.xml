@@ -10,7 +10,7 @@
         android:resizeable="true"
         android:smallScreens="true" />
 
-    <!-- Barcode(二维码)  begin -->
+    <!-- Barcode (QR Code) begin -->
     <uses-permission android:name="android.permission.CAMERA" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 
@@ -19,7 +19,7 @@
 
     <uses-permission android:name="android.permission.VIBRATE" />
     <uses-permission android:name="android.permission.FLASHLIGHT" />
-    <!-- Barcode(二维码)  end -->
+    <!-- Barcode (QR Code) end -->
 
     <application
         android:name="io.dcloud.application.DCloudApplication"
@@ -29,7 +29,7 @@
         android:largeHeap="true"
         android:supportsRtl="true">
 
-        <!-- 应用入口 -->
+        <!-- Application entry -->
         <activity
             android:name="io.dcloud.PandoraEntry"
             android:configChanges="orientation|keyboardHidden|screenSize|mcc|mnc|fontScale"

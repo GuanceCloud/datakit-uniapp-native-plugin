@@ -7,7 +7,7 @@ import com.ft.sdk.FTAutoTrack;
 import com.ft.sdk.garble.utils.Utils;
 
 /**
- * UniApp 无法使用 gradle plugin，所以使用这种方式进
+ * UniApp cannot use gradle plugin, so use this method instead
  */
 public class FTUniAppStartManager {
     private static class SingletonHolder {

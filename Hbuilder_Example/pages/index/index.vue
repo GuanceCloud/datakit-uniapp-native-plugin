@@ -1,20 +1,20 @@
 <template>
 		<view class="btn-list">
-			<button type="primary" @click="bindUser()">绑定用户</button>
-			<button type="primary" @click="unbindUser()">解绑用户</button>
+			<button type="primary" @click="bindUser()">Bind User</button>
+			<button type="primary" @click="unbindUser()">Unbind User</button>
 			<button type="primary" @click="appendGlobalContext()">appendGlobalContext</button>
 			<button type="primary" @click="appendRUMGlobalContext()">appendRUMGlobalContext</button>
 			<button type="primary" @click="appendLogGlobalContext()">appendLogGlobalContext</button>		
-			<button type="primary" @click="flushSyncData()">主动数据同步</button>
-			<button type="primary" @click="clearAllData()">清除未同步本地数据</button>
+			<button type="primary" @click="flushSyncData()">Manual Data Sync</button>
+			<button type="primary" @click="clearAllData()">Clear Unsynchronized Local Data</button>
 			<navigator url="../logging/logging">
-				<button type="primary">日志输出</button>
+				<button type="primary">Log Output</button>
 			</navigator>
 			<navigator url="../tracing/tracing">
-				<button type="primary">网络链路追踪</button>
+				<button type="primary">Network Link Tracing</button>
 			</navigator>
 			<navigator url="../rum/rum">
-				<button type="primary">RUM数据采集</button>
+				<button type="primary">RUM Data Collection</button>
 			</navigator>
 		</view>
 	

@@ -1,11 +1,11 @@
-# 观测云 UniApp Native Plugin
+# Guance UniApp Native Plugin
 
-## 简介
-观测云应用于 UniApp 使用的 Native Plugin，支持 Android，iOS
+## Introduction
+Guance application Native Plugin for UniApp, supporting Android and iOS
 
-## 示例
- [观测云 UniApp Native Plugin Demo](https://github.com/GuanceCloud/datakit-uniapp-native-plugin/tree/develop/Hbuilder_Example)   
+## Example
+ [Guance UniApp Native Plugin Demo](https://github.com/GuanceCloud/datakit-uniapp-native-plugin/tree/develop/Hbuilder_Example)   
 
-## 使用文档
+## Documentation
 
-接入文档请查阅[官方文档](https://docs.guance.com/real-user-monitoring/uni-app/app-access/)
+For integration documentation, please refer to [Official Documentation](https://docs.guance.com/real-user-monitoring/uni-app/app-access/)

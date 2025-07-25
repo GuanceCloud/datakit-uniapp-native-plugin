@@ -4,7 +4,7 @@
 		<button type="primary" @click="startView()">View Start</button>
 		<button type="primary" @click="stopView()">View Stop</button>
 		<navigator url="../rum/rum-view-mixin">
-			<button type="primary">View Mixin 例子</button>
+			<button type="primary">View Mixin Example</button>
 		</navigator>
 		<button type="primary" @click="startAction()">Start Action</button>
 		<button type="primary" @click="addAction()">Add Action</button>
