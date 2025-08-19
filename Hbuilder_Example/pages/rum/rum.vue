@@ -81,13 +81,13 @@
 				})
 			},
 			resourceError() {
-				Utils.rumRequest('https://console-api.guance.com/not/found/', 'GET', {
+				Utils.rumRequest('https://httpbin.org/status/400', 'GET', {
 					'Accept': 'application/json',
 					'Content-Type': 'application/json'
 				})
 			},
 			resource() {
-				Utils.rumRequest('http://120.79.13.13:30007/api/user', 'GET', {
+				Utils.rumRequest('https://httpbin.org/status/200', 'GET', {
 					'Accept': 'application/json',
 					'Content-Type': 'application/json'
 				})

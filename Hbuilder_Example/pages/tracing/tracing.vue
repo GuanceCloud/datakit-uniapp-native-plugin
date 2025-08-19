@@ -7,8 +7,7 @@
 <script>
 	import Utils from '../../utils.js';
 	var tracer = uni.requireNativePlugin("GCUniPlugin-Tracer");
-	let requestUrl =
-		"http://testing-ft2x-api.cloudcare.cn/api/v1/account/permissions";
+	let requestUrl = "http://10.100.64.166:8000/api/user";
 	export default {
 		data() {
 			return {

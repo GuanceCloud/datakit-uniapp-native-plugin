@@ -1617,7 +1617,7 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"${PODS_CONFIGURATION_BUILD_DIR}/FTMobileSDK\"",
-					"\"${PODS_CONFIGURATION_BUILD_DIR}/Guance-UniPlugin-App\"",
+					"\"${PODS_CONFIGURATION_BUILD_DIR}/GC-UniPlugin-App\"",
 					"$(DEVELOPER_FRAMEWORKS_DIR)",
 					"$(PROJECT_DIR)/../SDK/libs",
 					"$(PROJECT_DIR)",
@@ -1632,7 +1632,7 @@
 					PDR_PLUS_UMENG,
 				);
 				INFOPLIST_FILE = "HBuilder-Hello/HBuilder-uniPlugin-Info.plist";
-				INFOPLIST_KEY_CFBundleDisplayName = GuanceUniPluginExample;
+				INFOPLIST_KEY_CFBundleDisplayName = GCUniPluginExample;
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1678,7 +1678,7 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"${PODS_CONFIGURATION_BUILD_DIR}/FTMobileSDK\"",
-					"\"${PODS_CONFIGURATION_BUILD_DIR}/Guance-UniPlugin-App\"",
+					"\"${PODS_CONFIGURATION_BUILD_DIR}/GC-UniPlugin-App\"",
 					"$(DEVELOPER_FRAMEWORKS_DIR)",
 					"$(PROJECT_DIR)/../SDK/libs",
 					"$(PROJECT_DIR)",
@@ -1693,7 +1693,7 @@
 					PDR_PLUS_UMENG,
 				);
 				INFOPLIST_FILE = "HBuilder-Hello/HBuilder-uniPlugin-Info.plist";
-				INFOPLIST_KEY_CFBundleDisplayName = GuanceUniPluginExample;
+				INFOPLIST_KEY_CFBundleDisplayName = GCUniPluginExample;
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",

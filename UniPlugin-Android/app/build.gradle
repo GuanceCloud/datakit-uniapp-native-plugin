@@ -5,7 +5,7 @@ android {
     compileSdkVersion 31
     buildToolsVersion '30.0.3'
     defaultConfig {
-        applicationId "com.guance.UniPlugin.demo"
+        applicationId "com.ft.UniPlugin.demo"
         minSdkVersion 21
         targetSdkVersion 31
         //It is recommended to set this property value to 21. When io.dcloud.PandoraEntry is used as the apk entry, targetSDKVersion>=21 must be set for immersive mode to take effect
