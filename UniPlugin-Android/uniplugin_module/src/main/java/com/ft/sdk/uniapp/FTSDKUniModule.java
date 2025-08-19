@@ -16,7 +16,6 @@ import java.util.Map;
 
 import io.dcloud.feature.uniapp.annotation.UniJSMethod;
 import io.dcloud.feature.uniapp.common.UniModule;
-import uni.dcloud.io.uniplugin_module.BuildConfig;
 
 public class FTSDKUniModule extends UniModule {
 
