@@ -20,7 +20,9 @@ import io.dcloud.feature.uniapp.common.UniModule;
 public class FTSDKUniModule extends UniModule {
 
     private final static String KEY_VERSION_SDK_PACKAGE_UNIAPP = "sdk_package_uniapp";
-
+    
+    // Store bridge context for use by FTRUMModule
+    private static Map<String, Object> bridgeContext;
 
     @UniJSMethod(uiThread = false)
     public void sdkConfig(JSONObject data) {
@@ -41,11 +43,17 @@ public class FTSDKUniModule extends UniModule {
         Boolean compressIntakeRequests = (Boolean) map.get("compressIntakeRequests");
         String serviceName = (String) map.get("service");
         Map<String, Object> globalContext = (Map<String, Object>) map.get("globalContext");
+        Map<String, Object> bridgeContextParam = (Map<String, Object>) map.get("bridgeContext");
         Boolean enableLimitWithDbSize = (Boolean) map.get("enableLimitWithDbSize");
         Number dbCacheLimit = (Number) (map.get("dbCacheLimit"));
         Object dbDiscardStrategy = map.get("dbDiscardStrategy");
         final Map<String, Object> dataModifier = (Map<String, Object>) map.get("dataModifier");
         final Map<String, Map<String, Object>> lineDataModifier = (Map<String, Map<String, Object>>) map.get("lineDataModifier");
+
+        // Store bridgeContext for later use
+        if (bridgeContextParam != null) {
+            bridgeContext = new HashMap<>(bridgeContextParam);
+        }
 
         FTSDKConfig sdkConfig = (datakitUrl != null)
                 ? FTSDKConfig.builder(datakitUrl)
@@ -200,5 +208,13 @@ public class FTSDKUniModule extends UniModule {
     @UniJSMethod(uiThread = true)
     public void manuallySetApplicationStart() {
         FTUniAppStartManager.get().start();
+    }
+
+    /**
+     * Get bridge context for use by FTRUMModule
+     * @return bridgeContext bridge context
+     */
+    public static Map<String, Object> getBridgeContext() {
+        return bridgeContext;
     }
 }

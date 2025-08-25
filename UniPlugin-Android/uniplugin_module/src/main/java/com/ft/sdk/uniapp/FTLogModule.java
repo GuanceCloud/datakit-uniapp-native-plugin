@@ -91,7 +91,7 @@ public class FTLogModule extends UniModule {
         String status = data.getString("status");
         JSONObject property = data.getJSONObject("property");
         if (content != null && status != null) {
-            HashMap<String, Object> propertyMap = Utils.convertJSONtoHashMap(property);
+            HashMap<String, Object> propertyMap = Utils.mergeBridgeContext(property);
             Status logStatus = null;
             for (Status value : Status.values()) {
                 if (value.name.equals(status)) {

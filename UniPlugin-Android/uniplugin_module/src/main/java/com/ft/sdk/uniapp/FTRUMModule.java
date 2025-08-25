@@ -22,6 +22,8 @@ import io.dcloud.feature.uniapp.common.UniModule;
 public class FTRUMModule extends UniModule {
     private static final String DEFAULT_ERROR_TYPE = "uniapp_crash";
 
+
+
     @UniJSMethod(uiThread = false)
     public void setConfig(JSONObject data) {
         Map<String, Object> map = Utils.convertJSONtoHashMap(data);
@@ -176,7 +178,7 @@ public class FTRUMModule extends UniModule {
         String actionName = data.getString("actionName");
         String actionType = data.getString("actionType");
         JSONObject property = data.getJSONObject("property");
-        HashMap<String, Object> params = Utils.convertJSONtoHashMap(property);
+        HashMap<String, Object> params = Utils.mergeBridgeContext(property);
         FTRUMGlobalManager.get().startAction(actionName, actionType, params);
 
     }
@@ -186,7 +188,7 @@ public class FTRUMModule extends UniModule {
         String actionName = data.getString("actionName");
         String actionType = data.getString("actionType");
         JSONObject property = data.getJSONObject("property");
-        HashMap<String, Object> params = Utils.convertJSONtoHashMap(property);
+        HashMap<String, Object> params = Utils.mergeBridgeContext(property);
         FTRUMGlobalManager.get().startAction(actionName, actionType, params);
 
     }
@@ -202,7 +204,7 @@ public class FTRUMModule extends UniModule {
     public void startView(JSONObject data) {
         String viewName = data.getString("viewName");
         JSONObject property = data.getJSONObject("property");
-        HashMap<String, Object> params = Utils.convertJSONtoHashMap(property);
+        HashMap<String, Object> params = Utils.mergeBridgeContext(property);
         FTRUMGlobalManager.get().startView(viewName, params);
     }
 
@@ -210,7 +212,7 @@ public class FTRUMModule extends UniModule {
     public void stopView(JSONObject data) {
         if (data != null) {
             JSONObject property = data.getJSONObject("property");
-            HashMap<String, Object> params = Utils.convertJSONtoHashMap(property);
+            HashMap<String, Object> params = Utils.mergeBridgeContext(property);
             FTRUMGlobalManager.get().stopView(params);
         } else {
             FTRUMGlobalManager.get().stopView();
@@ -227,7 +229,7 @@ public class FTRUMModule extends UniModule {
             appState = AppState.getValueFrom(state);
         }
         JSONObject property = data.getJSONObject("property");
-        HashMap<String, Object> params = Utils.convertJSONtoHashMap(property);
+        HashMap<String, Object> params = Utils.mergeBridgeContext(property);
         FTRUMGlobalManager.get().addError(stack, message, DEFAULT_ERROR_TYPE, appState, params);
     }
 
@@ -236,7 +238,7 @@ public class FTRUMModule extends UniModule {
     public void startResource(JSONObject data) {
         String key = data.getString("key");
         JSONObject property = data.getJSONObject("property");
-        HashMap<String, Object> params = Utils.convertJSONtoHashMap(property);
+        HashMap<String, Object> params = Utils.mergeBridgeContext(property);
         FTRUMGlobalManager.get().startResource(key, params);
 
     }
