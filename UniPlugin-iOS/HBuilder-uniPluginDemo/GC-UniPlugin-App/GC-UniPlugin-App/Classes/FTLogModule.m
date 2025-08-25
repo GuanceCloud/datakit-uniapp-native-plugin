@@ -7,6 +7,7 @@
 
 #import "FTLogModule.h"
 #import <FTMobileSDK/FTMobileAgent.h>
+#import "FTUniPluginUtils.h"
 @implementation FTLogModule
 #pragma mark --------- INIT ----------
 UNI_EXPORT_METHOD_SYNC(@selector(setConfig:))
@@ -51,6 +52,7 @@ UNI_EXPORT_METHOD(@selector(logging:))
     NSString *statusStr = [params objectForKey:@"status"];
     NSDictionary *property = [params objectForKey:@"property"];
     if(content && statusStr){
+        property = [FTUniPluginUtils mergeBridgeContext:property];
         [[FTLogger sharedInstance] log:content status:statusStr property:property];
     }
 }

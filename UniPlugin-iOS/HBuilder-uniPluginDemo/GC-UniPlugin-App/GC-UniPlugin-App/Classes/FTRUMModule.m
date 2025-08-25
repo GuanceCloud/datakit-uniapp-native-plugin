@@ -153,12 +153,14 @@ UNI_EXPORT_METHOD(@selector(addResource:))
     NSString *actionName = [params objectForKey:@"actionName"];
     NSString *actionType = [params objectForKey:@"actionType"];
     NSDictionary *property = [params objectForKey:@"property"];
+    property = [FTUniPluginUtils mergeBridgeContext:property];
     [[FTExternalDataManager sharedManager] startAction:actionName actionType:actionType property:property];
 }
 - (void)addAction:(NSDictionary *)params{
     NSString *actionName = [params objectForKey:@"actionName"];
     NSString *actionType = [params objectForKey:@"actionType"];
     NSDictionary *property = [params objectForKey:@"property"];
+    property = [FTUniPluginUtils mergeBridgeContext:property];
     [[FTExternalDataManager sharedManager] addAction:actionName actionType:actionType property:property];
 }
 - (void)onCreateView:(NSDictionary *)params{
@@ -169,6 +171,7 @@ UNI_EXPORT_METHOD(@selector(addResource:))
 - (void)startView:(NSDictionary *)params{
     NSString *viewName = [params objectForKey:@"viewName"];
     NSDictionary *property = [params objectForKey:@"property"];
+    property = [FTUniPluginUtils mergeBridgeContext:property];
     [[FTExternalDataManager sharedManager] startViewWithName:viewName property:property];
 }
 - (void)stopView:(NSDictionary *)params{
@@ -191,11 +194,13 @@ UNI_EXPORT_METHOD(@selector(addResource:))
     }
     type = type?:@"uniapp_crash";
     NSDictionary *property = [params objectForKey:@"property"];
+    property = [FTUniPluginUtils mergeBridgeContext:property];
     [[FTExternalDataManager sharedManager] addErrorWithType:type state:appState message:message stack:stack property:property];
 }
 - (void)startResource:(NSDictionary *)params{
     NSString *key = [params objectForKey:@"key"];
     NSDictionary *property = [params objectForKey:@"property"];
+    property = [FTUniPluginUtils mergeBridgeContext:property];
     [[FTExternalDataManager sharedManager] startResourceWithKey:key property:property];
 }
 - (void)stopResource:(NSDictionary *)params{

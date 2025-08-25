@@ -10,6 +10,7 @@
 #import <FTMobileSDK/FTMobileAgent.h>
 #import <FTMobileSDK/FTMobileConfig+Private.h>
 #import <FTMobileSDK/FTConstants.h>
+#import "FTUniPluginUtils.h"
 @implementation FTMobileUniModule
 #pragma mark --------- SDK INIT ----------
 UNI_EXPORT_METHOD_SYNC(@selector(sdkConfig:))
@@ -143,5 +144,13 @@ UNI_EXPORT_METHOD(@selector(shutDown))
 UNI_EXPORT_METHOD(@selector(clearAllData))
 - (void)clearAllData{
     [FTMobileAgent clearAllData];
+}
+#pragma mark --------- Bridge Context ----------
+UNI_EXPORT_METHOD(@selector(bridgeContext:))
+- (void)bridgeContext:(NSDictionary *)context{
+    if (context && context.count > 0) {
+        NSDictionary *immutableContext = [context copy];
+        [FTUniPluginUtils setBridgeContext:immutableContext];
+    }
 }
 @end
