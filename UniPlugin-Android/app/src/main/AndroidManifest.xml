@@ -82,7 +82,7 @@
         </activity>
         <meta-data
             android:name="dcloud_appkey"
-            android:value="7bca4a41f3436a6939c83e26b8ee2e21" />
+            android:value="079f7a9f196dcf70cba2b8651c2fa23a" />
     </application>
 
 </manifest>
