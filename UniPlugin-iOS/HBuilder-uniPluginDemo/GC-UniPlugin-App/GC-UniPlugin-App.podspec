@@ -44,6 +44,6 @@ Pod::Spec.new do |s|
   # s.frameworks = 'UIKit', 'MapKit'
   # buildFramework.sh is used to automatically update the version number in the code during development and testing
   s.script_phase = {:name => 'changesdkVersion',:script => 'sh ../GC-UniPlugin-App/buildFramework.sh cocoapods',:execution_position => :before_compile }
-  s.dependency 'FTMobileSDK', '1.5.16'
+  s.dependency 'FTMobileSDK', '1.5.18'
   
 end
