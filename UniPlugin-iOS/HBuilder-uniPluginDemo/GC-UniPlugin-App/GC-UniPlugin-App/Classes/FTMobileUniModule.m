@@ -16,6 +16,12 @@
 UNI_EXPORT_METHOD_SYNC(@selector(sdkConfig:))
 - (void)sdkConfig:(NSDictionary *)params{
     dispatch_block_t block = ^(){
+        if ([params.allKeys containsObject:@"bridgeContext"]) {
+            NSDictionary *bridgeContext = [params valueForKey:@"bridgeContext"];
+            if (bridgeContext && bridgeContext.count>0){
+                [FTUniPluginUtils setBridgeContext:bridgeContext];
+            }
+        }
         NSString *serverUrl = [params valueForKey:@"serverUrl"];
         NSString *datakitUrl = [params valueForKey:@"datakitUrl"];
         datakitUrl = datakitUrl ?:serverUrl;
@@ -144,13 +150,5 @@ UNI_EXPORT_METHOD(@selector(shutDown))
 UNI_EXPORT_METHOD(@selector(clearAllData))
 - (void)clearAllData{
     [FTMobileAgent clearAllData];
-}
-#pragma mark --------- Bridge Context ----------
-UNI_EXPORT_METHOD(@selector(bridgeContext:))
-- (void)bridgeContext:(NSDictionary *)context{
-    if (context && context.count > 0) {
-        NSDictionary *immutableContext = [context copy];
-        [FTUniPluginUtils setBridgeContext:immutableContext];
-    }
 }
 @end
