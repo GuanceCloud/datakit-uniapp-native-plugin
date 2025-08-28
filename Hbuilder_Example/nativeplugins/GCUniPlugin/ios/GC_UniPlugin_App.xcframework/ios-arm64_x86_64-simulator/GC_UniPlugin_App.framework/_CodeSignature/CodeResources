@@ -22,7 +22,7 @@
 		</data>
 		<key>Headers/GC-UniPlugin-App-Version.h</key>
 		<data>
-		KZDbUQYmqPe4x5PG3jg27V0b1Ug=
+		VR+K/6HkG8J2hOMnZWuGl59OqZY=
 		</data>
 		<key>Headers/GC_UniPlugin_App.h</key>
 		<data>
@@ -30,7 +30,7 @@
 		</data>
 		<key>Info.plist</key>
 		<data>
-		wrh2dGdg77hcz8Eu6mvR6s9iGfI=
+		ze11C21jmlkUyJ5P/bGAB2y4vhs=
 		</data>
 		<key>Modules/module.modulemap</key>
 		<data>
@@ -87,11 +87,11 @@
 		<dict>
 			<key>hash</key>
 			<data>
-			KZDbUQYmqPe4x5PG3jg27V0b1Ug=
+			VR+K/6HkG8J2hOMnZWuGl59OqZY=
 			</data>
 			<key>hash2</key>
 			<data>
-			KRF7XNt9EbRsSNuevZD1RhhPDM/z2DlDF/keznWLh9E=
+			SsUc969OBr/L++up9pNojXG6IgvKQ7V74+t3OXrkHBY=
 			</data>
 		</dict>
 		<key>Headers/GC_UniPlugin_App.h</key>
