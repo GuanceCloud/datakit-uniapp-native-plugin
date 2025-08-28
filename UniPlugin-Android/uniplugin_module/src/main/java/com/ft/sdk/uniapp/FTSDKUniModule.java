@@ -1,15 +1,14 @@
 package com.ft.sdk.uniapp;
 
-import com.ft.sdk.garble.utils.Constants;
-
 import com.alibaba.fastjson.JSONObject;
 import com.ft.sdk.DBCacheDiscard;
+import com.ft.sdk.DataModifier;
 import com.ft.sdk.FTSDKConfig;
 import com.ft.sdk.FTSdk;
 import com.ft.sdk.InnerClassProxy;
-import com.ft.sdk.garble.bean.UserData;
-import com.ft.sdk.DataModifier;
 import com.ft.sdk.LineDataModifier;
+import com.ft.sdk.garble.bean.UserData;
+import com.ft.sdk.garble.utils.Constants;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -19,8 +18,6 @@ import io.dcloud.feature.uniapp.common.UniModule;
 
 public class FTSDKUniModule extends UniModule {
 
-    private final static String KEY_VERSION_SDK_PACKAGE_UNIAPP = "sdk_package_uniapp";
-    
     // Store bridge context for use by FTRUMModule
     private static Map<String, Object> bridgeContext;
 
@@ -43,17 +40,11 @@ public class FTSDKUniModule extends UniModule {
         Boolean compressIntakeRequests = (Boolean) map.get("compressIntakeRequests");
         String serviceName = (String) map.get("service");
         Map<String, Object> globalContext = (Map<String, Object>) map.get("globalContext");
-        Map<String, Object> bridgeContextParam = (Map<String, Object>) map.get("bridgeContext");
         Boolean enableLimitWithDbSize = (Boolean) map.get("enableLimitWithDbSize");
         Number dbCacheLimit = (Number) (map.get("dbCacheLimit"));
         Object dbDiscardStrategy = map.get("dbDiscardStrategy");
         final Map<String, Object> dataModifier = (Map<String, Object>) map.get("dataModifier");
         final Map<String, Map<String, Object>> lineDataModifier = (Map<String, Map<String, Object>>) map.get("lineDataModifier");
-
-        // Store bridgeContext for later use
-        if (bridgeContextParam != null) {
-            bridgeContext = new HashMap<>(bridgeContextParam);
-        }
 
         FTSDKConfig sdkConfig = (datakitUrl != null)
                 ? FTSDKConfig.builder(datakitUrl)
@@ -120,7 +111,7 @@ public class FTSDKUniModule extends UniModule {
                 public Map<String, Object> modify(String measurement, HashMap<String, Object> data) {
                     if (measurement.equals(Constants.FT_LOG_DEFAULT_MEASUREMENT)) {
                         return lineDataModifier.get("log");
-                    }else{
+                    } else {
                         return lineDataModifier.get(measurement);
                     }
                 }
@@ -208,6 +199,14 @@ public class FTSDKUniModule extends UniModule {
     @UniJSMethod(uiThread = true)
     public void manuallySetApplicationStart() {
         FTUniAppStartManager.get().start();
+    }
+
+    @UniJSMethod(uiThread = true)
+    public void setBridgeContext(JSONObject context) {
+        if (bridgeContext == null) {
+            bridgeContext = new HashMap<>();
+        }
+        bridgeContext = Utils.convertJSONtoHashMap(context);
     }
 
     /**
