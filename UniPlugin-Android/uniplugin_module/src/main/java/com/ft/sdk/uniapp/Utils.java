@@ -31,7 +31,7 @@ public class Utils {
         
         // Get and merge bridgeContext
         Map<String, Object> bridgeContext = FTSDKUniModule.getBridgeContext();
-        if (bridgeContext != null) {
+        if (!bridgeContext.isEmpty()) {
             params.putAll(bridgeContext);
         }
         

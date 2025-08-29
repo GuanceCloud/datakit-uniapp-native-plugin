@@ -5,21 +5,26 @@ import com.ft.sdk.DBCacheDiscard;
 import com.ft.sdk.DataModifier;
 import com.ft.sdk.FTSDKConfig;
 import com.ft.sdk.FTSdk;
-import com.ft.sdk.InnerClassProxy;
 import com.ft.sdk.LineDataModifier;
 import com.ft.sdk.garble.bean.UserData;
 import com.ft.sdk.garble.utils.Constants;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 import io.dcloud.feature.uniapp.annotation.UniJSMethod;
 import io.dcloud.feature.uniapp.common.UniModule;
 
 public class FTSDKUniModule extends UniModule {
 
-    // Store bridge context for use by FTRUMModule
-    private static Map<String, Object> bridgeContext;
+    private static final Map<String, Object> bridgeContext = new ConcurrentHashMap<>();
+
+    static {
+        bridgeContext.put("sdk_bridge_info",
+                "{\"uniapp\":\"" + BuildConfig.FT_UNI_APP_SDK_VERSION + "\"}");
+    }
+
 
     @UniJSMethod(uiThread = false)
     public void sdkConfig(JSONObject data) {
@@ -95,8 +100,6 @@ public class FTSDKUniModule extends UniModule {
                 sdkConfig.setDbCacheDiscard(DBCacheDiscard.DISCARD);
             }
         }
-        InnerClassProxy.addPkgInfo(sdkConfig, "uniapp", BuildConfig.FT_UNI_APP_SDK_VERSION);
-
         if (dataModifier != null) {
             sdkConfig.setDataModifier(new DataModifier() {
                 @Override
@@ -202,15 +205,15 @@ public class FTSDKUniModule extends UniModule {
     }
 
     @UniJSMethod(uiThread = true)
-    public void setBridgeContext(JSONObject context) {
-        if (bridgeContext == null) {
-            bridgeContext = new HashMap<>();
+    public void appendBridgeContext(JSONObject context) {
+        if (context != null) {
+            bridgeContext.putAll(Utils.convertJSONtoHashMap(context));
         }
-        bridgeContext = Utils.convertJSONtoHashMap(context);
     }
 
     /**
      * Get bridge context for use by FTRUMModule
+     *
      * @return bridgeContext bridge context
      */
     public static Map<String, Object> getBridgeContext() {
