@@ -6,7 +6,6 @@
 //
 
 #import "FTMobileUniModule.h"
-#import "GC-UniPlugin-App-Version.h"
 #import <FTMobileSDK/FTMobileAgent.h>
 #import <FTMobileSDK/FTMobileConfig+Private.h>
 #import <FTMobileSDK/FTConstants.h>
@@ -98,7 +97,6 @@ UNI_EXPORT_METHOD_SYNC(@selector(sdkConfig:))
                 return nil;
             };
         }
-        [config addPkgInfo:@"uniapp" value:UniPluginAppVersion];
         [FTMobileAgent startWithConfigOptions:config];
     };
     if (NSThread.isMainThread) {
