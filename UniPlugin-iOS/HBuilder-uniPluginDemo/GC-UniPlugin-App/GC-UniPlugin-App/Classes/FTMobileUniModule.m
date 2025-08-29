@@ -146,11 +146,11 @@ UNI_EXPORT_METHOD(@selector(clearAllData))
     [FTMobileAgent clearAllData];
 }
 #pragma mark --------- Bridge Context ----------
-UNI_EXPORT_METHOD(@selector(setBridgeContext:))
-- (void)setBridgeContext:(NSDictionary *)context{
+UNI_EXPORT_METHOD(@selector(appendBridgeContext:))
+- (void)appendBridgeContext:(NSDictionary *)context{
     if (context && context.count > 0) {
         NSDictionary *immutableContext = [context copy];
-        [FTUniPluginUtils setBridgeContext:immutableContext];
+        [FTUniPluginUtils appendBridgeContext:immutableContext];
     }
 }
 @end

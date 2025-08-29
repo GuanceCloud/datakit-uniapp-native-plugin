@@ -6,18 +6,18 @@
 //
 
 #import "FTUniPluginUtils.h"
-static NSDictionary *bridgeContext;
+static NSMutableDictionary *bridgeContext;
 static dispatch_queue_t bridgeContextQueue;
 @implementation FTUniPluginUtils
 + (void)initialize {
     if (self == [FTUniPluginUtils class]) {
-        bridgeContextQueue = dispatch_queue_create("com.ft.sdk.bridgeContextQueue", DISPATCH_QUEUE_SERIAL);
-        bridgeContext = @{};
+        bridgeContextQueue = dispatch_queue_create("com.ft.sdk.bridgeContextQueue", DISPATCH_QUEUE_CONCURRENT);
+        bridgeContext = [NSMutableDictionary new];
     }
 }
-+ (void)setBridgeContext:(NSDictionary *)context{
-    dispatch_sync(bridgeContextQueue, ^{
-        bridgeContext = context;
++ (void)appendBridgeContext:(NSDictionary *)context{
+    dispatch_barrier_async(bridgeContextQueue, ^{
+        [bridgeContext addEntriesFromDictionary:context];
     });
 }
 + (NSDictionary *)mergeBridgeContext:(NSDictionary *)property{
@@ -25,18 +25,13 @@ static dispatch_queue_t bridgeContextQueue;
     dispatch_sync(bridgeContextQueue, ^{
         bridge = [bridgeContext copy];
     });
-    NSMutableDictionary *result = [NSMutableDictionary dictionary];
-    if (property) [result addEntriesFromDictionary:property];
-    if (bridge) [result addEntriesFromDictionary:bridge];
-    return [result copy];
-}
-
-+ (NSDictionary *)safeBridgeContext{
-    __block NSDictionary *result;
-    dispatch_sync(bridgeContextQueue, ^{
-        result = bridgeContext;
-    });
-    return result;
+    if (bridge.count == 0) {
+        return property;
+    }else{
+        NSMutableDictionary *result = [NSMutableDictionary dictionaryWithDictionary:bridge];
+        if (property) [result addEntriesFromDictionary:property];
+        return [result copy];
+    }
 }
 + (BOOL)filterBlackResource:(NSURL *)url{
     static NSRegularExpression *regex;

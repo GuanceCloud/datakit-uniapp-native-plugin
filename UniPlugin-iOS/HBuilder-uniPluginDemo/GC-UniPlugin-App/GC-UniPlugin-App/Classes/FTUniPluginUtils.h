@@ -12,7 +12,7 @@ NS_ASSUME_NONNULL_BEGIN
 @interface FTUniPluginUtils : NSObject
 + (BOOL)filterBlackResource:(NSURL *)url;
 
-+ (void)setBridgeContext:(NSDictionary *)context;
++ (void)appendBridgeContext:(NSDictionary *)context;
 + (NSDictionary *)mergeBridgeContext:(NSDictionary *)property;
 @end
 
