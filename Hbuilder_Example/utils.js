@@ -2,7 +2,7 @@ export const SERVER_URL = 'http://127.0.0.1:9529'
 export const ANDROID_APP_ID = 'android_uniapp_app_id'
 export const IOS_APP_ID = 'ios_uniapp_app_id'
 export const TRACK_ID = 'track_id'
-import gc from './GCRequest.js';
+import {gcRequest} from 'ft-uniapp-js-plugin';
 export default {
 
 	getUUID() {
@@ -13,7 +13,7 @@ export default {
 		});
 	},
 	request(requestUrl, header = {}) {
-		gc.request({
+		gcRequest.request({
 			url: requestUrl,
 			header: header,
 			success() {
@@ -25,7 +25,7 @@ export default {
 		});
 	},
 	rumRequest(requestUrl,method,header = {}){			
-			gc.request({
+			gcRequest.request({
 				url: requestUrl,
 				method: method,
 				header: header,

@@ -1,22 +1,22 @@
 /**
- * Used for single View data collection, not used together with GCWatchRouter.js
- */
+	* Used for single View data collection, not used together with GCWatchRouter.js
+	*/
 var rum = uni.requireNativePlugin("GCUniPlugin-RUM");
 var loadStart;
 
 /**
- * Get the current page route path 
- * @returns {string|null} The current page route (e.g. "pages/home/index"), returns null if failed
- */
+	* Get the current page route path 
+	* @returns {string|null} The current page route (e.g. "pages/home/index"), returns null if failed
+	*/
 const getCurrentPagePath = () => {
-  try {
-    return getCurrentPages().pop()?.route || null;
-  } catch (e) {
-    return null;
-  }
+	try {
+		return getCurrentPages().pop()?.route || null;
+	} catch (e) {
+		return null;
+	}
 };
 
-export const rumViewMixin = {
+export const gcPageViewMixinOnly = {
 	onLoad() {
 		loadStart = new Date().getTime() * 1000000
 	},
@@ -29,10 +29,10 @@ export const rumViewMixin = {
 		}
 		loadStart = null;
 		let pagePath = getCurrentPagePath();
-		if (pagePath === null){
+		if (pagePath === null) {
 			return;
 		}
-		if (duration >= 0 ) {
+		if (duration >= 0) {
 			rum.onCreateView({
 				'viewName': pagePath,
 				'loadTime': duration,
@@ -47,10 +47,10 @@ export const rumViewMixin = {
 		// The page is triggered each time it appears on the screen.
 		if (loadStart === null) {
 			let pagePath = getCurrentPagePath();
-			if (pagePath !== null){
-			rum.startView({
-				'viewName': pagePath
-			})
+			if (pagePath !== null) {
+				rum.startView({
+					'viewName': pagePath
+				})
 			}
 		}
 	},

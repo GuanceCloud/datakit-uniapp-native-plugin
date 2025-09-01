@@ -47,6 +47,9 @@
             /* SDK configuration */
             "sdkConfigs" : {
                 "ad" : {}
+            },
+            "webpack" : {
+                "include" : [ "node_modules" ]
             }
         },
         "nativePlugins" : {

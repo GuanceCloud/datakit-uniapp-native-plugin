@@ -1,13 +1,13 @@
 <script>
 	import * as SDKConst from '@/utils.js'
-	import WatchRouter from '@/GCWatchRouter.js'	
+	import {gcWatchRouter} from 'ft-uniapp-js-plugin';
 	var ftMobileSDK = uni.requireNativePlugin("GCUniPlugin-MobileAgent");
 	var logger = uni.requireNativePlugin("GCUniPlugin-Logger");
 	var rum = uni.requireNativePlugin("GCUniPlugin-RUM");
 	var tracer = uni.requireNativePlugin("GCUniPlugin-Tracer");
     export var appState = 'startup';
 	export default {
-		mixins:[WatchRouter],
+		mixins:[gcWatchRouter],
 		onLaunch: function() {
 			ftMobileSDK.sdkConfig({
 				'datakitUrl': SDKConst.SERVER_URL,

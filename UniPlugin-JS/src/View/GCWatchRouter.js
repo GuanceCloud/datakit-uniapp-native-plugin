@@ -1,15 +1,15 @@
 /**
- * Collect RUM View Event
- * Note: Since the App lifecycle onLaunch, onShow occurs before the first page lifecycle
- * So you need to use GCPageMixin in the first displayed page of the App to supplement page information, otherwise you cannot get the viewName of the first page
- */
+	* Collect RUM View Event
+	* Note: Since the App lifecycle onLaunch, onShow occurs before the first page lifecycle
+	* So you need to use GCPageMixin in the first displayed page of the App to supplement page information, otherwise you cannot get the viewName of the first page
+	*/
 var rum = uni.requireNativePlugin("GCUniPlugin-RUM");
 var loadStart;
 var currentPage;
 
-export default {
-	globalData:{
-		GCFirstLoad:true,
+export const gcWatchRouter = {
+	globalData: {
+		GCFirstLoad: true,
 	},
 	onLaunch: function() {
 		this.startWatch()
@@ -38,7 +38,7 @@ export default {
 				invoke(e) {
 					gc.rumRecordNewView(e.url)
 				},
-				success(){
+				success() {
 					gc.rumStopOldStartNew()
 				}
 			})
@@ -63,19 +63,19 @@ export default {
 					gc.rumRecordNewView(e.url)
 				},
 				success() {
-				    gc.rumStopOldStartNew()
+					gc.rumStopOldStartNew()
 				}
 			})
 			uni.addInterceptor('navigateBack', {
 				invoke() {
 					navBackPagesLength = getCurrentPages().length
-					if(navBackPagesLength > 1){
+					if (navBackPagesLength > 1) {
 						gc.rumRecordNewView(null)
 					}
 				},
 				success(result) {
-					if(navBackPagesLength>1){
-						console.log('currentPageLength:'+navBackPagesLength)
+					if (navBackPagesLength > 1) {
+						console.log('currentPageLength:' + navBackPagesLength)
 						gc.navigateBack()
 					}
 				}
@@ -83,9 +83,9 @@ export default {
 		},
 		rumRecordNewView(url) {
 			loadStart = new Date().getTime() * 1000000
-			if(url !== null){
+			if (url !== null) {
 				currentPage = url.split('?')[0]
-			}else{
+			} else {
 				currentPage = null
 			}
 		},
@@ -105,13 +105,13 @@ export default {
 				rum.startView({
 					'viewName': currentPage
 				})
-				if(addListener){
+				if (addListener) {
 					this.addPopGestureEventListener()
 				}
 			}
 			loadStart = null;
 		},
-		navigateBack(){
+		navigateBack() {
 			var pages = getCurrentPages()
 			if (pages.length > 0) {
 				let pageInstance = pages[pages.length - 1]
@@ -119,26 +119,26 @@ export default {
 				this.rumStopOldStartNew(false)
 			}
 		},
-		addPopGestureEventListener(){
+		addPopGestureEventListener() {
 			var pages = getCurrentPages()
 			if (pages.length > 0) {
 				let pageInstance = pages[pages.length - 1]
 				let object = pageInstance.$getAppWebview()
 				let gc = this;
-				console.log('addEventListener:'+object)
-				object.addEventListener('popGesture',gc.eventListenerPopGesture)
+				console.log('addEventListener:' + object)
+				object.addEventListener('popGesture', gc.eventListenerPopGesture)
 				let orionclose = object.onclose
-				object.onclose = function (result){
+				object.onclose = function(result) {
 					console.log('onclose')
-					object.removeEventListener('popGesture',gc.eventListenerPopGesture)
+					object.removeEventListener('popGesture', gc.eventListenerPopGesture)
 					orionclose(result)
 				}
 			}
 		},
-		eventListenerPopGesture(e){
+		eventListenerPopGesture(e) {
 			let progress = e.progress
-			if(progress == 100){
-				console.log('popGesture',e)
+			if (progress == 100) {
+				console.log('popGesture', e)
 				this.navigateBack()
 			}
 		}

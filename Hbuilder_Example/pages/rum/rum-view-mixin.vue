@@ -6,14 +6,14 @@
 </template>
 
 <script>
-import { rumViewMixin } from '../../GCPageViewMixinOnly.js';
+import  {gcPageViewMixinOnly} from 'ft-uniapp-js-plugin';
 	export default {
 		data() {
 			return {
 				
 			}
 		},
-		mixins:[rumViewMixin],
+		mixins:[gcPageViewMixinOnly],
 		methods: {
 			
 		}

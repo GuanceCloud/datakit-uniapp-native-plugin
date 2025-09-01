@@ -21,13 +21,14 @@
 </template>
 
 <script>
-	import GCPageMixin from '../../GCPageMixin.js';
+	import {gcPageMixin} from 'ft-uniapp-js-plugin';
+	
 	var ftMobileSDK = uni.requireNativePlugin("GCUniPlugin-MobileAgent");
 	export default {
 		data() {
 			return {}
 		},
-		mixins:[GCPageMixin],
+		mixins:[gcPageMixin],
 		onReady(){
 			console.log('index onReady')
 		},
