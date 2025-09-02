@@ -9,6 +9,6 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "ft-uniapp-js-plugin":"../UniPlugin-JS/ft-uniapp-js-plugin-0.2.4-alpha.3.tgz"
+    "ft-uniapp-js-plugin": "file:../UniPlugin-JS/ft-uniapp-js-plugin-0.2.4-alpha.3.tgz"
   }
 }
