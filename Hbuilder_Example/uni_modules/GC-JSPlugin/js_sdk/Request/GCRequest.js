@@ -62,7 +62,7 @@ export const gcRequest = {
 					options.fail(err);
 				}
 			},
-			complete() {
+			complete: () => {
 				if (!filter) {
 					rum.stopResource({
 						'key': key,
@@ -79,7 +79,7 @@ export const gcRequest = {
 						}
 					})
 				}
-				if (options.complete !== null || options.complete !== undefined) {
+				if (!this.isEmpty(options.complete) && typeof options.complete === 'function') {
 					options.complete();
 				}
 			}

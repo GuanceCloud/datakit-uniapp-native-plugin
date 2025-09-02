@@ -21,7 +21,7 @@
 </template>
 
 <script>
-	import {gcPageMixin} from 'ft-uniapp-js-plugin';
+	import {gcPageMixin} from '@/uni_modules/GC-JSPlugin/js_sdk/index.js';
 	
 	var ftMobileSDK = uni.requireNativePlugin("GCUniPlugin-MobileAgent");
 	export default {

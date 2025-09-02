@@ -6,7 +6,7 @@
 </template>
 
 <script>
-import  {gcPageViewMixinOnly} from 'ft-uniapp-js-plugin';
+import  {gcPageViewMixinOnly} from '@/uni_modules/GC-JSPlugin/js_sdk/index.js';
 	export default {
 		data() {
 			return {
