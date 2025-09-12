@@ -9,6 +9,8 @@
 		<button type="primary" @click="startAction()">Start Action</button>
 		<button type="primary" @click="addAction()">Add Action</button>
 		<button type="primary" @click="addError()">Add Error</button>
+		<button type="primary" @click="consoleError()">Generate an Error</button>
+		<button type="primary" @click="uniError()">Generate a Console Error</button>
 		<button type="primary" @click="resource()">Resource Normal</button>
 		<button type="primary" @click="resourceError()">Resource Error</button>
 	</view>
@@ -79,6 +81,12 @@
 						'error_property': 'uni_test'
 					}
 				})
+			},
+			consoleError() {
+			    console.error('console error')	
+			},
+			uniError() {
+				throw new Error('This is a throw error')
 			},
 			resourceError() {
 				Utils.rumRequest('https://httpbin.org/status/400', 'GET', {

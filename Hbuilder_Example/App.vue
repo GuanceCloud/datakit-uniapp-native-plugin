@@ -5,7 +5,6 @@
 	var logger = uni.requireNativePlugin("GCUniPlugin-Logger");
 	var rum = uni.requireNativePlugin("GCUniPlugin-RUM");
 	var tracer = uni.requireNativePlugin("GCUniPlugin-Tracer");
-    export var appState = 'startup';
 	export default {
 		mixins:[gcWatchRouter],
 		onLaunch: function() {
@@ -59,34 +58,6 @@
 				'traceType': 'ddTrace',
 				'enableLinkRUMData':true,
 			})
-		},
-		onShow: function() {
-			appState = 'run'
-		},
-		onHide: function() {
-		},
-		onError: function(err) {
-			if (err instanceof Error) {
-				console.log('Error name:', err.name);
-				console.log('Error message:', err.message);
-				console.log('Error stack:', err.stack);
-				if (rum) {
-					rum.addError({
-						'message': err.message,
-						'stack': err.stack,
-						'state': 'run',
-					})
-				}
-			} else if (err instanceof String) {
-				console.log('Error:', err);
-				if (rum) {
-					rum.addError({
-						'message': err,
-						'stack': err,
-						'state': 'run',
-					})
-				}
-			}
 		}
 	}
 </script>

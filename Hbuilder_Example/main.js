@@ -1,4 +1,7 @@
 import App from './App'
+import { gcErrorTracking } from './uni_modules/GC-JSPlugin/js_sdk'
+
+gcErrorTracking.startTracking()
 
 // #ifndef VUE3
 import Vue from 'vue'

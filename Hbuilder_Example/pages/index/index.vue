@@ -4,7 +4,8 @@
 			<button type="primary" @click="unbindUser()">Unbind User</button>
 			<button type="primary" @click="appendGlobalContext()">appendGlobalContext</button>
 			<button type="primary" @click="appendRUMGlobalContext()">appendRUMGlobalContext</button>
-			<button type="primary" @click="appendLogGlobalContext()">appendLogGlobalContext</button>		
+			<button type="primary" @click="appendLogGlobalContext()">appendLogGlobalContext</button>
+			<button type="primary" @click="appendBridgeContext()">appendBridgeContext</button>
 			<button type="primary" @click="flushSyncData()">Manual Data Sync</button>
 			<button type="primary" @click="clearAllData()">Clear Unsynchronized Local Data</button>
 			<navigator url="../logging/logging">
@@ -60,6 +61,11 @@
 		  	  ftMobileSDK.appendLogGlobalContext({
 				  'ft_global_log_key':'ft_global_log_value'
 		     })
+		  },
+		  appendBridgeContext(){
+			  ftMobileSDK.appendBridgeContext({
+				 'ft_bridge_context': 'ft_bridge_context_value'
+			 })
 		  },
 		  flushSyncData(){
 		  	  ftMobileSDK.flushSyncData()
