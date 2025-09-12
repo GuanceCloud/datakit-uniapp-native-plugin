@@ -16,13 +16,25 @@
 		<data>
 		P4QoKH8Mllw4NzTARjXsCEIjZcc=
 		</data>
+		<key>Headers/FTEnumConstant.h</key>
+		<data>
+		L3snR1IqxllpRhPekoNl1rAZ8r4=
+		</data>
 		<key>Headers/FTExternalDataManager.h</key>
 		<data>
 		9qnigww/BlO0QkAYsp4mjFHhyks=
 		</data>
+		<key>Headers/FTLog+Private.h</key>
+		<data>
+		0M5fD8I14ZGaEznwr+3noVotG1E=
+		</data>
 		<key>Headers/FTLog.h</key>
 		<data>
 		awXVeIkJD2G4WMwmpXeXpxCB/Vo=
+		</data>
+		<key>Headers/FTLogMessage.h</key>
+		<data>
+		RZUjedNsPFeR9Efyz5tZXp3FDfg=
 		</data>
 		<key>Headers/FTLogger.h</key>
 		<data>
@@ -144,6 +156,17 @@
 			ghkT77M1UUQ6jqM87qH4BcRMvAJGQJ2fGYiHj0uycuA=
 			</data>
 		</dict>
+		<key>Headers/FTEnumConstant.h</key>
+		<dict>
+			<key>hash</key>
+			<data>
+			L3snR1IqxllpRhPekoNl1rAZ8r4=
+			</data>
+			<key>hash2</key>
+			<data>
+			U1xuhbrshhWMnwfPEania5XhkzEBu9mpFqGudDhywUE=
+			</data>
+		</dict>
 		<key>Headers/FTExternalDataManager.h</key>
 		<dict>
 			<key>hash</key>
@@ -155,6 +178,17 @@
 			Ylh8gpV7pXTlfcgCoq/6Sx/KSAbnyccBWPMewkcp48g=
 			</data>
 		</dict>
+		<key>Headers/FTLog+Private.h</key>
+		<dict>
+			<key>hash</key>
+			<data>
+			0M5fD8I14ZGaEznwr+3noVotG1E=
+			</data>
+			<key>hash2</key>
+			<data>
+			+fr3K7AJrWXKs3T5l16bGRrH+P6zlFTLjO16HdZ1d+o=
+			</data>
+		</dict>
 		<key>Headers/FTLog.h</key>
 		<dict>
 			<key>hash</key>
@@ -164,6 +198,17 @@
 			<key>hash2</key>
 			<data>
 			nUvSEZ1q6Iv4MIv8IbdpcAzm6EWtmXbfVRAnBVoy79E=
+			</data>
+		</dict>
+		<key>Headers/FTLogMessage.h</key>
+		<dict>
+			<key>hash</key>
+			<data>
+			RZUjedNsPFeR9Efyz5tZXp3FDfg=
+			</data>
+			<key>hash2</key>
+			<data>
+			nZaYjUEmm1ShZ+gQAjWrDMLBzSgv1+lGJbThF+/+qIw=
 			</data>
 		</dict>
 		<key>Headers/FTLogger.h</key>
