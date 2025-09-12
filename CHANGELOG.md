@@ -1,3 +1,11 @@
+# 0.2.4
+* `GCUniPlugin-MobileAgent`
+  * Support the addition of bridge context through the `appendBridgeContext` method to distinguish the data source or to mark specific scenarios.
+* `GC-JSPlugin`
+  * Refactor RUM monitoring js file as plugins 
+  * Support use `gcErrorTracking.startTracking()` method collection errors
+* Compatible with iOS 1.5.17, 1.5.18, Android ft-sdk 1.6.12, 1.6.13, 1.6.14
+---
 # 0.2.3
 * Fixed the issue where assigning `false` to the following parameters failed on iOS:
   RUM parameters (`enableNativeUserAction`, `enableNativeUserView`, `enableNativeUserResource`),
