@@ -7,6 +7,7 @@
 
 #import "FTUniPluginUtils.h"
 #import "GC-UniPlugin-App-Version.h"
+#import <FTMobileSDK/FTLog+Private.h>
 static NSMutableDictionary *bridgeContext;
 static dispatch_queue_t bridgeContextQueue;
 @implementation FTUniPluginUtils
@@ -14,12 +15,13 @@ static dispatch_queue_t bridgeContextQueue;
     if (self == [FTUniPluginUtils class]) {
         bridgeContextQueue = dispatch_queue_create("com.ft.sdk.bridgeContextQueue", DISPATCH_QUEUE_CONCURRENT);
         bridgeContext = [NSMutableDictionary new];
-        [bridgeContext setValue:@{@"uniapp":UniPluginAppVersion} forKey:@"sdk_bridge_info"];
+        [FTUniPluginUtils appendBridgeContext:@{@"sdk_bridge_info":@{@"uniapp":UniPluginAppVersion}}];
     }
 }
 + (void)appendBridgeContext:(NSDictionary *)context{
     dispatch_barrier_async(bridgeContextQueue, ^{
         [bridgeContext addEntriesFromDictionary:context];
+        FTInnerLogInfo(@"[GC-UniPlugin-App] current bridgeContext: %@",bridgeContext);
     });
 }
 + (NSDictionary *)mergeBridgeContext:(NSDictionary *)property{
