@@ -1,5 +1,5 @@
 import App from './App'
-import { gcErrorTracking } from './uni_modules/GC-JSPlugin/js_sdk'
+import { gcErrorTracking } from '@/uni_modules/GC-JSPlugin'
 
 gcErrorTracking.startTracking()
 

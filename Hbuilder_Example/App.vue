@@ -1,6 +1,6 @@
 <script>
 	import * as SDKConst from '@/utils.js'
-	import {gcWatchRouter} from '@/uni_modules/GC-JSPlugin/js_sdk/index.js';
+	import {gcWatchRouter} from '@/uni_modules/GC-JSPlugin';
 	var ftMobileSDK = uni.requireNativePlugin("GCUniPlugin-MobileAgent");
 	var logger = uni.requireNativePlugin("GCUniPlugin-Logger");
 	var rum = uni.requireNativePlugin("GCUniPlugin-RUM");
