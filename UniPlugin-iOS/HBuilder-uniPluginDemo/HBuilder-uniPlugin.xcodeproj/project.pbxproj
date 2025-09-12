@@ -3,10 +3,14 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 52;
+	objectVersion = 60;
 	objects = {
 
 /* Begin PBXBuildFile section */
+		174D14B52E73C80200C29B59 /* TencentOpenAPI.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 174D14A02E73C7D500C29B59 /* TencentOpenAPI.xcframework */; };
+		174D14B82E73C81800C29B59 /* AlipaySDK.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 174D13D42E73C7D500C29B59 /* AlipaySDK.xcframework */; };
+		174D14BA2E73C85400C29B59 /* UMAPM.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 174D14A42E73C7D500C29B59 /* UMAPM.framework */; };
+		174D14BC2E73C86E00C29B59 /* UMAPM.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 174D14A42E73C7D500C29B59 /* UMAPM.framework */; };
 		174F8B402A5D4D0B000CC5AA /* Pandora in Resources */ = {isa = PBXBuildFile; fileRef = 174F8B3F2A5D4D0B000CC5AA /* Pandora */; };
 		17788C18298D22170007B47F /* BDSClientEASRResources in Resources */ = {isa = PBXBuildFile; fileRef = 17788C17298D22170007B47F /* BDSClientEASRResources */; };
 		240905031C200AEF0070786F /* CoreBluetooth.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 240905021C200AEF0070786F /* CoreBluetooth.framework */; };
@@ -16,8 +20,6 @@
 		2430A7021E11603E00D3D42D /* libssl.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 2430A7001E11603E00D3D42D /* libssl.a */; };
 		2447371B1D0830BB00D0F08F /* WebKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2447371A1D0830BB00D0F08F /* WebKit.framework */; };
 		24A7515F1D9CCCC600C8B0F9 /* QuickLook.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 24A7515E1D9CCCC600C8B0F9 /* QuickLook.framework */; };
-		24AFD7FF1CB50C3200C0F062 /* AlipaySDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 24AFD7FB1CB50C3200C0F062 /* AlipaySDK.framework */; };
-		24AFD8021CB50C3200C0F062 /* TencentOpenAPI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 24AFD7FE1CB50C3200C0F062 /* TencentOpenAPI.framework */; };
 		24AFD8401CB50C4000C0F062 /* libalixpayment.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 24AFD8031CB50C3F00C0F062 /* libalixpayment.a */; };
 		24AFD8431CB50C4000C0F062 /* libBaiduMobStatForSDK.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 24AFD8061CB50C3F00C0F062 /* libBaiduMobStatForSDK.a */; };
 		24AFD8461CB50C4000C0F062 /* libcoreSupport.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 24AFD8091CB50C3F00C0F062 /* libcoreSupport.a */; };
@@ -124,7 +126,6 @@
 		672CE2B322DC9118005A0D88 /* DCUniVideoPublic.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 672CE2B222DC9118005A0D88 /* DCUniVideoPublic.framework */; };
 		672CE2B522DC916C005A0D88 /* libDCUniZXing.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 672CE2B422DC916C005A0D88 /* libDCUniZXing.a */; };
 		6731F3A4232F5B7A007838BC /* libresolv.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 6731F3A3232F5B7A007838BC /* libresolv.tbd */; };
-		6731F3A7232F5B87007838BC /* UMCommon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6731F3A5232F5B87007838BC /* UMCommon.framework */; };
 		6731F3AA232F5B97007838BC /* Photos.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6731F3A9232F5B97007838BC /* Photos.framework */; };
 		673E6E7321E44ABF00C021FE /* liblibFingerprint.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 673E6E7221E44ABF00C021FE /* liblibFingerprint.a */; };
 		67414FA024333E320093CD65 /* uni-jsframework.js in Resources */ = {isa = PBXBuildFile; fileRef = 67414F9F24333E320093CD65 /* uni-jsframework.js */; };
@@ -180,26 +181,235 @@
 		8EED65A6198A626B000A4449 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8EED65A5198A626B000A4449 /* MapKit.framework */; };
 		8EED65A8198A6273000A4449 /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8EED65A7198A6273000A4449 /* OpenGLES.framework */; };
 		95DA22F0276A0B1E00071681 /* UMAPM.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 95DA22EE276A0B1E00071681 /* UMAPM.framework */; };
-		95DA22F1276A0B1E00071681 /* UMDevice.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 95DA22EF276A0B1E00071681 /* UMDevice.framework */; };
 		97D33A5D24750907004DDFB5 /* liblibPDRCore.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 247F85DA1FA32B2C006ECAC6 /* liblibPDRCore.a */; };
 		97D33A5E24750907004DDFB5 /* liblibWeex.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 2FDE1569215F468000588710 /* liblibWeex.a */; };
 		EAD8D88245DA0882EC0AC342 /* Pods_HBuilder.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 710327A53A7EC983E8F01EB5 /* Pods_HBuilder.framework */; };
 /* End PBXBuildFile section */
 
-/* Begin PBXCopyFilesBuildPhase section */
-		7A4980F42126ADAD00D20880 /* Embed Frameworks */ = {
-			isa = PBXCopyFilesBuildPhase;
-			buildActionMask = 2147483647;
-			dstPath = "";
-			dstSubfolderSpec = 10;
-			files = (
-			);
-			name = "Embed Frameworks";
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-/* End PBXCopyFilesBuildPhase section */
-
 /* Begin PBXFileReference section */
+		174D13D22E73C7D500C29B59 /* KSAdSDK.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; path = KSAdSDK.xcframework; sourceTree = "<group>"; };
+		174D13D42E73C7D500C29B59 /* AlipaySDK.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; path = AlipaySDK.xcframework; sourceTree = "<group>"; };
+		174D13D52E73C7D500C29B59 /* AliyunFaceAuthFacade.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = AliyunFaceAuthFacade.framework; sourceTree = "<group>"; };
+		174D13D62E73C7D500C29B59 /* AliyunMobileRPC.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = AliyunMobileRPC.framework; sourceTree = "<group>"; };
+		174D13D72E73C7D500C29B59 /* AliyunOSSiOS.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = AliyunOSSiOS.framework; sourceTree = "<group>"; };
+		174D13D82E73C7D500C29B59 /* AMapFoundationKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = AMapFoundationKit.framework; sourceTree = "<group>"; };
+		174D13D92E73C7D500C29B59 /* AMapLocationKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = AMapLocationKit.framework; sourceTree = "<group>"; };
+		174D13DA2E73C7D500C29B59 /* AMapSearchKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = AMapSearchKit.framework; sourceTree = "<group>"; };
+		174D13DB2E73C7D500C29B59 /* APBToygerFacade.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = APBToygerFacade.framework; sourceTree = "<group>"; };
+		174D13DC2E73C7D500C29B59 /* AppAuth.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; path = AppAuth.xcframework; sourceTree = "<group>"; };
+		174D13DD2E73C7D500C29B59 /* APPSecuritySDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = APPSecuritySDK.framework; sourceTree = "<group>"; };
+		174D13DE2E73C7D500C29B59 /* BaiduMapAPI_Base.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = BaiduMapAPI_Base.framework; sourceTree = "<group>"; };
+		174D13DF2E73C7D500C29B59 /* BaiduMapAPI_Map.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = BaiduMapAPI_Map.framework; sourceTree = "<group>"; };
+		174D13E02E73C7D500C29B59 /* BaiduMapAPI_Search.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = BaiduMapAPI_Search.framework; sourceTree = "<group>"; };
+		174D13E12E73C7D500C29B59 /* BaiduMapAPI_Utils.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = BaiduMapAPI_Utils.framework; sourceTree = "<group>"; };
+		174D13E22E73C7D500C29B59 /* BaiduMobAdSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = BaiduMobAdSDK.framework; sourceTree = "<group>"; };
+		174D13E32E73C7D500C29B59 /* BioAuthAPI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = BioAuthAPI.framework; sourceTree = "<group>"; };
+		174D13E42E73C7D500C29B59 /* BioAuthEngine.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = BioAuthEngine.framework; sourceTree = "<group>"; };
+		174D13E52E73C7D500C29B59 /* BMKLocationKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = BMKLocationKit.framework; sourceTree = "<group>"; };
+		174D13E62E73C7D500C29B59 /* BUAdSDK.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; path = BUAdSDK.xcframework; sourceTree = "<group>"; };
+		174D13E72E73C7D500C29B59 /* BURelyFoundation_Global.xcframework */ = {isa = PBXFileReference; expectedSignature = "AppleDeveloperProgram:22MMUN2RN5:BYTEDANCE PTE. LTD."; lastKnownFileType = wrapper.xcframework; path = BURelyFoundation_Global.xcframework; sourceTree = "<group>"; };
+		174D13E82E73C7D500C29B59 /* CSJMediation.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; path = CSJMediation.xcframework; sourceTree = "<group>"; };
+		174D13E92E73C7D500C29B59 /* DCloudBigInt.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; path = DCloudBigInt.xcframework; sourceTree = "<group>"; };
+		174D13EA2E73C7D500C29B59 /* DCloudUTSExtAPI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = DCloudUTSExtAPI.framework; sourceTree = "<group>"; };
+		174D13EB2E73C7D500C29B59 /* DCloudUTSFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = DCloudUTSFoundation.framework; sourceTree = "<group>"; };
+		174D13EC2E73C7D500C29B59 /* DCUniAdBd.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; path = DCUniAdBd.xcframework; sourceTree = "<group>"; };
+		174D13ED2E73C7D500C29B59 /* DCUniAdCsj.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; path = DCUniAdCsj.xcframework; sourceTree = "<group>"; };
+		174D13EE2E73C7D500C29B59 /* DCUniAdGdt.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; path = DCUniAdGdt.xcframework; sourceTree = "<group>"; };
+		174D13EF2E73C7D500C29B59 /* DCUniAdGg.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; path = DCUniAdGg.xcframework; sourceTree = "<group>"; };
+		174D13F02E73C7D500C29B59 /* DCUniAdGm.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; path = DCUniAdGm.xcframework; sourceTree = "<group>"; };
+		174D13F12E73C7D500C29B59 /* DCUniAdKs.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; path = DCUniAdKs.xcframework; sourceTree = "<group>"; };
+		174D13F22E73C7D500C29B59 /* DCUniAdKsContent.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; path = DCUniAdKsContent.xcframework; sourceTree = "<group>"; };
+		174D13F32E73C7D500C29B59 /* DCUniAdPg.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; path = DCUniAdPg.xcframework; sourceTree = "<group>"; };
+		174D13F42E73C7D500C29B59 /* DCUniAdSgm.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; path = DCUniAdSgm.xcframework; sourceTree = "<group>"; };
+		174D13F52E73C7D500C29B59 /* DCUniAdWm.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; path = DCUniAdWm.xcframework; sourceTree = "<group>"; };
+		174D13F62E73C7D500C29B59 /* DCUniAdYT.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; path = DCUniAdYT.xcframework; sourceTree = "<group>"; };
+		174D13F72E73C7D500C29B59 /* DCUniBase.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = DCUniBase.framework; sourceTree = "<group>"; };
+		174D13F82E73C7D500C29B59 /* DCUniRecord.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = DCUniRecord.framework; sourceTree = "<group>"; };
+		174D13F92E73C7D500C29B59 /* DCUniVideoPublic.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = DCUniVideoPublic.framework; sourceTree = "<group>"; };
+		174D13FA2E73C7D500C29B59 /* deviceiOS.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = deviceiOS.framework; sourceTree = "<group>"; };
+		174D13FB2E73C7D500C29B59 /* DTFIdentityManager.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = DTFIdentityManager.framework; sourceTree = "<group>"; };
+		174D13FC2E73C7D500C29B59 /* DTFSensorServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = DTFSensorServices.framework; sourceTree = "<group>"; };
+		174D13FD2E73C7D500C29B59 /* DTFUIModule.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = DTFUIModule.framework; sourceTree = "<group>"; };
+		174D13FE2E73C7D500C29B59 /* DTFUtility.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = DTFUtility.framework; sourceTree = "<group>"; };
+		174D13FF2E73C7D500C29B59 /* FBAEMKit.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; path = FBAEMKit.xcframework; sourceTree = "<group>"; };
+		174D14002E73C7D500C29B59 /* FBAudienceNetwork.xcframework */ = {isa = PBXFileReference; expectedSignature = "AppleDeveloperProgram:V9WTTPBFK9:Meta Platforms, Inc."; lastKnownFileType = wrapper.xcframework; path = FBAudienceNetwork.xcframework; sourceTree = "<group>"; };
+		174D14012E73C7D500C29B59 /* FBLPromises.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; path = FBLPromises.xcframework; sourceTree = "<group>"; };
+		174D14022E73C7D500C29B59 /* FBSDKCoreKit.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; path = FBSDKCoreKit.xcframework; sourceTree = "<group>"; };
+		174D14032E73C7D500C29B59 /* FBSDKCoreKit_Basics.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; path = FBSDKCoreKit_Basics.xcframework; sourceTree = "<group>"; };
+		174D14042E73C7D500C29B59 /* FBSDKLoginKit.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; path = FBSDKLoginKit.xcframework; sourceTree = "<group>"; };
+		174D14052E73C7D500C29B59 /* FirebaseAnalytics.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; path = FirebaseAnalytics.xcframework; sourceTree = "<group>"; };
+		174D14062E73C7D500C29B59 /* FirebaseCore.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; path = FirebaseCore.xcframework; sourceTree = "<group>"; };
+		174D14072E73C7D500C29B59 /* FirebaseCoreInternal.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; path = FirebaseCoreInternal.xcframework; sourceTree = "<group>"; };
+		174D14082E73C7D500C29B59 /* FirebaseInstallations.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; path = FirebaseInstallations.xcframework; sourceTree = "<group>"; };
+		174D14092E73C7D500C29B59 /* FirebaseMessaging.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; path = FirebaseMessaging.xcframework; sourceTree = "<group>"; };
+		174D140A2E73C7D500C29B59 /* FLAdSaas.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; path = FLAdSaas.xcframework; sourceTree = "<group>"; };
+		174D140B2E73C7D500C29B59 /* FLAdUniAdapter.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; path = FLAdUniAdapter.xcframework; sourceTree = "<group>"; };
+		174D140C2E73C7D500C29B59 /* GDTMobSDK.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; path = GDTMobSDK.xcframework; sourceTree = "<group>"; };
+		174D140D2E73C7D500C29B59 /* GeYanSdk.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; path = GeYanSdk.xcframework; sourceTree = "<group>"; };
+		174D140E2E73C7D500C29B59 /* GoogleAppMeasurement.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; path = GoogleAppMeasurement.xcframework; sourceTree = "<group>"; };
+		174D140F2E73C7D500C29B59 /* GoogleAppMeasurementIdentitySupport.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; path = GoogleAppMeasurementIdentitySupport.xcframework; sourceTree = "<group>"; };
+		174D14102E73C7D500C29B59 /* GoogleDataTransport.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; path = GoogleDataTransport.xcframework; sourceTree = "<group>"; };
+		174D14112E73C7D500C29B59 /* GoogleMaps.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = GoogleMaps.framework; sourceTree = "<group>"; };
+		174D14122E73C7D500C29B59 /* GoogleMapsBase.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = GoogleMapsBase.framework; sourceTree = "<group>"; };
+		174D14132E73C7D500C29B59 /* GoogleMapsCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = GoogleMapsCore.framework; sourceTree = "<group>"; };
+		174D14142E73C7D500C29B59 /* GoogleMobileAds.xcframework */ = {isa = PBXFileReference; expectedSignature = "AppleDeveloperProgram:EQHXZ8M8AV:Google LLC"; lastKnownFileType = wrapper.xcframework; path = GoogleMobileAds.xcframework; sourceTree = "<group>"; };
+		174D14152E73C7D500C29B59 /* GoogleSignIn.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; path = GoogleSignIn.xcframework; sourceTree = "<group>"; };
+		174D14162E73C7D500C29B59 /* GoogleUtilities.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; path = GoogleUtilities.xcframework; sourceTree = "<group>"; };
+		174D14172E73C7D500C29B59 /* GTCommonSDK.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; path = GTCommonSDK.xcframework; sourceTree = "<group>"; };
+		174D14182E73C7D500C29B59 /* GTMAppAuth.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; path = GTMAppAuth.xcframework; sourceTree = "<group>"; };
+		174D14192E73C7D500C29B59 /* GTMSessionFetcher.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; path = GTMSessionFetcher.xcframework; sourceTree = "<group>"; };
+		174D141A2E73C7D500C29B59 /* GTSDK.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; path = GTSDK.xcframework; sourceTree = "<group>"; };
+		174D141B2E73C7D500C29B59 /* iflyMSC.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = iflyMSC.framework; sourceTree = "<group>"; };
+		174D141C2E73C7D500C29B59 /* IJKMediaFrameworkWithSSL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = IJKMediaFrameworkWithSSL.framework; sourceTree = "<group>"; };
+		174D141D2E73C7D500C29B59 /* InMobiAdapter.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; path = InMobiAdapter.xcframework; sourceTree = "<group>"; };
+		174D141E2E73C7D500C29B59 /* InMobiSDK.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; path = InMobiSDK.xcframework; sourceTree = "<group>"; };
+		174D141F2E73C7D500C29B59 /* IronSource.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; path = IronSource.xcframework; sourceTree = "<group>"; };
+		174D14202E73C7D500C29B59 /* IronSourceAdapter.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; path = IronSourceAdapter.xcframework; sourceTree = "<group>"; };
+		174D14212E73C7D500C29B59 /* KSAdSDK.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; path = KSAdSDK.xcframework; sourceTree = "<group>"; };
+		174D14222E73C7D500C29B59 /* KSCrash.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = KSCrash.framework; sourceTree = "<group>"; };
+		174D14232E73C7D500C29B59 /* libalixpayment.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libalixpayment.a; sourceTree = "<group>"; };
+		174D14242E73C7D500C29B59 /* libAMapImp.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libAMapImp.a; sourceTree = "<group>"; };
+		174D14252E73C7D500C29B59 /* libAMapLocationPlugin.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libAMapLocationPlugin.a; sourceTree = "<group>"; };
+		174D14262E73C7D500C29B59 /* libAppleOauth.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libAppleOauth.a; sourceTree = "<group>"; };
+		174D14272E73C7D500C29B59 /* libBaiduKeyVerify.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libBaiduKeyVerify.a; sourceTree = "<group>"; };
+		174D14282E73C7D500C29B59 /* libBaiduLocationPlugin.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libBaiduLocationPlugin.a; sourceTree = "<group>"; };
+		174D14292E73C7D500C29B59 /* libBaiduMobStatForSDK.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libBaiduMobStatForSDK.a; sourceTree = "<group>"; };
+		174D142A2E73C7D500C29B59 /* libbaiduSpeech.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libbaiduSpeech.a; sourceTree = "<group>"; };
+		174D142B2E73C7D500C29B59 /* libBaiduSpeechSDK.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libBaiduSpeechSDK.a; sourceTree = "<group>"; };
+		174D142C2E73C7D500C29B59 /* libbmapimp.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libbmapimp.a; sourceTree = "<group>"; };
+		174D142D2E73C7D500C29B59 /* libcoreSupport.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libcoreSupport.a; sourceTree = "<group>"; };
+		174D142E2E73C7D500C29B59 /* libcrypto.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libcrypto.a; sourceTree = "<group>"; };
+		174D142F2E73C7D500C29B59 /* libDCUniAdWeexModule.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libDCUniAdWeexModule.a; sourceTree = "<group>"; };
+		174D14302E73C7D500C29B59 /* libDCUniAmap.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libDCUniAmap.a; sourceTree = "<group>"; };
+		174D14312E73C7D500C29B59 /* libDCUniBarcode.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libDCUniBarcode.a; sourceTree = "<group>"; };
+		174D14322E73C7D500C29B59 /* libDCUniBMap.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libDCUniBMap.a; sourceTree = "<group>"; };
+		174D14332E73C7D500C29B59 /* libDCUniCanvas.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libDCUniCanvas.a; sourceTree = "<group>"; };
+		174D14342E73C7D500C29B59 /* libDCUniFaceID.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libDCUniFaceID.a; sourceTree = "<group>"; };
+		174D14352E73C7D500C29B59 /* libDCUniGoogleMap.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libDCUniGoogleMap.a; sourceTree = "<group>"; };
+		174D14362E73C7D500C29B59 /* libDCUniGPUImage.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libDCUniGPUImage.a; sourceTree = "<group>"; };
+		174D14372E73C7D500C29B59 /* libDCUniLivePush.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libDCUniLivePush.a; sourceTree = "<group>"; };
+		174D14382E73C7D500C29B59 /* libDCUniMap.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libDCUniMap.a; sourceTree = "<group>"; };
+		174D14392E73C7D500C29B59 /* libDCUniVideo.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libDCUniVideo.a; sourceTree = "<group>"; };
+		174D143A2E73C7D500C29B59 /* libDCUniZXing.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libDCUniZXing.a; sourceTree = "<group>"; };
+		174D143B2E73C7D500C29B59 /* libFBOauth.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libFBOauth.a; sourceTree = "<group>"; };
+		174D143C2E73C7D500C29B59 /* libFCMPush.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libFCMPush.a; sourceTree = "<group>"; };
+		174D143D2E73C7D500C29B59 /* libGDTMobSDK.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libGDTMobSDK.a; sourceTree = "<group>"; };
+		174D143E2E73C7D500C29B59 /* libGeTuiPush.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libGeTuiPush.a; sourceTree = "<group>"; };
+		174D143F2E73C7D500C29B59 /* libGoogleOauth.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libGoogleOauth.a; sourceTree = "<group>"; };
+		174D14402E73C7D500C29B59 /* libGoogleStatistic.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libGoogleStatistic.a; sourceTree = "<group>"; };
+		174D14412E73C7D500C29B59 /* libH5WEUIWebview.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libH5WEUIWebview.a; sourceTree = "<group>"; };
+		174D14422E73C7D500C29B59 /* libIAPPay.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libIAPPay.a; sourceTree = "<group>"; };
+		174D14432E73C7D500C29B59 /* libiflySpeech.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libiflySpeech.a; sourceTree = "<group>"; };
+		174D14442E73C7D500C29B59 /* liblibAccelerometer.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = liblibAccelerometer.a; sourceTree = "<group>"; };
+		174D14452E73C7D500C29B59 /* liblibAdSupport.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = liblibAdSupport.a; sourceTree = "<group>"; };
+		174D14462E73C7D500C29B59 /* liblibBarcode.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = liblibBarcode.a; sourceTree = "<group>"; };
+		174D14472E73C7D500C29B59 /* liblibBeacon.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = liblibBeacon.a; sourceTree = "<group>"; };
+		174D14482E73C7D500C29B59 /* liblibBlueTooth.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = liblibBlueTooth.a; sourceTree = "<group>"; };
+		174D14492E73C7D500C29B59 /* liblibCache.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = liblibCache.a; sourceTree = "<group>"; };
+		174D144A2E73C7D500C29B59 /* liblibCamera.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = liblibCamera.a; sourceTree = "<group>"; };
+		174D144B2E73C7D500C29B59 /* liblibContacts.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = liblibContacts.a; sourceTree = "<group>"; };
+		174D144C2E73C7D500C29B59 /* liblibFingerprint.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = liblibFingerprint.a; sourceTree = "<group>"; };
+		174D144D2E73C7D500C29B59 /* liblibGeolocation.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = liblibGeolocation.a; sourceTree = "<group>"; };
+		174D144E2E73C7D500C29B59 /* liblibIO.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = liblibIO.a; sourceTree = "<group>"; };
+		174D144F2E73C7D500C29B59 /* liblibLivePush.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = liblibLivePush.a; sourceTree = "<group>"; };
+		174D14502E73C7D500C29B59 /* liblibLoader.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = liblibLoader.a; sourceTree = "<group>"; };
+		174D14512E73C7D500C29B59 /* liblibLog.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = liblibLog.a; sourceTree = "<group>"; };
+		174D14522E73C7D500C29B59 /* liblibMap.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = liblibMap.a; sourceTree = "<group>"; };
+		174D14532E73C7D500C29B59 /* liblibMedia.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = liblibMedia.a; sourceTree = "<group>"; };
+		174D14542E73C7D500C29B59 /* liblibMessage.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = liblibMessage.a; sourceTree = "<group>"; };
+		174D14552E73C7D500C29B59 /* liblibNativeObj.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = liblibNativeObj.a; sourceTree = "<group>"; };
+		174D14562E73C7D500C29B59 /* liblibNativeUI.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = liblibNativeUI.a; sourceTree = "<group>"; };
+		174D14572E73C7D500C29B59 /* liblibNavigator.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = liblibNavigator.a; sourceTree = "<group>"; };
+		174D14582E73C7D500C29B59 /* liblibNotification.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = liblibNotification.a; sourceTree = "<group>"; };
+		174D14592E73C7D500C29B59 /* liblibOauth.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = liblibOauth.a; sourceTree = "<group>"; };
+		174D145A2E73C7D500C29B59 /* liblibOrientation.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = liblibOrientation.a; sourceTree = "<group>"; };
+		174D145B2E73C7D500C29B59 /* liblibPayment.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = liblibPayment.a; sourceTree = "<group>"; };
+		174D145C2E73C7D500C29B59 /* liblibPDRCore.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = liblibPDRCore.a; sourceTree = "<group>"; };
+		174D145D2E73C7D500C29B59 /* liblibPGInvocation.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = liblibPGInvocation.a; sourceTree = "<group>"; };
+		174D145E2E73C7D500C29B59 /* liblibPGProximity.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = liblibPGProximity.a; sourceTree = "<group>"; };
+		174D145F2E73C7D500C29B59 /* liblibPush.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = liblibPush.a; sourceTree = "<group>"; };
+		174D14602E73C7D500C29B59 /* liblibShare.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = liblibShare.a; sourceTree = "<group>"; };
+		174D14612E73C7D500C29B59 /* liblibSpeech.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = liblibSpeech.a; sourceTree = "<group>"; };
+		174D14622E73C7D500C29B59 /* liblibSqlite.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = liblibSqlite.a; sourceTree = "<group>"; };
+		174D14632E73C7D500C29B59 /* liblibStatistic.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = liblibStatistic.a; sourceTree = "<group>"; };
+		174D14642E73C7D500C29B59 /* liblibStorage.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = liblibStorage.a; sourceTree = "<group>"; };
+		174D14652E73C7D500C29B59 /* liblibUI.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = liblibUI.a; sourceTree = "<group>"; };
+		174D14662E73C7D500C29B59 /* liblibVideo.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = liblibVideo.a; sourceTree = "<group>"; };
+		174D14672E73C7D500C29B59 /* liblibWeex.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = liblibWeex.a; sourceTree = "<group>"; };
+		174D14682E73C7D500C29B59 /* liblibXHR.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = liblibXHR.a; sourceTree = "<group>"; };
+		174D14692E73C7D500C29B59 /* liblibZip.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = liblibZip.a; sourceTree = "<group>"; };
+		174D146A2E73C7D500C29B59 /* libMiOauth.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libMiOauth.a; sourceTree = "<group>"; };
+		174D146B2E73C7D500C29B59 /* libMiPushSDK.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libMiPushSDK.a; sourceTree = "<group>"; };
+		174D146C2E73C7D500C29B59 /* libmp3lame.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libmp3lame.a; sourceTree = "<group>"; };
+		174D146D2E73C7D500C29B59 /* libopencore-amrnb.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = "libopencore-amrnb.a"; sourceTree = "<group>"; };
+		174D146E2E73C7D500C29B59 /* libpaypalpay.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libpaypalpay.a; sourceTree = "<group>"; };
+		174D146F2E73C7D500C29B59 /* libQQOauth.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libQQOauth.a; sourceTree = "<group>"; };
+		174D14702E73C7D500C29B59 /* libQQShare.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libQQShare.a; sourceTree = "<group>"; };
+		174D14712E73C7D500C29B59 /* libSDWebImage.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libSDWebImage.a; sourceTree = "<group>"; };
+		174D14722E73C7D500C29B59 /* libSinaShare.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libSinaShare.a; sourceTree = "<group>"; };
+		174D14732E73C7D500C29B59 /* libSinaWBOauth.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libSinaWBOauth.a; sourceTree = "<group>"; };
+		174D14742E73C7D500C29B59 /* libssl.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libssl.a; sourceTree = "<group>"; };
+		174D14752E73C7D500C29B59 /* libstripepay.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libstripepay.a; sourceTree = "<group>"; };
+		174D14762E73C7D500C29B59 /* libTouchJSON.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libTouchJSON.a; sourceTree = "<group>"; };
+		174D14772E73C7D500C29B59 /* libuchardet.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libuchardet.a; sourceTree = "<group>"; };
+		174D14782E73C7D500C29B59 /* libUmengStatistic.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libUmengStatistic.a; sourceTree = "<group>"; };
+		174D14792E73C7D500C29B59 /* libUniPush.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libUniPush.a; sourceTree = "<group>"; };
+		174D147A2E73C7D500C29B59 /* libWeChatSDK.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libWeChatSDK.a; sourceTree = "<group>"; };
+		174D147B2E73C7D500C29B59 /* libWeChatSDK_pay.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libWeChatSDK_pay.a; sourceTree = "<group>"; };
+		174D147C2E73C7D500C29B59 /* libWeiboSDK.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libWeiboSDK.a; sourceTree = "<group>"; };
+		174D147D2E73C7D500C29B59 /* libweixinShare.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libweixinShare.a; sourceTree = "<group>"; };
+		174D147E2E73C7D500C29B59 /* libWXOauth.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libWXOauth.a; sourceTree = "<group>"; };
+		174D147F2E73C7D500C29B59 /* libwxpay.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libwxpay.a; sourceTree = "<group>"; };
+		174D14802E73C7D500C29B59 /* libXiaomiPush.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libXiaomiPush.a; sourceTree = "<group>"; };
+		174D14812E73C7D500C29B59 /* LiftoffMonetizeAdapter.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; path = LiftoffMonetizeAdapter.xcframework; sourceTree = "<group>"; };
+		174D14822E73C7D500C29B59 /* MAMapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = MAMapKit.framework; sourceTree = "<group>"; };
+		174D14832E73C7D500C29B59 /* Masonry.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Masonry.framework; sourceTree = "<group>"; };
+		174D14842E73C7D500C29B59 /* MetaAdapter.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; path = MetaAdapter.xcframework; sourceTree = "<group>"; };
+		174D14852E73C7D500C29B59 /* MintegralAdapter.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; path = MintegralAdapter.xcframework; sourceTree = "<group>"; };
+		174D14862E73C7D500C29B59 /* MiPassport.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = MiPassport.framework; sourceTree = "<group>"; };
+		174D14872E73C7D500C29B59 /* MPRemoteLogging.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = MPRemoteLogging.framework; sourceTree = "<group>"; };
+		174D14882E73C7D500C29B59 /* MTGSDK.xcframework */ = {isa = PBXFileReference; expectedSignature = "AppleDeveloperProgram:DJRJZKDWWH:Mobvista (guangzhou) Technology Co., Ltd."; lastKnownFileType = wrapper.xcframework; path = MTGSDK.xcframework; sourceTree = "<group>"; };
+		174D14892E73C7D500C29B59 /* MTGSDKBanner.xcframework */ = {isa = PBXFileReference; expectedSignature = "AppleDeveloperProgram:DJRJZKDWWH:Mobvista (guangzhou) Technology Co., Ltd."; lastKnownFileType = wrapper.xcframework; path = MTGSDKBanner.xcframework; sourceTree = "<group>"; };
+		174D148A2E73C7D500C29B59 /* MTGSDKBidding.xcframework */ = {isa = PBXFileReference; expectedSignature = "AppleDeveloperProgram:DJRJZKDWWH:Mobvista (guangzhou) Technology Co., Ltd."; lastKnownFileType = wrapper.xcframework; path = MTGSDKBidding.xcframework; sourceTree = "<group>"; };
+		174D148B2E73C7D500C29B59 /* MTGSDKInterstitialVideo.xcframework */ = {isa = PBXFileReference; expectedSignature = "AppleDeveloperProgram:DJRJZKDWWH:Mobvista (guangzhou) Technology Co., Ltd."; lastKnownFileType = wrapper.xcframework; path = MTGSDKInterstitialVideo.xcframework; sourceTree = "<group>"; };
+		174D148C2E73C7D500C29B59 /* MTGSDKNativeAdvanced.xcframework */ = {isa = PBXFileReference; expectedSignature = "AppleDeveloperProgram:DJRJZKDWWH:Mobvista (guangzhou) Technology Co., Ltd."; lastKnownFileType = wrapper.xcframework; path = MTGSDKNativeAdvanced.xcframework; sourceTree = "<group>"; };
+		174D148D2E73C7D500C29B59 /* MTGSDKNewInterstitial.xcframework */ = {isa = PBXFileReference; expectedSignature = "AppleDeveloperProgram:DJRJZKDWWH:Mobvista (guangzhou) Technology Co., Ltd."; lastKnownFileType = wrapper.xcframework; path = MTGSDKNewInterstitial.xcframework; sourceTree = "<group>"; };
+		174D148E2E73C7D500C29B59 /* MTGSDKReward.xcframework */ = {isa = PBXFileReference; expectedSignature = "AppleDeveloperProgram:DJRJZKDWWH:Mobvista (guangzhou) Technology Co., Ltd."; lastKnownFileType = wrapper.xcframework; path = MTGSDKReward.xcframework; sourceTree = "<group>"; };
+		174D148F2E73C7D500C29B59 /* MTGSDKSplash.xcframework */ = {isa = PBXFileReference; expectedSignature = "AppleDeveloperProgram:DJRJZKDWWH:Mobvista (guangzhou) Technology Co., Ltd."; lastKnownFileType = wrapper.xcframework; path = MTGSDKSplash.xcframework; sourceTree = "<group>"; };
+		174D14902E73C7D500C29B59 /* nanopb.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; path = nanopb.xcframework; sourceTree = "<group>"; };
+		174D14912E73C7D500C29B59 /* OctAdSDK.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; path = OctAdSDK.xcframework; sourceTree = "<group>"; };
+		174D14922E73C7D500C29B59 /* OctCore.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; path = OctCore.xcframework; sourceTree = "<group>"; };
+		174D14932E73C7D500C29B59 /* OctUniAdSDK.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; path = OctUniAdSDK.xcframework; sourceTree = "<group>"; };
+		174D14942E73C7D500C29B59 /* PAGAdSDK.xcframework */ = {isa = PBXFileReference; expectedSignature = "AppleDeveloperProgram:22MMUN2RN5:BYTEDANCE PTE. LTD."; lastKnownFileType = wrapper.xcframework; path = PAGAdSDK.xcframework; sourceTree = "<group>"; };
+		174D14952E73C7D500C29B59 /* PangleAdapter.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; path = PangleAdapter.xcframework; sourceTree = "<group>"; };
+		174D14962E73C7D500C29B59 /* PayPalCheckout.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; path = PayPalCheckout.xcframework; sourceTree = "<group>"; };
+		174D14972E73C7D500C29B59 /* qucFrameWorkAll.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = qucFrameWorkAll.framework; sourceTree = "<group>"; };
+		174D14982E73C7D500C29B59 /* storage.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = storage.framework; sourceTree = "<group>"; };
+		174D14992E73C7D500C29B59 /* Stripe3DS2.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; path = Stripe3DS2.xcframework; sourceTree = "<group>"; };
+		174D149A2E73C7D500C29B59 /* StripeApplePay.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; path = StripeApplePay.xcframework; sourceTree = "<group>"; };
+		174D149B2E73C7D500C29B59 /* StripeCore.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; path = StripeCore.xcframework; sourceTree = "<group>"; };
+		174D149C2E73C7D500C29B59 /* StripePayments.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; path = StripePayments.xcframework; sourceTree = "<group>"; };
+		174D149D2E73C7D500C29B59 /* StripePaymentSheet.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; path = StripePaymentSheet.xcframework; sourceTree = "<group>"; };
+		174D149E2E73C7D500C29B59 /* StripePaymentsUI.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; path = StripePaymentsUI.xcframework; sourceTree = "<group>"; };
+		174D149F2E73C7D500C29B59 /* StripeUICore.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; path = StripeUICore.xcframework; sourceTree = "<group>"; };
+		174D14A02E73C7D500C29B59 /* TencentOpenAPI.xcframework */ = {isa = PBXFileReference; expectedSignature = "AppleDeveloperProgram:HKB8WPFBR9:Tencent Technology (Shenzhen) Co., Ltd"; lastKnownFileType = wrapper.xcframework; path = TencentOpenAPI.xcframework; sourceTree = "<group>"; };
+		174D14A12E73C7D500C29B59 /* ToygerNative.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = ToygerNative.framework; sourceTree = "<group>"; };
+		174D14A22E73C7D500C29B59 /* ToygerService.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = ToygerService.framework; sourceTree = "<group>"; };
+		174D14A32E73C7D500C29B59 /* Tquic.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; path = Tquic.xcframework; sourceTree = "<group>"; };
+		174D14A42E73C7D500C29B59 /* UMAPM.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = UMAPM.framework; sourceTree = "<group>"; };
+		174D14A52E73C7D500C29B59 /* UMCommon.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; path = UMCommon.xcframework; sourceTree = "<group>"; };
+		174D14A62E73C7D500C29B59 /* UMDevice.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; path = UMDevice.xcframework; sourceTree = "<group>"; };
+		174D14A72E73C7D500C29B59 /* uniFacialRecognitionVerify.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = uniFacialRecognitionVerify.framework; sourceTree = "<group>"; };
+		174D14A82E73C7D500C29B59 /* UnityAdapter.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; path = UnityAdapter.xcframework; sourceTree = "<group>"; };
+		174D14A92E73C7D500C29B59 /* UnityAds.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; path = UnityAds.xcframework; sourceTree = "<group>"; };
+		174D14AA2E73C7D500C29B59 /* UniVerify.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = UniVerify.framework; sourceTree = "<group>"; };
+		174D14AB2E73C7D500C29B59 /* UPLiveSDKDll.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = UPLiveSDKDll.framework; sourceTree = "<group>"; };
+		174D14AC2E73C7D500C29B59 /* UserMessagingPlatform.xcframework */ = {isa = PBXFileReference; expectedSignature = "AppleDeveloperProgram:EQHXZ8M8AV:Google LLC"; lastKnownFileType = wrapper.xcframework; path = UserMessagingPlatform.xcframework; sourceTree = "<group>"; };
+		174D14AD2E73C7D500C29B59 /* VungleAdsSDK.xcframework */ = {isa = PBXFileReference; expectedSignature = "AppleDeveloperProgram:GTA9LK7P23:Vungle, Inc."; lastKnownFileType = wrapper.xcframework; path = VungleAdsSDK.xcframework; sourceTree = "<group>"; };
+		174D14AE2E73C7D500C29B59 /* WindFoundation.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; path = WindFoundation.xcframework; sourceTree = "<group>"; };
+		174D14AF2E73C7D500C29B59 /* WindSDK.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; path = WindSDK.xcframework; sourceTree = "<group>"; };
+		174D14B02E73C7D500C29B59 /* YouTuiAdSDK.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; path = YouTuiAdSDK.xcframework; sourceTree = "<group>"; };
+		174D14B12E73C7D500C29B59 /* YTRelayFoundation.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; path = YTRelayFoundation.xcframework; sourceTree = "<group>"; };
 		174F8B3F2A5D4D0B000CC5AA /* Pandora */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Pandora; sourceTree = "<group>"; };
 		17788C17298D22170007B47F /* BDSClientEASRResources */ = {isa = PBXFileReference; lastKnownFileType = folder; path = BDSClientEASRResources; sourceTree = "<group>"; };
 		240905021C200AEF0070786F /* CoreBluetooth.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreBluetooth.framework; path = System/Library/Frameworks/CoreBluetooth.framework; sourceTree = SDKROOT; };
@@ -618,12 +828,12 @@
 				4FE3666A254FE5FC00DCD173 /* libuchardet.a in Frameworks */,
 				67A9340323A8BAF6004A4DF4 /* libSDWebImage.a in Frameworks */,
 				6731F3AA232F5B97007838BC /* Photos.framework in Frameworks */,
-				6731F3A7232F5B87007838BC /* UMCommon.framework in Frameworks */,
 				6731F3A4232F5B7A007838BC /* libresolv.tbd in Frameworks */,
 				672CE2B322DC9118005A0D88 /* DCUniVideoPublic.framework in Frameworks */,
 				67229AD1230171AE0093F29A /* libDCUniAmap.a in Frameworks */,
 				67229AD2230171AE0093F29A /* libDCUniVideo.a in Frameworks */,
 				67229AD3230171AE0093F29A /* libDCUniBarcode.a in Frameworks */,
+				174D14B82E73C81800C29B59 /* AlipaySDK.xcframework in Frameworks */,
 				67229AD6230171AE0093F29A /* libDCUniGPUImage.a in Frameworks */,
 				67229AD8230171AE0093F29A /* libDCUniMap.a in Frameworks */,
 				672CE2B522DC916C005A0D88 /* libDCUniZXing.a in Frameworks */,
@@ -688,6 +898,7 @@
 				67D6390921C12945005D1E8F /* libBaiduSpeechSDK.a in Frameworks */,
 				24AFD8621CB50C4000C0F062 /* liblibSpeech.a in Frameworks */,
 				24AFD8631CB50C4000C0F062 /* liblibStatistic.a in Frameworks */,
+				174D14BC2E73C86E00C29B59 /* UMAPM.framework in Frameworks */,
 				24AFD8641CB50C4000C0F062 /* liblibStorage.a in Frameworks */,
 				24AFD8651CB50C4000C0F062 /* liblibUI.a in Frameworks */,
 				24AFD8681CB50C4000C0F062 /* liblibXHR.a in Frameworks */,
@@ -706,8 +917,6 @@
 				24AFD87B1CB50C4000C0F062 /* libWXOauth.a in Frameworks */,
 				24AFD87C1CB50C4000C0F062 /* libwxpay.a in Frameworks */,
 				2F5FAE6F2865DB9800430AFA /* KSCrash.framework in Frameworks */,
-				24AFD7FF1CB50C3200C0F062 /* AlipaySDK.framework in Frameworks */,
-				24AFD8021CB50C3200C0F062 /* TencentOpenAPI.framework in Frameworks */,
 				24BD5AF21C994A1700B05AA2 /* libicucore.tbd in Frameworks */,
 				24BD5AF01C99494A00B05AA2 /* libz.tbd in Frameworks */,
 				24BD5AEE1C99494200B05AA2 /* libxml2.tbd in Frameworks */,
@@ -717,6 +926,7 @@
 				24BD5AEA1C99492A00B05AA2 /* libiconv.2.tbd in Frameworks */,
 				24BD5AE81C99491D00B05AA2 /* libsqlite3.0.tbd in Frameworks */,
 				2430A7021E11603E00D3D42D /* libssl.a in Frameworks */,
+				174D14BA2E73C85400C29B59 /* UMAPM.framework in Frameworks */,
 				240905031C200AEF0070786F /* CoreBluetooth.framework in Frameworks */,
 				8E6E37AC1B0E1B580036EB48 /* ImageIO.framework in Frameworks */,
 				8E163D021A8D208500308A8B /* AssetsLibrary.framework in Frameworks */,
@@ -724,7 +934,6 @@
 				8EED65A8198A6273000A4449 /* OpenGLES.framework in Frameworks */,
 				8EED65A6198A626B000A4449 /* MapKit.framework in Frameworks */,
 				8EED65A0198A5789000A4449 /* Accounts.framework in Frameworks */,
-				95DA22F1276A0B1E00071681 /* UMDevice.framework in Frameworks */,
 				8EED659E198A5782000A4449 /* Social.framework in Frameworks */,
 				8EED659C198A5773000A4449 /* AddressBookUI.framework in Frameworks */,
 				8EED6598198A5754000A4449 /* MessageUI.framework in Frameworks */,
@@ -733,6 +942,7 @@
 				8EED6592198A5737000A4449 /* AddressBook.framework in Frameworks */,
 				8EED6422198A2678000A4449 /* AudioToolbox.framework in Frameworks */,
 				8EED6420198A2668000A4449 /* MediaPlayer.framework in Frameworks */,
+				174D14B52E73C80200C29B59 /* TencentOpenAPI.xcframework in Frameworks */,
 				8EED641E198A265F000A4449 /* CoreTelephony.framework in Frameworks */,
 				8EED6416198A2635000A4449 /* CoreVideo.framework in Frameworks */,
 				8EED6414198A262C000A4449 /* CoreMedia.framework in Frameworks */,
@@ -744,6 +954,245 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		174D13D32E73C7D500C29B59 /* KsContent */ = {
+			isa = PBXGroup;
+			children = (
+				174D13D22E73C7D500C29B59 /* KSAdSDK.xcframework */,
+			);
+			path = KsContent;
+			sourceTree = "<group>";
+		};
+		174D14B22E73C7D500C29B59 /* Libs */ = {
+			isa = PBXGroup;
+			children = (
+				174D13D32E73C7D500C29B59 /* KsContent */,
+				174D13D42E73C7D500C29B59 /* AlipaySDK.xcframework */,
+				174D13D52E73C7D500C29B59 /* AliyunFaceAuthFacade.framework */,
+				174D13D62E73C7D500C29B59 /* AliyunMobileRPC.framework */,
+				174D13D72E73C7D500C29B59 /* AliyunOSSiOS.framework */,
+				174D13D82E73C7D500C29B59 /* AMapFoundationKit.framework */,
+				174D13D92E73C7D500C29B59 /* AMapLocationKit.framework */,
+				174D13DA2E73C7D500C29B59 /* AMapSearchKit.framework */,
+				174D13DB2E73C7D500C29B59 /* APBToygerFacade.framework */,
+				174D13DC2E73C7D500C29B59 /* AppAuth.xcframework */,
+				174D13DD2E73C7D500C29B59 /* APPSecuritySDK.framework */,
+				174D13DE2E73C7D500C29B59 /* BaiduMapAPI_Base.framework */,
+				174D13DF2E73C7D500C29B59 /* BaiduMapAPI_Map.framework */,
+				174D13E02E73C7D500C29B59 /* BaiduMapAPI_Search.framework */,
+				174D13E12E73C7D500C29B59 /* BaiduMapAPI_Utils.framework */,
+				174D13E22E73C7D500C29B59 /* BaiduMobAdSDK.framework */,
+				174D13E32E73C7D500C29B59 /* BioAuthAPI.framework */,
+				174D13E42E73C7D500C29B59 /* BioAuthEngine.framework */,
+				174D13E52E73C7D500C29B59 /* BMKLocationKit.framework */,
+				174D13E62E73C7D500C29B59 /* BUAdSDK.xcframework */,
+				174D13E72E73C7D500C29B59 /* BURelyFoundation_Global.xcframework */,
+				174D13E82E73C7D500C29B59 /* CSJMediation.xcframework */,
+				174D13E92E73C7D500C29B59 /* DCloudBigInt.xcframework */,
+				174D13EA2E73C7D500C29B59 /* DCloudUTSExtAPI.framework */,
+				174D13EB2E73C7D500C29B59 /* DCloudUTSFoundation.framework */,
+				174D13EC2E73C7D500C29B59 /* DCUniAdBd.xcframework */,
+				174D13ED2E73C7D500C29B59 /* DCUniAdCsj.xcframework */,
+				174D13EE2E73C7D500C29B59 /* DCUniAdGdt.xcframework */,
+				174D13EF2E73C7D500C29B59 /* DCUniAdGg.xcframework */,
+				174D13F02E73C7D500C29B59 /* DCUniAdGm.xcframework */,
+				174D13F12E73C7D500C29B59 /* DCUniAdKs.xcframework */,
+				174D13F22E73C7D500C29B59 /* DCUniAdKsContent.xcframework */,
+				174D13F32E73C7D500C29B59 /* DCUniAdPg.xcframework */,
+				174D13F42E73C7D500C29B59 /* DCUniAdSgm.xcframework */,
+				174D13F52E73C7D500C29B59 /* DCUniAdWm.xcframework */,
+				174D13F62E73C7D500C29B59 /* DCUniAdYT.xcframework */,
+				174D13F72E73C7D500C29B59 /* DCUniBase.framework */,
+				174D13F82E73C7D500C29B59 /* DCUniRecord.framework */,
+				174D13F92E73C7D500C29B59 /* DCUniVideoPublic.framework */,
+				174D13FA2E73C7D500C29B59 /* deviceiOS.framework */,
+				174D13FB2E73C7D500C29B59 /* DTFIdentityManager.framework */,
+				174D13FC2E73C7D500C29B59 /* DTFSensorServices.framework */,
+				174D13FD2E73C7D500C29B59 /* DTFUIModule.framework */,
+				174D13FE2E73C7D500C29B59 /* DTFUtility.framework */,
+				174D13FF2E73C7D500C29B59 /* FBAEMKit.xcframework */,
+				174D14002E73C7D500C29B59 /* FBAudienceNetwork.xcframework */,
+				174D14012E73C7D500C29B59 /* FBLPromises.xcframework */,
+				174D14022E73C7D500C29B59 /* FBSDKCoreKit.xcframework */,
+				174D14032E73C7D500C29B59 /* FBSDKCoreKit_Basics.xcframework */,
+				174D14042E73C7D500C29B59 /* FBSDKLoginKit.xcframework */,
+				174D14052E73C7D500C29B59 /* FirebaseAnalytics.xcframework */,
+				174D14062E73C7D500C29B59 /* FirebaseCore.xcframework */,
+				174D14072E73C7D500C29B59 /* FirebaseCoreInternal.xcframework */,
+				174D14082E73C7D500C29B59 /* FirebaseInstallations.xcframework */,
+				174D14092E73C7D500C29B59 /* FirebaseMessaging.xcframework */,
+				174D140A2E73C7D500C29B59 /* FLAdSaas.xcframework */,
+				174D140B2E73C7D500C29B59 /* FLAdUniAdapter.xcframework */,
+				174D140C2E73C7D500C29B59 /* GDTMobSDK.xcframework */,
+				174D140D2E73C7D500C29B59 /* GeYanSdk.xcframework */,
+				174D140E2E73C7D500C29B59 /* GoogleAppMeasurement.xcframework */,
+				174D140F2E73C7D500C29B59 /* GoogleAppMeasurementIdentitySupport.xcframework */,
+				174D14102E73C7D500C29B59 /* GoogleDataTransport.xcframework */,
+				174D14112E73C7D500C29B59 /* GoogleMaps.framework */,
+				174D14122E73C7D500C29B59 /* GoogleMapsBase.framework */,
+				174D14132E73C7D500C29B59 /* GoogleMapsCore.framework */,
+				174D14142E73C7D500C29B59 /* GoogleMobileAds.xcframework */,
+				174D14152E73C7D500C29B59 /* GoogleSignIn.xcframework */,
+				174D14162E73C7D500C29B59 /* GoogleUtilities.xcframework */,
+				174D14172E73C7D500C29B59 /* GTCommonSDK.xcframework */,
+				174D14182E73C7D500C29B59 /* GTMAppAuth.xcframework */,
+				174D14192E73C7D500C29B59 /* GTMSessionFetcher.xcframework */,
+				174D141A2E73C7D500C29B59 /* GTSDK.xcframework */,
+				174D141B2E73C7D500C29B59 /* iflyMSC.framework */,
+				174D141C2E73C7D500C29B59 /* IJKMediaFrameworkWithSSL.framework */,
+				174D141D2E73C7D500C29B59 /* InMobiAdapter.xcframework */,
+				174D141E2E73C7D500C29B59 /* InMobiSDK.xcframework */,
+				174D141F2E73C7D500C29B59 /* IronSource.xcframework */,
+				174D14202E73C7D500C29B59 /* IronSourceAdapter.xcframework */,
+				174D14212E73C7D500C29B59 /* KSAdSDK.xcframework */,
+				174D14222E73C7D500C29B59 /* KSCrash.framework */,
+				174D14232E73C7D500C29B59 /* libalixpayment.a */,
+				174D14242E73C7D500C29B59 /* libAMapImp.a */,
+				174D14252E73C7D500C29B59 /* libAMapLocationPlugin.a */,
+				174D14262E73C7D500C29B59 /* libAppleOauth.a */,
+				174D14272E73C7D500C29B59 /* libBaiduKeyVerify.a */,
+				174D14282E73C7D500C29B59 /* libBaiduLocationPlugin.a */,
+				174D14292E73C7D500C29B59 /* libBaiduMobStatForSDK.a */,
+				174D142A2E73C7D500C29B59 /* libbaiduSpeech.a */,
+				174D142B2E73C7D500C29B59 /* libBaiduSpeechSDK.a */,
+				174D142C2E73C7D500C29B59 /* libbmapimp.a */,
+				174D142D2E73C7D500C29B59 /* libcoreSupport.a */,
+				174D142E2E73C7D500C29B59 /* libcrypto.a */,
+				174D142F2E73C7D500C29B59 /* libDCUniAdWeexModule.a */,
+				174D14302E73C7D500C29B59 /* libDCUniAmap.a */,
+				174D14312E73C7D500C29B59 /* libDCUniBarcode.a */,
+				174D14322E73C7D500C29B59 /* libDCUniBMap.a */,
+				174D14332E73C7D500C29B59 /* libDCUniCanvas.a */,
+				174D14342E73C7D500C29B59 /* libDCUniFaceID.a */,
+				174D14352E73C7D500C29B59 /* libDCUniGoogleMap.a */,
+				174D14362E73C7D500C29B59 /* libDCUniGPUImage.a */,
+				174D14372E73C7D500C29B59 /* libDCUniLivePush.a */,
+				174D14382E73C7D500C29B59 /* libDCUniMap.a */,
+				174D14392E73C7D500C29B59 /* libDCUniVideo.a */,
+				174D143A2E73C7D500C29B59 /* libDCUniZXing.a */,
+				174D143B2E73C7D500C29B59 /* libFBOauth.a */,
+				174D143C2E73C7D500C29B59 /* libFCMPush.a */,
+				174D143D2E73C7D500C29B59 /* libGDTMobSDK.a */,
+				174D143E2E73C7D500C29B59 /* libGeTuiPush.a */,
+				174D143F2E73C7D500C29B59 /* libGoogleOauth.a */,
+				174D14402E73C7D500C29B59 /* libGoogleStatistic.a */,
+				174D14412E73C7D500C29B59 /* libH5WEUIWebview.a */,
+				174D14422E73C7D500C29B59 /* libIAPPay.a */,
+				174D14432E73C7D500C29B59 /* libiflySpeech.a */,
+				174D14442E73C7D500C29B59 /* liblibAccelerometer.a */,
+				174D14452E73C7D500C29B59 /* liblibAdSupport.a */,
+				174D14462E73C7D500C29B59 /* liblibBarcode.a */,
+				174D14472E73C7D500C29B59 /* liblibBeacon.a */,
+				174D14482E73C7D500C29B59 /* liblibBlueTooth.a */,
+				174D14492E73C7D500C29B59 /* liblibCache.a */,
+				174D144A2E73C7D500C29B59 /* liblibCamera.a */,
+				174D144B2E73C7D500C29B59 /* liblibContacts.a */,
+				174D144C2E73C7D500C29B59 /* liblibFingerprint.a */,
+				174D144D2E73C7D500C29B59 /* liblibGeolocation.a */,
+				174D144E2E73C7D500C29B59 /* liblibIO.a */,
+				174D144F2E73C7D500C29B59 /* liblibLivePush.a */,
+				174D14502E73C7D500C29B59 /* liblibLoader.a */,
+				174D14512E73C7D500C29B59 /* liblibLog.a */,
+				174D14522E73C7D500C29B59 /* liblibMap.a */,
+				174D14532E73C7D500C29B59 /* liblibMedia.a */,
+				174D14542E73C7D500C29B59 /* liblibMessage.a */,
+				174D14552E73C7D500C29B59 /* liblibNativeObj.a */,
+				174D14562E73C7D500C29B59 /* liblibNativeUI.a */,
+				174D14572E73C7D500C29B59 /* liblibNavigator.a */,
+				174D14582E73C7D500C29B59 /* liblibNotification.a */,
+				174D14592E73C7D500C29B59 /* liblibOauth.a */,
+				174D145A2E73C7D500C29B59 /* liblibOrientation.a */,
+				174D145B2E73C7D500C29B59 /* liblibPayment.a */,
+				174D145C2E73C7D500C29B59 /* liblibPDRCore.a */,
+				174D145D2E73C7D500C29B59 /* liblibPGInvocation.a */,
+				174D145E2E73C7D500C29B59 /* liblibPGProximity.a */,
+				174D145F2E73C7D500C29B59 /* liblibPush.a */,
+				174D14602E73C7D500C29B59 /* liblibShare.a */,
+				174D14612E73C7D500C29B59 /* liblibSpeech.a */,
+				174D14622E73C7D500C29B59 /* liblibSqlite.a */,
+				174D14632E73C7D500C29B59 /* liblibStatistic.a */,
+				174D14642E73C7D500C29B59 /* liblibStorage.a */,
+				174D14652E73C7D500C29B59 /* liblibUI.a */,
+				174D14662E73C7D500C29B59 /* liblibVideo.a */,
+				174D14672E73C7D500C29B59 /* liblibWeex.a */,
+				174D14682E73C7D500C29B59 /* liblibXHR.a */,
+				174D14692E73C7D500C29B59 /* liblibZip.a */,
+				174D146A2E73C7D500C29B59 /* libMiOauth.a */,
+				174D146B2E73C7D500C29B59 /* libMiPushSDK.a */,
+				174D146C2E73C7D500C29B59 /* libmp3lame.a */,
+				174D146D2E73C7D500C29B59 /* libopencore-amrnb.a */,
+				174D146E2E73C7D500C29B59 /* libpaypalpay.a */,
+				174D146F2E73C7D500C29B59 /* libQQOauth.a */,
+				174D14702E73C7D500C29B59 /* libQQShare.a */,
+				174D14712E73C7D500C29B59 /* libSDWebImage.a */,
+				174D14722E73C7D500C29B59 /* libSinaShare.a */,
+				174D14732E73C7D500C29B59 /* libSinaWBOauth.a */,
+				174D14742E73C7D500C29B59 /* libssl.a */,
+				174D14752E73C7D500C29B59 /* libstripepay.a */,
+				174D14762E73C7D500C29B59 /* libTouchJSON.a */,
+				174D14772E73C7D500C29B59 /* libuchardet.a */,
+				174D14782E73C7D500C29B59 /* libUmengStatistic.a */,
+				174D14792E73C7D500C29B59 /* libUniPush.a */,
+				174D147A2E73C7D500C29B59 /* libWeChatSDK.a */,
+				174D147B2E73C7D500C29B59 /* libWeChatSDK_pay.a */,
+				174D147C2E73C7D500C29B59 /* libWeiboSDK.a */,
+				174D147D2E73C7D500C29B59 /* libweixinShare.a */,
+				174D147E2E73C7D500C29B59 /* libWXOauth.a */,
+				174D147F2E73C7D500C29B59 /* libwxpay.a */,
+				174D14802E73C7D500C29B59 /* libXiaomiPush.a */,
+				174D14812E73C7D500C29B59 /* LiftoffMonetizeAdapter.xcframework */,
+				174D14822E73C7D500C29B59 /* MAMapKit.framework */,
+				174D14832E73C7D500C29B59 /* Masonry.framework */,
+				174D14842E73C7D500C29B59 /* MetaAdapter.xcframework */,
+				174D14852E73C7D500C29B59 /* MintegralAdapter.xcframework */,
+				174D14862E73C7D500C29B59 /* MiPassport.framework */,
+				174D14872E73C7D500C29B59 /* MPRemoteLogging.framework */,
+				174D14882E73C7D500C29B59 /* MTGSDK.xcframework */,
+				174D14892E73C7D500C29B59 /* MTGSDKBanner.xcframework */,
+				174D148A2E73C7D500C29B59 /* MTGSDKBidding.xcframework */,
+				174D148B2E73C7D500C29B59 /* MTGSDKInterstitialVideo.xcframework */,
+				174D148C2E73C7D500C29B59 /* MTGSDKNativeAdvanced.xcframework */,
+				174D148D2E73C7D500C29B59 /* MTGSDKNewInterstitial.xcframework */,
+				174D148E2E73C7D500C29B59 /* MTGSDKReward.xcframework */,
+				174D148F2E73C7D500C29B59 /* MTGSDKSplash.xcframework */,
+				174D14902E73C7D500C29B59 /* nanopb.xcframework */,
+				174D14912E73C7D500C29B59 /* OctAdSDK.xcframework */,
+				174D14922E73C7D500C29B59 /* OctCore.xcframework */,
+				174D14932E73C7D500C29B59 /* OctUniAdSDK.xcframework */,
+				174D14942E73C7D500C29B59 /* PAGAdSDK.xcframework */,
+				174D14952E73C7D500C29B59 /* PangleAdapter.xcframework */,
+				174D14962E73C7D500C29B59 /* PayPalCheckout.xcframework */,
+				174D14972E73C7D500C29B59 /* qucFrameWorkAll.framework */,
+				174D14982E73C7D500C29B59 /* storage.framework */,
+				174D14992E73C7D500C29B59 /* Stripe3DS2.xcframework */,
+				174D149A2E73C7D500C29B59 /* StripeApplePay.xcframework */,
+				174D149B2E73C7D500C29B59 /* StripeCore.xcframework */,
+				174D149C2E73C7D500C29B59 /* StripePayments.xcframework */,
+				174D149D2E73C7D500C29B59 /* StripePaymentSheet.xcframework */,
+				174D149E2E73C7D500C29B59 /* StripePaymentsUI.xcframework */,
+				174D149F2E73C7D500C29B59 /* StripeUICore.xcframework */,
+				174D14A02E73C7D500C29B59 /* TencentOpenAPI.xcframework */,
+				174D14A12E73C7D500C29B59 /* ToygerNative.framework */,
+				174D14A22E73C7D500C29B59 /* ToygerService.framework */,
+				174D14A32E73C7D500C29B59 /* Tquic.xcframework */,
+				174D14A42E73C7D500C29B59 /* UMAPM.framework */,
+				174D14A52E73C7D500C29B59 /* UMCommon.xcframework */,
+				174D14A62E73C7D500C29B59 /* UMDevice.xcframework */,
+				174D14A72E73C7D500C29B59 /* uniFacialRecognitionVerify.framework */,
+				174D14A82E73C7D500C29B59 /* UnityAdapter.xcframework */,
+				174D14A92E73C7D500C29B59 /* UnityAds.xcframework */,
+				174D14AA2E73C7D500C29B59 /* UniVerify.framework */,
+				174D14AB2E73C7D500C29B59 /* UPLiveSDKDll.framework */,
+				174D14AC2E73C7D500C29B59 /* UserMessagingPlatform.xcframework */,
+				174D14AD2E73C7D500C29B59 /* VungleAdsSDK.xcframework */,
+				174D14AE2E73C7D500C29B59 /* WindFoundation.xcframework */,
+				174D14AF2E73C7D500C29B59 /* WindSDK.xcframework */,
+				174D14B02E73C7D500C29B59 /* YouTuiAdSDK.xcframework */,
+				174D14B12E73C7D500C29B59 /* YTRelayFoundation.xcframework */,
+			);
+			name = Libs;
+			path = ../SDK/Libs;
+			sourceTree = "<group>";
+		};
 		2F0BA3FA215B4A4100F67004 /* inc */ = {
 			isa = PBXGroup;
 			children = (
@@ -1029,6 +1478,7 @@
 		8EED629A198A1D13000A4449 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				174D14B22E73C7D500C29B59 /* Libs */,
 				2FDE6A52297147E1004C7701 /* GTSDK.xcframework */,
 				2F4864C6293E121C00142360 /* DCUniRecord.framework */,
 				2F5FAE6C2865DB9800430AFA /* BMKLocationKit.framework */,
@@ -1343,7 +1793,6 @@
 				8EED6294198A1D13000A4449 /* Sources */,
 				8EED6295198A1D13000A4449 /* Frameworks */,
 				8EED6296198A1D13000A4449 /* Resources */,
-				7A4980F42126ADAD00D20880 /* Embed Frameworks */,
 				75ECE69AEAAF922D7029B194 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
@@ -1609,9 +2058,9 @@
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_ARC = YES;
 				CODE_SIGN_IDENTITY = "Apple Development";
-				CODE_SIGN_STYLE = Manual;
+				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 101;
-				DEVELOPMENT_TEAM = "";
+				DEVELOPMENT_TEAM = RRLM22BB37;
 				ENABLE_BITCODE = NO;
 				"EXCLUDED_ARCHS[sdk=iphonesimulator*]" = arm64;
 				FRAMEWORK_SEARCH_PATHS = (

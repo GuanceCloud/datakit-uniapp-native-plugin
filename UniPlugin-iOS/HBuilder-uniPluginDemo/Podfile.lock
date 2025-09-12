@@ -1,44 +1,47 @@
 PODS:
-  - FTMobileSDK (1.5.16):
-    - FTMobileSDK/FTMobileAgent (= 1.5.16)
-  - FTMobileSDK/FTMobileAgent (1.5.16):
+  - FTMobileSDK (1.5.18):
+    - FTMobileSDK/FTMobileAgent (= 1.5.18)
+  - FTMobileSDK/FTMobileAgent (1.5.18):
     - FTMobileSDK/FTSDKCore
-  - FTMobileSDK/FTSDKCore (1.5.16):
-    - FTMobileSDK/FTSDKCore/BaseUtils (= 1.5.16)
-    - FTMobileSDK/FTSDKCore/DataManager (= 1.5.16)
-    - FTMobileSDK/FTSDKCore/FTRUM (= 1.5.16)
-    - FTMobileSDK/FTSDKCore/FTWKWebView (= 1.5.16)
-    - FTMobileSDK/FTSDKCore/Logger (= 1.5.16)
-    - FTMobileSDK/FTSDKCore/Protocol (= 1.5.16)
-    - FTMobileSDK/FTSDKCore/URLSessionAutoInstrumentation (= 1.5.16)
-  - FTMobileSDK/FTSDKCore/BaseUtils (1.5.16):
-    - FTMobileSDK/FTSDKCore/BaseUtils/Base (= 1.5.16)
-    - FTMobileSDK/FTSDKCore/BaseUtils/Swizzle (= 1.5.16)
-    - FTMobileSDK/FTSDKCore/BaseUtils/Thread (= 1.5.16)
-  - FTMobileSDK/FTSDKCore/BaseUtils/Base (1.5.16):
+  - FTMobileSDK/FTSDKCore (1.5.18):
+    - FTMobileSDK/FTSDKCore/BaseUtils (= 1.5.18)
+    - FTMobileSDK/FTSDKCore/DataManager (= 1.5.18)
+    - FTMobileSDK/FTSDKCore/FTRUM (= 1.5.18)
+    - FTMobileSDK/FTSDKCore/FTWKWebView (= 1.5.18)
+    - FTMobileSDK/FTSDKCore/Logger (= 1.5.18)
+    - FTMobileSDK/FTSDKCore/Protocol (= 1.5.18)
+    - FTMobileSDK/FTSDKCore/RemoteConfig (= 1.5.18)
+    - FTMobileSDK/FTSDKCore/URLSessionAutoInstrumentation (= 1.5.18)
+  - FTMobileSDK/FTSDKCore/BaseUtils (1.5.18):
+    - FTMobileSDK/FTSDKCore/BaseUtils/Base (= 1.5.18)
+    - FTMobileSDK/FTSDKCore/BaseUtils/Swizzle (= 1.5.18)
+    - FTMobileSDK/FTSDKCore/BaseUtils/Thread (= 1.5.18)
+  - FTMobileSDK/FTSDKCore/BaseUtils/Base (1.5.18):
     - FTMobileSDK/FTSDKCore/BaseUtils/Thread
-  - FTMobileSDK/FTSDKCore/BaseUtils/Swizzle (1.5.16):
+  - FTMobileSDK/FTSDKCore/BaseUtils/Swizzle (1.5.18):
     - FTMobileSDK/FTSDKCore/BaseUtils/Base
-  - FTMobileSDK/FTSDKCore/BaseUtils/Thread (1.5.16)
-  - FTMobileSDK/FTSDKCore/DataManager (1.5.16):
+  - FTMobileSDK/FTSDKCore/BaseUtils/Thread (1.5.18)
+  - FTMobileSDK/FTSDKCore/DataManager (1.5.18):
     - FTMobileSDK/FTSDKCore/BaseUtils/Base
     - FTMobileSDK/FTSDKCore/BaseUtils/Thread
     - FTMobileSDK/FTSDKCore/Protocol
-  - FTMobileSDK/FTSDKCore/FTRUM (1.5.16):
+  - FTMobileSDK/FTSDKCore/FTRUM (1.5.18):
     - FTMobileSDK/FTSDKCore/BaseUtils/Base
     - FTMobileSDK/FTSDKCore/Protocol
-  - FTMobileSDK/FTSDKCore/FTWKWebView (1.5.16):
+  - FTMobileSDK/FTSDKCore/FTWKWebView (1.5.18):
     - FTMobileSDK/FTSDKCore/BaseUtils/Swizzle
     - FTMobileSDK/FTSDKCore/Protocol
-  - FTMobileSDK/FTSDKCore/Logger (1.5.16):
+  - FTMobileSDK/FTSDKCore/Logger (1.5.18):
     - FTMobileSDK/FTSDKCore/BaseUtils/Base
     - FTMobileSDK/FTSDKCore/Protocol
-  - FTMobileSDK/FTSDKCore/Protocol (1.5.16)
-  - FTMobileSDK/FTSDKCore/URLSessionAutoInstrumentation (1.5.16):
+  - FTMobileSDK/FTSDKCore/Protocol (1.5.18)
+  - FTMobileSDK/FTSDKCore/RemoteConfig (1.5.18):
+    - FTMobileSDK/FTSDKCore/DataManager
+  - FTMobileSDK/FTSDKCore/URLSessionAutoInstrumentation (1.5.18):
     - FTMobileSDK/FTSDKCore/BaseUtils/Swizzle
     - FTMobileSDK/FTSDKCore/Protocol
   - GC-UniPlugin-App (0.2.3):
-    - FTMobileSDK (= 1.5.16)
+    - FTMobileSDK (= 1.5.18)
 
 DEPENDENCIES:
   - GC-UniPlugin-App (from `./GC-UniPlugin-App`)
@@ -52,9 +55,9 @@ EXTERNAL SOURCES:
     :path: "./GC-UniPlugin-App"
 
 SPEC CHECKSUMS:
-  FTMobileSDK: 39afb4bb6dd8612b20e5a9ef43962f5158819e7e
-  GC-UniPlugin-App: 5b1df9a61af16b88edfbb5a346b75bfb7850d83e
+  FTMobileSDK: 6eebd96ebc302fecf461e70f6b8405e72aaf6a8b
+  GC-UniPlugin-App: e9f61dcb84ab379581d2dd21e201f8570dbfc863
 
-PODFILE CHECKSUM: 0e9fbb1078b8b5f6fcbf1e25cd075814a29a3b31
+PODFILE CHECKSUM: b0587bbcfdec8faf9ff59ee38c51758ec8822c61
 
 COCOAPODS: 1.15.2
