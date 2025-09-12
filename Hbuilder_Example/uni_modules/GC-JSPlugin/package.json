@@ -1,7 +1,7 @@
 {
   "id": "GC-JSPlugin",
   "displayName": "GC-JSPlugin",
-  "version": "0.2.4-alpha.3",
+  "version": "0.2.4",
   "description": "Guance UniApp JS Plugin",
   "keywords": [
     "GC-JSPlugin"

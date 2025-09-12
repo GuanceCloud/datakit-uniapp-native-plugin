@@ -1,7 +1,7 @@
 {
   "name": "Guance UniPlugin",
   "id": "GCUniPlugin",
-  "version": "0.2.4-alpha.3",
+  "version": "0.2.4",
   "description": "Guance UniApp Native Application Integration Library",
   "_dp_type": "nativeplugin",
   "_dp_nativeplugin": {
