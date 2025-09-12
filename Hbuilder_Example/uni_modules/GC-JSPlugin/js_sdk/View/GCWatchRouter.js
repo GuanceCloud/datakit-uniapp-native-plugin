@@ -72,14 +72,13 @@ export const gcWatchRouter = {
 			})
 			uni.addInterceptor('navigateBack', {
 				invoke() {
-					this.navBackPagesLength = getCurrentPages().length
-					if (this.navBackPagesLength > 1) {
+					gc.navBackPagesLength = getCurrentPages().length
+					if (gc.navBackPagesLength > 1) {
 						gc.rumRecordNewView(null)
 					}
 				},
 				success(result) {
-					if (this.navBackPagesLength > 1) {
-						console.log('currentPageLength:' + this.navBackPagesLength)
+					if (gc.navBackPagesLength > 1) {
 						gc.navigateBack()
 					}
 				}
@@ -135,7 +134,9 @@ export const gcWatchRouter = {
 				object.onclose = function(result) {
 					console.log('onclose')
 					object.removeEventListener('popGesture', gc.eventListenerPopGesture)
-					orionclose(result)
+					if (typeof orionclose === 'function') {
+					    orionclose(result)
+					}
 				}
 			}
 		},

@@ -9,8 +9,12 @@ from './View/GCPageMixin.js';
 export {
 	gcPageViewMixinOnly
 }
-from './View/GCPageViewMixinOnly';
+from './View/GCPageViewMixinOnly.js';
 export {
 	gcWatchRouter
 }
-from './View/GCWatchRouter';
+from './View/GCWatchRouter.js';
+export {
+	gcErrorTracking
+}
+from './Error/GCErrorTracking.js'
