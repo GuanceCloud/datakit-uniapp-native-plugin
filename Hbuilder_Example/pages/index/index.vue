@@ -8,9 +8,7 @@
 			<button type="primary" @click="appendBridgeContext()">appendBridgeContext</button>
 			<button type="primary" @click="flushSyncData()">Manual Data Sync</button>
 			<button type="primary" @click="clearAllData()">Clear Unsynchronized Local Data</button>
-			<navigator url="../logging/logging">
-				<button type="primary">Log Output</button>
-			</navigator>
+			<button type="primary" @click="navigatorToLogPage()">Log Output</button>
 			<navigator url="../tracing/tracing">
 				<button type="primary">Network Link Tracing</button>
 			</navigator>
@@ -73,6 +71,11 @@
 		  clearAllData(){
 		  	  ftMobileSDK.clearAllData()
 		  },
+		  navigatorToLogPage(){
+			  uni.navigateTo({
+			    url: '../logging/logging?id=123&name=test'
+			  });
+		 },
 		}
 	}
 </script>

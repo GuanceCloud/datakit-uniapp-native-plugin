@@ -86,11 +86,7 @@ export const gcWatchRouter = {
 		},
 		rumRecordNewView(url) {
 			this.loadStart = new Date().getTime() * 1000000
-			if (url !== null) {
-				this.currentPage = url.split('?')[0]
-			} else {
-				this.currentPage = null
-			}
+			this.currentPage = url
 		},
 		rumStopOldStartNew(addListener = true) {
 			if (this.currentPage) {
@@ -98,16 +94,24 @@ export const gcWatchRouter = {
 				rum.stopView()
 				const loadEnd = new Date().getTime() * 1000000
 				let duration = (loadEnd - this.loadStart);
+				const {
+					view_name,
+					qureyJsonStr
+				} = this.parseUrl(this.currentPage);
 				if (this.loadStart !== null && duration >= 0) {
 					rum.onCreateView({
-						'viewName': this.currentPage,
+						'viewName': view_name,
 						'loadTime': duration,
 					})
 				}
-				console.log("startView", this.currentPage)
+
 				rum.startView({
-					'viewName': this.currentPage
+					'viewName': view_name,
+					'property': {
+						'view_url_query': qureyJsonStr
+					}
 				})
+
 				if (addListener) {
 					this.addPopGestureEventListener()
 				}
@@ -135,7 +139,7 @@ export const gcWatchRouter = {
 					console.log('onclose')
 					object.removeEventListener('popGesture', gc.eventListenerPopGesture)
 					if (typeof orionclose === 'function') {
-					    orionclose(result)
+						orionclose(result)
 					}
 				}
 			}
@@ -146,6 +150,31 @@ export const gcWatchRouter = {
 				console.log('popGesture', e)
 				this.navigateBack()
 			}
+		},
+		parseUrl(url) {
+			const view_url_query = {};
+			let view_name = '';
+			if (url) {
+				const urlParts = url.split('?');
+				view_name = urlParts[0];
+				if (urlParts.length > 1) {
+					const queryString = urlParts[1];
+					const params = queryString.split('&');
+
+					params.forEach(param => {
+						const [key, value] = param.split('=');
+						if (key) {
+							view_url_query[decodeURIComponent(key)] = value ? decodeURIComponent(value) :
+							'';
+						}
+					});
+				}
+			}
+			const qureyJsonStr = JSON.stringify(view_url_query);
+			return {
+				view_name,
+				qureyJsonStr
+			};
 		}
 	}
 
