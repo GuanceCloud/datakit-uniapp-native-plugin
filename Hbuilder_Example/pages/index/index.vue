@@ -15,6 +15,9 @@
 			<navigator url="../rum/rum">
 				<button type="primary">RUM Data Collection</button>
 			</navigator>
+			<navigator url="../webview/webView">
+				<button type="primary">WebView</button>
+			</navigator>
 		</view>
 	
 </template>

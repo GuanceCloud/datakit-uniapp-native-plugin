@@ -65,6 +65,14 @@
 			"navigationBarTitleText": "page2",
 			"enablePullDownRefresh": false
 		}
+	},
+	{
+		"path": "pages/webview/webView",
+		"style": {
+			"navigationBarTitleText": "webView",
+			"enablePullDownRefresh": false
+		}
+	
 	}],
 	"tabBar": {
 		"color": "#7A7E83",
