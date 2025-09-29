@@ -1,6 +1,6 @@
 <template>
 	<view class="btn-list">
-		<button type="primary" @click="onCreateView()">View OnCreate</button>
+		<button class="btn-success" type="primary" @click="onCreateView()">View OnCreate</button>
 		<button type="primary" @click="startView()">View Start</button>
 		<button type="primary" @click="stopView()">View Stop</button>
 		<navigator url="../rum/rum-view-mixin">
@@ -9,8 +9,8 @@
 		<button type="primary" @click="startAction()">Start Action</button>
 		<button type="primary" @click="addAction()">Add Action</button>
 		<button type="primary" @click="addError()">Add Error</button>
-		<button type="primary" @click="consoleError()">Generate an Error</button>
-		<button type="primary" @click="uniError()">Generate a Console Error</button>
+		<button type="primary" @click="uniError()">Generate an Error</button>
+		<button type="primary" @click="consoleError()">Generate a Console Error</button>
 		<button type="primary" @click="resource()">Resource Normal</button>
 		<button type="primary" @click="resourceError()">Resource Error</button>
 	</view>
@@ -105,5 +105,29 @@
 </script>
 
 <style>
-
+	.tooltip {
+	    position: relative;
+	    display: inline-block;
+	  }
+	
+	  .tooltip .tooltiptext {
+	    visibility: hidden;
+	    width: 200px;
+	    background-color: #2c3e50;
+	    color: #fff;
+	    text-align: center;
+	    border-radius: 6px;
+	    padding: 8px;
+	    position: absolute;
+	    z-index: 1;
+	    bottom: 125%;
+	    left: 50%;
+	    margin-left: -100px;
+	    opacity: 0;
+	    transition: opacity 0.3s;
+	  }
+	   .btn-success {
+	      background: linear-gradient(45deg, #27ae60, #2ecc71);
+	      color: white;
+	    }
 </style>
