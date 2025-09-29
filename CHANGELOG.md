@@ -1,3 +1,7 @@
+# 0.2.5-alpha.1
+* `GC-JSPlugin`
+  * Add the `view_url_query` field to Rum View
+---
 # 0.2.4
 * `GCUniPlugin-MobileAgent`
   * Support the addition of bridge context through the `appendBridgeContext` method to distinguish the data source or to mark specific scenarios.
