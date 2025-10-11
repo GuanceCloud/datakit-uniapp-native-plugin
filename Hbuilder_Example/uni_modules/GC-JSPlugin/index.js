@@ -18,3 +18,7 @@ export {
 	gcErrorTracking
 }
 from './js_sdk/Error/GCErrorTracking.js'
+export {
+	gcViewTracking
+}
+from './js_sdk/View/GCViewTracking.js'
