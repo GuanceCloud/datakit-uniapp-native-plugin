@@ -38,7 +38,9 @@ class PageMonitor {
 
 			// Monitor route changes
 			this.startWatchRouter();
-
+            
+			this.checkInitialPage();
+			
 			console.log('Page monitoring plugin initialized successfully');
 			// #endif
 		} catch (error) {
@@ -46,21 +48,23 @@ class PageMonitor {
 			this.initialized = false;
 		}
 	}
-    
-	firstPageStart(){
-		console.log('rumStartView 1')
-		
-		if (!this.firstPageDetected) {
-			const page = getCurrentPages().pop();
-			if (page) {
-				this.currentPage = page.route;
-				console.log('rumStartView')
-				this.rumStartView();
-			}
-			this.firstPageDetected = true;
-		}
-	}
-
+    checkInitialPage() {
+    		if (!this.initialized) return; 
+    		setTimeout(() => {
+    			if (!this.initialized || this.firstPageDetected) return; 
+    			const page = getCurrentPages().pop();
+    			if (page) {
+    				this.currentPage = page.route;
+    				this.loadStart = this.appLaunchTime ? this.appLaunchTime * 1000000 : Date.now() * 1000000;
+					console.log('page.onReady:'+page.route);
+					this.rumStartView();
+					this.firstPageDetected = true;
+    			} else {
+    				setTimeout(() => this.checkInitialPage(), 100);
+    			}
+    		}, 50);
+    }
+	
 	evalSessionReplayJS(js) {
 		this.sessionReplayJS = js;
 	}
@@ -134,11 +138,6 @@ class PageMonitor {
 			}
 			this.appLaunched = true;
 		}
-	}
-
-	// Get page path
-	getPagePath(page) {
-		return page.route || page.$mp?.page?.route || `unknown_first_page`;
 	}
 
 	// Monitor route changes
