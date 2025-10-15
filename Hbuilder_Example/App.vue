@@ -6,7 +6,7 @@
 	var rum = uni.requireNativePlugin("GCUniPlugin-RUM");
 	var tracer = uni.requireNativePlugin("GCUniPlugin-Tracer");
 	export default {
-		mixins:[gcWatchRouter],
+		// mixins:[gcWatchRouter],
 		onLaunch: function() {
 			ftMobileSDK.sdkConfig({
 				'datakitUrl': SDKConst.SERVER_URL,
