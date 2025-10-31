@@ -11,6 +11,8 @@ const jsCode = `
     var script = document.createElement('script');
     script.src = 'https://static.guance.com/browser-sdk/v3/dataflux-rum.js';
     script.onload = function() {
+			DATAFLUX_RUM.setGlobalContextProperty('wgt_id', 'wgt_id_1');
+			DATAFLUX_RUM.setGlobalContextProperty('wgt_name', 'wgt_name_1');
       // Initialize after script loads
       DATAFLUX_RUM.init({
         applicationId: 'xxxx',
@@ -25,8 +27,6 @@ const jsCode = `
         trackInteractions: true,
         traceType: "ddtrace"
       });
-			DATAFLUX_RUM.setGlobalContextProperty('wgt_id', 'wgt_id_1');
-			DATAFLUX_RUM.setGlobalContextProperty('wgt_name', 'wgt_name_1');
       window.DATAFLUX_RUM.startSessionReplayRecording();
     };
     document.head.appendChild(script);
