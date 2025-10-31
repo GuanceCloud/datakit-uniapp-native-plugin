@@ -1,6 +1,11 @@
+# 0.2.5
+* `GC-JSPlugin`
+  * Add the `view_url_query` field to RUM View
+  * Support use `gcViewTracking.startTracking()` method collection RUM Views
+---
 # 0.2.5-alpha.1
 * `GC-JSPlugin`
-  * Add the `view_url_query` field to Rum View
+  * Add the `view_url_query` field to RUM View
 ---
 # 0.2.4
 * `GCUniPlugin-MobileAgent`
