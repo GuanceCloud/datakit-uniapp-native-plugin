@@ -52,19 +52,29 @@ class PageMonitor {
     		if (!this.initialized) return; 
     		setTimeout(() => {
     			if (!this.initialized || this.firstPageDetected) return; 
-    			const page = getCurrentPages().pop();
-    			if (page) {
-    				this.currentPage = page.route;
+    			const pagePath = this.getCurrentPagePath();
+    			if (pagePath) {
+    				this.currentPage = pagePath;
     				this.loadStart = this.appLaunchTime ? this.appLaunchTime * 1000000 : Date.now() * 1000000;
-					console.log('page.onReady:'+page.route);
+					console.log('first page:'+pagePath);
 					this.rumStartView();
-					this.firstPageDetected = true;
+					this.firstPageDetected = true;			  
     			} else {
     				setTimeout(() => this.checkInitialPage(), 100);
     			}
     		}, 50);
     }
-	
+	getCurrentPagePath(){
+		const page = getCurrentPages().pop()
+		if (!page){
+			return null
+		}
+		const fullPath = page.$page.fullPath;
+		if (fullPath){
+			return fullPath;
+		}
+		return page.route;
+	}
 	evalSessionReplayJS(js) {
 		this.sessionReplayJS = js;
 	}
@@ -91,13 +101,12 @@ class PageMonitor {
 
 			// Listen for App display
 			addAppListener('resume', () => {
-				const pages = getCurrentPages();
-				if (pages.length > 0) {
-					const pageInstance = pages[pages.length - 1];
-					this.currentPage = pageInstance.route;
-					console.log('App display (resume) detected:' + this.currentPage);
+				const pagePath = this.getCurrentPagePath();
+				if (pagePath) {
+					this.currentPage = pagePath;
+					console.log('App display (resume) detected:' + pagePath);
 					this.rum.startView({
-						'viewName': pageInstance.route
+						'viewName': pagePath
 					});
 				}
 			});
@@ -226,7 +235,7 @@ class PageMonitor {
 					});
 				}
 				console.log('startView：' + view_name);
-				// Fixed this loss issue here
+				
 				this.rum.startView({
 					'viewName': view_name,
 					'property': {
