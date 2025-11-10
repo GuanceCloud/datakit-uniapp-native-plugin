@@ -1,4 +1,6 @@
-class PageMonitor {
+ const FT_JS_PLUGIN_VERSION = '0.2.6-alpha.1';
+ 
+ class PageMonitor {
 	constructor() {
 		// Plugin status
 		this.initialized = false;
@@ -20,15 +22,14 @@ class PageMonitor {
 
 	// Initialize monitoring
 	startTracking() {
-		console.log('initialized');
 
 		if (this.initialized) return;
 		this.initialized = true;
-		console.log('initialized');
-
+		
+		console.log(`[FTLog] View tracking initialized (version: ${FT_JS_PLUGIN_VERSION})`);
+        
 		try {
 			//	#ifdef APP-PLUS	
-			console.log('Page monitoring plugin initialized');
 			
 			// 1. Record app launch time (execute as early as possible)
 			this.recordAppLaunchTime();
@@ -41,10 +42,10 @@ class PageMonitor {
             
 			this.checkInitialPage();
 			
-			console.log('Page monitoring plugin initialized successfully');
+			console.log('[FTLog] View tracking plugin initialized successfully');
 			// #endif
 		} catch (error) {
-			console.error('Page monitoring plugin initialization failed:', error);
+			console.error('[FTLog] View tracking plugin initialization failed:', error);
 			this.initialized = false;
 		}
 	}
@@ -56,7 +57,7 @@ class PageMonitor {
     			if (pagePath) {
     				this.currentPage = pagePath;
     				this.loadStart = this.appLaunchTime ? this.appLaunchTime * 1000000 : Date.now() * 1000000;
-					console.log('first page:'+pagePath);
+					console.log('[FTLog] First page:'+ pagePath);
 					this.rumStartView();
 					this.firstPageDetected = true;			  
     			} else {
@@ -91,10 +92,10 @@ class PageMonitor {
 						});
 						return true;
 					}
-					console.warn(`Unsupported event listener type: ${event}`);
+					console.warn(`[FTLog] Unsupported event listener type: ${event}`);
 					return false;
 				} catch (e) {
-					console.error(`Failed to add event listener ${event}:`, e);
+					console.error(`[FTLog] Failed to add event listener ${event}:`, e);
 					return false;
 				}
 			};
@@ -104,7 +105,7 @@ class PageMonitor {
 				const pagePath = this.getCurrentPagePath();
 				if (pagePath) {
 					this.currentPage = pagePath;
-					console.log('App display (resume) detected:' + pagePath);
+					console.log('[FTLog] App display (resume) detected:' + pagePath);
 					this.rum.startView({
 						'viewName': pagePath
 					});
@@ -113,20 +114,20 @@ class PageMonitor {
 
 			// Listen for App hiding
 			addAppListener('pause', () => {
-				console.log('App hiding (pause) detected');
+				console.log('[FTLog] App hiding (pause) detected');
 				this.rum.stopView();
 			});
 
 			// Listen for App launch completion
 			addAppListener('launch', () => {
-				console.log('App launch completion (launch) detected');
+				console.log('[FTLog] App launch completion (launch) detected');
 				// Check initial page again to ensure first page is captured
 				this.checkInitialPage();
 			});
 
-			console.log('watchAppLifecycle internal logic executed successfully');
+			console.log('[FTLog] watchAppLifecycle internal logic executed successfully');
 		} catch (error) {
-			console.error('Error executing watchAppLifecycle method:', error);
+			console.error('[FTLog] Error executing watchAppLifecycle method:', error);
 			// Throw error for upper layer to catch, avoid silent failure
 			throw error;
 		}
@@ -139,11 +140,9 @@ class PageMonitor {
 			// If native launch time is available (supported by some Android devices)
 			if (plus.runtime.launchTime) {
 				this.appLaunchTime = plus.runtime.launchTime;
-				console.log('Native launch time:', this.appLaunchTime);
 			} else {
 				// Otherwise use current time as launch time (slightly larger error, but as a fallback)
 				this.appLaunchTime = Date.now();
-				console.log('Fallback launch time:', this.appLaunchTime);
 			}
 			this.appLaunched = true;
 		}
@@ -219,7 +218,7 @@ class PageMonitor {
 	}
 	
 	rumStartView(addListener = true){
-		console.log('this.currentPage'+this.currentPage);
+		console.log('[FTLog] this.currentPage:'+this.currentPage);
 		if (this.currentPage) {
 			const loadEnd = new Date().getTime() * 1000000;
 				let duration = (loadEnd - this.loadStart);
@@ -228,13 +227,12 @@ class PageMonitor {
 					qureyJsonStr
 				} = this.parseUrl(this.currentPage);
 				if (this.loadStart !== null && duration >= 0) {
-					console.log('[FTLog] duration：' + duration);
 					this.rum.onCreateView({
 						'viewName': view_name,
 						'loadTime': duration,
 					});
 				}
-				console.log('startView：' + view_name);
+				console.log('[FTLog] startView：' + view_name);
 				
 				this.rum.startView({
 					'viewName': view_name,
@@ -276,8 +274,6 @@ class PageMonitor {
 						originalOnClose(result);
 					}
 				};
-			} else {
-				console.log('no webView');
 			}
 		}
 	}

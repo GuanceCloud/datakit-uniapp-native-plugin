@@ -1,3 +1,4 @@
+const FT_JS_PLUGIN_VERSION = '0.2.6-alpha.1';
 /**
  * Error information collection module
  * Responsible for capturing console.error and uni.onError errors
@@ -7,18 +8,16 @@ const CONSOLE_ERROR = "console_error";
 const rum = uni.requireNativePlugin("GCUniPlugin-RUM");
 // Application state management - initially in startup state
 let appState = 'startup';
+let isUniApiAvailable = typeof uni !== 'undefined';
 
 // Monitor application show/hide state changes
 function setupAppStateTracking() {
-  // Listen for application show event
-  uni.onAppShow(() => {
-    appState = 'run';
-  });
-  
-  // Listen for application hide event
-  uni.onAppHide(() => {
-    appState = 'unknown';
-  });
+	if (isUniApiAvailable && typeof uni.onAppShow === 'function' && typeof uni.onAppHide === 'function') {
+		uni.onAppShow(() => appState = 'run');
+		uni.onAppHide(() => appState = 'unknown');
+	} else {
+		appState = 'unknown'
+	}
 }
 
 export const gcErrorTracking = {
@@ -28,19 +27,30 @@ export const gcErrorTracking = {
 	 */
 	startTracking() {
 		if (this.isTracking) {
-			console.log('Error tracking is already active');
+			console.log('[FTLog] Error tracking is already active');
 			return;
 		}
-		setupAppStateTracking();
-		
-		// Capture console.error
-		this.captureConsoleError();
+		try {
+			console.log(`[FTLog] Error tracking initialized (version: ${FT_JS_PLUGIN_VERSION})`);
 
-		// Capture uni.onError
-		this.captureUniError();
+			setupAppStateTracking();
 
-		this.isTracking = true;
-		console.log('Error tracking started successfully');
+			// Capture console.error
+			this.captureConsoleError();
+			// #ifdef VUE3
+			// Capture uni.onError
+			this.captureUniError();
+			//  #endif
+
+			// #ifndef VUE3
+			this.captureVueComponentError();
+			// #endif
+
+			this.isTracking = true;
+
+		} catch (e) {
+			console.error('[FTLog] An exception occurred during uni error collection:', e);
+		}
 	},
 
 	/**
@@ -48,24 +58,38 @@ export const gcErrorTracking = {
 	 */
 	captureConsoleError() {
 		const originalConsoleError = console.error;
-
+	
 		console.error = function(...args) {
 			// Call the original method to ensure errors are normally output to the console
 			originalConsoleError.apply(console, args);
-
 			// Process error information
 			try {
+				// #ifndef VUE3
+				// Filter 1: args[0] is a Vue2 warning string (starts with [Vue warn]: )
+				const firstArg = args[0];
+				if (typeof firstArg === 'string' && firstArg.startsWith('[Vue warn]: ')) {
+					console.log('[FTLog] Skip Vue2 warning string:', firstArg);
+					return;
+				}
+	
+				// Filter 2: Error instances marked by Vue.config.errorHandler
+				const err = args.find(item => item instanceof Error); // Find the actual Error instance
+				if (err && err.__ft_vue_component_error__) {
+					console.log('[FTLog] Skip marked Vue2 component error');
+					return;
+				}
+				// #endif
 				const errorInfo = {
 					type: CONSOLE_ERROR,
 					message: this.getErrorMessage(args[0]),
 					stack: this.getErrorStackTrace(args[0]),
 					state: appState,
 				};
-
+	
 				// Report error information
 				this.reportError(errorInfo);
 			} catch (e) {
-				originalConsoleError('An exception occurred during error collection:', e);
+				originalConsoleError('[FTLog] An exception occurred during error collection:', e);
 			}
 		}.bind(this);
 	},
@@ -74,20 +98,49 @@ export const gcErrorTracking = {
 	 * Capture uni.onError errors
 	 */
 	captureUniError() {
-		uni.onError((error) => {
-			try {
-				const errorInfo = {
-					message: this.getErrorMessage(error),
-					stack: this.getErrorStackTrace(error),
-					state: appState,
-				};
-
-				// Report error information
-				this.reportError(errorInfo);
-			} catch (e) {
-				console.error('An exception occurred during uni error collection:', e);
-			}
-		});
+		if (isUniApiAvailable && typeof uni.onError === 'function') {
+			uni.onError((error) => {
+				try {
+					console.log(error);
+					const errorInfo = {
+						message: this.getErrorMessage(error),
+						stack: this.getErrorStackTrace(error),
+						state: appState,
+					};
+	
+					// Report error information
+					this.reportError(errorInfo);
+				} catch (e) {
+					console.error('An exception occurred during uni error collection:', e);
+				}
+			});
+		}
+	},
+	
+	captureVueComponentError() {
+		if (typeof Vue.config.errorHandler === 'function') {
+			const originalErrorHandler = Vue.config.errorHandler;
+			Vue.config.errorHandler = (err, vm, info) => {
+				try {
+					if (err instanceof Error) {
+						err.__ft_vue_component_error__ = true;
+					}
+					const errorInfo = {
+						message: this.getErrorMessage(err),
+						stack: this.getErrorStackTrace(err),
+						state: appState,
+					};
+					this.reportError(errorInfo);
+				} catch (e) {
+					console.error('[FTLog] Vue component error collection failed:', e);
+				}
+	
+				// Preserve original error handling logic
+				if (originalErrorHandler) {
+					originalErrorHandler(err, vm, info);
+				}
+			};
+		}
 	},
 
 	/**
@@ -96,8 +149,8 @@ export const gcErrorTracking = {
 	 */
 	reportError(errorInfo) {
 		console.log('Error captured, ready to report:', errorInfo);
-		if(rum){
-		  rum.addError(errorInfo);
+		if (rum) {
+			rum.addError(errorInfo);
 		}
 	},
 
