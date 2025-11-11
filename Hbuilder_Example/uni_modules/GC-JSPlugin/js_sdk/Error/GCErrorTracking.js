@@ -1,4 +1,4 @@
-const FT_JS_PLUGIN_VERSION = '0.2.6-alpha.1';
+const FT_JS_PLUGIN_VERSION = '0.2.6-alpha.2';
 /**
  * Error information collection module
  * Responsible for capturing console.error and uni.onError errors
@@ -135,7 +135,7 @@ export const gcErrorTracking = {
 	},
 
 	captureVueComponentError() {
-		if (typeof Vue === 'undefined' || originalVueErrorHandler !== null) return;
+		if (typeof Vue === 'undefined' || typeof Vue.config.errorHandler !== 'function' || originalVueErrorHandler !== null) return;
 		originalVueErrorHandler = Vue.config.errorHandler;
 		Vue.config.errorHandler = (err, vm, info) => {
 			try {
