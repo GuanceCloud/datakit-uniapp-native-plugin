@@ -22,7 +22,7 @@
 		</data>
 		<key>Headers/GC-UniPlugin-App-Version.h</key>
 		<data>
-		Dt23bskTasm/MppsrgLrtwZj24E=
+		6ig/tL5vHI1k77xk2wZY6rWEeEI=
 		</data>
 		<key>Headers/GC_UniPlugin_App.h</key>
 		<data>
@@ -30,7 +30,7 @@
 		</data>
 		<key>Info.plist</key>
 		<data>
-		8tTJloXcmy+edCJUS6gPYAz8RGg=
+		2eoh1WxRveQFStzDrXc3StB+7dA=
 		</data>
 		<key>Modules/module.modulemap</key>
 		<data>
@@ -41,10 +41,6 @@
 	<dict>
 		<key>Headers/FTLogModule.h</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			a9y/iOlpDhqmkfrKz5owi0kNOqI=
-			</data>
 			<key>hash2</key>
 			<data>
 			cJZT165FZSaSvqQgTl+P1VPZzl0L3/MpEumaBZQIWAs=
@@ -52,10 +48,6 @@
 		</dict>
 		<key>Headers/FTMobileUniModule.h</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			KwwfY6p/UYmzTSfwcx0QuBZ24x0=
-			</data>
 			<key>hash2</key>
 			<data>
 			QVPvUEbOhbTETtqK/UAGzyMWZEKyPqnuGtaJvWp2m/Y=
@@ -63,10 +55,6 @@
 		</dict>
 		<key>Headers/FTRUMModule.h</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			BtwJhAV1FwXHlk4MAjgEPPTxS4w=
-			</data>
 			<key>hash2</key>
 			<data>
 			Yy/Q0Ux8zwOeZTRAdnwTMT5PW6y26CFCC5e+RGUUssM=
@@ -74,10 +62,6 @@
 		</dict>
 		<key>Headers/FTTracerModule.h</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			6d+lOxRZfbLSF1otcRWrCTfmZ4g=
-			</data>
 			<key>hash2</key>
 			<data>
 			P2tViHPF9Ff9E6zwGJbXcmW3ZoQX5llfM0dWKi72wlg=
@@ -85,21 +69,13 @@
 		</dict>
 		<key>Headers/GC-UniPlugin-App-Version.h</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			Dt23bskTasm/MppsrgLrtwZj24E=
-			</data>
 			<key>hash2</key>
 			<data>
-			lalenhJGSMR6T3o9HvG2fTpK+ZpwdLdgETtOZtEvpuE=
+			WtBeySOurzgrpXOGGh6cBrJjHKSmDMYTBliDU5cryuE=
 			</data>
 		</dict>
 		<key>Headers/GC_UniPlugin_App.h</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			nts5b1DzpqWmTcxtCvyE7p8f7pc=
-			</data>
 			<key>hash2</key>
 			<data>
 			qDJoOoa++4dqATPgvOu/kG/zgntm7qfXCBIOw3SCSRc=
@@ -107,10 +83,6 @@
 		</dict>
 		<key>Modules/module.modulemap</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			ZsaUGycQiza9Wvrd9Jb2b0puNtE=
-			</data>
 			<key>hash2</key>
 			<data>
 			2dUue9Ik6btzkJfdeqIJoKcWbbwcB7ffg6wysGrwBow=
