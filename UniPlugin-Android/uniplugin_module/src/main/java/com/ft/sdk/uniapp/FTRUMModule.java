@@ -44,6 +44,8 @@ public class FTRUMModule extends UniModule {
         Map<String, Object> globalContext = (Map<String, Object>) map.get("globalContext");
         Number rumCacheLimitCount = (Number) map.get("rumCacheLimitCount");
         Object rumDiscardStrategy = map.get("rumDiscardStrategy");
+        Boolean enableTraceWebView = (Boolean) map.get("enableTraceWebView");
+        Object allowWebViewHost = map.get("allowWebViewHost");
         FTRUMConfig rumConfig = new FTRUMConfig().setRumAppId(rumAppId);
         if (sampleRate != null) {
             rumConfig.setSamplingRate(sampleRate.floatValue());
@@ -168,6 +170,17 @@ public class FTRUMModule extends UniModule {
             } else if (rumDiscardStrategy.equals("discard")) {
                 rumConfig.setRumCacheDiscardStrategy(RUMCacheDiscard.DISCARD);
             }
+        }
+        if (enableTraceWebView != null) {
+            rumConfig.setEnableTraceWebView(enableTraceWebView);
+        }
+        if (allowWebViewHost instanceof JSONArray){
+            JSONArray allowWebViewHostArr = (JSONArray) allowWebViewHost;
+            String[] hostArray = new String[allowWebViewHostArr.size()];
+            for (int i = 0; i < allowWebViewHostArr.size(); i++) {
+                hostArray[i] = allowWebViewHostArr.getString(i);
+            }
+            rumConfig.setAllowWebViewHost(hostArray);
         }
         FTSdk.initRUMWithConfig(rumConfig);
         FTUniAppStartManager.get().uploadColdBootTimeWhenManualStart();

@@ -137,6 +137,15 @@ UNI_EXPORT_METHOD_SYNC(@selector(setConfig:))
           return [FTUniPluginUtils filterBlackResource:url];
         };
     }
+    if ([params.allKeys containsObject:@"enableTraceWebView"]){
+        rumConfig.enableTraceWebView = [params[@"enableTraceWebView"] boolValue];
+    }
+    if ([params.allKeys containsObject:@"allowWebViewHost"]){
+        id allowWebViewHost = params[@"allowWebViewHost"];
+        if ([allowWebViewHost isKindOfClass:NSArray.class]) {
+            rumConfig.allowWebViewHost = (NSArray *)allowWebViewHost;
+        }
+    }
     [[FTMobileAgent sharedInstance] startRumWithConfigOptions:rumConfig];
 }
 #pragma mark --------- RUM DATA ADD ----------

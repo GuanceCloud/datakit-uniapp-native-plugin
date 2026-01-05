@@ -36,6 +36,8 @@
 				'nativeFreezeDurationMs':400,
 				'rumDiscardStrategy':'discardOldest',
 				'rumCacheLimitCount': 10000,
+				'enableTraceWebView': true,
+				'allowWebViewHost': ['10.100.64.166'],
 				'globalContext': {
 					'track_id': SDKConst.TRACK_ID,
 					'rum_globalContext': 'custom_rum_globalContext'
