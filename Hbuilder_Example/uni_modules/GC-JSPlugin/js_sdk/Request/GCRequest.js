@@ -1,4 +1,4 @@
-const FT_JS_PLUGIN_VERSION = '0.2.6-alpha.2';
+const FT_JS_PLUGIN_VERSION = '0.2.6';
 
 var rum = uni.requireNativePlugin("GCUniPlugin-RUM");
 var tracer = uni.requireNativePlugin("GCUniPlugin-Tracer");
