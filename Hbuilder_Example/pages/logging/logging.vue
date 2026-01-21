@@ -9,7 +9,8 @@
 </template>
 
 <script>
-	var logger = uni.requireNativePlugin("GCUniPlugin-Logger");
+	import { getLogger } from '@/utils/pluginManager.js';
+	var logger = getLogger();
 	export default {
 		data() {
 			return {}

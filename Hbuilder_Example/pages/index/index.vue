@@ -24,8 +24,9 @@
 
 <script>
 	import {gcPageMixin} from '@/uni_modules/GC-JSPlugin';
+	import { getMobileAgent } from '@/utils/pluginManager.js';
 	
-	var ftMobileSDK = uni.requireNativePlugin("GCUniPlugin-MobileAgent");
+	var ftMobileSDK = getMobileAgent();
 	export default {
 		data() {
 			return {}

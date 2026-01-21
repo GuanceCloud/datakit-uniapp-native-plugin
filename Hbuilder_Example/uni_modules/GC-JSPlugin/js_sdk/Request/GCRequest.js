@@ -1,7 +1,14 @@
 const FT_JS_PLUGIN_VERSION = '0.2.6';
 
+// #ifdef APP-HARMONY
+import { getRUM, getTracer } from '@/utils/pluginManager.js';
+var rum = getRUM();
+var tracer = getTracer();
+// #endif
+// #ifndef APP-HARMONY
 var rum = uni.requireNativePlugin("GCUniPlugin-RUM");
 var tracer = uni.requireNativePlugin("GCUniPlugin-Tracer");
+// #endif
 // Get platform information
 const platform = uni.getSystemInfoSync().platform;
 

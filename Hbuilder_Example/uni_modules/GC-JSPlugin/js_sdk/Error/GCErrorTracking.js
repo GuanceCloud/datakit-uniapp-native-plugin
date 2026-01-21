@@ -5,7 +5,13 @@ const FT_JS_PLUGIN_VERSION = '0.2.6';
  */
 const EMPTY_MESSAGE = 'Unknown Error';
 const CONSOLE_ERROR = "console_error";
+// #ifdef APP-HARMONY
+import { getRUM } from '@/utils/pluginManager.js';
+const rum = getRUM();
+// #endif
+// #ifndef APP-HARMONY
 const rum = uni.requireNativePlugin("GCUniPlugin-RUM");
+// #endif
 
 let originalConsoleError = null;
 let originalVueErrorHandler = null;

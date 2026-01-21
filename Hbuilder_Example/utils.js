@@ -1,7 +1,12 @@
-export const SERVER_URL = 'http://127.0.0.1:9529'
-export const ANDROID_APP_ID = 'android_uniapp_app_id'
-export const IOS_APP_ID = 'ios_uniapp_app_id'
-export const TRACK_ID = 'track_id'
+export const SERVER_URL      = 'http://127.0.0.1:9529'
+export const ANDROID_APP_ID  = 'android_uniapp_app_id'
+export const IOS_APP_ID      = 'ios_uniapp_app_id'
+export const HARMONY_APP_ID  = 'harmony_uniapp_app_id'
+
+export const DATAWAY_URL    = ''
+export const CLIENT_TOKEN   = ''
+
+export const TRACK_ID        = 'track_id'
 import {gcRequest} from '@/uni_modules/GC-JSPlugin';
 export default {
 

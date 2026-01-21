@@ -6,7 +6,8 @@
 
 <script>
 	import Utils from '../../utils.js';
-	var tracer = uni.requireNativePlugin("GCUniPlugin-Tracer");
+	import { getTracer } from '@/utils/pluginManager.js';
+	var tracer = getTracer();
 	let requestUrl = "http://10.100.64.166:8000/api/user";
 	export default {
 		data() {

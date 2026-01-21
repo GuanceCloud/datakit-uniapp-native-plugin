@@ -1,0 +1,242 @@
+{
+  "id": "GC-UniPlugin-HarmonyOS",
+  "displayName": "Guance UniPlugin HarmonyOS",
+  "version": "0.2.6",
+  "description": "Guance UniApp Native Plugin for HarmonyOS (UTS Plugin)",
+  "keywords": [
+    "GC-UniPlugin",
+    "HarmonyOS",
+    "UTS"
+  ],
+  "repository": "",
+  "engines": {
+    "HBuilderX": "^4.27.0"
+  },
+  "dcloudext": {
+    "type": "uts",
+    "sale": {
+      "regular": {
+        "price": "0.00"
+      },
+      "sourcecode": {
+        "price": "0.00"
+      }
+    },
+    "contact": {
+      "qq": ""
+    },
+    "declaration": {
+      "ads": "",
+      "data": "",
+      "permissions": ""
+    },
+    "npmurl": ""
+  },
+  "uni_modules": {
+    "dependencies": [],
+    "encrypt": [],
+    "platforms": {
+      "cloud": {
+        "tcb": "n",
+        "aliyun": "n",
+        "alipay": "n"
+      },
+      "client": {
+        "Vue": {
+          "vue2": "y",
+          "vue3": "y"
+        },
+        "App": {
+          "app-android": "n",
+          "app-ios": "n",
+          "app-harmony": "y"
+        },
+        "H5-mobile": {
+          "Safari": "n",
+          "Android Browser": "n",
+          "微信浏览器(Android)": "n",
+          "QQ浏览器(Android)": "n"
+        },
+        "H5-pc": {
+          "Chrome": "n",
+          "IE": "n",
+          "Edge": "n",
+          "Firefox": "n",
+          "Safari": "n"
+        },
+        "小程序": {
+          "微信": "n",
+          "阿里": "n",
+          "百度": "n",
+          "字节跳动": "n",
+          "QQ": "n",
+          "钉钉": "n",
+          "快手": "n",
+          "飞书": "n",
+          "京东": "n"
+        },
+        "快应用": {
+          "华为": "n",
+          "联盟": "n"
+        }
+      }
+    },
+    "uni-ext-api": {
+      "uni": {
+        "sdkConfig": {
+          "name": "sdkConfig",
+          "app": {
+            "js": false,
+            "kotlin": false,
+            "swift": false,
+            "arkts": true
+          }
+        },
+        "bindRUMUserData": {
+          "name": "bindRUMUserData",
+          "app": {
+            "arkts": true
+          }
+        },
+        "unbindRUMUserData": {
+          "name": "unbindRUMUserData",
+          "app": {
+            "arkts": true
+          }
+        },
+        "flushSyncData": {
+          "name": "flushSyncData",
+          "app": {
+            "arkts": true
+          }
+        },
+        "appendGlobalContext": {
+          "name": "appendGlobalContext",
+          "app": {
+            "arkts": true
+          }
+        },
+        "appendLogGlobalContext": {
+          "name": "appendLogGlobalContext",
+          "app": {
+            "arkts": true
+          }
+        },
+        "appendRUMGlobalContext": {
+          "name": "appendRUMGlobalContext",
+          "app": {
+            "arkts": true
+          }
+        },
+        "shutDown": {
+          "name": "shutDown",
+          "app": {
+            "arkts": true
+          }
+        },
+        "clearAllData": {
+          "name": "clearAllData",
+          "app": {
+            "arkts": true
+          }
+        },
+        "manuallySetApplicationStart": {
+          "name": "manuallySetApplicationStart",
+          "app": {
+            "arkts": true
+          }
+        },
+        "appendBridgeContext": {
+          "name": "appendBridgeContext",
+          "app": {
+            "arkts": true
+          }
+        },
+        "rumSetConfig": {
+          "name": "rumSetConfig",
+          "app": {
+            "arkts": true
+          }
+        },
+        "rumStartAction": {
+          "name": "rumStartAction",
+          "app": {
+            "arkts": true
+          }
+        },
+        "rumAddAction": {
+          "name": "rumAddAction",
+          "app": {
+            "arkts": true
+          }
+        },
+        "rumOnCreateView": {
+          "name": "rumOnCreateView",
+          "app": {
+            "arkts": true
+          }
+        },
+        "rumStartView": {
+          "name": "rumStartView",
+          "app": {
+            "arkts": true
+          }
+        },
+        "rumStopView": {
+          "name": "rumStopView",
+          "app": {
+            "arkts": true
+          }
+        },
+        "rumAddError": {
+          "name": "rumAddError",
+          "app": {
+            "arkts": true
+          }
+        },
+        "rumStartResource": {
+          "name": "rumStartResource",
+          "app": {
+            "arkts": true
+          }
+        },
+        "rumStopResource": {
+          "name": "rumStopResource",
+          "app": {
+            "arkts": true
+          }
+        },
+        "rumAddResource": {
+          "name": "rumAddResource",
+          "app": {
+            "arkts": true
+          }
+        },
+        "loggerSetConfig": {
+          "name": "loggerSetConfig",
+          "app": {
+            "arkts": true
+          }
+        },
+        "loggerLogging": {
+          "name": "loggerLogging",
+          "app": {
+            "arkts": true
+          }
+        },
+        "tracerSetConfig": {
+          "name": "tracerSetConfig",
+          "app": {
+            "arkts": true
+          }
+        },
+        "tracerGetTraceHeader": {
+          "name": "tracerGetTraceHeader",
+          "app": {
+            "arkts": true
+          }
+        }
+      }
+    }
+  }
+}

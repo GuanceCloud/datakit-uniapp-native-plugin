@@ -1,0 +1,314 @@
+/**
+ * GC-UniPlugin-HarmonyOS Interface Definitions
+ * Corresponds to Android interface definitions
+ */
+
+// ==================== SDK Base Module Interfaces ====================
+
+export interface Uni {
+  /**
+   * SDK Configuration
+   * @param options Configuration options
+   */
+  sdkConfig(options: SDKConfigOptions): void;
+
+  /**
+   * Bind RUM User Data
+   * @param options User data options
+   */
+  bindRUMUserData(options: BindRUMUserDataOptions): void;
+
+  /**
+   * Unbind RUM User Data
+   */
+  unbindRUMUserData(): void;
+
+  /**
+   * Flush Sync Data Immediately
+   */
+  flushSyncData(): void;
+
+  /**
+   * Append Global Context
+   * @param options Context options
+   */
+  appendGlobalContext(options: GlobalContextOptions): void;
+
+  /**
+   * Append Log Global Context
+   * @param options Context options
+   */
+  appendLogGlobalContext(options: GlobalContextOptions): void;
+
+  /**
+   * Append RUM Global Context
+   * @param options Context options
+   */
+  appendRUMGlobalContext(options: GlobalContextOptions): void;
+
+  /**
+   * Shutdown SDK
+   */
+  shutDown(): void;
+
+  /**
+   * Clear All Data
+   */
+  clearAllData(): void;
+
+  /**
+   * Manually Set Application Start Time
+   */
+  manuallySetApplicationStart(): void;
+
+  /**
+   * Append Bridge Context
+   * @param options Context options
+   */
+  appendBridgeContext(options: GlobalContextOptions): void;
+
+  // ==================== RUM Module Interfaces ====================
+
+  /**
+   * RUM Configuration
+   * @param options RUM configuration options
+   */
+  rumSetConfig(options: RUMConfigOptions): void;
+
+  /**
+   * Start Action
+   * @param options Action options
+   */
+  rumStartAction(options: ActionOptions): void;
+
+  /**
+   * Add Action
+   * @param options Action options
+   */
+  rumAddAction(options: ActionOptions): void;
+
+  /**
+   * Create View
+   * @param options View options
+   */
+  rumOnCreateView(options: CreateViewOptions): void;
+
+  /**
+   * Start View
+   * @param options View options
+   */
+  rumStartView(options: ViewOptions): void;
+
+  /**
+   * Stop View
+   * @param options View options (optional)
+   */
+  rumStopView(options?: ViewOptions): void;
+
+  /**
+   * Add Error
+   * @param options Error options
+   */
+  rumAddError(options: ErrorOptions): void;
+
+  /**
+   * Start Resource
+   * @param options Resource options
+   */
+  rumStartResource(options: ResourceOptions): void;
+
+  /**
+   * Stop Resource
+   * @param options Resource options
+   */
+  rumStopResource(options: ResourceStopOptions): void;
+
+  /**
+   * Add Resource
+   * @param options Resource add options
+   */
+  rumAddResource(options: ResourceAddOptions): void;
+
+  // ==================== Logger Module Interfaces ====================
+
+  /**
+   * Logger Configuration
+   * @param options Logger configuration options
+   */
+  loggerSetConfig(options: LoggerConfigOptions): void;
+
+  /**
+   * Logging
+   * @param options Logging options
+   */
+  loggerLogging(options: LoggingOptions): void;
+
+  // ==================== Tracer Module Interfaces ====================
+
+  /**
+   * Tracer Configuration
+   * @param options Tracer configuration options
+   */
+  tracerSetConfig(options: TracerConfigOptions): void;
+
+  /**
+   * Get Trace Header
+   * @param options Trace header options
+   * @returns Trace header information
+   */
+  tracerGetTraceHeader(options: TraceHeaderOptions): Record<string, string> | null;
+}
+
+// ==================== Type Definitions ====================
+
+export type ContextValue = string | number | boolean;
+
+export interface SDKConfigOptions {
+  serverUrl?: string;
+  datakitUrl?: string;
+  datawayUrl?: string;
+  clientToken?: string;
+  debug?: boolean;
+  autoSync?: boolean;
+  syncPageSize?: number;
+  syncSleepTime?: number;
+  enableDataIntegerCompatible?: boolean;
+  compressIntakeRequests?: boolean;
+  service?: string;
+  env?: string;
+  globalContext?: Record<string, ContextValue>;
+  enableLimitWithDbSize?: boolean;
+  dbCacheLimit?: number;
+  dbDiscardStrategy?: DiscardStrategy;
+  dataModifier?: Record<string, ContextValue>;
+  lineDataModifier?: Record<string, Record<string, ContextValue>>;
+  offlinePackage?: boolean;
+}
+
+export interface BindRUMUserDataOptions {
+  userId?: string;
+  userName?: string;
+  userEmail?: string;
+  extra?: Record<string, string>;
+}
+
+export type GlobalContextOptions = Record<string, ContextValue>;
+
+export interface RUMConfigOptions {
+  androidAppId?: string;
+  iOSAppId?: string;
+  harmonyAppId?: string;
+  samplerate?: number;
+  sessionOnErrorSampleRate?: number;
+  enableNativeUserAction?: boolean;
+  enableNativeUserView?: boolean;
+  enableNativeUserResource?: boolean;
+  enableResourceHostIP?: boolean;
+  enableTrackNativeCrash?: boolean;
+  enableTrackNativeAppANR?: boolean;
+  enableTrackNativeFreeze?: boolean;
+  nativeFreezeDurationMs?: number;
+  errorMonitorType?: string | string[];
+  deviceMonitorType?: string | string[];
+  detectFrequency?: string;
+  globalContext?: Record<string, ContextValue>;
+  rumCacheLimitCount?: number;
+  rumDiscardStrategy?: DiscardStrategy;
+  enableTraceWebView?: boolean;
+  allowWebViewHost?: string[];
+}
+
+export interface ActionOptions {
+  actionName: string;
+  actionType: string;
+  property?: Record<string, ContextValue>;
+}
+
+export interface CreateViewOptions {
+  viewName: string;
+  loadTime: number;
+}
+
+export interface ViewOptions {
+  viewName?: string;
+  property?: Record<string, ContextValue>;
+}
+
+export interface ErrorOptions {
+  message: string;
+  stack: string;
+  state?: string;
+  property?: Record<string, ContextValue>;
+}
+
+export interface ResourceOptions {
+  key: string;
+  property?: Record<string, ContextValue>;
+}
+
+export interface ResourceStopOptions {
+  key: string;
+  property?: Record<string, ContextValue>;
+}
+
+export interface ResourceContentOptions {
+  url: string;
+  httpMethod?: string;
+  requestHeader?: string;
+  responseHeader?: string;
+  responseBody?: string;
+  resourceStatus?: number;
+}
+
+export interface ResourceAddOptions {
+  key: string;
+  content: ResourceContentOptions;
+}
+
+export type DiscardStrategy = "discardOldest" | "discard";
+
+export interface LoggerConfigOptions {
+  discardStrategy?: DiscardStrategy;
+  samplerate?: number;
+  logLevelFilters?: string[];
+  enableLinkRumData?: boolean;
+  enableCustomLog?: boolean;
+  globalContext?: Record<string, ContextValue>;
+  logCacheLimitCount?: number;
+}
+
+export interface LoggingOptions {
+  content: string;
+  status: string;
+  property?: Record<string, ContextValue>;
+}
+
+export type TraceTypeLiteral =
+  | "ddTrace"
+  | "zipkinMultiHeader"
+  | "zipkinSingleHeader"
+  | "traceparent"
+  | "skywalking"
+  | "jaeger";
+
+export interface TracerConfigOptions {
+  sampleRate?: number;
+  traceType?: TraceTypeLiteral;
+  enableLinkRUMData?: boolean;
+  enableNativeAutoTrace?: boolean;
+}
+
+export interface TraceHeaderOptions {
+  key: string;
+  url: string;
+}
+
+// ==================== Callback Types ====================
+
+export interface CallbackResult {
+  errMsg: string;
+}
+
+export type SuccessCallback = (result: CallbackResult) => void;
+export type FailCallback = (result: CallbackResult) => void;
+export type CompleteCallback = (result: CallbackResult) => void;

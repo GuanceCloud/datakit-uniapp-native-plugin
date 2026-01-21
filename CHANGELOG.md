@@ -1,3 +1,6 @@
+# 0.2.7
+* HarmonyOS plugin added 
+---
 # 0.2.6
 * `GCUniPlugin-RUM`
 *  Support setting webView collection rules via `enableTraceWebView` 、`allowWebViewHost`

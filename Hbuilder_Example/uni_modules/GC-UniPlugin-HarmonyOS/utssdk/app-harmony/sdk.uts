@@ -1,0 +1,288 @@
+/**
+ * SDK Base Module Implementation
+ * Corresponds to Android FTSDKUniModule
+ */
+
+import type {
+  SDKConfigOptions,
+  BindRUMUserDataOptions,
+  GlobalContextOptions,
+  ContextValue
+} from '../interface.uts';
+
+// Import HarmonyOS FT SDK from local oh_modules package
+import { FTSDK } from 'ft_sdk';
+import { FTSDKConfig } from 'ft_sdk';
+import { UserData } from 'ft_sdk';
+import { Context } from '@kit.AbilityKit';
+
+// Bridge context (corresponds to Android bridgeContext)
+let bridgeContext: Map<string, ContextValue> = new Map();
+
+// Initialize bridge context
+bridgeContext.set("sdk_bridge_info", "uniapp:0.2.7");
+
+/**
+ * Get Context (needs to be implemented when actually used)
+ * In UTS plugin, may need to get Context through other means
+ * Note: In uni-app, Context might be available through global variables or passed from JS side
+ */
+function getContext(): Context | undefined {
+  // In uni-app UTS plugin, Context might be available through global variables
+  // For now, return undefined and let SDK handle it
+  // The SDK's install method accepts optional Context parameter
+  return undefined;
+}
+
+/**
+ * SDK Configuration
+ * Corresponds to Android: sdkConfig(JSONObject data)
+ */
+export function sdkConfig(options: SDKConfigOptions): void {
+  (async () => {
+    try {
+      // 1. Parse configuration parameters
+      const datakitUrl = options.datakitUrl || options.serverUrl;
+      const datawayUrl = options.datawayUrl;
+      const cliToken = options.clientToken;
+      const debug = options.debug;
+      const env = options.env;
+      const serviceName = options.service;
+      const globalContext = options.globalContext;
+
+      // 2. Build FTSDKConfig
+      const sdkConfig = datakitUrl
+        ? FTSDKConfig.builder(datakitUrl)
+        : FTSDKConfig.builder(datawayUrl, cliToken);
+
+      if (debug !== undefined) {
+        sdkConfig.setDebug(debug);
+      }
+      if (env) {
+        sdkConfig.setEnv(env);
+      }
+      if (serviceName) {
+        sdkConfig.setServiceName(serviceName);
+      }
+      if (globalContext) {
+        const keys = Object.keys(globalContext);
+        for (let i = 0; i < keys.length; i++) {
+          const key = keys[i];
+          sdkConfig.addGlobalContext(key, new Object(globalContext[key]));
+        }
+      }
+
+      // 3. Install SDK
+      await FTSDK.install(sdkConfig, getContext());
+
+      console.log('[GC-UniPlugin-HarmonyOS] sdkConfig completed successfully');
+    } catch (error) {
+      console.error('[GC-UniPlugin-HarmonyOS] sdkConfig failed:', error);
+    }
+  })();
+}
+
+/**
+ * Bind RUM User Data
+ * Corresponds to Android: bindRUMUserData(JSONObject data)
+ */
+export function bindRUMUserData(options: BindRUMUserDataOptions): void {
+  (async () => {
+    try {
+      const userData = new UserData();
+      if (options.userId) {
+        userData.setId(options.userId);
+      }
+      if (options.userName) {
+        userData.setName(options.userName);
+      }
+      if (options.userEmail) {
+        userData.setEmail(options.userEmail);
+      }
+      if (options.extra) {
+        const extraKeys = Object.keys(options.extra);
+        for (let i = 0; i < extraKeys.length; i++) {
+          const key = extraKeys[i];
+          userData.addExt(key, options.extra[key]);
+        }
+      }
+      await FTSDK.bindRumUserData(userData);
+
+      console.log('[GC-UniPlugin-HarmonyOS] bindRUMUserData completed successfully');
+    } catch (error) {
+      console.error('[GC-UniPlugin-HarmonyOS] bindRUMUserData failed:', error);
+    }
+  })();
+}
+
+/**
+ * Unbind RUM User Data
+ * Corresponds to Android: unbindRUMUserData()
+ */
+export function unbindRUMUserData(): void {
+  (async () => {
+    try {
+      await FTSDK.unbindRumUserData();
+      console.log('[GC-UniPlugin-HarmonyOS] unbindRUMUserData completed successfully');
+    } catch (error) {
+      console.error('[GC-UniPlugin-HarmonyOS] unbindRUMUserData failed:', error);
+    }
+  })();
+}
+
+/**
+ * Flush Sync Data Immediately
+ * Corresponds to Android: flushSyncData()
+ */
+export function flushSyncData(): void {
+  try {
+    FTSDK.flushSyncData();
+    console.log('[GC-UniPlugin-HarmonyOS] flushSyncData completed successfully');
+  } catch (error) {
+    console.error('[GC-UniPlugin-HarmonyOS] flushSyncData failed:', error);
+  }
+}
+
+/**
+ * Append Global Context
+ * Corresponds to Android: appendGlobalContext(JSONObject extra)
+ */
+export function appendGlobalContext(options: GlobalContextOptions): void {
+  try {
+    if (options) {
+      const contextMap = convertToMapString(options);
+      FTSDK.appendGlobalContext(contextMap);
+      console.log('[GC-UniPlugin-HarmonyOS] appendGlobalContext completed successfully');
+    }
+  } catch (error) {
+    console.error('[GC-UniPlugin-HarmonyOS] appendGlobalContext failed:', error);
+  }
+}
+
+/**
+ * Append Log Global Context
+ * Corresponds to Android: appendLogGlobalContext(JSONObject extra)
+ */
+export function appendLogGlobalContext(options: GlobalContextOptions): void {
+  try {
+    if (options) {
+      const contextMap = convertToMapString(options);
+      FTSDK.appendLogGlobalContext(contextMap);
+      console.log('[GC-UniPlugin-HarmonyOS] appendLogGlobalContext completed successfully');
+    }
+  } catch (error) {
+    console.error('[GC-UniPlugin-HarmonyOS] appendLogGlobalContext failed:', error);
+  }
+}
+
+/**
+ * Append RUM Global Context
+ * Corresponds to Android: appendRUMGlobalContext(JSONObject extra)
+ */
+export function appendRUMGlobalContext(options: GlobalContextOptions): void {
+  try {
+    if (options) {
+      const contextMap = convertToMapString(options);
+      FTSDK.appendRUMGlobalContext(contextMap);
+      console.log('[GC-UniPlugin-HarmonyOS] appendRUMGlobalContext completed successfully');
+    }
+  } catch (error) {
+    console.error('[GC-UniPlugin-HarmonyOS] appendRUMGlobalContext failed:', error);
+  }
+}
+
+/**
+ * Shutdown SDK
+ * Corresponds to Android: shutDown()
+ */
+export function shutDown(): void {
+  try {
+    FTSDK.shutDown();
+    console.log('[GC-UniPlugin-HarmonyOS] shutDown completed successfully');
+  } catch (error) {
+    console.error('[GC-UniPlugin-HarmonyOS] shutDown failed:', error);
+  }
+}
+
+/**
+ * Clear All Data
+ * Corresponds to Android: clearAllData()
+ */
+export function clearAllData(): void {
+  (async () => {
+    try {
+      await FTSDK.clearAllData();
+      console.log('[GC-UniPlugin-HarmonyOS] clearAllData completed successfully');
+    } catch (error) {
+      console.error('[GC-UniPlugin-HarmonyOS] clearAllData failed:', error);
+    }
+  })();
+}
+
+/**
+ * Manually Set Application Start Time
+ * Corresponds to Android: manuallySetApplicationStart()
+ */
+export function manuallySetApplicationStart(): void {
+  try {
+    // TODO: Implement manually set application start time logic
+    // FTSDK.manuallySetApplicationStart();
+
+    console.log('[GC-UniPlugin-HarmonyOS] manuallySetApplicationStart called');
+  } catch (error) {
+    console.error('[GC-UniPlugin-HarmonyOS] manuallySetApplicationStart failed:', error);
+  }
+}
+
+/**
+ * Append Bridge Context
+ * Corresponds to Android: appendBridgeContext(JSONObject context)
+ */
+export function appendBridgeContext(options: GlobalContextOptions): void {
+  try {
+    if (options) {
+      const keys = Object.keys(options);
+      for (let i = 0; i < keys.length; i++) {
+        const key = keys[i];
+        bridgeContext.set(key, options[key]);
+      }
+    }
+    console.log('[GC-UniPlugin-HarmonyOS] appendBridgeContext called with:', JSON.stringify(options));
+  } catch (error) {
+    console.error('[GC-UniPlugin-HarmonyOS] appendBridgeContext failed:', error);
+  }
+}
+
+/**
+ * Get Bridge Context (for use by other modules)
+ */
+export function getBridgeContext(): Map<string, ContextValue> {
+  return bridgeContext;
+}
+
+/**
+ * Utility function: Convert value to object for ArkTS API signatures.
+ */
+/**
+ * Utility function: Convert context to Map<string, string>
+ * FTSDK's appendGlobalContext methods require Map<string, string>
+ */
+function convertToMapString(obj: GlobalContextOptions): Map<string, string> {
+  const map = new Map<string, string>();
+  const keys = Object.keys(obj);
+  for (let i = 0; i < keys.length; i++) {
+    const key = keys[i];
+    map.set(key, String(obj[key]));
+  }
+  return map;
+}
+
+function convertToMapObject(obj: GlobalContextOptions): Map<string, object> {
+  const map = new Map<string, object>();
+  const keys = Object.keys(obj);
+  for (let i = 0; i < keys.length; i++) {
+    const key = keys[i];
+    map.set(key, new Object(obj[key]));
+  }
+  return map;
+}

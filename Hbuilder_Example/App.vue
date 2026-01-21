@@ -1,15 +1,19 @@
 <script>
 	import * as SDKConst from '@/utils.js'
 	import {gcWatchRouter} from '@/uni_modules/GC-JSPlugin';
-	var ftMobileSDK = uni.requireNativePlugin("GCUniPlugin-MobileAgent");
-	var logger = uni.requireNativePlugin("GCUniPlugin-Logger");
-	var rum = uni.requireNativePlugin("GCUniPlugin-RUM");
-	var tracer = uni.requireNativePlugin("GCUniPlugin-Tracer");
-	export default {
-		// mixins:[gcWatchRouter],
+	import { getMobileAgent, getRUM, getLogger, getTracer } from '@/utils/pluginManager.js';
+	
+	var ftMobileSDK = getMobileAgent();
+	var logger = getLogger();
+	var rum = getRUM();
+	var tracer = getTracer();
+export default {
+		mixins:[gcWatchRouter],
 		onLaunch: function() {
 			ftMobileSDK.sdkConfig({
 				'datakitUrl': SDKConst.SERVER_URL,
+				//'datawayUrl': SDKConst.DATAWAY_URL,
+				//'clientToken': SDKConst.CLIENT_TOKEN,
 				// 'autoSync': true,
 				// 'syncPageSize': 15,
 				// 'syncSleepTime': 100,
@@ -27,6 +31,7 @@
 			rum.setConfig({
 				'androidAppId': SDKConst.ANDROID_APP_ID,
 				'iOSAppId': SDKConst.IOS_APP_ID,
+				'harmonyAppId': SDKConst.HARMONY_APP_ID,
 				'errorMonitorType': ['cpu', 'memory'],
 				'deviceMonitorType': 'all',
 				'enableNativeUserResource':true,
@@ -48,8 +53,10 @@
 				'enableCustomLog': true,
 				'discardStrategy': 'discardOldest',
 				'logLevelFilters': [
-					'warning',
-					'error'
+					'info',
+					'warn',
+					'error',
+					'fatal'
 				],
 				'logCacheLimitCount':6000,
 				'globalContext': {

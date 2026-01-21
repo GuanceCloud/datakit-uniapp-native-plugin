@@ -1,0 +1,212 @@
+/**
+ * GC-UniPlugin-HarmonyOS Main Entry File
+ * Exports all module methods
+ */
+
+// Import interface definitions
+import type {
+  SDKConfigOptions,
+  BindRUMUserDataOptions,
+  GlobalContextOptions,
+  RUMConfigOptions,
+  ActionOptions,
+  CreateViewOptions,
+  ViewOptions,
+  ErrorOptions,
+  ResourceOptions,
+  ResourceStopOptions,
+  ResourceAddOptions,
+  LoggerConfigOptions,
+  LoggingOptions,
+  TracerConfigOptions,
+  TraceHeaderOptions
+} from '../interface.uts';
+
+// Import module implementations
+import * as SDKModule from './sdk.uts';
+import * as RUMModule from './rum.uts';
+import * as LoggerModule from './logger.uts';
+import * as TracerModule from './tracer.uts';
+
+// ==================== SDK Base Module Exports ====================
+
+/**
+ * SDK Configuration
+ */
+export function sdkConfig(options: SDKConfigOptions): void {
+  SDKModule.sdkConfig(options);
+}
+
+/**
+ * Bind RUM User Data
+ */
+export function bindRUMUserData(options: BindRUMUserDataOptions): void {
+  SDKModule.bindRUMUserData(options);
+}
+
+/**
+ * Unbind RUM User Data
+ */
+export function unbindRUMUserData(): void {
+  SDKModule.unbindRUMUserData();
+}
+
+/**
+ * Flush Sync Data Immediately
+ */
+export function flushSyncData(): void {
+  SDKModule.flushSyncData();
+}
+
+/**
+ * Append Global Context
+ */
+export function appendGlobalContext(options: GlobalContextOptions): void {
+  SDKModule.appendGlobalContext(options);
+}
+
+/**
+ * Append Log Global Context
+ */
+export function appendLogGlobalContext(options: GlobalContextOptions): void {
+  SDKModule.appendLogGlobalContext(options);
+}
+
+/**
+ * Append RUM Global Context
+ */
+export function appendRUMGlobalContext(options: GlobalContextOptions): void {
+  SDKModule.appendRUMGlobalContext(options);
+}
+
+/**
+ * Shutdown SDK
+ */
+export function shutDown(): void {
+  SDKModule.shutDown();
+}
+
+/**
+ * Clear All Data
+ */
+export function clearAllData(): void {
+  SDKModule.clearAllData();
+}
+
+/**
+ * Manually Set Application Start Time
+ */
+export function manuallySetApplicationStart(): void {
+  SDKModule.manuallySetApplicationStart();
+}
+
+/**
+ * Append Bridge Context
+ */
+export function appendBridgeContext(options: GlobalContextOptions): void {
+  SDKModule.appendBridgeContext(options);
+}
+
+// ==================== RUM Module Exports ====================
+
+/**
+ * RUM Configuration
+ */
+export function rumSetConfig(options: RUMConfigOptions): void {
+  RUMModule.setConfig(options);
+}
+
+/**
+ * Start Action
+ */
+export function rumStartAction(options: ActionOptions): void {
+  RUMModule.startAction(options);
+}
+
+/**
+ * Add Action
+ */
+export function rumAddAction(options: ActionOptions): void {
+  RUMModule.addAction(options);
+}
+
+/**
+ * Create View
+ */
+export function rumOnCreateView(options: CreateViewOptions): void {
+  RUMModule.onCreateView(options);
+}
+
+/**
+ * Start View
+ */
+export function rumStartView(options: ViewOptions): void {
+  RUMModule.startView(options);
+}
+
+/**
+ * Stop View
+ */
+export function rumStopView(options?: ViewOptions): void {
+  RUMModule.stopView(options);
+}
+
+/**
+ * Add Error
+ */
+export function rumAddError(options: ErrorOptions): void {
+  RUMModule.addError(options);
+}
+
+/**
+ * Start Resource
+ */
+export function rumStartResource(options: ResourceOptions): void {
+  RUMModule.startResource(options);
+}
+
+/**
+ * Stop Resource
+ */
+export function rumStopResource(options: ResourceStopOptions): void {
+  RUMModule.stopResource(options);
+}
+
+/**
+ * Add Resource
+ */
+export function rumAddResource(options: ResourceAddOptions): void {
+  RUMModule.addResource(options);
+}
+
+// ==================== Logger Module Exports ====================
+
+/**
+ * Logger Configuration
+ */
+export function loggerSetConfig(options: LoggerConfigOptions): void {
+  LoggerModule.setConfig(options);
+}
+
+/**
+ * Logging
+ */
+export function loggerLogging(options: LoggingOptions): void {
+  LoggerModule.logging(options);
+}
+
+// ==================== Tracer Module Exports ====================
+
+/**
+ * Tracer Configuration
+ */
+export function tracerSetConfig(options: TracerConfigOptions): void {
+  TracerModule.setConfig(options);
+}
+
+/**
+ * Get Trace Header
+ */
+export function tracerGetTraceHeader(options: TraceHeaderOptions): Record<string, string> | null {
+  return TracerModule.getTraceHeader(options);
+}

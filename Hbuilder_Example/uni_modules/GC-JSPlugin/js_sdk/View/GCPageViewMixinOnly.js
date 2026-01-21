@@ -1,7 +1,13 @@
 /**
 	* Used for single View data collection, not used together with GCWatchRouter.js
 	*/
+// #ifdef APP-HARMONY
+import { getRUM } from '@/utils/pluginManager.js';
+var rum = getRUM();
+// #endif
+// #ifndef APP-HARMONY
 var rum = uni.requireNativePlugin("GCUniPlugin-RUM");
+// #endif
 
 /**
 	* Get the current page route path 

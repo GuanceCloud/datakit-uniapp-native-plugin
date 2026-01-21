@@ -3,7 +3,13 @@
  * Note: Since the App lifecycle onLaunch, onShow occurs before the first page lifecycle
  * So you need to use GCPageMixin in the first displayed page of the App to supplement page information, otherwise you cannot get the viewName of the first page
  */
+// #ifdef APP-HARMONY
+import { getRUM } from '@/utils/pluginManager.js';
+var rum = getRUM();
+// #endif
+// #ifndef APP-HARMONY
 var rum = uni.requireNativePlugin("GCUniPlugin-RUM");
+// #endif
 
 export const gcWatchRouter = {
 	globalData: {
