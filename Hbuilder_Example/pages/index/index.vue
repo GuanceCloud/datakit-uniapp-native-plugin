@@ -24,7 +24,7 @@
 
 <script>
 	import {gcPageMixin} from '@/uni_modules/GC-JSPlugin';
-	import { getMobileAgent } from '@/utils/pluginManager.js';
+	import { getMobileAgent } from '@/uni_modules/GC-JSPlugin/js_sdk/pluginManager.js';
 	
 	var ftMobileSDK = getMobileAgent();
 	export default {

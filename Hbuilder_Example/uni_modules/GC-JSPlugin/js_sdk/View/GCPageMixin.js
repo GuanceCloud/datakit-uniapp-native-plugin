@@ -1,13 +1,8 @@
 /**
  * Used to supplement WatchRouter data information on the first page
  */
-// #ifdef APP-HARMONY
-import { getRUM } from '@/utils/pluginManager.js';
+import { getRUM } from '@/uni_modules/GC-JSPlugin/js_sdk/pluginManager.js';
 var rum = getRUM();
-// #endif
-// #ifndef APP-HARMONY
-var rum = uni.requireNativePlugin("GCUniPlugin-RUM");
-// #endif
 
 /**
  * Get the current page route path 

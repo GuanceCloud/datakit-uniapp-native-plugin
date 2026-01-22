@@ -9,7 +9,7 @@
 </template>
 
 <script>
-	import { getLogger } from '@/utils/pluginManager.js';
+	import { getLogger } from '@/uni_modules/GC-JSPlugin/js_sdk/pluginManager.js';
 	var logger = getLogger();
 	export default {
 		data() {

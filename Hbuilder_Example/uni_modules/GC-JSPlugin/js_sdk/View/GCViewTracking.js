@@ -1,8 +1,7 @@
- const FT_JS_PLUGIN_VERSION = '0.2.6';
+import { getRUM } from '@/uni_modules/GC-JSPlugin/js_sdk/pluginManager.js';
+
+const FT_JS_PLUGIN_VERSION = '0.2.6';
  
- // #ifdef APP-HARMONY
- import { getRUM } from '@/utils/pluginManager.js';
- // #endif
  
  class PageMonitor {
 	constructor() {
@@ -19,12 +18,7 @@
 		// Store event listeners for easy destruction
 		this.eventListeners = [];
 		// Native RUM plugin
-		// #ifdef APP-HARMONY
 		this.rum = getRUM();
-		// #endif
-		// #ifndef APP-HARMONY
-		this.rum = uni.requireNativePlugin("GCUniPlugin-RUM");
-		// #endif
 		// Bind this context
 		this.eventListenerPopGesture = this.eventListenerPopGesture.bind(this);
 	}

@@ -1,7 +1,7 @@
 <script>
 	import * as SDKConst from '@/utils.js'
 	import {gcWatchRouter} from '@/uni_modules/GC-JSPlugin';
-	import { getMobileAgent, getRUM, getLogger, getTracer } from '@/utils/pluginManager.js';
+	import { getMobileAgent, getRUM, getLogger, getTracer } from '@/uni_modules/GC-JSPlugin/js_sdk/pluginManager.js';
 	
 	var ftMobileSDK = getMobileAgent();
 	var logger = getLogger();

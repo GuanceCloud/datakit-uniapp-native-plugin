@@ -18,7 +18,7 @@
 
 <script>
 	import Utils from '../../utils.js';
-	import { getRUM } from '@/utils/pluginManager.js';
+	import { getRUM } from '@/uni_modules/GC-JSPlugin/js_sdk/pluginManager.js';
 
 	var rum = getRUM();
 	export default {
