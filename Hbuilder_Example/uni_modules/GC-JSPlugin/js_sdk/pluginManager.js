@@ -30,7 +30,7 @@ import {
   loggerLogging,
   tracerSetConfig,
   tracerGetTraceHeader
-} from '@/uni_modules/GC-UniPlugin-HarmonyOS';
+} from '@/uni_modules/GC-UniPlugin';
 // #endif
 
 /**

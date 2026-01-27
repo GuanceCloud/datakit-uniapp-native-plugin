@@ -77,9 +77,9 @@ export function setConfig(options: RUMConfigOptions): void {
       }
       
       await FTSDK.installRUMConfig(rumConfig);
-      console.log('[GC-UniPlugin-HarmonyOS] rumSetConfig completed successfully');
+      console.log('[GC-UniPlugin] rumSetConfig completed successfully');
     } catch (error) {
-      console.error('[GC-UniPlugin-HarmonyOS] rumSetConfig failed:', error);
+      console.error('[GC-UniPlugin] rumSetConfig failed:', error);
     }
   })();
 }
@@ -93,9 +93,9 @@ export function startAction(options: ActionOptions): void {
     const rumManager = FTRUMGlobalManager.getInstance();
     const property = mergeBridgeContext(options.property);
     rumManager.startActionFull(options.actionName, options.actionType, false, property);
-    console.log('[GC-UniPlugin-HarmonyOS] rumStartAction completed successfully');
+    console.log('[GC-UniPlugin] rumStartAction completed successfully');
   } catch (error) {
-    console.error('[GC-UniPlugin-HarmonyOS] rumStartAction failed:', error);
+    console.error('[GC-UniPlugin] rumStartAction failed:', error);
   }
 }
 
@@ -108,9 +108,9 @@ export function addAction(options: ActionOptions): void {
     const rumManager = FTRUMGlobalManager.getInstance();
     const property = mergeBridgeContext(options.property);
     rumManager.startActionFull(options.actionName, options.actionType, false, property);
-    console.log('[GC-UniPlugin-HarmonyOS] rumAddAction completed successfully');
+    console.log('[GC-UniPlugin] rumAddAction completed successfully');
   } catch (error) {
-    console.error('[GC-UniPlugin-HarmonyOS] rumAddAction failed:', error);
+    console.error('[GC-UniPlugin] rumAddAction failed:', error);
   }
 }
 
@@ -122,9 +122,9 @@ export function onCreateView(options: CreateViewOptions): void {
   try {
     const rumManager = FTRUMGlobalManager.getInstance();
     rumManager.onCreateView(options.viewName, options.loadTime);
-    console.log('[GC-UniPlugin-HarmonyOS] rumOnCreateView completed successfully');
+    console.log('[GC-UniPlugin] rumOnCreateView completed successfully');
   } catch (error) {
-    console.error('[GC-UniPlugin-HarmonyOS] rumOnCreateView failed:', error);
+    console.error('[GC-UniPlugin] rumOnCreateView failed:', error);
   }
 }
 
@@ -138,9 +138,9 @@ export function startView(options: ViewOptions): void {
       const rumManager = FTRUMGlobalManager.getInstance();
       const property = mergeBridgeContext(options.property);
       await rumManager.startView(options.viewName || '', property);
-      console.log('[GC-UniPlugin-HarmonyOS] rumStartView completed successfully');
+      console.log('[GC-UniPlugin] rumStartView completed successfully');
     } catch (error) {
-      console.error('[GC-UniPlugin-HarmonyOS] rumStartView failed:', error);
+      console.error('[GC-UniPlugin] rumStartView failed:', error);
     }
   })();
 }
@@ -160,9 +160,9 @@ export function stopView(options?: ViewOptions): void {
         const emptyProperty: Record<string, object> = {};
         await rumManager.stopView(emptyProperty);
       }
-      console.log('[GC-UniPlugin-HarmonyOS] rumStopView completed successfully');
+      console.log('[GC-UniPlugin] rumStopView completed successfully');
     } catch (error) {
-      console.error('[GC-UniPlugin-HarmonyOS] rumStopView failed:', error);
+      console.error('[GC-UniPlugin] rumStopView failed:', error);
     }
   })();
 }
@@ -185,9 +185,9 @@ export function addError(options: ErrorOptions): void {
     }
     const property = mergeBridgeContext(options.property);
     rumManager.addError(options.stack, options.message, 'uniapp_crash', appState, property);
-    console.log('[GC-UniPlugin-HarmonyOS] rumAddError completed successfully');
+    console.log('[GC-UniPlugin] rumAddError completed successfully');
   } catch (error) {
-    console.error('[GC-UniPlugin-HarmonyOS] rumAddError failed:', error);
+    console.error('[GC-UniPlugin] rumAddError failed:', error);
   }
 }
 
@@ -199,9 +199,9 @@ export function startResource(options: ResourceOptions): void {
   try {
     const rumManager = FTRUMGlobalManager.getInstance();
     rumManager.startResource(options.key);
-    console.log('[GC-UniPlugin-HarmonyOS] rumStartResource completed successfully');
+    console.log('[GC-UniPlugin] rumStartResource completed successfully');
   } catch (error) {
-    console.error('[GC-UniPlugin-HarmonyOS] rumStartResource failed:', error);
+    console.error('[GC-UniPlugin] rumStartResource failed:', error);
   }
 }
 
@@ -224,9 +224,9 @@ export function stopResource(options: ResourceStopOptions): void {
       }
     }
     rumManager.stopResource(options.key, statusCode, contentLength);
-    console.log('[GC-UniPlugin-HarmonyOS] rumStopResource completed successfully');
+    console.log('[GC-UniPlugin] rumStopResource completed successfully');
   } catch (error) {
-    console.error('[GC-UniPlugin-HarmonyOS] rumStopResource failed:', error);
+    console.error('[GC-UniPlugin] rumStopResource failed:', error);
   }
 }
 
@@ -255,9 +255,9 @@ export function addResource(options: ResourceAddOptions): void {
     
     const netStatusBean = new NetStatusBean();
     rumManager.addResource(options.key, params, netStatusBean);
-    console.log('[GC-UniPlugin-HarmonyOS] rumAddResource completed successfully');
+    console.log('[GC-UniPlugin] rumAddResource completed successfully');
   } catch (error) {
-    console.error('[GC-UniPlugin-HarmonyOS] rumAddResource failed:', error);
+    console.error('[GC-UniPlugin] rumAddResource failed:', error);
   }
 }
 

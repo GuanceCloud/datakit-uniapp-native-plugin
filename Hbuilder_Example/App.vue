@@ -55,8 +55,7 @@ export default {
 				'logLevelFilters': [
 					'info',
 					'warn',
-					'error',
-					'fatal'
+					'error'
 				],
 				'logCacheLimitCount':6000,
 				'globalContext': {

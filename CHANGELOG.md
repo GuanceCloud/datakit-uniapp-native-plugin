@@ -1,3 +1,8 @@
+# 0.2.8
+* HarmonyOS plugin
+  * Fix missing `sdk_name` tag in error data by merging RUM global context in `addResourceError`
+  * Remove redundant `rumConfig.getGlobalContext().set()` calls for `session_type` and `service`
+---
 # 0.2.7
 * HarmonyOS plugin added 
 ---

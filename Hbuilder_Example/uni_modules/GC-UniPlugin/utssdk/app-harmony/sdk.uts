@@ -75,9 +75,9 @@ export function sdkConfig(options: SDKConfigOptions): void {
       // 3. Install SDK
       await FTSDK.install(sdkConfig, getContext());
 
-      console.log('[GC-UniPlugin-HarmonyOS] sdkConfig completed successfully');
+      console.log('[GC-UniPlugin] sdkConfig completed successfully');
     } catch (error) {
-      console.error('[GC-UniPlugin-HarmonyOS] sdkConfig failed:', error);
+      console.error('[GC-UniPlugin] sdkConfig failed:', error);
     }
   })();
 }
@@ -108,9 +108,9 @@ export function bindRUMUserData(options: BindRUMUserDataOptions): void {
       }
       await FTSDK.bindRumUserData(userData);
 
-      console.log('[GC-UniPlugin-HarmonyOS] bindRUMUserData completed successfully');
+      console.log('[GC-UniPlugin] bindRUMUserData completed successfully');
     } catch (error) {
-      console.error('[GC-UniPlugin-HarmonyOS] bindRUMUserData failed:', error);
+      console.error('[GC-UniPlugin] bindRUMUserData failed:', error);
     }
   })();
 }
@@ -123,9 +123,9 @@ export function unbindRUMUserData(): void {
   (async () => {
     try {
       await FTSDK.unbindRumUserData();
-      console.log('[GC-UniPlugin-HarmonyOS] unbindRUMUserData completed successfully');
+      console.log('[GC-UniPlugin] unbindRUMUserData completed successfully');
     } catch (error) {
-      console.error('[GC-UniPlugin-HarmonyOS] unbindRUMUserData failed:', error);
+      console.error('[GC-UniPlugin] unbindRUMUserData failed:', error);
     }
   })();
 }
@@ -137,9 +137,9 @@ export function unbindRUMUserData(): void {
 export function flushSyncData(): void {
   try {
     FTSDK.flushSyncData();
-    console.log('[GC-UniPlugin-HarmonyOS] flushSyncData completed successfully');
+    console.log('[GC-UniPlugin] flushSyncData completed successfully');
   } catch (error) {
-    console.error('[GC-UniPlugin-HarmonyOS] flushSyncData failed:', error);
+    console.error('[GC-UniPlugin] flushSyncData failed:', error);
   }
 }
 
@@ -152,10 +152,10 @@ export function appendGlobalContext(options: GlobalContextOptions): void {
     if (options) {
       const contextMap = convertToMapString(options);
       FTSDK.appendGlobalContext(contextMap);
-      console.log('[GC-UniPlugin-HarmonyOS] appendGlobalContext completed successfully');
+      console.log('[GC-UniPlugin] appendGlobalContext completed successfully');
     }
   } catch (error) {
-    console.error('[GC-UniPlugin-HarmonyOS] appendGlobalContext failed:', error);
+    console.error('[GC-UniPlugin] appendGlobalContext failed:', error);
   }
 }
 
@@ -168,10 +168,10 @@ export function appendLogGlobalContext(options: GlobalContextOptions): void {
     if (options) {
       const contextMap = convertToMapString(options);
       FTSDK.appendLogGlobalContext(contextMap);
-      console.log('[GC-UniPlugin-HarmonyOS] appendLogGlobalContext completed successfully');
+      console.log('[GC-UniPlugin] appendLogGlobalContext completed successfully');
     }
   } catch (error) {
-    console.error('[GC-UniPlugin-HarmonyOS] appendLogGlobalContext failed:', error);
+    console.error('[GC-UniPlugin] appendLogGlobalContext failed:', error);
   }
 }
 
@@ -184,10 +184,10 @@ export function appendRUMGlobalContext(options: GlobalContextOptions): void {
     if (options) {
       const contextMap = convertToMapString(options);
       FTSDK.appendRUMGlobalContext(contextMap);
-      console.log('[GC-UniPlugin-HarmonyOS] appendRUMGlobalContext completed successfully');
+      console.log('[GC-UniPlugin] appendRUMGlobalContext completed successfully');
     }
   } catch (error) {
-    console.error('[GC-UniPlugin-HarmonyOS] appendRUMGlobalContext failed:', error);
+    console.error('[GC-UniPlugin] appendRUMGlobalContext failed:', error);
   }
 }
 
@@ -198,9 +198,9 @@ export function appendRUMGlobalContext(options: GlobalContextOptions): void {
 export function shutDown(): void {
   try {
     FTSDK.shutDown();
-    console.log('[GC-UniPlugin-HarmonyOS] shutDown completed successfully');
+    console.log('[GC-UniPlugin] shutDown completed successfully');
   } catch (error) {
-    console.error('[GC-UniPlugin-HarmonyOS] shutDown failed:', error);
+    console.error('[GC-UniPlugin] shutDown failed:', error);
   }
 }
 
@@ -212,9 +212,9 @@ export function clearAllData(): void {
   (async () => {
     try {
       await FTSDK.clearAllData();
-      console.log('[GC-UniPlugin-HarmonyOS] clearAllData completed successfully');
+      console.log('[GC-UniPlugin] clearAllData completed successfully');
     } catch (error) {
-      console.error('[GC-UniPlugin-HarmonyOS] clearAllData failed:', error);
+      console.error('[GC-UniPlugin] clearAllData failed:', error);
     }
   })();
 }
@@ -228,9 +228,9 @@ export function manuallySetApplicationStart(): void {
     // TODO: Implement manually set application start time logic
     // FTSDK.manuallySetApplicationStart();
 
-    console.log('[GC-UniPlugin-HarmonyOS] manuallySetApplicationStart called');
+    console.log('[GC-UniPlugin] manuallySetApplicationStart called');
   } catch (error) {
-    console.error('[GC-UniPlugin-HarmonyOS] manuallySetApplicationStart failed:', error);
+    console.error('[GC-UniPlugin] manuallySetApplicationStart failed:', error);
   }
 }
 
@@ -247,9 +247,9 @@ export function appendBridgeContext(options: GlobalContextOptions): void {
         bridgeContext.set(key, options[key]);
       }
     }
-    console.log('[GC-UniPlugin-HarmonyOS] appendBridgeContext called with:', JSON.stringify(options));
+    console.log('[GC-UniPlugin] appendBridgeContext called with:', JSON.stringify(options));
   } catch (error) {
-    console.error('[GC-UniPlugin-HarmonyOS] appendBridgeContext failed:', error);
+    console.error('[GC-UniPlugin] appendBridgeContext failed:', error);
   }
 }
 

@@ -1,8 +1,0 @@
-{
-  "name": "gc-uni-plugin-harmonyos-utssdk",
-  "version": "0.2.7",
-  "description": "UTS SDK dependencies for HarmonyOS",
-  "dependencies": {
-    "ft_sdk": "file:./app-harmony/libs/ft_sdk.har"
-  }
-}

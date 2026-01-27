@@ -69,9 +69,9 @@ export function setConfig(options: LoggerConfigOptions): void {
     }
     
     FTSDK.installLogConfig(logConfig);
-    console.log('[GC-UniPlugin-HarmonyOS] loggerSetConfig completed successfully');
+    console.log('[GC-UniPlugin] loggerSetConfig completed successfully');
   } catch (error) {
-    console.error('[GC-UniPlugin-HarmonyOS] loggerSetConfig failed:', error);
+    console.error('[GC-UniPlugin] loggerSetConfig failed:', error);
   }
 }
 
@@ -91,9 +91,9 @@ export function logging(options: LoggingOptions): void {
       logStatus = statusObj;
     }
     FTLogger.logBackground(options.content, logStatus, propertyMap);
-    console.log('[GC-UniPlugin-HarmonyOS] loggerLogging completed successfully');
+    console.log('[GC-UniPlugin] loggerLogging completed successfully');
   } catch (error) {
-    console.error('[GC-UniPlugin-HarmonyOS] loggerLogging failed:', error);
+    console.error('[GC-UniPlugin] loggerLogging failed:', error);
   }
 }
 

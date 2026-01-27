@@ -62,9 +62,9 @@ export function setConfig(options: TracerConfigOptions): void {
     }
     
     FTSDK.installTraceConfig(traceConfig);
-    console.log('[GC-UniPlugin-HarmonyOS] tracerSetConfig completed successfully');
+    console.log('[GC-UniPlugin] tracerSetConfig completed successfully');
   } catch (error) {
-    console.error('[GC-UniPlugin-HarmonyOS] tracerSetConfig failed:', error);
+    console.error('[GC-UniPlugin] tracerSetConfig failed:', error);
   }
 }
 
@@ -76,10 +76,10 @@ export function getTraceHeader(options: TraceHeaderOptions): Record<string, stri
   try {
     const traceManager = FTTraceManager.getInstance();
     const headers = traceManager.getTraceHeader(options.key, options.url);
-    console.log('[GC-UniPlugin-HarmonyOS] tracerGetTraceHeader completed successfully');
+    console.log('[GC-UniPlugin] tracerGetTraceHeader completed successfully');
     return headers;
   } catch (error) {
-    console.error('[GC-UniPlugin-HarmonyOS] tracerGetTraceHeader failed:', error);
+    console.error('[GC-UniPlugin] tracerGetTraceHeader failed:', error);
     return null;
   }
 }

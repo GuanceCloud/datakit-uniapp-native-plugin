@@ -1,5 +1,5 @@
 /**
- * GC-UniPlugin-HarmonyOS JS Compatibility Layer
+ * GC-UniPlugin JS Compatibility Layer
  * Provides compatibility with uni.requireNativePlugin() API
  * 
  * Note: In uni-app, UTS plugins are automatically available through uni.requireNativePlugin()

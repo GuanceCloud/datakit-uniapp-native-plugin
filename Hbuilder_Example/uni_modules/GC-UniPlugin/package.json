@@ -1,5 +1,5 @@
 {
-  "id": "GC-UniPlugin-HarmonyOS",
+  "id": "GC-UniPlugin",
   "displayName": "Guance UniPlugin HarmonyOS",
   "version": "0.2.6",
   "description": "Guance UniApp Native Plugin for HarmonyOS (UTS Plugin)",
