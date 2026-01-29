@@ -1,4 +1,4 @@
- const FT_JS_PLUGIN_VERSION = '0.2.6';
+ const FT_JS_PLUGIN_VERSION = '0.2.7-alpha.1';
  
  class PageMonitor {
 	constructor() {

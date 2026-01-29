@@ -1,8 +1,12 @@
+# 0.2.7-alpha.1
+* `GC-JSPlugin`
+    * `GCRequest.js`：supplement the missing  parameter return in the request method's `complete` callback
+---
 # 0.2.6
 * `GCUniPlugin-RUM`
 *  Support setting webView collection rules via `enableTraceWebView` 、`allowWebViewHost`
 * `GC-JSPlugin`
-  *  `GCErrorTracking`: Adapt error data collection for VUE2 environment
+    *  `GCErrorTracking`: Adapt error data collection for VUE2 environment
 ---
 # 0.2.6-alpha.2
 * `GC-JSPlugin`

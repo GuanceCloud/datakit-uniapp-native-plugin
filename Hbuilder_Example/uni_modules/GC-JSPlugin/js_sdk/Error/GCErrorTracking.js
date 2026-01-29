@@ -1,4 +1,4 @@
-const FT_JS_PLUGIN_VERSION = '0.2.6';
+const FT_JS_PLUGIN_VERSION = '0.2.7-alpha.1';
 /**
  * Error information collection module
  * Responsible for capturing console.error and uni.onError errors

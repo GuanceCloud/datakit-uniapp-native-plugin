@@ -8,6 +8,6 @@
 #ifndef GC_UniPlugin_App_Version_h
 #define GC_UniPlugin_App_Version_h
 
-#define UniPluginAppVersion @"0.2.6"
+#define UniPluginAppVersion @"0.2.7-alpha.1"
 
 #endif /* GC_UniPlugin_App_Version_h */
