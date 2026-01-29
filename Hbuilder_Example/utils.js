@@ -37,8 +37,8 @@ export default {
 				fail(err) {
 					console.log('fail:' + JSON.stringify(err))
 				},
-				complete() {
-					console.log('complete')
+			    complete(res) {
+					console.log('complete:' + JSON.stringify(res))
 				}
 			});
 	}
