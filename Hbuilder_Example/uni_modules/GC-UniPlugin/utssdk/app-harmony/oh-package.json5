@@ -1,8 +1,0 @@
-{
-  "name": "gc-uni-plugin-harmonyos",
-  "version": "0.2.6",
-  "description": "Guance UniApp HarmonyOS UTS plugin module",
-  "dependencies": {
-    "ft_sdk": "file:./libs/ft_sdk.har"
-  }
-}

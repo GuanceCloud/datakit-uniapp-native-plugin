@@ -23,6 +23,7 @@ import { AppState } from 'ft_sdk';
 import { ResourceParams } from 'ft_sdk';
 import { NetStatusBean } from 'ft_sdk';
 import { LogCacheDiscard } from 'ft_sdk';
+import { FTNativeCrashHandler } from 'ft_native';
 
 // Import bridge context
 import { getBridgeContext } from './sdk.uts';
@@ -32,11 +33,11 @@ import { getBridgeContext } from './sdk.uts';
  * Corresponds to Android: setConfig(JSONObject data)
  */
 export function setConfig(options: RUMConfigOptions): void {
-  (async () => {
+
     try {
       const rumAppId = options.harmonyAppId || options.androidAppId || options.iOSAppId;
       const rumConfig = new FTRUMConfig().setRumAppId(rumAppId);
-      
+
       if (options.samplerate !== undefined) {
         rumConfig.setSamplingRate(options.samplerate);
       }
@@ -57,6 +58,7 @@ export function setConfig(options: RUMConfigOptions): void {
       }
       if (options.enableTrackNativeCrash !== undefined) {
         rumConfig.setEnableTrackAppCrash(options.enableTrackNativeCrash);
+		rumConfig.setNativeCrashHandler(new FTNativeCrashHandler()) 
       }
       if (options.enableTrackNativeAppANR !== undefined) {
         rumConfig.setEnableTrackAppANR(options.enableTrackNativeAppANR);
@@ -75,13 +77,13 @@ export function setConfig(options: RUMConfigOptions): void {
           rumConfig.addGlobalContext(key, toObject(options.globalContext[key]));
         }
       }
-      
-      await FTSDK.installRUMConfig(rumConfig);
+
+      FTSDK.installRUMConfig(rumConfig);
       console.log('[GC-UniPlugin] rumSetConfig completed successfully');
     } catch (error) {
       console.error('[GC-UniPlugin] rumSetConfig failed:', error);
     }
-  })();
+
 }
 
 /**
@@ -133,16 +135,14 @@ export function onCreateView(options: CreateViewOptions): void {
  * Corresponds to Android: startView(JSONObject data)
  */
 export function startView(options: ViewOptions): void {
-  (async () => {
     try {
       const rumManager = FTRUMGlobalManager.getInstance();
       const property = mergeBridgeContext(options.property);
-      await rumManager.startView(options.viewName || '', property);
+      rumManager.startView(options.viewName || '', property);
       console.log('[GC-UniPlugin] rumStartView completed successfully');
     } catch (error) {
       console.error('[GC-UniPlugin] rumStartView failed:', error);
     }
-  })();
 }
 
 /**
@@ -150,21 +150,19 @@ export function startView(options: ViewOptions): void {
  * Corresponds to Android: stopView(JSONObject data)
  */
 export function stopView(options?: ViewOptions): void {
-  (async () => {
     try {
       const rumManager = FTRUMGlobalManager.getInstance();
       if (options && options.property) {
         const property = mergeBridgeContext(options.property);
-        await rumManager.stopView(property);
+        rumManager.stopView(property);
       } else {
         const emptyProperty: Record<string, object> = {};
-        await rumManager.stopView(emptyProperty);
+        rumManager.stopView(emptyProperty);
       }
       console.log('[GC-UniPlugin] rumStopView completed successfully');
     } catch (error) {
       console.error('[GC-UniPlugin] rumStopView failed:', error);
     }
-  })();
 }
 
 /**

@@ -1,5 +1,6 @@
 {
   "dependencies": {
-    "ft_sdk": "./libs/ft_sdk.har"
+    "ft_sdk": "./libs/ft_sdk.har",
+	"ft_native": "./libs/ft_native.har"
   }
 }

@@ -39,7 +39,6 @@ function getContext(): Context | undefined {
  * Corresponds to Android: sdkConfig(JSONObject data)
  */
 export function sdkConfig(options: SDKConfigOptions): void {
-  (async () => {
     try {
       // 1. Parse configuration parameters
       const datakitUrl = options.datakitUrl || options.serverUrl;
@@ -73,13 +72,12 @@ export function sdkConfig(options: SDKConfigOptions): void {
       }
 
       // 3. Install SDK
-      await FTSDK.install(sdkConfig, getContext());
-
+      FTSDK.install(sdkConfig, getContext());
       console.log('[GC-UniPlugin] sdkConfig completed successfully');
     } catch (error) {
       console.error('[GC-UniPlugin] sdkConfig failed:', error);
     }
-  })();
+
 }
 
 /**
@@ -87,7 +85,6 @@ export function sdkConfig(options: SDKConfigOptions): void {
  * Corresponds to Android: bindRUMUserData(JSONObject data)
  */
 export function bindRUMUserData(options: BindRUMUserDataOptions): void {
-  (async () => {
     try {
       const userData = new UserData();
       if (options.userId) {
@@ -106,13 +103,12 @@ export function bindRUMUserData(options: BindRUMUserDataOptions): void {
           userData.addExt(key, options.extra[key]);
         }
       }
-      await FTSDK.bindRumUserData(userData);
+       FTSDK.bindRumUserData(userData);
 
       console.log('[GC-UniPlugin] bindRUMUserData completed successfully');
     } catch (error) {
       console.error('[GC-UniPlugin] bindRUMUserData failed:', error);
     }
-  })();
 }
 
 /**
@@ -120,14 +116,12 @@ export function bindRUMUserData(options: BindRUMUserDataOptions): void {
  * Corresponds to Android: unbindRUMUserData()
  */
 export function unbindRUMUserData(): void {
-  (async () => {
     try {
-      await FTSDK.unbindRumUserData();
+      FTSDK.unbindRumUserData();
       console.log('[GC-UniPlugin] unbindRUMUserData completed successfully');
     } catch (error) {
       console.error('[GC-UniPlugin] unbindRUMUserData failed:', error);
     }
-  })();
 }
 
 /**
@@ -209,14 +203,12 @@ export function shutDown(): void {
  * Corresponds to Android: clearAllData()
  */
 export function clearAllData(): void {
-  (async () => {
     try {
-      await FTSDK.clearAllData();
+	  FTSDK.clearAllData();
       console.log('[GC-UniPlugin] clearAllData completed successfully');
     } catch (error) {
       console.error('[GC-UniPlugin] clearAllData failed:', error);
     }
-  })();
 }
 
 /**

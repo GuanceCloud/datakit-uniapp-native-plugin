@@ -23,7 +23,7 @@ import { getBridgeContext } from './sdk.uts';
  * Logger Configuration
  * Corresponds to Android: setConfig(JSONObject data)
  */
-export function setConfig(options: LoggerConfigOptions): void {
+export async function setConfig(options: LoggerConfigOptions): Promise<void> {
   try {
     const logConfig = new FTLoggerConfig();
     
