@@ -202,7 +202,7 @@ public class FTRUMModule extends UniModule {
         String actionType = data.getString("actionType");
         JSONObject property = data.getJSONObject("property");
         HashMap<String, Object> params = Utils.mergeBridgeContext(property);
-        FTRUMGlobalManager.get().startAction(actionName, actionType, params);
+        FTRUMGlobalManager.get().addAction(actionName, actionType, params);
 
     }
 
@@ -243,6 +243,7 @@ public class FTRUMModule extends UniModule {
         }
         JSONObject property = data.getJSONObject("property");
         HashMap<String, Object> params = Utils.mergeBridgeContext(property);
+        // Keep the fixed error type for current UniApp-side business classification.
         FTRUMGlobalManager.get().addError(stack, message, DEFAULT_ERROR_TYPE, appState, params);
     }
 
@@ -315,6 +316,7 @@ public class FTRUMModule extends UniModule {
 //        if (sslEndTime != null) {
 //            netStatusBean.sslEndTime = sslEndTime;
 //        }
+        // Intentionally avoid mergeBridgeContext here to preserve the existing stopResource payload contract.
         FTRUMGlobalManager.get().addResource(key, params, netStatusBean);
 
 
