@@ -5,7 +5,6 @@ import {
 } from '@/uni_modules/GC-JSPlugin'
 
 gcErrorTracking.startTracking()
-gcViewTracking.startTracking()
 const jsCode = `   
     // Dynamically create and load external script
     var script = document.createElement('script');
@@ -34,6 +33,7 @@ const jsCode = `
 gcViewTracking.evalSessionReplayJS(jsCode);
 // #ifndef VUE3
 import Vue from 'vue'
+gcViewTracking.startTracking()
 Vue.config.productionTip = false
 App.mpType = 'app'
 const app = new Vue({
@@ -46,6 +46,7 @@ app.$mount()
 import { createSSRApp } from 'vue'
 export function createApp() {
   const app = createSSRApp(App)
+  gcViewTracking.startTracking(app)
   return {
     app
   }
