@@ -1,6 +1,0 @@
-framework module GC_UniPlugin_App {
-  umbrella header "GC_UniPlugin_App.h"
-  export *
-
-  module * { export * }
-}
