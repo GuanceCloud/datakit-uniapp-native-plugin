@@ -10,7 +10,7 @@ buildscript {
         jcenter()
 
         maven {
-            url 'https://mvnrepo.jiagouyun.com/repository/maven-releases'
+            url 'https://mvnrepo.guance.com/repository/maven-releases'
         }
     }
     dependencies {
@@ -29,7 +29,7 @@ allprojects {
         jcenter()
 
         maven {
-            url 'https://mvnrepo.jiagouyun.com/repository/maven-releases'
+            url 'https://mvnrepo.guance.com/repository/maven-releases'
         }
     }
 }
