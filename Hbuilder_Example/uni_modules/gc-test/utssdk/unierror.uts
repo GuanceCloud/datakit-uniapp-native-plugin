@@ -1,0 +1,34 @@
+/* This follows the uni convention. Implement it only when needed. */
+import { MyApiErrorCode, MyApiFail } from "./interface.uts"
+
+/**
+ * Error subject.
+ * The subject is usually the plugin name. Change it for each component as needed.
+ * Optional implementation.
+ */
+export const UniErrorSubject = 'uts-api';
+
+/**
+ * Error messages.
+ * @UniError
+ * Optional implementation.
+ */
+export const MyAPIErrors : Map<MyApiErrorCode, string> = new Map([
+  /** Error codes and their corresponding messages. */
+  [9010001, 'custom error message 1'],
+  [9010002, 'custom error message 2'],
+]);
+
+/** Error object implementation. */
+export class MyApiFailImpl extends UniError implements MyApiFail {
+
+  override errCode: MyApiErrorCode
+
+  /** Error object constructor. */
+  constructor(errCode : MyApiErrorCode) {
+    super();
+    this.errSubject = UniErrorSubject;
+    this.errCode = errCode;
+    this.errMsg = MyAPIErrors.get(errCode) ?? "";
+  }
+}

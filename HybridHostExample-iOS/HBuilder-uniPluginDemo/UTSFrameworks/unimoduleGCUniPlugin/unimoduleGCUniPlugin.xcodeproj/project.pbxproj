@@ -1,0 +1,412 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		626FA7BEE6C21FC065AEDC55 /* DCloudUTSFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 996A13452A671ED32904FD70 /* DCloudUTSFoundation.framework */; };
+		656D3E46127F38F04760165A /* GCUniPluginUTSCPP.mm in Sources */ = {isa = PBXBuildFile; fileRef = E590D40F71FACE697E458F1B /* GCUniPluginUTSCPP.mm */; };
+		6B353A00A5EF70DC7F6F42C1 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7C074F3F02D905385B916AB5 /* Foundation.framework */; };
+		81ADB8AE6BB9E443F52AFAED /* GCUniPluginNative.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A253F7045931BD108040CC1 /* GCUniPluginNative.swift */; };
+		8209711381F43E7BC54B035F /* GCUniPluginUTSConfig.m in Sources */ = {isa = PBXBuildFile; fileRef = E6B2038FAF369341A30F7130 /* GCUniPluginUTSConfig.m */; };
+		B425E919DDF0CB1BAA0371DF /* index.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4C0B0940DBA194B74C62CAD /* index.swift */; };
+		C023DF2EF918F5177191E4B2 /* GuanceSDK-Dynamic.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0976D8F514D97C27A0191C04 /* GuanceSDK-Dynamic.xcframework */; };
+		D3B266039211849A2CF08ABB /* config.json in Resources */ = {isa = PBXBuildFile; fileRef = B6ECCBB702154EF3644C421D /* config.json */; };
+		D4541EA172A40A4B3C80BCA7 /* DCUniBase.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B386EB7E0F942512E7B347C8 /* DCUniBase.framework */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		0976D8F514D97C27A0191C04 /* GuanceSDK-Dynamic.xcframework */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = wrapper.xcframework; name = "GuanceSDK-Dynamic.xcframework"; path = "../../SharedFrameworks/GuanceSDK-Dynamic.xcframework"; sourceTree = "<group>"; };
+		49EEFAC48077B83B58A3ED2A /* unimoduleGCUniPlugin.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = unimoduleGCUniPlugin.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		5A253F7045931BD108040CC1 /* GCUniPluginNative.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = GCUniPluginNative.swift; sourceTree = "<group>"; };
+		7C074F3F02D905385B916AB5 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS18.0.sdk/System/Library/Frameworks/Foundation.framework; sourceTree = DEVELOPER_DIR; };
+		996A13452A671ED32904FD70 /* DCloudUTSFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = DCloudUTSFoundation.framework; path = ../../../SDK/Libs/DCloudUTSFoundation.framework; sourceTree = "<group>"; };
+		A4C0B0940DBA194B74C62CAD /* index.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = index.swift; sourceTree = "<group>"; };
+		B386EB7E0F942512E7B347C8 /* DCUniBase.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = DCUniBase.framework; path = ../../../SDK/Libs/DCUniBase.framework; sourceTree = "<group>"; };
+		B6ECCBB702154EF3644C421D /* config.json */ = {isa = PBXFileReference; includeInIndex = 1; path = config.json; sourceTree = "<group>"; };
+		E590D40F71FACE697E458F1B /* GCUniPluginUTSCPP.mm */ = {isa = PBXFileReference; includeInIndex = 1; path = GCUniPluginUTSCPP.mm; sourceTree = "<group>"; };
+		E6B2038FAF369341A30F7130 /* GCUniPluginUTSConfig.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = GCUniPluginUTSConfig.m; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		45B4F63AD54993E1CC4A34EB /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				6B353A00A5EF70DC7F6F42C1 /* Foundation.framework in Frameworks */,
+				D4541EA172A40A4B3C80BCA7 /* DCUniBase.framework in Frameworks */,
+				626FA7BEE6C21FC065AEDC55 /* DCloudUTSFoundation.framework in Frameworks */,
+				C023DF2EF918F5177191E4B2 /* GuanceSDK-Dynamic.xcframework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		036330A848C4647E63288914 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				49EEFAC48077B83B58A3ED2A /* unimoduleGCUniPlugin.framework */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		36EFA974962A9F444A3E1949 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				E95454B725876602C1E0516D /* iOS */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		79D3FBFB9C8FFC5842C3C30D /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				B6ECCBB702154EF3644C421D /* config.json */,
+			);
+			name = Resources;
+			sourceTree = "<group>";
+		};
+		7F942D363EE815485367F068 /* Sources */ = {
+			isa = PBXGroup;
+			children = (
+				5A253F7045931BD108040CC1 /* GCUniPluginNative.swift */,
+				E590D40F71FACE697E458F1B /* GCUniPluginUTSCPP.mm */,
+				E6B2038FAF369341A30F7130 /* GCUniPluginUTSConfig.m */,
+				A4C0B0940DBA194B74C62CAD /* index.swift */,
+			);
+			name = Sources;
+			path = Sources;
+			sourceTree = "<group>";
+		};
+		C9CD552CA2477EF6FE30FCB9 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				B386EB7E0F942512E7B347C8 /* DCUniBase.framework */,
+				996A13452A671ED32904FD70 /* DCloudUTSFoundation.framework */,
+				0976D8F514D97C27A0191C04 /* GuanceSDK-Dynamic.xcframework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		D6D5ADB36FE50C60F01DCCB7 = {
+			isa = PBXGroup;
+			children = (
+				036330A848C4647E63288914 /* Products */,
+				36EFA974962A9F444A3E1949 /* Frameworks */,
+				7F942D363EE815485367F068 /* Sources */,
+				79D3FBFB9C8FFC5842C3C30D /* Resources */,
+				C9CD552CA2477EF6FE30FCB9 /* Frameworks */,
+			);
+			sourceTree = "<group>";
+		};
+		E95454B725876602C1E0516D /* iOS */ = {
+			isa = PBXGroup;
+			children = (
+				7C074F3F02D905385B916AB5 /* Foundation.framework */,
+			);
+			name = iOS;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXHeadersBuildPhase section */
+		35A98C6B4559617944206CB2 /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXHeadersBuildPhase section */
+
+/* Begin PBXNativeTarget section */
+		C4E01C7B3649AFD7BD439112 /* unimoduleGCUniPlugin */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = D72E6796AF39FE7CE643FB7B /* Build configuration list for PBXNativeTarget "unimoduleGCUniPlugin" */;
+			buildPhases = (
+				35A98C6B4559617944206CB2 /* Headers */,
+				04666C03DB538B3551787FEA /* Sources */,
+				45B4F63AD54993E1CC4A34EB /* Frameworks */,
+				1071C085E6C5770583936761 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = unimoduleGCUniPlugin;
+			productName = unimoduleGCUniPlugin;
+			productReference = 49EEFAC48077B83B58A3ED2A /* unimoduleGCUniPlugin.framework */;
+			productType = "com.apple.product-type.framework";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		B7319F5F951FD87D746E4953 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastSwiftUpdateCheck = 1600;
+				LastUpgradeCheck = 1600;
+			};
+			buildConfigurationList = 78C094524C7BDDC750B2C368 /* Build configuration list for PBXProject "unimoduleGCUniPlugin" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = D6D5ADB36FE50C60F01DCCB7;
+			minimizedProjectReferenceProxies = 0;
+			preferredProjectObjectVersion = 77;
+			productRefGroup = 036330A848C4647E63288914 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				C4E01C7B3649AFD7BD439112 /* unimoduleGCUniPlugin */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		1071C085E6C5770583936761 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				D3B266039211849A2CF08ABB /* config.json in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		04666C03DB538B3551787FEA /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				81ADB8AE6BB9E443F52AFAED /* GCUniPluginNative.swift in Sources */,
+				656D3E46127F38F04760165A /* GCUniPluginUTSCPP.mm in Sources */,
+				8209711381F43E7BC54B035F /* GCUniPluginUTSConfig.m in Sources */,
+				B425E919DDF0CB1BAA0371DF /* index.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin XCBuildConfiguration section */
+		10460D3BCA2B0DC82B671A6C /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				SWIFT_VERSION = 5.0;
+			};
+			name = Release;
+		};
+		3D2E5B87A3A71DE3A70EAEB9 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUILD_LIBRARY_FOR_DISTRIBUTION = YES;
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_WEAK = NO;
+				CURRENT_PROJECT_VERSION = 1;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				ENABLE_MODULE_VERIFIER = NO;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"../../../SDK/Libs\"",
+					"\"../../SharedFrameworks\"",
+				);
+				INFOPLIST_FILE = Info.plist;
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				OTHER_LDFLAGS = (
+					"$(inherited)",
+					"-ObjC",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = io.guance.unimodule.GCUniPlugin;
+				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Debug;
+		};
+		7CC3A11E9DBF530767D57DD9 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 5.0;
+			};
+			name = Debug;
+		};
+		A3674B1917A5B3774E10279F /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUILD_LIBRARY_FOR_DISTRIBUTION = YES;
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_WEAK = NO;
+				CURRENT_PROJECT_VERSION = 1;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				ENABLE_MODULE_VERIFIER = NO;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"../../../SDK/Libs\"",
+					"\"../../SharedFrameworks\"",
+				);
+				INFOPLIST_FILE = Info.plist;
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				OTHER_LDFLAGS = (
+					"$(inherited)",
+					"-ObjC",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = io.guance.unimodule.GCUniPlugin;
+				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		78C094524C7BDDC750B2C368 /* Build configuration list for PBXProject "unimoduleGCUniPlugin" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				7CC3A11E9DBF530767D57DD9 /* Debug */,
+				10460D3BCA2B0DC82B671A6C /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		D72E6796AF39FE7CE643FB7B /* Build configuration list for PBXNativeTarget "unimoduleGCUniPlugin" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				A3674B1917A5B3774E10279F /* Release */,
+				3D2E5B87A3A71DE3A70EAEB9 /* Debug */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = B7319F5F951FD87D746E4953 /* Project object */;
+}

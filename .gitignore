@@ -140,3 +140,14 @@ iOSInjectionProject/
 
 .hbuilderx/
 unpackage/
+docs/
+
+# Locally generated DCloud SDK and Xcode dependency/build state for the hybrid host example.
+HybridHostExample-iOS/SDK/
+HybridHostExample-iOS/**/Pods/
+HybridHostExample-iOS/**/SharedFrameworks/
+HybridHostExample-iOS/**/xcuserdata/
+HybridHostExample-iOS/**/DerivedData/
+HybridHostExample-iOS/**/.derived-data-*
+HybridHostExample-iOS/**/build/
+HybridHostExample-iOS/**/.DS_Store

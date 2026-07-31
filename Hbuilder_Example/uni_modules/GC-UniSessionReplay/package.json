@@ -1,0 +1,102 @@
+{
+  "id": "GC-UniSessionReplay",
+  "displayName": "GC-UniSessionReplay",
+  "version": "0.2.7-alpha.1",
+  "description": "Optional Guance Session Replay support for UniApp on iOS",
+  "keywords": [
+    "GC-UniSessionReplay",
+    "Session Replay",
+    "Guance"
+  ],
+  "repository": "",
+  "engines": {
+    "HBuilderX": "^4.25.0",
+    "uni-app": "^3.1.0",
+    "uni-app-x": "^3.1.0"
+  },
+  "dcloudext": {
+    "type": "uts",
+    "sale": {
+      "regular": {
+        "price": "0.00"
+      },
+      "sourcecode": {
+        "price": "0.00"
+      }
+    },
+    "contact": {
+      "qq": ""
+    },
+    "declaration": {
+      "ads": "",
+      "data": "",
+      "permissions": ""
+    },
+    "npmurl": "",
+    "darkmode": "-",
+    "i18n": "-",
+    "widescreen": "-"
+  },
+  "uni_modules": {
+    "dependencies": [
+      "GC-UniPlugin"
+    ],
+    "encrypt": [],
+    "platforms": {
+      "cloud": {
+        "tcb": "-",
+        "aliyun": "-",
+        "alipay": "-"
+      },
+      "client": {
+        "uni-app": {
+          "vue": {
+            "vue2": "u",
+            "vue3": "u"
+          },
+          "web": {
+            "safari": "-",
+            "chrome": "-"
+          },
+          "app": {
+            "vue": "u",
+            "nvue": "-",
+            "android": "-",
+            "ios": "u",
+            "harmony": "-"
+          },
+          "mp": {
+            "weixin": "-",
+            "alipay": "-",
+            "toutiao": "-",
+            "baidu": "-",
+            "kuaishou": "-",
+            "jd": "-",
+            "harmony": "-",
+            "qq": "-",
+            "lark": "-",
+            "xhs": "-"
+          },
+          "quickapp": {
+            "huawei": "-",
+            "union": "-"
+          }
+        },
+        "uni-app-x": {
+          "web": {
+            "safari": "-",
+            "chrome": "-"
+          },
+          "app": {
+            "android": "-",
+            "ios": "u",
+            "harmony": "-"
+          },
+          "mp": {
+            "weixin": "-"
+          }
+        }
+      }
+    }
+  }
+}

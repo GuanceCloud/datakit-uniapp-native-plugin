@@ -1,0 +1,95 @@
+export const GC_UTS_BRIDGE_VERSION: string = '0.2.7-alpha.1'
+
+function createDefaultBridgeContext(): UTSJSONObject {
+	const context = JSON.parseObject('{"sdk_bridge_info":"{\\"uniapp\\":\\"' + GC_UTS_BRIDGE_VERSION + '\\"}"}')
+	return context ?? {}
+}
+
+let bridgeContext: UTSJSONObject = createDefaultBridgeContext()
+
+function parseObject(text: string | null): UTSJSONObject | null {
+	if (text == null || text.length == 0) {
+		return null
+	}
+	return JSON.parseObject(text)
+}
+
+function cloneJSONObject(source: UTSJSONObject | null): UTSJSONObject {
+	if (source == null) {
+		return {}
+	}
+	return parseObject(JSON.stringify(source)) ?? {}
+}
+
+function toJSONObject(source: any | null): UTSJSONObject | null {
+	if (source == null) {
+		return null
+	}
+	return parseObject(JSON.stringify(source))
+}
+
+function mergeJSONObject(target: UTSJSONObject, source: UTSJSONObject | null): UTSJSONObject {
+	if (source == null) {
+		return target
+	}
+	source.toMap().forEach((entry) => {
+		target[entry.key] = entry.value
+	})
+	return target
+}
+
+export function getBridgeContext(): UTSJSONObject {
+	return cloneJSONObject(bridgeContext)
+}
+
+export function appendBridgeContextState(context: any | null): UTSJSONObject {
+	const nextBridgeContext = cloneJSONObject(bridgeContext)
+	mergeJSONObject(nextBridgeContext, toJSONObject(context))
+	bridgeContext = nextBridgeContext
+	return getBridgeContext()
+}
+
+export function mergeBridgeContext(property: any | null): UTSJSONObject {
+	const result = cloneJSONObject(bridgeContext)
+	mergeJSONObject(result, toJSONObject(property))
+	return result
+}
+
+export function cloneParams(params: any | null): UTSJSONObject {
+	return cloneJSONObject(toJSONObject(params))
+}
+
+export function mergePropertyForParams(params: any | null): UTSJSONObject {
+	const result = cloneParams(params)
+	result['property'] = mergeBridgeContext(result.getJSON('property'))
+	return result
+}
+
+export function normalizeAddResourceParams(params: any | null): UTSJSONObject {
+	const result = cloneParams(params)
+	const content = result.getJSON('content')
+	if (content != null) {
+		result['content'] = cloneJSONObject(content)
+	}
+	return result
+}
+
+export function normalizeSdkConfigParams(params: any | null): UTSJSONObject {
+	return cloneParams(params)
+}
+
+export function normalizeRumConfigParams(params: any | null): UTSJSONObject {
+	return cloneParams(params)
+}
+
+export function normalizeLoggerConfigParams(params: any | null): UTSJSONObject {
+	return cloneParams(params)
+}
+
+export function normalizeTraceConfigParams(params: any | null): UTSJSONObject {
+	return cloneParams(params)
+}
+
+export function normalizeLoggingParams(params: any | null): UTSJSONObject {
+	return cloneParams(params)
+}

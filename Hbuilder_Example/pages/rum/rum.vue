@@ -18,8 +18,7 @@
 
 <script>
 	import Utils from '../../utils.js';
-
-	var rum = uni.requireNativePlugin("GCUniPlugin-RUM");
+	import { rum } from '@/uni_modules/GC-UniPlugin';
 	export default {
 		data() {
 			return {}

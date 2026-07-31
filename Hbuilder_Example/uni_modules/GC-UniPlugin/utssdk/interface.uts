@@ -1,0 +1,174 @@
+export type GCMobileConfig = {
+	datakitUrl?: string | null
+	datawayUrl?: string | null
+	clientToken?: string | null
+	env?: string | null
+	debug?: boolean | null
+	service?: string | null
+	autoSync?: boolean | null
+	syncPageSize?: number | null
+	syncSleepTime?: number | null
+	enableDataIntegerCompatible?: boolean | null
+	compressIntakeRequests?: boolean | null
+	enableLimitWithDbSize?: boolean | null
+	dbCacheLimit?: number | null
+	dbDiscardStrategy?: string | null
+	globalContext?: any | null
+	dataModifier?: any | null
+	lineDataModifier?: any | null
+}
+
+export type GCRUMConfig = {
+	androidAppId?: string | null
+	iOSAppId?: string | null
+	sampleRate?: number | null
+	sessionOnErrorSampleRate?: number | null
+	enableNativeUserAction?: boolean | null
+	enableNativeUserView?: boolean | null
+	enableNativeUserResource?: boolean | null
+	enableResourceHostIP?: boolean | null
+	enableTrackNativeCrash?: boolean | null
+	enableTrackNativeAppANR?: boolean | null
+	enableTrackNativeFreeze?: boolean | null
+	nativeFreezeDurationMs?: number | null
+	errorMonitorType?: string | string[] | null
+	deviceMonitorType?: string | string[] | null
+	detectFrequency?: string | null
+	enableTraceWebView?: boolean | null
+	allowWebViewHost?: string[] | null
+	globalContext?: any | null
+	rumCacheLimitCount?: number | null
+	rumDiscardStrategy?: string | null
+}
+
+export type GCLoggerConfig = {
+	sampleRate?: number | null
+	enableLinkRumData?: boolean | null
+	enableCustomLog?: boolean | null
+	logCacheLimitCount?: number | null
+	discardStrategy?: string | null
+	logLevelFilters?: string[] | null
+	globalContext?: any | null
+}
+
+export type GCTraceConfig = {
+	sampleRate?: number | null
+	traceType?: string | null
+	enableLinkRUMData?: boolean | null
+}
+
+export type GCRUMUserDataParams = {
+	userId: string
+	userName?: string | null
+	userEmail?: string | null
+	extra?: any | null
+}
+
+export type GCRUMActionParams = {
+	actionName: string
+	actionType?: string | null
+	property?: any | null
+}
+
+export type GCRUMViewParams = {
+	viewName: string
+	property?: any | null
+}
+
+export type GCRUMCreateViewParams = {
+	viewName: string
+	loadTime: number
+}
+
+export type GCRUMStopViewParams = {
+	property?: any | null
+}
+
+export type GCRUMErrorParams = {
+	type?: string | null
+	errorType?: string | null
+	message: string
+	stack: string
+	state?: string | null
+	property?: any | null
+}
+
+export type GCRUMResourceContentParams = {
+	url: string
+	httpMethod?: string | null
+	requestHeader?: any | null
+	responseHeader?: any | null
+	responseBody?: string | null
+	resourceStatus?: number | null
+	errorMessage?: string | null
+	errorStack?: string | null
+	fetchStartTime?: number | null
+	requestStartTime?: number | null
+	responseStartTime?: number | null
+	responseEndTime?: number | null
+	tcpStartTime?: number | null
+	tcpEndTime?: number | null
+	dnsStartTime?: number | null
+	dnsEndTime?: number | null
+	sslStartTime?: number | null
+	sslEndTime?: number | null
+}
+
+export type GCRUMResourceParams = {
+	key: string
+	property?: any | null
+}
+
+export type GCRUMAddResourceParams = {
+	key: string
+	content: GCRUMResourceContentParams
+	property?: any | null
+}
+
+export type GCLoggerLogParams = {
+	content: string
+	status?: string | number | null
+	property?: any | null
+}
+
+export type GCTraceHeaderParams = {
+	url: string
+	key?: string | null
+}
+
+export type GCMobileAgent = {
+	sdkConfig(params: GCMobileConfig): void
+	bindRUMUserData(params: GCRUMUserDataParams): void
+	unbindRUMUserData(): void
+	appendGlobalContext(params: any | null): void
+	appendRUMGlobalContext(params: any | null): void
+	appendLogGlobalContext(params: any | null): void
+	appendBridgeContext(params: any | null): void
+	flushSyncData(): void
+	clearAllData(): void
+	shutDown(): void
+	manuallySetApplicationStart(): void
+}
+
+export type GCRUM = {
+	setConfig(params: GCRUMConfig): void
+	startAction(params: GCRUMActionParams): void
+	addAction(params: GCRUMActionParams): void
+	onCreateView(params: GCRUMCreateViewParams): void
+	startView(params: GCRUMViewParams): void
+	stopView(params: GCRUMStopViewParams | null): void
+	addError(params: GCRUMErrorParams): void
+	startResource(params: GCRUMResourceParams): void
+	stopResource(params: GCRUMResourceParams): void
+	addResource(params: GCRUMAddResourceParams): void
+}
+
+export type GCLogger = {
+	setConfig(params: GCLoggerConfig): void
+	logging(params: GCLoggerLogParams): void
+}
+
+export type GCTracer = {
+	setConfig(params: GCTraceConfig): void
+	getTraceHeader(params: GCTraceHeaderParams): any | null
+}
