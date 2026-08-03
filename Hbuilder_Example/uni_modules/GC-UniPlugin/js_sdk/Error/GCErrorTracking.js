@@ -133,6 +133,23 @@ export const gcErrorTracking = {
 			}
 		};
 	},
+	captureAppError(error) {
+		try {
+			this.reportError({
+				type: 'uniapp_error',
+				message: this.getErrorMessage(error),
+				stack: this.getErrorStackTrace(error),
+				state: getAppState(),
+				property: {
+					error_source: 'uniapp_app_onError'
+				}
+			});
+		} catch (e) {
+			if (originalConsoleError) {
+				originalConsoleError('[FTLog] App error collection failed:', e);
+			}
+		}
+	},
 	reportError(errorInfo) {
 		console.log('[FTLog] Error captured, ready to report:', errorInfo);
 		if (rum && typeof rum.addError === 'function') {

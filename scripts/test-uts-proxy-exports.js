@@ -184,6 +184,16 @@ for (const name of ['rum', 'tracer']) {
   );
 }
 
+const errorTracking = read(
+  'Hbuilder_Example/uni_modules/GC-UniPlugin/js_sdk/Error/GCErrorTracking.js'
+);
+assert.match(errorTracking, /captureAppError\(error\)/);
+assert.match(errorTracking, /type:\s*'uniapp_error'/);
+
+const appLifecycleEntry = read('Hbuilder_Example/App.vue');
+assert.match(appLifecycleEntry, /onError:\s*function\(error\)/);
+assert.match(appLifecycleEntry, /gcErrorTracking\.captureAppError\(error\)/);
+
 const replayInterface = read(
   'Hbuilder_Example/uni_modules/GC-UniSessionReplay/utssdk/interface.uts'
 );

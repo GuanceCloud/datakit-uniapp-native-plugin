@@ -91,7 +91,7 @@
 				  env: 'common',
 				  debug: true,
 				  service: 'df_rum_android_interface',
-				  autoSync: false,
+				  autoSync: true,
 				  syncPageSize: 10,
 				  syncSleepTime: 100,
 				  enableDataIntegerCompatible: true,
