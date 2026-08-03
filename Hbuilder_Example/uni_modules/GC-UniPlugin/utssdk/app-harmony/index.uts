@@ -1,375 +1,784 @@
 /**
- * GC-UniPlugin Main Entry File
- * Exports all module methods
+ * HarmonyOS implementation of the GC-UniPlugin class API.
+ *
+ * Keep this platform entry self-contained, like app-android/index.uts and
+ * app-ios/index.uts. Only the shared class API is exported.
  */
-
-// Import interface definitions
 import type {
-  SDKConfigOptions,
-  BindRUMUserDataOptions,
-  GlobalContextOptions,
-  RUMConfigOptions,
-  ActionOptions,
-  CreateViewOptions,
-  ViewOptions,
-  ErrorOptions,
-  ResourceOptions,
-  ResourceStopOptions,
-  ResourceAddOptions,
-  LoggerConfigOptions,
-  LoggingOptions,
-  TracerConfigOptions,
-  TraceHeaderOptions
+  GCLoggerConfig,
+  GCLoggerLogParams,
+  GCMobileConfig,
+  GCRUMActionParams,
+  GCRUMAddResourceParams,
+  GCRUMConfig,
+  GCRUMCreateViewParams,
+  GCRUMErrorParams,
+  GCRUMResourceContentParams,
+  GCRUMResourceParams,
+  GCRUMStopViewParams,
+  GCRUMUserDataParams,
+  GCRUMViewParams,
+  GCTraceConfig,
+  GCTraceHeaderParams
 } from '../interface.uts';
+import type { DataModifier, DataModifierValue, LineDataModifier } from '@guancecloud/ft_sdk';
+import { Context } from '@kit.AbilityKit';
+import {
+  AppState,
+  DBCacheDiscard,
+  DetectFrequency,
+  DeviceMetricsMonitorType,
+  ErrorMonitorType,
+  FTLogger,
+  FTLoggerConfig,
+  FTRUMConfig,
+  FTRUMGlobalManager,
+  FTSDK,
+  FTSDKConfig,
+  FTTraceConfig,
+  FTTraceManager,
+  LogCacheDiscard,
+  NetStatusBean,
+  ResourceParams,
+  RUMCacheDiscard,
+  Status,
+  TraceType,
+  UserData
+} from '@guancecloud/ft_sdk';
 
-// Import module implementations
-import * as SDKModule from './sdk.uts';
-import * as RUMModule from './rum.uts';
-import * as LoggerModule from './logger.uts';
-import * as TracerModule from './tracer.uts';
+const pendingViewLoadTimes: Map<string, number> = new Map();
+const bridgeContext: Map<string, any> = new Map();
+let currentViewName = '';
 
-// ==================== SDK Base Module Exports ====================
+bridgeContext.set('sdk_bridge_info', 'uniapp:0.2.7');
 
-/**
- * SDK Configuration
- */
-export function sdkConfig(options: SDKConfigOptions): void {
-  SDKModule.sdkConfig(options);
-}
-
-/**
- * Bind RUM User Data
- */
-export function bindRUMUserData(options: BindRUMUserDataOptions): void {
-  SDKModule.bindRUMUserData(options);
-}
-
-/**
- * Unbind RUM User Data
- */
-export function unbindRUMUserData(): void {
-  SDKModule.unbindRUMUserData();
-}
-
-/**
- * Flush Sync Data Immediately
- */
-export function flushSyncData(): void {
-  SDKModule.flushSyncData();
-}
-
-/**
- * Append Global Context
- */
-export function appendGlobalContext(options: GlobalContextOptions): void {
-  SDKModule.appendGlobalContext(options);
-}
-
-/**
- * Append Log Global Context
- */
-export function appendLogGlobalContext(options: GlobalContextOptions): void {
-  SDKModule.appendLogGlobalContext(options);
-}
-
-/**
- * Append RUM Global Context
- */
-export function appendRUMGlobalContext(options: GlobalContextOptions): void {
-  SDKModule.appendRUMGlobalContext(options);
-}
-
-/**
- * Shutdown SDK
- */
-export function shutDown(): void {
-  SDKModule.shutDown();
-}
-
-/**
- * Clear All Data
- */
-export function clearAllData(): void {
-  SDKModule.clearAllData();
-}
-
-/**
- * Manually Set Application Start Time
- */
-export function manuallySetApplicationStart(): void {
-  SDKModule.manuallySetApplicationStart();
-}
-
-/**
- * Append Bridge Context
- */
-export function appendBridgeContext(options: GlobalContextOptions): void {
-  SDKModule.appendBridgeContext(options);
-}
-
-// ==================== RUM Module Exports ====================
-
-/**
- * RUM Configuration
- */
-export function rumSetConfig(options: RUMConfigOptions): void {
-  RUMModule.setConfig(options);
-}
-
-/**
- * Start Action
- */
-export function rumStartAction(options: ActionOptions): void {
-  RUMModule.startAction(options);
-}
-
-/**
- * Add Action
- */
-export function rumAddAction(options: ActionOptions): void {
-  RUMModule.addAction(options);
-}
-
-/**
- * Create View
- */
-export function rumOnCreateView(options: CreateViewOptions): void {
-  RUMModule.onCreateView(options);
-}
-
-/**
- * Start View
- */
-export function rumStartView(options: ViewOptions): void {
-  RUMModule.startView(options);
-}
-
-/**
- * Stop View
- */
-export function rumStopView(options?: ViewOptions): void {
-  RUMModule.stopView(options);
-}
-
-/**
- * Add Error
- */
-export function rumAddError(options: ErrorOptions): void {
-  RUMModule.addError(options);
-}
-
-/**
- * Start Resource
- */
-export function rumStartResource(options: ResourceOptions): void {
-  RUMModule.startResource(options);
-}
-
-/**
- * Stop Resource
- */
-export function rumStopResource(options: ResourceStopOptions): void {
-  RUMModule.stopResource(options);
-}
-
-/**
- * Add Resource
- */
-export function rumAddResource(options: ResourceAddOptions): void {
-  RUMModule.addResource(options);
-}
-
-// ==================== Logger Module Exports ====================
-
-/**
- * Logger Configuration
- */
-export function loggerSetConfig(options: LoggerConfigOptions): void {
-  LoggerModule.setConfig(options);
-}
-
-/**
- * Logging
- */
-export function loggerLogging(options: LoggingOptions): void {
-  LoggerModule.logging(options);
-}
-
-// ==================== Tracer Module Exports ====================
-
-/**
- * Tracer Configuration
- */
-export function tracerSetConfig(options: TracerConfigOptions): void {
-  TracerModule.setConfig(options);
-}
-
-/**
- * Get Trace Header
- */
-export function tracerGetTraceHeader(options: TraceHeaderOptions): Record<string, string> | null {
-  return TracerModule.getTraceHeader(options);
-}
-
-// The common JS helpers introduced by feature-uts use class-based exports.
-// Keep the original Harmony function exports above for compatibility, and
-// expose equivalent classes so all three native platforms share one JS API.
 export class mobileAgent {
-  static sdkConfig(params: SDKConfigOptions) {
-    sdkConfig(params)
+  static sdkConfig(params: GCMobileConfig) {
+    try {
+      const datakitUrl = params.datakitUrl;
+      const datawayUrl = params.datawayUrl;
+      const clientToken = params.clientToken;
+      let config: FTSDKConfig;
+
+      if (datakitUrl != null && datakitUrl.length > 0) {
+        config = FTSDKConfig.builder(datakitUrl);
+      } else if (datawayUrl != null && datawayUrl.length > 0 && clientToken != null && clientToken.length > 0) {
+        config = FTSDKConfig.builder(datawayUrl, clientToken);
+      } else {
+        console.error('[GC-UniPlugin] sdkConfig failed: missing datakitUrl or datawayUrl/clientToken');
+        return;
+      }
+
+      if (params.debug !== undefined && params.debug !== null) {
+        config.setDebug(params.debug);
+      }
+      if (params.env) {
+        config.setEnv(params.env);
+      }
+      if (params.service) {
+        config.setServiceName(params.service);
+      }
+      if (params.autoSync !== undefined && params.autoSync !== null) {
+        config.setAutoSync(params.autoSync);
+      }
+      if (params.syncPageSize !== undefined && params.syncPageSize !== null) {
+        config.setCustomSyncPageSize(params.syncPageSize);
+      }
+      if (params.syncSleepTime !== undefined && params.syncSleepTime !== null) {
+        config.setSyncSleepTime(params.syncSleepTime);
+      }
+      if (params.enableDataIntegerCompatible === true) {
+        config.enableDataIntegerCompatible();
+      }
+      if (params.compressIntakeRequests !== undefined && params.compressIntakeRequests !== null) {
+        config.setCompressIntakeRequests(params.compressIntakeRequests);
+      }
+      if (params.dbCacheLimit !== undefined && params.dbCacheLimit !== null) {
+        config.enableLimitWithDbSize(params.dbCacheLimit);
+      } else if (params.enableLimitWithDbSize === true) {
+        config.enableLimitWithDbSize();
+      }
+      const dbDiscard = harmonyDbCacheDiscard(params.dbDiscardStrategy);
+      if (dbDiscard !== null) {
+        config.setDbCacheDiscard(dbDiscard);
+      }
+      if (params.globalContext) {
+        const globalContext = params.globalContext as Record<string, any>;
+        const keys = Object.keys(globalContext);
+        for (let i = 0; i < keys.length; i++) {
+          const key = keys[i];
+          config.addGlobalContext(key, toHarmonyObject(globalContext[key]));
+        }
+      }
+      if (params.dataModifier) {
+        config.setDataModifier(new HarmonyDataModifier(toHarmonyObjectMap(params.dataModifier)));
+      }
+      if (params.lineDataModifier) {
+        config.setLineDataModifier(new HarmonyLineDataModifier(toHarmonyLinePatches(params.lineDataModifier)));
+      }
+
+      FTSDK.install(config, getHarmonyContext());
+      console.log('[GC-UniPlugin] sdkConfig completed successfully');
+    } catch (error) {
+      console.error('[GC-UniPlugin] sdkConfig failed:', error);
+    }
   }
 
-  static bindRUMUserData(params: BindRUMUserDataOptions) {
-    bindRUMUserData(params)
+  static bindRUMUserData(params: GCRUMUserDataParams) {
+    try {
+      const userData = new UserData();
+      userData.setId(params.userId);
+      if (params.userName) {
+        userData.setName(params.userName);
+      }
+      if (params.userEmail) {
+        userData.setEmail(params.userEmail);
+      }
+      if (params.extra) {
+        const extra = params.extra as Record<string, any>;
+        const keys = Object.keys(extra);
+        for (let i = 0; i < keys.length; i++) {
+          const key = keys[i];
+          userData.addExt(key, String(extra[key]));
+        }
+      }
+      FTSDK.bindRumUserData(userData);
+    } catch (error) {
+      console.error('[GC-UniPlugin] bindRUMUserData failed:', error);
+    }
   }
 
   static unbindRUMUserData() {
-    unbindRUMUserData()
+    FTSDK.unbindRumUserData();
   }
 
-  static appendGlobalContext(params: GlobalContextOptions) {
-    appendGlobalContext(params)
+  static appendGlobalContext(params: any | null) {
+    if (params) {
+      FTSDK.appendGlobalContext(toHarmonyStringMap(params));
+    }
   }
 
-  static appendRUMGlobalContext(params: GlobalContextOptions) {
-    appendRUMGlobalContext(params)
+  static appendRUMGlobalContext(params: any | null) {
+    if (params) {
+      FTSDK.appendRUMGlobalContext(toHarmonyStringMap(params));
+    }
   }
 
-  static appendLogGlobalContext(params: GlobalContextOptions) {
-    appendLogGlobalContext(params)
+  static appendLogGlobalContext(params: any | null) {
+    if (params) {
+      FTSDK.appendLogGlobalContext(toHarmonyStringMap(params));
+    }
   }
 
-  static appendBridgeContext(params: GlobalContextOptions) {
-    appendBridgeContext(params)
+  static appendBridgeContext(params: any | null) {
+    if (!params) {
+      return;
+    }
+    const context = params as Record<string, any>;
+    const keys = Object.keys(context);
+    for (let i = 0; i < keys.length; i++) {
+      const key = keys[i];
+      bridgeContext.set(key, context[key]);
+    }
   }
 
   static flushSyncData() {
-    flushSyncData()
+    FTSDK.flushSyncData();
   }
 
   static clearAllData() {
-    clearAllData()
+    FTSDK.clearAllData();
   }
 
   static shutDown() {
-    shutDown()
+    FTSDK.shutDown();
   }
 
   static manuallySetApplicationStart() {
-    manuallySetApplicationStart()
+    console.log('[GC-UniPlugin] manuallySetApplicationStart is not supported on HarmonyOS');
   }
 }
 
 export class rum {
-  static setConfig(params: RUMConfigOptions) {
-    rumSetConfig(params)
+  static setConfig(params: GCRUMConfig) {
+    try {
+      const rumAppId = params.harmonyAppId || params.androidAppId || params.iOSAppId;
+      if (!rumAppId) {
+        console.error('[GC-UniPlugin] rumSetConfig failed: missing RUM app id');
+        return;
+      }
+
+      const config = new FTRUMConfig().setRumAppId(rumAppId);
+      if (params.sampleRate !== undefined && params.sampleRate !== null) {
+        config.setSamplingRate(params.sampleRate);
+      }
+      if (params.sessionOnErrorSampleRate !== undefined && params.sessionOnErrorSampleRate !== null) {
+        config.setSessionErrorSampleRate(params.sessionOnErrorSampleRate);
+      }
+      if (params.enableNativeUserAction !== undefined && params.enableNativeUserAction !== null) {
+        config.setEnableTraceUserAction(params.enableNativeUserAction);
+      }
+      if (params.enableNativeUserView !== undefined && params.enableNativeUserView !== null) {
+        config.setEnableTraceUserView(params.enableNativeUserView);
+      }
+      if (params.enableNativeUserResource !== undefined && params.enableNativeUserResource !== null) {
+        config.setEnableTraceUserResource(params.enableNativeUserResource);
+      }
+      if (params.enableResourceHostIP !== undefined && params.enableResourceHostIP !== null) {
+        config.setEnableResourceHostIP(params.enableResourceHostIP);
+      }
+      if (params.enableTrackNativeCrash !== undefined && params.enableTrackNativeCrash !== null) {
+        config.setEnableTrackAppCrash(params.enableTrackNativeCrash);
+      }
+      if (params.enableTrackNativeAppANR !== undefined && params.enableTrackNativeAppANR !== null) {
+        config.setEnableTrackAppANR(params.enableTrackNativeAppANR);
+      }
+      if (params.enableTrackNativeFreeze !== undefined && params.enableTrackNativeFreeze !== null) {
+        config.setEnableTrackAppUIBlock(params.enableTrackNativeFreeze, params.nativeFreezeDurationMs || 1000);
+      }
+      const errorMonitorType = harmonyErrorMonitorType(params.errorMonitorType);
+      if (errorMonitorType !== 0) {
+        config.setExtraMonitorTypeWithError(errorMonitorType);
+      }
+      const deviceMonitorType = harmonyDeviceMonitorType(params.deviceMonitorType);
+      if (deviceMonitorType !== 0) {
+        config.setDeviceMetricsMonitorType(deviceMonitorType);
+        if (params.detectFrequency) {
+          config.setDeviceMetricsDetectFrequency(harmonyDetectFrequency(params.detectFrequency));
+        }
+      }
+      if (params.enableTraceWebView !== undefined && params.enableTraceWebView !== null) {
+        config.setEnableTraceWebView(params.enableTraceWebView);
+      }
+      if (params.allowWebViewHost) {
+        config.setAllowWebViewHost(params.allowWebViewHost);
+      }
+      if (params.globalContext) {
+        const globalContext = params.globalContext as Record<string, any>;
+        const keys = Object.keys(globalContext);
+        for (let i = 0; i < keys.length; i++) {
+          const key = keys[i];
+          config.addGlobalContext(key, toHarmonyObject(globalContext[key]));
+        }
+      }
+      if (params.rumCacheLimitCount !== undefined && params.rumCacheLimitCount !== null) {
+        config.setRumCacheLimitCount(params.rumCacheLimitCount);
+      }
+      const rumDiscard = harmonyRumCacheDiscard(params.rumDiscardStrategy);
+      if (rumDiscard !== null) {
+        config.setRumCacheDiscardStrategy(rumDiscard);
+      }
+      FTSDK.installRUMConfig(config);
+    } catch (error) {
+      console.error('[GC-UniPlugin] rumSetConfig failed:', error);
+    }
   }
 
-  static startAction(params: ActionOptions) {
-    rumStartAction(params)
+  static startAction(params: GCRUMActionParams) {
+    FTRUMGlobalManager.getInstance().startAction(
+      params.actionName,
+      params.actionType || 'click',
+      mergeRumBridgeContext(params.property)
+    );
   }
 
-  static addAction(params: ActionOptions) {
-    rumAddAction(params)
+  static addAction(params: GCRUMActionParams) {
+    FTRUMGlobalManager.getInstance().addAction(
+      params.actionName,
+      params.actionType || 'click',
+      mergeRumBridgeContext(params.property)
+    );
   }
 
-  static onCreateView(params: CreateViewOptions) {
-    rumOnCreateView(params)
+  static onCreateView(params: GCRUMCreateViewParams) {
+    if (!params.viewName || params.loadTime <= 0) {
+      return;
+    }
+    pendingViewLoadTimes.set(params.viewName, params.loadTime);
+    if (currentViewName === params.viewName) {
+      FTRUMGlobalManager.getInstance().updateLoadTime(params.loadTime);
+      pendingViewLoadTimes.delete(params.viewName);
+    }
   }
 
-  static startView(params: ViewOptions) {
-    rumStartView(params)
+  static startView(params: GCRUMViewParams) {
+    startHarmonyView(params);
   }
 
-  static stopView(params?: ViewOptions) {
-    rumStopView(params)
+  static stopView(params: GCRUMStopViewParams | null) {
+    const property = params == null ? {} : mergeRumBridgeContext(params.property);
+    FTRUMGlobalManager.getInstance().stopView(property);
+    currentViewName = '';
   }
 
-  static addError(params: ErrorOptions) {
-    rumAddError(params)
+  static addError(params: GCRUMErrorParams) {
+    const property = mergeRumBridgeContext(params.property);
+    FTRUMGlobalManager.getInstance().addError(
+      params.stack,
+      params.message,
+      params.type || params.errorType || 'uniapp_crash',
+      harmonyAppState(params.state),
+      property
+    );
   }
 
-  static startResource(params: ResourceOptions) {
-    rumStartResource(params)
+  static startResource(params: GCRUMResourceParams) {
+    FTRUMGlobalManager.getInstance().startResource(params.key, mergeRumBridgeContext(params.property));
   }
 
-  static stopResource(params: ResourceStopOptions) {
-    rumStopResource(params)
+  static stopResource(params: GCRUMResourceParams) {
+    FTRUMGlobalManager.getInstance().stopResource(params.key, mergeRumBridgeContext(params.property));
   }
 
-  static addResource(params: ResourceAddOptions) {
-    rumAddResource(params)
+  static addResource(params: GCRUMAddResourceParams) {
+    const content = params.content;
+    const resource = new ResourceParams();
+    resource.url = content.url;
+    resource.resourceMethod = content.httpMethod || 'GET';
+    resource.requestHeader = normalizeHarmonyHeader(content.requestHeader);
+    resource.responseHeader = normalizeHarmonyHeader(content.responseHeader);
+    resource.responseBody = content.responseBody || '';
+    resource.resourceStatus = content.resourceStatus || 0;
+    resource.requestErrorMsg = content.errorMessage || '';
+    resource.requestErrorStack = content.errorStack || '';
+    resource.setProperty(toHarmonyObjectMap(mergeRumBridgeContext(params.property)));
+
+    const netStatus = new NetStatusBean();
+    applyHarmonyResourceTiming(netStatus, content);
+    FTRUMGlobalManager.getInstance().addResource(params.key, resource, netStatus);
   }
 }
 
 export class logger {
-  static setConfig(params: LoggerConfigOptions) {
-    loggerSetConfig(params)
+  static setConfig(params: GCLoggerConfig) {
+    try {
+      const config = new FTLoggerConfig();
+      if (params.enableCustomLog !== undefined && params.enableCustomLog !== null) {
+        config.setEnableCustomLog(params.enableCustomLog);
+      }
+      if (params.sampleRate !== undefined && params.sampleRate !== null) {
+        config.setSamplingRate(params.sampleRate);
+      }
+      if (params.discardStrategy === 'discardOldest') {
+        config.setLogCacheDiscardStrategy(LogCacheDiscard.DISCARD_OLDEST);
+      } else if (params.discardStrategy === 'discard') {
+        config.setLogCacheDiscardStrategy(LogCacheDiscard.DISCARD);
+      }
+      if (params.logLevelFilters && params.logLevelFilters.length > 0) {
+        const filters: string[] = [];
+        for (let i = 0; i < params.logLevelFilters.length; i++) {
+          const status = Status.fromName(normalizeHarmonyLogStatus(String(params.logLevelFilters[i])));
+          if (status) {
+            filters.push(status.name);
+          }
+        }
+        if (filters.length > 0) {
+          config.setLogLevelFilters(filters);
+        }
+      }
+      if (params.enableLinkRumData !== undefined && params.enableLinkRumData !== null) {
+        config.setEnableLinkRumData(params.enableLinkRumData);
+      }
+      if (params.globalContext) {
+        const globalContext = params.globalContext as Record<string, any>;
+        const keys = Object.keys(globalContext);
+        for (let i = 0; i < keys.length; i++) {
+          const key = keys[i];
+          config.addGlobalContext(key, String(globalContext[key]));
+        }
+      }
+      if (params.logCacheLimitCount !== undefined && params.logCacheLimitCount !== null) {
+        config.setLogCacheLimitCount(params.logCacheLimitCount);
+      }
+      FTSDK.installLogConfig(config);
+    } catch (error) {
+      console.error('[GC-UniPlugin] loggerSetConfig failed:', error);
+    }
   }
 
-  static logging(params: LoggingOptions) {
-    loggerLogging(params)
+  static logging(params: GCLoggerLogParams) {
+    const status = normalizeHarmonyLogStatus(params.status == null ? 'info' : String(params.status));
+    const logStatus = Status.fromName(status) || Status.INFO;
+    FTLogger.logBackground(params.content, logStatus, mergeLogBridgeContext(params.property));
   }
 }
 
 export class tracer {
-  static setConfig(params: TracerConfigOptions) {
-    tracerSetConfig(params)
+  static setConfig(params: GCTraceConfig) {
+    try {
+      const config = new FTTraceConfig();
+      if (params.sampleRate !== undefined && params.sampleRate !== null) {
+        config.setSamplingRate(params.sampleRate);
+      }
+      if (params.traceType) {
+        config.setTraceType(harmonyTraceType(params.traceType));
+      }
+      if (params.enableLinkRUMData !== undefined && params.enableLinkRUMData !== null) {
+        config.setEnableLinkRUMData(params.enableLinkRUMData);
+      }
+      FTSDK.installTraceConfig(config);
+    } catch (error) {
+      console.error('[GC-UniPlugin] tracerSetConfig failed:', error);
+    }
   }
 
-  static getTraceHeader(params: TraceHeaderOptions): Record<string, string> | null {
-    return tracerGetTraceHeader(params)
+  static getTraceHeader(params: GCTraceHeaderParams): any | null {
+    try {
+      return FTTraceManager.getInstance().getTraceHeader(params.key || params.url, params.url);
+    } catch (error) {
+      console.error('[GC-UniPlugin] tracerGetTraceHeader failed:', error);
+      return null;
+    }
   }
+}
+
+function getHarmonyContext(): Context | undefined {
+  return undefined;
+}
+
+async function startHarmonyView(params: GCRUMViewParams): Promise<void> {
+  try {
+    const manager = FTRUMGlobalManager.getInstance();
+    await manager.startView(params.viewName, mergeRumBridgeContext(params.property));
+    currentViewName = params.viewName;
+    const loadTime = pendingViewLoadTimes.get(params.viewName);
+    if (loadTime !== undefined) {
+      manager.updateLoadTime(loadTime);
+      pendingViewLoadTimes.delete(params.viewName);
+    }
+  } catch (error) {
+    console.error('[GC-UniPlugin] rumStartView failed:', error);
+  }
+}
+
+class HarmonyDataModifier implements DataModifier {
+  private readonly replacements: Map<string, object>;
+
+  constructor(replacements: Map<string, object>) {
+    this.replacements = replacements;
+  }
+
+  modify(key: string, value: DataModifierValue): DataModifierValue | null {
+    const replacement = this.replacements.get(key);
+    return replacement === undefined ? null : replacement;
+  }
+}
+
+class HarmonyLineDataModifier implements LineDataModifier {
+  private readonly patches: Map<string, Map<string, object>>;
+
+  constructor(patches: Map<string, Map<string, object>>) {
+    this.patches = patches;
+  }
+
+  modify(measurement: string, data: Map<string, DataModifierValue>): Map<string, DataModifierValue> | null {
+    let patch = this.patches.get(measurement);
+    if (patch === undefined || patch === null) {
+      patch = this.patches.get('log');
+    }
+    if (patch === undefined || patch === null) {
+      return null;
+    }
+
+    const result = new Map<string, DataModifierValue>();
+    patch.forEach((value, key) => {
+      result.set(key, value);
+    });
+    return result;
+  }
+}
+
+function harmonyAppState(value: string | null | undefined): AppState {
+  if (value === 'run') {
+    return AppState.RUN;
+  }
+  if (value === 'background') {
+    return AppState.BACKGROUND;
+  }
+  return AppState.UNKNOWN;
+}
+
+function harmonyTraceType(value: string): TraceType {
+  switch (value) {
+    case 'zipkinMultiHeader': return TraceType.ZIPKIN_MULTI_HEADER;
+    case 'zipkinSingleHeader': return TraceType.ZIPKIN_SINGLE_HEADER;
+    case 'traceparent': return TraceType.TRACEPARENT;
+    case 'skywalking': return TraceType.SKYWALKING;
+    case 'jaeger': return TraceType.JAEGER;
+    default: return TraceType.DDTRACE;
+  }
+}
+
+function harmonyDbCacheDiscard(value: string | null | undefined): DBCacheDiscard | null {
+  if (value === 'discard') {
+    return DBCacheDiscard.DISCARD;
+  }
+  if (value === 'discardOldest') {
+    return DBCacheDiscard.DISCARD_OLDEST;
+  }
+  return null;
+}
+
+function harmonyRumCacheDiscard(value: string | null | undefined): RUMCacheDiscard | null {
+  if (value === 'discard') {
+    return RUMCacheDiscard.DISCARD;
+  }
+  if (value === 'discardOldest') {
+    return RUMCacheDiscard.DISCARD_OLDEST;
+  }
+  return null;
+}
+
+function harmonyMonitorValues(value: string | string[] | null | undefined): string[] {
+  if (typeof value === 'string') {
+    return [value];
+  }
+  if (value === null || value === undefined) {
+    return [];
+  }
+  return value;
+}
+
+function harmonyErrorMonitorType(value: string | string[] | null | undefined): number {
+  const values = harmonyMonitorValues(value);
+  let result = 0;
+  for (let i = 0; i < values.length; i++) {
+    const monitor = values[i].toLowerCase();
+    if (monitor === 'all') {
+      return ErrorMonitorType.ALL;
+    }
+    if (monitor === 'battery') {
+      result = result | ErrorMonitorType.BATTERY;
+    } else if (monitor === 'memory') {
+      result = result | ErrorMonitorType.MEMORY;
+    } else if (monitor === 'cpu') {
+      result = result | ErrorMonitorType.CPU;
+    }
+  }
+  return result;
+}
+
+function harmonyDeviceMonitorType(value: string | string[] | null | undefined): number {
+  const values = harmonyMonitorValues(value);
+  let result = 0;
+  for (let i = 0; i < values.length; i++) {
+    const monitor = values[i].toLowerCase();
+    if (monitor === 'all') {
+      return DeviceMetricsMonitorType.ALL;
+    }
+    if (monitor === 'battery') {
+      result = result | DeviceMetricsMonitorType.BATTERY;
+    } else if (monitor === 'memory') {
+      result = result | DeviceMetricsMonitorType.MEMORY;
+    } else if (monitor === 'cpu') {
+      result = result | DeviceMetricsMonitorType.CPU;
+    } else if (monitor === 'fps') {
+      result = result | DeviceMetricsMonitorType.FPS;
+    }
+  }
+  return result;
+}
+
+function harmonyDetectFrequency(value: string): DetectFrequency {
+  if (value === 'frequent') {
+    return DetectFrequency.FREQUENT;
+  }
+  if (value === 'rare') {
+    return DetectFrequency.RARE;
+  }
+  return DetectFrequency.DEFAULT;
+}
+
+function mergeRumBridgeContext(property?: any | null): Record<string, object> {
+  const result: Record<string, object> = {};
+  if (property) {
+    const rumProperty = property as Record<string, any>;
+    const keys = Object.keys(rumProperty);
+    for (let i = 0; i < keys.length; i++) {
+      const key = keys[i];
+      result[key] = toHarmonyObject(rumProperty[key]);
+    }
+  }
+  bridgeContext.forEach((value, key) => {
+    result[key] = toHarmonyObject(value);
+  });
+  return result;
+}
+
+function mergeLogBridgeContext(property?: any | null): Map<string, object> {
+  const result = new Map<string, object>();
+  if (property) {
+    const logProperty = property as Record<string, any>;
+    const keys = Object.keys(logProperty);
+    for (let i = 0; i < keys.length; i++) {
+      const key = keys[i];
+      result.set(key, toHarmonyObject(logProperty[key]));
+    }
+  }
+  bridgeContext.forEach((value, key) => {
+    result.set(key, toHarmonyObject(value));
+  });
+  return result;
+}
+
+function toHarmonyObjectMap(value: any): Map<string, object> {
+  const result = new Map<string, object>();
+  const context = value as Record<string, any>;
+  const keys = Object.keys(context);
+  for (let i = 0; i < keys.length; i++) {
+    const key = keys[i];
+    result.set(key, toHarmonyObject(context[key]));
+  }
+  return result;
+}
+
+function toHarmonyLinePatches(value: any): Map<string, Map<string, object>> {
+  const result = new Map<string, Map<string, object>>();
+  const patches = value as Record<string, any>;
+  const keys = Object.keys(patches);
+  for (let i = 0; i < keys.length; i++) {
+    const key = keys[i];
+    result.set(key, toHarmonyObjectMap(patches[key]));
+  }
+  return result;
+}
+
+function toHarmonyStringMap(value: any): Map<string, string> {
+  const result = new Map<string, string>();
+  const context = value as Record<string, any>;
+  const keys = Object.keys(context);
+  for (let i = 0; i < keys.length; i++) {
+    const key = keys[i];
+    result.set(key, String(context[key]));
+  }
+  return result;
+}
+
+function applyHarmonyResourceTiming(status: NetStatusBean, content: GCRUMResourceContentParams) {
+  const dnsStartTime = content.dnsStartTime;
+  const dnsEndTime = content.dnsEndTime;
+  if (dnsStartTime !== undefined && dnsStartTime !== null) {
+    status.setDNSStartTime(dnsStartTime);
+  }
+  if (dnsStartTime !== undefined && dnsStartTime !== null && dnsEndTime !== undefined && dnsEndTime !== null) {
+    status.setDNSTime(dnsEndTime - dnsStartTime);
+  }
+
+  const tcpStartTime = content.tcpStartTime;
+  const tcpEndTime = content.tcpEndTime;
+  if (tcpStartTime !== undefined && tcpStartTime !== null) {
+    status.setConnectStartTime(tcpStartTime);
+  }
+  if (tcpStartTime !== undefined && tcpStartTime !== null && tcpEndTime !== undefined && tcpEndTime !== null) {
+    status.setTcpTime(tcpEndTime - tcpStartTime);
+  }
+
+  const sslStartTime = content.sslStartTime;
+  const sslEndTime = content.sslEndTime;
+  if (sslStartTime !== undefined && sslStartTime !== null) {
+    status.setSslStartTime(sslStartTime);
+  }
+  if (sslStartTime !== undefined && sslStartTime !== null && sslEndTime !== undefined && sslEndTime !== null) {
+    status.setSSLTime(sslEndTime - sslStartTime);
+  }
+
+  const requestStartTime = content.requestStartTime;
+  const responseStartTime = content.responseStartTime;
+  if (requestStartTime !== undefined && requestStartTime !== null) {
+    status.setFirstByteStartTime(requestStartTime);
+  }
+  if (requestStartTime !== undefined && requestStartTime !== null && responseStartTime !== undefined && responseStartTime !== null) {
+    status.setFirstByteTime(responseStartTime - requestStartTime);
+  }
+
+  const responseEndTime = content.responseEndTime;
+  if (responseStartTime !== undefined && responseStartTime !== null) {
+    status.setDownloadTimeStart(responseStartTime);
+  }
+  if (responseStartTime !== undefined && responseStartTime !== null && responseEndTime !== undefined && responseEndTime !== null) {
+    status.setDownloadTime(responseEndTime - responseStartTime);
+  }
+
+  const fetchStartTime = content.fetchStartTime;
+  if (fetchStartTime !== undefined && fetchStartTime !== null && responseEndTime !== undefined && responseEndTime !== null) {
+    status.setHoleRequestTime(responseEndTime - fetchStartTime);
+  }
+}
+
+function toHarmonyObject(value: any): object {
+  return new Object(value);
+}
+
+function normalizeHarmonyHeader(value: any | null | undefined): string {
+  if (typeof value === 'string') {
+    return value;
+  }
+  if (value == null) {
+    return '';
+  }
+  try {
+    return JSON.stringify(value);
+  } catch (error) {
+    return String(value);
+  }
+}
+
+function normalizeHarmonyLogStatus(value: string): string {
+  const status = value.toLowerCase();
+  if (status === 'ok') return 'info';
+  if (status === 'critical') return 'fatal';
+  if (status === 'warning') return 'warn';
+  return status;
 }
 
 export class GCEnv {
-  static readonly PROD: string = 'prod'
-  static readonly GRAY: string = 'gray'
-  static readonly PRE: string = 'pre'
-  static readonly COMMON: string = 'common'
-  static readonly LOCAL: string = 'local'
+  static readonly PROD: string = 'prod';
+  static readonly GRAY: string = 'gray';
+  static readonly PRE: string = 'pre';
+  static readonly COMMON: string = 'common';
+  static readonly LOCAL: string = 'local';
 }
 
 export class GCDiscardStrategy {
-  static readonly DISCARD: string = 'discard'
-  static readonly DISCARD_OLDEST: string = 'discardOldest'
+  static readonly DISCARD: string = 'discard';
+  static readonly DISCARD_OLDEST: string = 'discardOldest';
 }
 
 export class GCTraceType {
-  static readonly DDTRACE: string = 'ddTrace'
-  static readonly ZIPKIN_MULTI_HEADER: string = 'zipkinMultiHeader'
-  static readonly ZIPKIN_SINGLE_HEADER: string = 'zipkinSingleHeader'
-  static readonly TRACEPARENT: string = 'traceparent'
-  static readonly SKYWALKING: string = 'skywalking'
-  static readonly JAEGER: string = 'jaeger'
+  static readonly DDTRACE: string = 'ddTrace';
+  static readonly ZIPKIN_MULTI_HEADER: string = 'zipkinMultiHeader';
+  static readonly ZIPKIN_SINGLE_HEADER: string = 'zipkinSingleHeader';
+  static readonly TRACEPARENT: string = 'traceparent';
+  static readonly SKYWALKING: string = 'skywalking';
+  static readonly JAEGER: string = 'jaeger';
 }
 
 export class GCMonitorFrequency {
-  static readonly NORMAL: string = 'normal'
-  static readonly FREQUENT: string = 'frequent'
-  static readonly RARE: string = 'rare'
+  static readonly NORMAL: string = 'normal';
+  static readonly FREQUENT: string = 'frequent';
+  static readonly RARE: string = 'rare';
 }
 
 export class GCLogStatus {
-  static readonly INFO: string = 'info'
-  static readonly DEBUG: string = 'debug'
-  static readonly WARNING: string = 'warning'
-  static readonly ERROR: string = 'error'
-  static readonly CRITICAL: string = 'critical'
-  static readonly OK: string = 'ok'
+  static readonly INFO: string = 'info';
+  static readonly DEBUG: string = 'debug';
+  static readonly WARNING: string = 'warning';
+  static readonly ERROR: string = 'error';
+  static readonly CRITICAL: string = 'critical';
+  static readonly OK: string = 'ok';
 }
 
 export class GCErrorMonitorType {
-  static readonly BATTERY: string = 'battery'
-  static readonly MEMORY: string = 'memory'
-  static readonly CPU: string = 'cpu'
-  static readonly ALL: string = 'all'
+  static readonly BATTERY: string = 'battery';
+  static readonly MEMORY: string = 'memory';
+  static readonly CPU: string = 'cpu';
+  static readonly ALL: string = 'all';
 }
 
 export class GCDeviceMonitorType {
-  static readonly BATTERY: string = 'battery'
-  static readonly MEMORY: string = 'memory'
-  static readonly CPU: string = 'cpu'
-  static readonly FPS: string = 'fps'
-  static readonly ALL: string = 'all'
+  static readonly BATTERY: string = 'battery';
+  static readonly MEMORY: string = 'memory';
+  static readonly CPU: string = 'cpu';
+  static readonly FPS: string = 'fps';
+  static readonly ALL: string = 'all';
 }

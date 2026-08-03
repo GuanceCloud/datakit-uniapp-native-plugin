@@ -93,6 +93,15 @@ for (const relativePath of [
   assertStaticConstantExports(relativePath, baseConstantClasses);
 }
 
+const harmonyEntry = read(
+  'Hbuilder_Example/uni_modules/GC-UniPlugin/utssdk/app-harmony/index.uts'
+);
+assert.doesNotMatch(
+  harmonyEntry,
+  /^export function\b/m,
+  'HarmonyOS must expose the SDK only through the shared class-based API'
+);
+
 const bridgeSource = read(
   'Hbuilder_Example/uni_modules/GC-UniPlugin/utssdk/bridge.uts'
 );
