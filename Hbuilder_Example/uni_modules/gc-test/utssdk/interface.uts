@@ -1,0 +1,46 @@
+/**
+ * interface.uts
+ * Defining plugin interfaces according to the UTS conventions provides better syntax assistance in HBuilderX.
+ */
+
+/**
+ * Parameters for the asynchronous myApi function. Define its parameters and success, failure, and completion callbacks in this type.
+ */
+export type MyApiOptions = {
+  paramA : boolean
+  success ?: (res : MyApiResult) => void
+  fail ?: (res : MyApiFail) => void
+  complete ?: (res : any) => void
+}
+
+/**
+ * Function result.
+ * This can be void, a primitive type, a custom type, or another type.
+ * Optional implementation.
+ */
+export type MyApiResult = {
+  fieldA : number,
+  fieldB : boolean,
+  fieldC : string
+}
+
+/**
+ * Error codes.
+ * The uni error-code convention recommends codes beginning with 90. Examples:
+ * - 9010001 Error message 1
+ * - 9010002 Error message 2
+ */
+export type MyApiErrorCode = 9010001 | 9010002;
+
+/**
+ * Failure callback parameter for myApi.
+ */
+export interface MyApiFail extends IUniError {
+  errCode : MyApiErrorCode
+};
+
+/* Asynchronous function definition. */
+export type MyApi = (options : MyApiOptions) => void
+
+/* Synchronous function definition. */
+export type MyApiSync = (paramA : boolean) => MyApiResult

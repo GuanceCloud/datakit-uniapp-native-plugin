@@ -1,0 +1,2045 @@
+{
+  "ABIRoot": {
+    "kind": "Root",
+    "name": "GuanceSessionReplay",
+    "printedName": "GuanceSessionReplay",
+    "children": [
+      {
+        "kind": "Import",
+        "name": "CoreGraphics",
+        "printedName": "CoreGraphics",
+        "declKind": "Import",
+        "moduleName": "GuanceSessionReplay"
+      },
+      {
+        "kind": "Import",
+        "name": "Foundation",
+        "printedName": "Foundation",
+        "declKind": "Import",
+        "moduleName": "GuanceSessionReplay"
+      },
+      {
+        "kind": "Import",
+        "name": "CoreGraphics",
+        "printedName": "CoreGraphics",
+        "declKind": "Import",
+        "moduleName": "GuanceSessionReplay"
+      },
+      {
+        "kind": "Import",
+        "name": "Foundation",
+        "printedName": "Foundation",
+        "declKind": "Import",
+        "moduleName": "GuanceSessionReplay"
+      },
+      {
+        "kind": "Import",
+        "name": "SwiftUI",
+        "printedName": "SwiftUI",
+        "declKind": "Import",
+        "moduleName": "GuanceSessionReplay"
+      },
+      {
+        "kind": "Import",
+        "name": "UIKit",
+        "printedName": "UIKit",
+        "declKind": "Import",
+        "moduleName": "GuanceSessionReplay"
+      },
+      {
+        "kind": "Import",
+        "name": "SwiftUI",
+        "printedName": "SwiftUI",
+        "declKind": "Import",
+        "moduleName": "GuanceSessionReplay"
+      },
+      {
+        "kind": "Import",
+        "name": "Foundation",
+        "printedName": "Foundation",
+        "declKind": "Import",
+        "moduleName": "GuanceSessionReplay"
+      },
+      {
+        "kind": "Import",
+        "name": "QuartzCore",
+        "printedName": "QuartzCore",
+        "declKind": "Import",
+        "moduleName": "GuanceSessionReplay"
+      },
+      {
+        "kind": "Import",
+        "name": "SwiftUI",
+        "printedName": "SwiftUI",
+        "declKind": "Import",
+        "moduleName": "GuanceSessionReplay"
+      },
+      {
+        "kind": "Import",
+        "name": "UIKit",
+        "printedName": "UIKit",
+        "declKind": "Import",
+        "moduleName": "GuanceSessionReplay"
+      },
+      {
+        "kind": "Import",
+        "name": "Foundation",
+        "printedName": "Foundation",
+        "declKind": "Import",
+        "moduleName": "GuanceSessionReplay"
+      },
+      {
+        "kind": "Import",
+        "name": "QuartzCore",
+        "printedName": "QuartzCore",
+        "declKind": "Import",
+        "moduleName": "GuanceSessionReplay"
+      },
+      {
+        "kind": "Import",
+        "name": "SwiftUI",
+        "printedName": "SwiftUI",
+        "declKind": "Import",
+        "moduleName": "GuanceSessionReplay"
+      },
+      {
+        "kind": "Import",
+        "name": "UIKit",
+        "printedName": "UIKit",
+        "declKind": "Import",
+        "moduleName": "GuanceSessionReplay"
+      },
+      {
+        "kind": "Import",
+        "name": "CoreGraphics",
+        "printedName": "CoreGraphics",
+        "declKind": "Import",
+        "moduleName": "GuanceSessionReplay"
+      },
+      {
+        "kind": "Import",
+        "name": "Foundation",
+        "printedName": "Foundation",
+        "declKind": "Import",
+        "moduleName": "GuanceSessionReplay"
+      },
+      {
+        "kind": "Import",
+        "name": "UIKit",
+        "printedName": "UIKit",
+        "declKind": "Import",
+        "moduleName": "GuanceSessionReplay"
+      },
+      {
+        "kind": "Import",
+        "name": "SwiftUI",
+        "printedName": "SwiftUI",
+        "declKind": "Import",
+        "moduleName": "GuanceSessionReplay"
+      },
+      {
+        "kind": "Import",
+        "name": "SwiftUI",
+        "printedName": "SwiftUI",
+        "declKind": "Import",
+        "moduleName": "GuanceSessionReplay"
+      },
+      {
+        "kind": "Import",
+        "name": "CoreGraphics",
+        "printedName": "CoreGraphics",
+        "declKind": "Import",
+        "moduleName": "GuanceSessionReplay"
+      },
+      {
+        "kind": "Import",
+        "name": "SwiftUI",
+        "printedName": "SwiftUI",
+        "declKind": "Import",
+        "moduleName": "GuanceSessionReplay"
+      },
+      {
+        "kind": "Import",
+        "name": "UIKit",
+        "printedName": "UIKit",
+        "declKind": "Import",
+        "moduleName": "GuanceSessionReplay"
+      },
+      {
+        "kind": "Import",
+        "name": "CoreGraphics",
+        "printedName": "CoreGraphics",
+        "declKind": "Import",
+        "moduleName": "GuanceSessionReplay"
+      },
+      {
+        "kind": "Import",
+        "name": "SwiftUI",
+        "printedName": "SwiftUI",
+        "declKind": "Import",
+        "moduleName": "GuanceSessionReplay"
+      },
+      {
+        "kind": "Import",
+        "name": "Foundation",
+        "printedName": "Foundation",
+        "declKind": "Import",
+        "moduleName": "GuanceSessionReplay"
+      },
+      {
+        "kind": "Import",
+        "name": "UIKit",
+        "printedName": "UIKit",
+        "declKind": "Import",
+        "moduleName": "GuanceSessionReplay"
+      },
+      {
+        "kind": "Import",
+        "name": "Foundation",
+        "printedName": "Foundation",
+        "declKind": "Import",
+        "moduleName": "GuanceSessionReplay"
+      },
+      {
+        "kind": "Import",
+        "name": "UIKit",
+        "printedName": "UIKit",
+        "declKind": "Import",
+        "moduleName": "GuanceSessionReplay"
+      },
+      {
+        "kind": "Import",
+        "name": "CoreGraphics",
+        "printedName": "CoreGraphics",
+        "declKind": "Import",
+        "moduleName": "GuanceSessionReplay"
+      },
+      {
+        "kind": "Import",
+        "name": "Foundation",
+        "printedName": "Foundation",
+        "declKind": "Import",
+        "moduleName": "GuanceSessionReplay"
+      },
+      {
+        "kind": "Import",
+        "name": "SwiftUI",
+        "printedName": "SwiftUI",
+        "declKind": "Import",
+        "moduleName": "GuanceSessionReplay"
+      },
+      {
+        "kind": "Import",
+        "name": "Foundation",
+        "printedName": "Foundation",
+        "declKind": "Import",
+        "moduleName": "GuanceSessionReplay"
+      },
+      {
+        "kind": "Import",
+        "name": "Foundation",
+        "printedName": "Foundation",
+        "declKind": "Import",
+        "moduleName": "GuanceSessionReplay"
+      },
+      {
+        "kind": "Import",
+        "name": "SwiftShims",
+        "printedName": "SwiftShims",
+        "declKind": "Import",
+        "moduleName": "GuanceSessionReplay"
+      },
+      {
+        "kind": "Import",
+        "name": "Foundation",
+        "printedName": "Foundation",
+        "declKind": "Import",
+        "moduleName": "GuanceSessionReplay"
+      },
+      {
+        "kind": "Import",
+        "name": "CommonCrypto",
+        "printedName": "CommonCrypto",
+        "declKind": "Import",
+        "moduleName": "GuanceSessionReplay"
+      },
+      {
+        "kind": "Import",
+        "name": "Foundation",
+        "printedName": "Foundation",
+        "declKind": "Import",
+        "moduleName": "GuanceSessionReplay"
+      },
+      {
+        "kind": "Import",
+        "name": "Foundation",
+        "printedName": "Foundation",
+        "declKind": "Import",
+        "moduleName": "GuanceSessionReplay"
+      },
+      {
+        "kind": "Import",
+        "name": "SwiftUI",
+        "printedName": "SwiftUI",
+        "declKind": "Import",
+        "moduleName": "GuanceSessionReplay"
+      },
+      {
+        "kind": "Import",
+        "name": "UIKit",
+        "printedName": "UIKit",
+        "declKind": "Import",
+        "moduleName": "GuanceSessionReplay"
+      },
+      {
+        "kind": "Import",
+        "name": "Foundation",
+        "printedName": "Foundation",
+        "declKind": "Import",
+        "moduleName": "GuanceSessionReplay"
+      },
+      {
+        "kind": "Import",
+        "name": "QuartzCore",
+        "printedName": "QuartzCore",
+        "declKind": "Import",
+        "moduleName": "GuanceSessionReplay"
+      },
+      {
+        "kind": "Import",
+        "name": "SwiftUI",
+        "printedName": "SwiftUI",
+        "declKind": "Import",
+        "moduleName": "GuanceSessionReplay"
+      },
+      {
+        "kind": "Import",
+        "name": "UIKit",
+        "printedName": "UIKit",
+        "declKind": "Import",
+        "moduleName": "GuanceSessionReplay"
+      },
+      {
+        "kind": "TypeDecl",
+        "name": "FTSwiftUIRecordingResult",
+        "printedName": "FTSwiftUIRecordingResult",
+        "children": [
+          {
+            "kind": "Constructor",
+            "name": "init",
+            "printedName": "init()",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "FTSwiftUIRecordingResult",
+                "printedName": "GuanceSessionReplay.FTSwiftUIRecordingResult",
+                "usr": "c:@M@GuanceSessionReplay@objc(cs)FTSwiftUIRecordingResult"
+              }
+            ],
+            "declKind": "Constructor",
+            "usr": "c:@M@GuanceSessionReplay@objc(cs)FTSwiftUIRecordingResult(im)init",
+            "mangledName": "$s19GuanceSessionReplay24FTSwiftUIRecordingResultCACycfc",
+            "moduleName": "GuanceSessionReplay",
+            "overriding": true,
+            "implicit": true,
+            "objc_name": "init",
+            "declAttributes": [
+              "Dynamic",
+              "ObjC",
+              "Override"
+            ],
+            "spi_group_names": [
+              "Private"
+            ],
+            "init_kind": "Designated"
+          }
+        ],
+        "declKind": "Class",
+        "usr": "c:@M@GuanceSessionReplay@objc(cs)FTSwiftUIRecordingResult",
+        "mangledName": "$s19GuanceSessionReplay24FTSwiftUIRecordingResultC",
+        "moduleName": "GuanceSessionReplay",
+        "intro_iOS": "13.0",
+        "objc_name": "FTSwiftUIRecordingResult",
+        "declAttributes": [
+          "Final",
+          "AccessControl",
+          "SPIAccessControl",
+          "ObjC",
+          "Available"
+        ],
+        "spi_group_names": [
+          "Private"
+        ],
+        "superclassUsr": "c:objc(cs)NSObject",
+        "hasMissingDesignatedInitializers": true,
+        "superclassNames": [
+          "ObjectiveC.NSObject"
+        ],
+        "conformances": [
+          {
+            "kind": "Conformance",
+            "name": "_KeyValueCodingAndObserving",
+            "printedName": "_KeyValueCodingAndObserving",
+            "usr": "s:10Foundation27_KeyValueCodingAndObservingP",
+            "mangledName": "$s10Foundation27_KeyValueCodingAndObservingP"
+          },
+          {
+            "kind": "Conformance",
+            "name": "_KeyValueCodingAndObservingPublishing",
+            "printedName": "_KeyValueCodingAndObservingPublishing",
+            "usr": "s:10Foundation37_KeyValueCodingAndObservingPublishingP",
+            "mangledName": "$s10Foundation37_KeyValueCodingAndObservingPublishingP"
+          },
+          {
+            "kind": "Conformance",
+            "name": "CVarArg",
+            "printedName": "CVarArg",
+            "usr": "s:s7CVarArgP",
+            "mangledName": "$ss7CVarArgP"
+          },
+          {
+            "kind": "Conformance",
+            "name": "Copyable",
+            "printedName": "Copyable",
+            "usr": "s:s8CopyableP",
+            "mangledName": "$ss8CopyableP"
+          },
+          {
+            "kind": "Conformance",
+            "name": "CustomDebugStringConvertible",
+            "printedName": "CustomDebugStringConvertible",
+            "usr": "s:s28CustomDebugStringConvertibleP",
+            "mangledName": "$ss28CustomDebugStringConvertibleP"
+          },
+          {
+            "kind": "Conformance",
+            "name": "CustomStringConvertible",
+            "printedName": "CustomStringConvertible",
+            "usr": "s:s23CustomStringConvertibleP",
+            "mangledName": "$ss23CustomStringConvertibleP"
+          },
+          {
+            "kind": "Conformance",
+            "name": "Equatable",
+            "printedName": "Equatable",
+            "usr": "s:SQ",
+            "mangledName": "$sSQ"
+          },
+          {
+            "kind": "Conformance",
+            "name": "Escapable",
+            "printedName": "Escapable",
+            "usr": "s:s9EscapableP",
+            "mangledName": "$ss9EscapableP"
+          },
+          {
+            "kind": "Conformance",
+            "name": "Hashable",
+            "printedName": "Hashable",
+            "usr": "s:SH",
+            "mangledName": "$sSH"
+          }
+        ]
+      },
+      {
+        "kind": "TypeDecl",
+        "name": "FTSwiftUIRenderer",
+        "printedName": "FTSwiftUIRenderer",
+        "children": [
+          {
+            "kind": "Constructor",
+            "name": "init",
+            "printedName": "init()",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "FTSwiftUIRenderer",
+                "printedName": "GuanceSessionReplay.FTSwiftUIRenderer",
+                "usr": "c:@M@GuanceSessionReplay@objc(cs)FTSwiftUIRenderer"
+              }
+            ],
+            "declKind": "Constructor",
+            "usr": "c:@M@GuanceSessionReplay@objc(cs)FTSwiftUIRenderer(im)init",
+            "mangledName": "$s19GuanceSessionReplay17FTSwiftUIRendererCACycfc",
+            "moduleName": "GuanceSessionReplay",
+            "overriding": true,
+            "implicit": true,
+            "objc_name": "init",
+            "declAttributes": [
+              "Dynamic",
+              "ObjC",
+              "Override"
+            ],
+            "spi_group_names": [
+              "Private"
+            ],
+            "init_kind": "Designated"
+          }
+        ],
+        "declKind": "Class",
+        "usr": "c:@M@GuanceSessionReplay@objc(cs)FTSwiftUIRenderer",
+        "mangledName": "$s19GuanceSessionReplay17FTSwiftUIRendererC",
+        "moduleName": "GuanceSessionReplay",
+        "intro_iOS": "13.0",
+        "objc_name": "FTSwiftUIRenderer",
+        "declAttributes": [
+          "Final",
+          "AccessControl",
+          "SPIAccessControl",
+          "ObjC",
+          "Available"
+        ],
+        "spi_group_names": [
+          "Private"
+        ],
+        "superclassUsr": "c:objc(cs)NSObject",
+        "hasMissingDesignatedInitializers": true,
+        "superclassNames": [
+          "ObjectiveC.NSObject"
+        ],
+        "conformances": [
+          {
+            "kind": "Conformance",
+            "name": "_KeyValueCodingAndObserving",
+            "printedName": "_KeyValueCodingAndObserving",
+            "usr": "s:10Foundation27_KeyValueCodingAndObservingP",
+            "mangledName": "$s10Foundation27_KeyValueCodingAndObservingP"
+          },
+          {
+            "kind": "Conformance",
+            "name": "_KeyValueCodingAndObservingPublishing",
+            "printedName": "_KeyValueCodingAndObservingPublishing",
+            "usr": "s:10Foundation37_KeyValueCodingAndObservingPublishingP",
+            "mangledName": "$s10Foundation37_KeyValueCodingAndObservingPublishingP"
+          },
+          {
+            "kind": "Conformance",
+            "name": "CVarArg",
+            "printedName": "CVarArg",
+            "usr": "s:s7CVarArgP",
+            "mangledName": "$ss7CVarArgP"
+          },
+          {
+            "kind": "Conformance",
+            "name": "Copyable",
+            "printedName": "Copyable",
+            "usr": "s:s8CopyableP",
+            "mangledName": "$ss8CopyableP"
+          },
+          {
+            "kind": "Conformance",
+            "name": "CustomDebugStringConvertible",
+            "printedName": "CustomDebugStringConvertible",
+            "usr": "s:s28CustomDebugStringConvertibleP",
+            "mangledName": "$ss28CustomDebugStringConvertibleP"
+          },
+          {
+            "kind": "Conformance",
+            "name": "CustomStringConvertible",
+            "printedName": "CustomStringConvertible",
+            "usr": "s:s23CustomStringConvertibleP",
+            "mangledName": "$ss23CustomStringConvertibleP"
+          },
+          {
+            "kind": "Conformance",
+            "name": "Equatable",
+            "printedName": "Equatable",
+            "usr": "s:SQ",
+            "mangledName": "$sSQ"
+          },
+          {
+            "kind": "Conformance",
+            "name": "Escapable",
+            "printedName": "Escapable",
+            "usr": "s:s9EscapableP",
+            "mangledName": "$ss9EscapableP"
+          },
+          {
+            "kind": "Conformance",
+            "name": "Hashable",
+            "printedName": "Hashable",
+            "usr": "s:SH",
+            "mangledName": "$sSH"
+          }
+        ]
+      },
+      {
+        "kind": "TypeDecl",
+        "name": "FTSwiftUIRecordingBuilder",
+        "printedName": "FTSwiftUIRecordingBuilder",
+        "children": [
+          {
+            "kind": "Function",
+            "name": "build",
+            "printedName": "build()",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "Optional",
+                "printedName": "GuanceSessionReplay.FTSwiftUIRecordingResult?",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "FTSwiftUIRecordingResult",
+                    "printedName": "GuanceSessionReplay.FTSwiftUIRecordingResult",
+                    "usr": "c:@M@GuanceSessionReplay@objc(cs)FTSwiftUIRecordingResult"
+                  }
+                ],
+                "usr": "s:Sq"
+              }
+            ],
+            "declKind": "Func",
+            "usr": "c:@M@GuanceSessionReplay@objc(cs)FTSwiftUIRecordingBuilder(im)build",
+            "mangledName": "$s19GuanceSessionReplay25FTSwiftUIRecordingBuilderC5buildAA0dE6ResultCSgyF",
+            "moduleName": "GuanceSessionReplay",
+            "objc_name": "build",
+            "declAttributes": [
+              "Final",
+              "AccessControl",
+              "ObjC"
+            ],
+            "spi_group_names": [
+              "Private"
+            ],
+            "funcSelfKind": "NonMutating"
+          },
+          {
+            "kind": "Constructor",
+            "name": "init",
+            "printedName": "init()",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "FTSwiftUIRecordingBuilder",
+                "printedName": "GuanceSessionReplay.FTSwiftUIRecordingBuilder",
+                "usr": "c:@M@GuanceSessionReplay@objc(cs)FTSwiftUIRecordingBuilder"
+              }
+            ],
+            "declKind": "Constructor",
+            "usr": "c:@M@GuanceSessionReplay@objc(cs)FTSwiftUIRecordingBuilder(im)init",
+            "mangledName": "$s19GuanceSessionReplay25FTSwiftUIRecordingBuilderCACycfc",
+            "moduleName": "GuanceSessionReplay",
+            "overriding": true,
+            "implicit": true,
+            "objc_name": "init",
+            "declAttributes": [
+              "Dynamic",
+              "ObjC",
+              "Override"
+            ],
+            "spi_group_names": [
+              "Private"
+            ],
+            "init_kind": "Designated"
+          }
+        ],
+        "declKind": "Class",
+        "usr": "c:@M@GuanceSessionReplay@objc(cs)FTSwiftUIRecordingBuilder",
+        "mangledName": "$s19GuanceSessionReplay25FTSwiftUIRecordingBuilderC",
+        "moduleName": "GuanceSessionReplay",
+        "intro_iOS": "13.0",
+        "objc_name": "FTSwiftUIRecordingBuilder",
+        "declAttributes": [
+          "Final",
+          "AccessControl",
+          "SPIAccessControl",
+          "ObjC",
+          "Available"
+        ],
+        "spi_group_names": [
+          "Private"
+        ],
+        "superclassUsr": "c:objc(cs)NSObject",
+        "hasMissingDesignatedInitializers": true,
+        "superclassNames": [
+          "ObjectiveC.NSObject"
+        ],
+        "conformances": [
+          {
+            "kind": "Conformance",
+            "name": "_KeyValueCodingAndObserving",
+            "printedName": "_KeyValueCodingAndObserving",
+            "usr": "s:10Foundation27_KeyValueCodingAndObservingP",
+            "mangledName": "$s10Foundation27_KeyValueCodingAndObservingP"
+          },
+          {
+            "kind": "Conformance",
+            "name": "_KeyValueCodingAndObservingPublishing",
+            "printedName": "_KeyValueCodingAndObservingPublishing",
+            "usr": "s:10Foundation37_KeyValueCodingAndObservingPublishingP",
+            "mangledName": "$s10Foundation37_KeyValueCodingAndObservingPublishingP"
+          },
+          {
+            "kind": "Conformance",
+            "name": "CVarArg",
+            "printedName": "CVarArg",
+            "usr": "s:s7CVarArgP",
+            "mangledName": "$ss7CVarArgP"
+          },
+          {
+            "kind": "Conformance",
+            "name": "Copyable",
+            "printedName": "Copyable",
+            "usr": "s:s8CopyableP",
+            "mangledName": "$ss8CopyableP"
+          },
+          {
+            "kind": "Conformance",
+            "name": "CustomDebugStringConvertible",
+            "printedName": "CustomDebugStringConvertible",
+            "usr": "s:s28CustomDebugStringConvertibleP",
+            "mangledName": "$ss28CustomDebugStringConvertibleP"
+          },
+          {
+            "kind": "Conformance",
+            "name": "CustomStringConvertible",
+            "printedName": "CustomStringConvertible",
+            "usr": "s:s23CustomStringConvertibleP",
+            "mangledName": "$ss23CustomStringConvertibleP"
+          },
+          {
+            "kind": "Conformance",
+            "name": "Equatable",
+            "printedName": "Equatable",
+            "usr": "s:SQ",
+            "mangledName": "$sSQ"
+          },
+          {
+            "kind": "Conformance",
+            "name": "Escapable",
+            "printedName": "Escapable",
+            "usr": "s:s9EscapableP",
+            "mangledName": "$ss9EscapableP"
+          },
+          {
+            "kind": "Conformance",
+            "name": "Hashable",
+            "printedName": "Hashable",
+            "usr": "s:SH",
+            "mangledName": "$sSH"
+          }
+        ]
+      },
+      {
+        "kind": "TypeDecl",
+        "name": "FTSwiftUIWireframePayload",
+        "printedName": "FTSwiftUIWireframePayload",
+        "children": [
+          {
+            "kind": "Constructor",
+            "name": "init",
+            "printedName": "init()",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "FTSwiftUIWireframePayload",
+                "printedName": "GuanceSessionReplay.FTSwiftUIWireframePayload",
+                "usr": "c:@M@GuanceSessionReplay@objc(cs)FTSwiftUIWireframePayload"
+              }
+            ],
+            "declKind": "Constructor",
+            "usr": "c:@M@GuanceSessionReplay@objc(cs)FTSwiftUIWireframePayload(im)init",
+            "mangledName": "$s19GuanceSessionReplay25FTSwiftUIWireframePayloadCACycfc",
+            "moduleName": "GuanceSessionReplay",
+            "overriding": true,
+            "implicit": true,
+            "objc_name": "init",
+            "declAttributes": [
+              "Dynamic",
+              "ObjC",
+              "Override"
+            ],
+            "spi_group_names": [
+              "Private"
+            ],
+            "init_kind": "Designated"
+          }
+        ],
+        "declKind": "Class",
+        "usr": "c:@M@GuanceSessionReplay@objc(cs)FTSwiftUIWireframePayload",
+        "mangledName": "$s19GuanceSessionReplay25FTSwiftUIWireframePayloadC",
+        "moduleName": "GuanceSessionReplay",
+        "intro_iOS": "13.0",
+        "objc_name": "FTSwiftUIWireframePayload",
+        "declAttributes": [
+          "Final",
+          "AccessControl",
+          "SPIAccessControl",
+          "ObjC",
+          "Available"
+        ],
+        "spi_group_names": [
+          "Private"
+        ],
+        "superclassUsr": "c:objc(cs)NSObject",
+        "hasMissingDesignatedInitializers": true,
+        "superclassNames": [
+          "ObjectiveC.NSObject"
+        ],
+        "conformances": [
+          {
+            "kind": "Conformance",
+            "name": "_KeyValueCodingAndObserving",
+            "printedName": "_KeyValueCodingAndObserving",
+            "usr": "s:10Foundation27_KeyValueCodingAndObservingP",
+            "mangledName": "$s10Foundation27_KeyValueCodingAndObservingP"
+          },
+          {
+            "kind": "Conformance",
+            "name": "_KeyValueCodingAndObservingPublishing",
+            "printedName": "_KeyValueCodingAndObservingPublishing",
+            "usr": "s:10Foundation37_KeyValueCodingAndObservingPublishingP",
+            "mangledName": "$s10Foundation37_KeyValueCodingAndObservingPublishingP"
+          },
+          {
+            "kind": "Conformance",
+            "name": "CVarArg",
+            "printedName": "CVarArg",
+            "usr": "s:s7CVarArgP",
+            "mangledName": "$ss7CVarArgP"
+          },
+          {
+            "kind": "Conformance",
+            "name": "Copyable",
+            "printedName": "Copyable",
+            "usr": "s:s8CopyableP",
+            "mangledName": "$ss8CopyableP"
+          },
+          {
+            "kind": "Conformance",
+            "name": "CustomDebugStringConvertible",
+            "printedName": "CustomDebugStringConvertible",
+            "usr": "s:s28CustomDebugStringConvertibleP",
+            "mangledName": "$ss28CustomDebugStringConvertibleP"
+          },
+          {
+            "kind": "Conformance",
+            "name": "CustomStringConvertible",
+            "printedName": "CustomStringConvertible",
+            "usr": "s:s23CustomStringConvertibleP",
+            "mangledName": "$ss23CustomStringConvertibleP"
+          },
+          {
+            "kind": "Conformance",
+            "name": "Equatable",
+            "printedName": "Equatable",
+            "usr": "s:SQ",
+            "mangledName": "$sSQ"
+          },
+          {
+            "kind": "Conformance",
+            "name": "Escapable",
+            "printedName": "Escapable",
+            "usr": "s:s9EscapableP",
+            "mangledName": "$ss9EscapableP"
+          },
+          {
+            "kind": "Conformance",
+            "name": "Hashable",
+            "printedName": "Hashable",
+            "usr": "s:SH",
+            "mangledName": "$sSH"
+          }
+        ]
+      },
+      {
+        "kind": "TypeDecl",
+        "name": "FTSwiftUIResourcePayload",
+        "printedName": "FTSwiftUIResourcePayload",
+        "children": [
+          {
+            "kind": "Constructor",
+            "name": "init",
+            "printedName": "init()",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "FTSwiftUIResourcePayload",
+                "printedName": "GuanceSessionReplay.FTSwiftUIResourcePayload",
+                "usr": "c:@M@GuanceSessionReplay@objc(cs)FTSwiftUIResourcePayload"
+              }
+            ],
+            "declKind": "Constructor",
+            "usr": "c:@M@GuanceSessionReplay@objc(cs)FTSwiftUIResourcePayload(im)init",
+            "mangledName": "$s19GuanceSessionReplay24FTSwiftUIResourcePayloadCACycfc",
+            "moduleName": "GuanceSessionReplay",
+            "overriding": true,
+            "implicit": true,
+            "objc_name": "init",
+            "declAttributes": [
+              "Dynamic",
+              "ObjC",
+              "Override"
+            ],
+            "spi_group_names": [
+              "Private"
+            ],
+            "init_kind": "Designated"
+          }
+        ],
+        "declKind": "Class",
+        "usr": "c:@M@GuanceSessionReplay@objc(cs)FTSwiftUIResourcePayload",
+        "mangledName": "$s19GuanceSessionReplay24FTSwiftUIResourcePayloadC",
+        "moduleName": "GuanceSessionReplay",
+        "intro_iOS": "13.0",
+        "objc_name": "FTSwiftUIResourcePayload",
+        "declAttributes": [
+          "Final",
+          "AccessControl",
+          "SPIAccessControl",
+          "ObjC",
+          "Available"
+        ],
+        "spi_group_names": [
+          "Private"
+        ],
+        "superclassUsr": "c:objc(cs)NSObject",
+        "hasMissingDesignatedInitializers": true,
+        "superclassNames": [
+          "ObjectiveC.NSObject"
+        ],
+        "conformances": [
+          {
+            "kind": "Conformance",
+            "name": "_KeyValueCodingAndObserving",
+            "printedName": "_KeyValueCodingAndObserving",
+            "usr": "s:10Foundation27_KeyValueCodingAndObservingP",
+            "mangledName": "$s10Foundation27_KeyValueCodingAndObservingP"
+          },
+          {
+            "kind": "Conformance",
+            "name": "_KeyValueCodingAndObservingPublishing",
+            "printedName": "_KeyValueCodingAndObservingPublishing",
+            "usr": "s:10Foundation37_KeyValueCodingAndObservingPublishingP",
+            "mangledName": "$s10Foundation37_KeyValueCodingAndObservingPublishingP"
+          },
+          {
+            "kind": "Conformance",
+            "name": "CVarArg",
+            "printedName": "CVarArg",
+            "usr": "s:s7CVarArgP",
+            "mangledName": "$ss7CVarArgP"
+          },
+          {
+            "kind": "Conformance",
+            "name": "Copyable",
+            "printedName": "Copyable",
+            "usr": "s:s8CopyableP",
+            "mangledName": "$ss8CopyableP"
+          },
+          {
+            "kind": "Conformance",
+            "name": "CustomDebugStringConvertible",
+            "printedName": "CustomDebugStringConvertible",
+            "usr": "s:s28CustomDebugStringConvertibleP",
+            "mangledName": "$ss28CustomDebugStringConvertibleP"
+          },
+          {
+            "kind": "Conformance",
+            "name": "CustomStringConvertible",
+            "printedName": "CustomStringConvertible",
+            "usr": "s:s23CustomStringConvertibleP",
+            "mangledName": "$ss23CustomStringConvertibleP"
+          },
+          {
+            "kind": "Conformance",
+            "name": "Equatable",
+            "printedName": "Equatable",
+            "usr": "s:SQ",
+            "mangledName": "$sSQ"
+          },
+          {
+            "kind": "Conformance",
+            "name": "Escapable",
+            "printedName": "Escapable",
+            "usr": "s:s9EscapableP",
+            "mangledName": "$ss9EscapableP"
+          },
+          {
+            "kind": "Conformance",
+            "name": "Hashable",
+            "printedName": "Hashable",
+            "usr": "s:SH",
+            "mangledName": "$sSH"
+          }
+        ]
+      },
+      {
+        "kind": "TypeDecl",
+        "name": "FTSwiftUIRecordingAttributes",
+        "printedName": "FTSwiftUIRecordingAttributes",
+        "children": [
+          {
+            "kind": "Constructor",
+            "name": "init",
+            "printedName": "init()",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "FTSwiftUIRecordingAttributes",
+                "printedName": "GuanceSessionReplay.FTSwiftUIRecordingAttributes",
+                "usr": "c:@M@GuanceSessionReplay@objc(cs)FTSwiftUIRecordingAttributes"
+              }
+            ],
+            "declKind": "Constructor",
+            "usr": "c:@M@GuanceSessionReplay@objc(cs)FTSwiftUIRecordingAttributes(im)init",
+            "mangledName": "$s19GuanceSessionReplay28FTSwiftUIRecordingAttributesCACycfc",
+            "moduleName": "GuanceSessionReplay",
+            "overriding": true,
+            "implicit": true,
+            "objc_name": "init",
+            "declAttributes": [
+              "Dynamic",
+              "ObjC",
+              "Override"
+            ],
+            "spi_group_names": [
+              "Private"
+            ],
+            "init_kind": "Designated"
+          }
+        ],
+        "declKind": "Class",
+        "usr": "c:@M@GuanceSessionReplay@objc(cs)FTSwiftUIRecordingAttributes",
+        "mangledName": "$s19GuanceSessionReplay28FTSwiftUIRecordingAttributesC",
+        "moduleName": "GuanceSessionReplay",
+        "intro_iOS": "13.0",
+        "objc_name": "FTSwiftUIRecordingAttributes",
+        "declAttributes": [
+          "Final",
+          "AccessControl",
+          "SPIAccessControl",
+          "ObjC",
+          "Available"
+        ],
+        "spi_group_names": [
+          "Private"
+        ],
+        "superclassUsr": "c:objc(cs)NSObject",
+        "inheritsConvenienceInitializers": true,
+        "superclassNames": [
+          "ObjectiveC.NSObject"
+        ],
+        "conformances": [
+          {
+            "kind": "Conformance",
+            "name": "_KeyValueCodingAndObserving",
+            "printedName": "_KeyValueCodingAndObserving",
+            "usr": "s:10Foundation27_KeyValueCodingAndObservingP",
+            "mangledName": "$s10Foundation27_KeyValueCodingAndObservingP"
+          },
+          {
+            "kind": "Conformance",
+            "name": "_KeyValueCodingAndObservingPublishing",
+            "printedName": "_KeyValueCodingAndObservingPublishing",
+            "usr": "s:10Foundation37_KeyValueCodingAndObservingPublishingP",
+            "mangledName": "$s10Foundation37_KeyValueCodingAndObservingPublishingP"
+          },
+          {
+            "kind": "Conformance",
+            "name": "CVarArg",
+            "printedName": "CVarArg",
+            "usr": "s:s7CVarArgP",
+            "mangledName": "$ss7CVarArgP"
+          },
+          {
+            "kind": "Conformance",
+            "name": "Copyable",
+            "printedName": "Copyable",
+            "usr": "s:s8CopyableP",
+            "mangledName": "$ss8CopyableP"
+          },
+          {
+            "kind": "Conformance",
+            "name": "CustomDebugStringConvertible",
+            "printedName": "CustomDebugStringConvertible",
+            "usr": "s:s28CustomDebugStringConvertibleP",
+            "mangledName": "$ss28CustomDebugStringConvertibleP"
+          },
+          {
+            "kind": "Conformance",
+            "name": "CustomStringConvertible",
+            "printedName": "CustomStringConvertible",
+            "usr": "s:s23CustomStringConvertibleP",
+            "mangledName": "$ss23CustomStringConvertibleP"
+          },
+          {
+            "kind": "Conformance",
+            "name": "Equatable",
+            "printedName": "Equatable",
+            "usr": "s:SQ",
+            "mangledName": "$sSQ"
+          },
+          {
+            "kind": "Conformance",
+            "name": "Escapable",
+            "printedName": "Escapable",
+            "usr": "s:s9EscapableP",
+            "mangledName": "$ss9EscapableP"
+          },
+          {
+            "kind": "Conformance",
+            "name": "Hashable",
+            "printedName": "Hashable",
+            "usr": "s:SH",
+            "mangledName": "$sSH"
+          }
+        ]
+      },
+      {
+        "kind": "TypeDecl",
+        "name": "FTSwiftUIReflectionRecording",
+        "printedName": "FTSwiftUIReflectionRecording",
+        "children": [
+          {
+            "kind": "Function",
+            "name": "makeRecordingAttributes",
+            "printedName": "makeRecordingAttributes()",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "FTSwiftUIRecordingAttributes",
+                "printedName": "GuanceSessionReplay.FTSwiftUIRecordingAttributes",
+                "usr": "c:@M@GuanceSessionReplay@objc(cs)FTSwiftUIRecordingAttributes"
+              }
+            ],
+            "declKind": "Func",
+            "usr": "c:@M@GuanceSessionReplay@objc(pl)FTSwiftUIReflectionRecording(im)makeRecordingAttributes",
+            "mangledName": "$s19GuanceSessionReplay28FTSwiftUIReflectionRecordingP04makeF10AttributesAA0d11UIRecordingH0CyF",
+            "moduleName": "GuanceSessionReplay",
+            "genericSig": "<τ_0_0 where τ_0_0 : GuanceSessionReplay.FTSwiftUIReflectionRecording>",
+            "sugared_genericSig": "<Self where Self : GuanceSessionReplay.FTSwiftUIReflectionRecording>",
+            "protocolReq": true,
+            "objc_name": "makeRecordingAttributes",
+            "declAttributes": [
+              "ObjC"
+            ],
+            "spi_group_names": [
+              "Private"
+            ],
+            "reqNewWitnessTableEntry": true,
+            "funcSelfKind": "NonMutating"
+          },
+          {
+            "kind": "Function",
+            "name": "renderer",
+            "printedName": "renderer(hostingView:)",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "Optional",
+                "printedName": "GuanceSessionReplay.FTSwiftUIRenderer?",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "FTSwiftUIRenderer",
+                    "printedName": "GuanceSessionReplay.FTSwiftUIRenderer",
+                    "usr": "c:@M@GuanceSessionReplay@objc(cs)FTSwiftUIRenderer"
+                  }
+                ],
+                "usr": "s:Sq"
+              },
+              {
+                "kind": "TypeNominal",
+                "name": "UIView",
+                "printedName": "UIKit.UIView",
+                "usr": "c:objc(cs)UIView"
+              }
+            ],
+            "declKind": "Func",
+            "usr": "c:@M@GuanceSessionReplay@objc(pl)FTSwiftUIReflectionRecording(im)rendererForHostingView:",
+            "mangledName": "$s19GuanceSessionReplay28FTSwiftUIReflectionRecordingP8renderer11hostingViewAA0D10UIRendererCSgSo6UIViewC_tF",
+            "moduleName": "GuanceSessionReplay",
+            "genericSig": "<τ_0_0 where τ_0_0 : GuanceSessionReplay.FTSwiftUIReflectionRecording>",
+            "sugared_genericSig": "<Self where Self : GuanceSessionReplay.FTSwiftUIReflectionRecording>",
+            "protocolReq": true,
+            "objc_name": "rendererForHostingView:",
+            "declAttributes": [
+              "ObjC"
+            ],
+            "spi_group_names": [
+              "Private"
+            ],
+            "reqNewWitnessTableEntry": true,
+            "funcSelfKind": "NonMutating"
+          },
+          {
+            "kind": "Function",
+            "name": "recordingBuilder",
+            "printedName": "recordingBuilder(renderer:attributes:)",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "Optional",
+                "printedName": "GuanceSessionReplay.FTSwiftUIRecordingBuilder?",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "FTSwiftUIRecordingBuilder",
+                    "printedName": "GuanceSessionReplay.FTSwiftUIRecordingBuilder",
+                    "usr": "c:@M@GuanceSessionReplay@objc(cs)FTSwiftUIRecordingBuilder"
+                  }
+                ],
+                "usr": "s:Sq"
+              },
+              {
+                "kind": "TypeNominal",
+                "name": "FTSwiftUIRenderer",
+                "printedName": "GuanceSessionReplay.FTSwiftUIRenderer",
+                "usr": "c:@M@GuanceSessionReplay@objc(cs)FTSwiftUIRenderer"
+              },
+              {
+                "kind": "TypeNominal",
+                "name": "FTSwiftUIRecordingAttributes",
+                "printedName": "GuanceSessionReplay.FTSwiftUIRecordingAttributes",
+                "usr": "c:@M@GuanceSessionReplay@objc(cs)FTSwiftUIRecordingAttributes"
+              }
+            ],
+            "declKind": "Func",
+            "usr": "c:@M@GuanceSessionReplay@objc(pl)FTSwiftUIReflectionRecording(im)recordingBuilderForRenderer:attributes:",
+            "mangledName": "$s19GuanceSessionReplay28FTSwiftUIReflectionRecordingP16recordingBuilder8renderer10attributesAA0d11UIRecordingH0CSgAA0D10UIRendererC_AA0dK10AttributesCtF",
+            "moduleName": "GuanceSessionReplay",
+            "genericSig": "<τ_0_0 where τ_0_0 : GuanceSessionReplay.FTSwiftUIReflectionRecording>",
+            "sugared_genericSig": "<Self where Self : GuanceSessionReplay.FTSwiftUIReflectionRecording>",
+            "protocolReq": true,
+            "objc_name": "recordingBuilderForRenderer:attributes:",
+            "declAttributes": [
+              "ObjC"
+            ],
+            "spi_group_names": [
+              "Private"
+            ],
+            "reqNewWitnessTableEntry": true,
+            "funcSelfKind": "NonMutating"
+          }
+        ],
+        "declKind": "Protocol",
+        "usr": "c:@M@GuanceSessionReplay@objc(pl)FTSwiftUIReflectionRecording",
+        "mangledName": "$s19GuanceSessionReplay28FTSwiftUIReflectionRecordingP",
+        "moduleName": "GuanceSessionReplay",
+        "genericSig": "<τ_0_0 : ObjectiveC.NSObjectProtocol>",
+        "sugared_genericSig": "<Self : ObjectiveC.NSObjectProtocol>",
+        "intro_iOS": "13.0",
+        "objc_name": "FTSwiftUIReflectionRecording",
+        "declAttributes": [
+          "AccessControl",
+          "SPIAccessControl",
+          "ObjC",
+          "Available"
+        ],
+        "spi_group_names": [
+          "Private"
+        ],
+        "conformances": [
+          {
+            "kind": "Conformance",
+            "name": "Escapable",
+            "printedName": "Escapable",
+            "usr": "s:s9EscapableP",
+            "mangledName": "$ss9EscapableP"
+          },
+          {
+            "kind": "Conformance",
+            "name": "Copyable",
+            "printedName": "Copyable",
+            "usr": "s:s8CopyableP",
+            "mangledName": "$ss8CopyableP"
+          }
+        ]
+      },
+      {
+        "kind": "TypeDecl",
+        "name": "FTSwiftUIReflectionBridge",
+        "printedName": "FTSwiftUIReflectionBridge",
+        "children": [
+          {
+            "kind": "Function",
+            "name": "makeRecordingAttributes",
+            "printedName": "makeRecordingAttributes()",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "FTSwiftUIRecordingAttributes",
+                "printedName": "GuanceSessionReplay.FTSwiftUIRecordingAttributes",
+                "usr": "c:@M@GuanceSessionReplay@objc(cs)FTSwiftUIRecordingAttributes"
+              }
+            ],
+            "declKind": "Func",
+            "usr": "c:@M@GuanceSessionReplay@objc(cs)FTSwiftUIReflectionBridge(im)makeRecordingAttributes",
+            "mangledName": "$s19GuanceSessionReplay25FTSwiftUIReflectionBridgeC23makeRecordingAttributesAA0d11UIRecordingI0CyF",
+            "moduleName": "GuanceSessionReplay",
+            "objc_name": "makeRecordingAttributes",
+            "declAttributes": [
+              "Final",
+              "AccessControl",
+              "ObjC"
+            ],
+            "spi_group_names": [
+              "Private"
+            ],
+            "funcSelfKind": "NonMutating"
+          },
+          {
+            "kind": "Function",
+            "name": "renderer",
+            "printedName": "renderer(hostingView:)",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "Optional",
+                "printedName": "GuanceSessionReplay.FTSwiftUIRenderer?",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "FTSwiftUIRenderer",
+                    "printedName": "GuanceSessionReplay.FTSwiftUIRenderer",
+                    "usr": "c:@M@GuanceSessionReplay@objc(cs)FTSwiftUIRenderer"
+                  }
+                ],
+                "usr": "s:Sq"
+              },
+              {
+                "kind": "TypeNominal",
+                "name": "UIView",
+                "printedName": "UIKit.UIView",
+                "usr": "c:objc(cs)UIView"
+              }
+            ],
+            "declKind": "Func",
+            "usr": "c:@M@GuanceSessionReplay@objc(cs)FTSwiftUIReflectionBridge(im)rendererForHostingView:",
+            "mangledName": "$s19GuanceSessionReplay25FTSwiftUIReflectionBridgeC8renderer11hostingViewAA0D10UIRendererCSgSo6UIViewC_tF",
+            "moduleName": "GuanceSessionReplay",
+            "objc_name": "rendererForHostingView:",
+            "declAttributes": [
+              "Final",
+              "AccessControl",
+              "ObjC"
+            ],
+            "spi_group_names": [
+              "Private"
+            ],
+            "funcSelfKind": "NonMutating"
+          },
+          {
+            "kind": "Function",
+            "name": "recordingBuilder",
+            "printedName": "recordingBuilder(renderer:attributes:)",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "Optional",
+                "printedName": "GuanceSessionReplay.FTSwiftUIRecordingBuilder?",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "FTSwiftUIRecordingBuilder",
+                    "printedName": "GuanceSessionReplay.FTSwiftUIRecordingBuilder",
+                    "usr": "c:@M@GuanceSessionReplay@objc(cs)FTSwiftUIRecordingBuilder"
+                  }
+                ],
+                "usr": "s:Sq"
+              },
+              {
+                "kind": "TypeNominal",
+                "name": "FTSwiftUIRenderer",
+                "printedName": "GuanceSessionReplay.FTSwiftUIRenderer",
+                "usr": "c:@M@GuanceSessionReplay@objc(cs)FTSwiftUIRenderer"
+              },
+              {
+                "kind": "TypeNominal",
+                "name": "FTSwiftUIRecordingAttributes",
+                "printedName": "GuanceSessionReplay.FTSwiftUIRecordingAttributes",
+                "usr": "c:@M@GuanceSessionReplay@objc(cs)FTSwiftUIRecordingAttributes"
+              }
+            ],
+            "declKind": "Func",
+            "usr": "c:@M@GuanceSessionReplay@objc(cs)FTSwiftUIReflectionBridge(im)recordingBuilderForRenderer:attributes:",
+            "mangledName": "$s19GuanceSessionReplay25FTSwiftUIReflectionBridgeC16recordingBuilder8renderer10attributesAA0d11UIRecordingH0CSgAA0D10UIRendererC_AA0dK10AttributesCtF",
+            "moduleName": "GuanceSessionReplay",
+            "objc_name": "recordingBuilderForRenderer:attributes:",
+            "declAttributes": [
+              "Final",
+              "AccessControl",
+              "ObjC"
+            ],
+            "spi_group_names": [
+              "Private"
+            ],
+            "funcSelfKind": "NonMutating"
+          },
+          {
+            "kind": "Constructor",
+            "name": "init",
+            "printedName": "init()",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "FTSwiftUIReflectionBridge",
+                "printedName": "GuanceSessionReplay.FTSwiftUIReflectionBridge",
+                "usr": "c:@M@GuanceSessionReplay@objc(cs)FTSwiftUIReflectionBridge"
+              }
+            ],
+            "declKind": "Constructor",
+            "usr": "c:@M@GuanceSessionReplay@objc(cs)FTSwiftUIReflectionBridge(im)init",
+            "mangledName": "$s19GuanceSessionReplay25FTSwiftUIReflectionBridgeCACycfc",
+            "moduleName": "GuanceSessionReplay",
+            "overriding": true,
+            "implicit": true,
+            "objc_name": "init",
+            "declAttributes": [
+              "Dynamic",
+              "ObjC",
+              "Override"
+            ],
+            "spi_group_names": [
+              "Private"
+            ],
+            "init_kind": "Designated"
+          }
+        ],
+        "declKind": "Class",
+        "usr": "c:@M@GuanceSessionReplay@objc(cs)FTSwiftUIReflectionBridge",
+        "mangledName": "$s19GuanceSessionReplay25FTSwiftUIReflectionBridgeC",
+        "moduleName": "GuanceSessionReplay",
+        "intro_iOS": "13.0",
+        "objc_name": "FTSwiftUIReflectionBridge",
+        "declAttributes": [
+          "Final",
+          "AccessControl",
+          "SPIAccessControl",
+          "ObjC",
+          "Available"
+        ],
+        "spi_group_names": [
+          "Private"
+        ],
+        "superclassUsr": "c:objc(cs)NSObject",
+        "inheritsConvenienceInitializers": true,
+        "superclassNames": [
+          "ObjectiveC.NSObject"
+        ],
+        "conformances": [
+          {
+            "kind": "Conformance",
+            "name": "_KeyValueCodingAndObserving",
+            "printedName": "_KeyValueCodingAndObserving",
+            "usr": "s:10Foundation27_KeyValueCodingAndObservingP",
+            "mangledName": "$s10Foundation27_KeyValueCodingAndObservingP"
+          },
+          {
+            "kind": "Conformance",
+            "name": "_KeyValueCodingAndObservingPublishing",
+            "printedName": "_KeyValueCodingAndObservingPublishing",
+            "usr": "s:10Foundation37_KeyValueCodingAndObservingPublishingP",
+            "mangledName": "$s10Foundation37_KeyValueCodingAndObservingPublishingP"
+          },
+          {
+            "kind": "Conformance",
+            "name": "FTSwiftUIReflectionRecording",
+            "printedName": "FTSwiftUIReflectionRecording",
+            "usr": "c:@M@GuanceSessionReplay@objc(pl)FTSwiftUIReflectionRecording",
+            "mangledName": "$s19GuanceSessionReplay28FTSwiftUIReflectionRecordingP"
+          },
+          {
+            "kind": "Conformance",
+            "name": "CVarArg",
+            "printedName": "CVarArg",
+            "usr": "s:s7CVarArgP",
+            "mangledName": "$ss7CVarArgP"
+          },
+          {
+            "kind": "Conformance",
+            "name": "Copyable",
+            "printedName": "Copyable",
+            "usr": "s:s8CopyableP",
+            "mangledName": "$ss8CopyableP"
+          },
+          {
+            "kind": "Conformance",
+            "name": "CustomDebugStringConvertible",
+            "printedName": "CustomDebugStringConvertible",
+            "usr": "s:s28CustomDebugStringConvertibleP",
+            "mangledName": "$ss28CustomDebugStringConvertibleP"
+          },
+          {
+            "kind": "Conformance",
+            "name": "CustomStringConvertible",
+            "printedName": "CustomStringConvertible",
+            "usr": "s:s23CustomStringConvertibleP",
+            "mangledName": "$ss23CustomStringConvertibleP"
+          },
+          {
+            "kind": "Conformance",
+            "name": "Equatable",
+            "printedName": "Equatable",
+            "usr": "s:SQ",
+            "mangledName": "$sSQ"
+          },
+          {
+            "kind": "Conformance",
+            "name": "Escapable",
+            "printedName": "Escapable",
+            "usr": "s:s9EscapableP",
+            "mangledName": "$ss9EscapableP"
+          },
+          {
+            "kind": "Conformance",
+            "name": "Hashable",
+            "printedName": "Hashable",
+            "usr": "s:SH",
+            "mangledName": "$sSH"
+          }
+        ]
+      },
+      {
+        "kind": "Import",
+        "name": "Foundation",
+        "printedName": "Foundation",
+        "declKind": "Import",
+        "moduleName": "GuanceSessionReplay"
+      },
+      {
+        "kind": "Import",
+        "name": "QuartzCore",
+        "printedName": "QuartzCore",
+        "declKind": "Import",
+        "moduleName": "GuanceSessionReplay"
+      },
+      {
+        "kind": "Import",
+        "name": "SwiftUI",
+        "printedName": "SwiftUI",
+        "declKind": "Import",
+        "moduleName": "GuanceSessionReplay"
+      },
+      {
+        "kind": "Import",
+        "name": "UIKit",
+        "printedName": "UIKit",
+        "declKind": "Import",
+        "moduleName": "GuanceSessionReplay"
+      },
+      {
+        "kind": "Import",
+        "name": "Foundation",
+        "printedName": "Foundation",
+        "declKind": "Import",
+        "moduleName": "GuanceSessionReplay"
+      },
+      {
+        "kind": "Import",
+        "name": "SwiftUI",
+        "printedName": "SwiftUI",
+        "declKind": "Import",
+        "moduleName": "GuanceSessionReplay"
+      },
+      {
+        "kind": "Import",
+        "name": "Foundation",
+        "printedName": "Foundation",
+        "declKind": "Import",
+        "moduleName": "GuanceSessionReplay"
+      },
+      {
+        "kind": "Import",
+        "name": "Foundation",
+        "printedName": "Foundation",
+        "declKind": "Import",
+        "moduleName": "GuanceSessionReplay"
+      }
+    ],
+    "json_format_version": 8
+  },
+  "ConstValues": [
+    {
+      "filePath": "\/Users\/hulilei\/Desktop\/work\/ft-sdk-ios\/Sources\/SessionReplay\/Recorder\/SRWireframe\/ViewTreeSnapshot\/ViewsRecorder\/SwiftUI\/DisplayList+Reflection.swift",
+      "kind": "IntegerLiteral",
+      "offset": 3576,
+      "length": 1,
+      "value": "0"
+    },
+    {
+      "filePath": "\/Users\/hulilei\/Desktop\/work\/ft-sdk-ios\/Sources\/SessionReplay\/Recorder\/SRWireframe\/ViewTreeSnapshot\/ViewsRecorder\/SwiftUI\/DisplayList+Reflection.swift",
+      "kind": "StringLiteral",
+      "offset": 3602,
+      "length": 10,
+      "value": "\"identity\""
+    },
+    {
+      "filePath": "\/Users\/hulilei\/Desktop\/work\/ft-sdk-ios\/Sources\/SessionReplay\/Recorder\/SRWireframe\/ViewTreeSnapshot\/ViewsRecorder\/SwiftUI\/DisplayList+Reflection.swift",
+      "kind": "StringLiteral",
+      "offset": 3672,
+      "length": 6,
+      "value": "\"clip\""
+    },
+    {
+      "filePath": "\/Users\/hulilei\/Desktop\/work\/ft-sdk-ios\/Sources\/SessionReplay\/Recorder\/SRWireframe\/ViewTreeSnapshot\/ViewsRecorder\/SwiftUI\/DisplayList+Reflection.swift",
+      "kind": "StringLiteral",
+      "offset": 3798,
+      "length": 8,
+      "value": "\"filter\""
+    },
+    {
+      "filePath": "\/Users\/hulilei\/Desktop\/work\/ft-sdk-ios\/Sources\/SessionReplay\/Recorder\/SRWireframe\/ViewTreeSnapshot\/ViewsRecorder\/SwiftUI\/DisplayList+Reflection.swift",
+      "kind": "StringLiteral",
+      "offset": 3896,
+      "length": 15,
+      "value": "\"platformGroup\""
+    },
+    {
+      "filePath": "\/Users\/hulilei\/Desktop\/work\/ft-sdk-ios\/Sources\/SessionReplay\/Recorder\/SRWireframe\/ViewTreeSnapshot\/ViewsRecorder\/SwiftUI\/DisplayList+Reflection.swift",
+      "kind": "IntegerLiteral",
+      "offset": 4459,
+      "length": 1,
+      "value": "0"
+    },
+    {
+      "filePath": "\/Users\/hulilei\/Desktop\/work\/ft-sdk-ios\/Sources\/SessionReplay\/Recorder\/SRWireframe\/ViewTreeSnapshot\/ViewsRecorder\/SwiftUI\/DisplayList+Reflection.swift",
+      "kind": "StringLiteral",
+      "offset": 4489,
+      "length": 7,
+      "value": "\"shape\""
+    },
+    {
+      "filePath": "\/Users\/hulilei\/Desktop\/work\/ft-sdk-ios\/Sources\/SessionReplay\/Recorder\/SRWireframe\/ViewTreeSnapshot\/ViewsRecorder\/SwiftUI\/DisplayList+Reflection.swift",
+      "kind": "StringLiteral",
+      "offset": 4649,
+      "length": 6,
+      "value": "\"text\""
+    },
+    {
+      "filePath": "\/Users\/hulilei\/Desktop\/work\/ft-sdk-ios\/Sources\/SessionReplay\/Recorder\/SRWireframe\/ViewTreeSnapshot\/ViewsRecorder\/SwiftUI\/DisplayList+Reflection.swift",
+      "kind": "StringLiteral",
+      "offset": 4769,
+      "length": 14,
+      "value": "\"platformView\""
+    },
+    {
+      "filePath": "\/Users\/hulilei\/Desktop\/work\/ft-sdk-ios\/Sources\/SessionReplay\/Recorder\/SRWireframe\/ViewTreeSnapshot\/ViewsRecorder\/SwiftUI\/DisplayList+Reflection.swift",
+      "kind": "StringLiteral",
+      "offset": 4847,
+      "length": 7,
+      "value": "\"image\""
+    },
+    {
+      "filePath": "\/Users\/hulilei\/Desktop\/work\/ft-sdk-ios\/Sources\/SessionReplay\/Recorder\/SRWireframe\/ViewTreeSnapshot\/ViewsRecorder\/SwiftUI\/DisplayList+Reflection.swift",
+      "kind": "StringLiteral",
+      "offset": 4945,
+      "length": 9,
+      "value": "\"drawing\""
+    },
+    {
+      "filePath": "\/Users\/hulilei\/Desktop\/work\/ft-sdk-ios\/Sources\/SessionReplay\/Recorder\/SRWireframe\/ViewTreeSnapshot\/ViewsRecorder\/SwiftUI\/DisplayList+Reflection.swift",
+      "kind": "StringLiteral",
+      "offset": 5243,
+      "length": 7,
+      "value": "\"color\""
+    },
+    {
+      "filePath": "\/Users\/hulilei\/Desktop\/work\/ft-sdk-ios\/Sources\/SessionReplay\/Recorder\/SRWireframe\/ViewTreeSnapshot\/ViewsRecorder\/SwiftUI\/DisplayList+Reflection.swift",
+      "kind": "IntegerLiteral",
+      "offset": 6058,
+      "length": 1,
+      "value": "0"
+    },
+    {
+      "filePath": "\/Users\/hulilei\/Desktop\/work\/ft-sdk-ios\/Sources\/SessionReplay\/Recorder\/SRWireframe\/ViewTreeSnapshot\/ViewsRecorder\/SwiftUI\/DisplayList+Reflection.swift",
+      "kind": "StringLiteral",
+      "offset": 6088,
+      "length": 8,
+      "value": "\"effect\""
+    },
+    {
+      "filePath": "\/Users\/hulilei\/Desktop\/work\/ft-sdk-ios\/Sources\/SessionReplay\/Recorder\/SRWireframe\/ViewTreeSnapshot\/ViewsRecorder\/SwiftUI\/DisplayList+Reflection.swift",
+      "kind": "StringLiteral",
+      "offset": 6232,
+      "length": 9,
+      "value": "\"content\""
+    },
+    {
+      "filePath": "\/Users\/hulilei\/Desktop\/work\/ft-sdk-ios\/Sources\/SessionReplay\/Recorder\/SRWireframe\/ViewTreeSnapshot\/ViewsRecorder\/SwiftUI\/Drawing.swift",
+      "kind": "StringLiteral",
+      "offset": 674,
+      "length": 28,
+      "value": "\"RBMovedDisplayListContents\""
+    },
+    {
+      "filePath": "\/Users\/hulilei\/Desktop\/work\/ft-sdk-ios\/Sources\/SessionReplay\/Recorder\/SRWireframe\/ViewTreeSnapshot\/ViewsRecorder\/SwiftUI\/Drawing.swift",
+      "kind": "StringLiteral",
+      "offset": 769,
+      "length": 26,
+      "value": "\"renderInContext:options:\""
+    },
+    {
+      "filePath": "\/Users\/hulilei\/Desktop\/work\/ft-sdk-ios\/Sources\/SessionReplay\/Recorder\/SRWireframe\/ViewTreeSnapshot\/ViewsRecorder\/SwiftUI\/Drawing.swift",
+      "kind": "StringLiteral",
+      "offset": 834,
+      "length": 14,
+      "value": "\"boundingRect\""
+    },
+    {
+      "filePath": "\/Users\/hulilei\/Desktop\/work\/ft-sdk-ios\/Sources\/SessionReplay\/Recorder\/SRWireframe\/ViewTreeSnapshot\/ViewsRecorder\/SwiftUI\/Drawing.swift",
+      "kind": "StringLiteral",
+      "offset": 892,
+      "length": 20,
+      "value": "\"rasterizationscale\""
+    },
+    {
+      "filePath": "\/Users\/hulilei\/Desktop\/work\/ft-sdk-ios\/Sources\/SessionReplay\/Recorder\/SRWireframe\/ViewTreeSnapshot\/ViewsRecorder\/SwiftUI\/Drawing.swift",
+      "kind": "IntegerLiteral",
+      "offset": 942,
+      "length": 5,
+      "value": "1024"
+    },
+    {
+      "filePath": "\/Users\/hulilei\/Desktop\/work\/ft-sdk-ios\/Sources\/SessionReplay\/Recorder\/SRWireframe\/ViewTreeSnapshot\/ViewsRecorder\/SwiftUI\/GraphicsFilter+Reflection.swift",
+      "kind": "IntegerLiteral",
+      "offset": 692,
+      "length": 1,
+      "value": "0"
+    },
+    {
+      "filePath": "\/Users\/hulilei\/Desktop\/work\/ft-sdk-ios\/Sources\/SessionReplay\/Recorder\/SRWireframe\/ViewTreeSnapshot\/ViewsRecorder\/SwiftUI\/GraphicsFilter+Reflection.swift",
+      "kind": "StringLiteral",
+      "offset": 722,
+      "length": 15,
+      "value": "\"colorMultiply\""
+    },
+    {
+      "filePath": "\/Users\/hulilei\/Desktop\/work\/ft-sdk-ios\/Sources\/SessionReplay\/Recorder\/SRWireframe\/ViewTreeSnapshot\/ViewsRecorder\/SwiftUI\/GraphicsImage+Reflection.swift",
+      "kind": "IntegerLiteral",
+      "offset": 1262,
+      "length": 1,
+      "value": "0"
+    },
+    {
+      "filePath": "\/Users\/hulilei\/Desktop\/work\/ft-sdk-ios\/Sources\/SessionReplay\/Recorder\/SRWireframe\/ViewTreeSnapshot\/ViewsRecorder\/SwiftUI\/GraphicsImage+Reflection.swift",
+      "kind": "StringLiteral",
+      "offset": 1292,
+      "length": 9,
+      "value": "\"cgImage\""
+    },
+    {
+      "filePath": "\/Users\/hulilei\/Desktop\/work\/ft-sdk-ios\/Sources\/SessionReplay\/Recorder\/SRWireframe\/ViewTreeSnapshot\/ViewsRecorder\/SwiftUI\/GraphicsImage+Reflection.swift",
+      "kind": "StringLiteral",
+      "offset": 1386,
+      "length": 13,
+      "value": "\"vectorLayer\""
+    },
+    {
+      "filePath": "\/Users\/hulilei\/Desktop\/work\/ft-sdk-ios\/Sources\/SessionReplay\/Recorder\/SRWireframe\/ViewTreeSnapshot\/ViewsRecorder\/SwiftUI\/GraphicsImage+Reflection.swift",
+      "kind": "IntegerLiteral",
+      "offset": 1745,
+      "length": 1,
+      "value": "0"
+    },
+    {
+      "filePath": "\/Users\/hulilei\/Desktop\/work\/ft-sdk-ios\/Sources\/SessionReplay\/Recorder\/SRWireframe\/ViewTreeSnapshot\/ViewsRecorder\/SwiftUI\/GraphicsImage+Reflection.swift",
+      "kind": "StringLiteral",
+      "offset": 1775,
+      "length": 8,
+      "value": "\"bundle\""
+    },
+    {
+      "filePath": "\/Users\/hulilei\/Desktop\/work\/ft-sdk-ios\/Sources\/SessionReplay\/Recorder\/SRWireframe\/ViewTreeSnapshot\/ViewsRecorder\/SwiftUI\/ReflectionMirror.swift",
+      "kind": "Array",
+      "offset": 1799,
+      "length": 2,
+      "value": "[]"
+    },
+    {
+      "filePath": "\/Users\/hulilei\/Desktop\/work\/ft-sdk-ios\/Sources\/SessionReplay\/Recorder\/SRWireframe\/ViewTreeSnapshot\/ViewsRecorder\/SwiftUI\/ReflectionMirror.swift",
+      "kind": "StringLiteral",
+      "offset": 3858,
+      "length": 2,
+      "value": "\"\""
+    },
+    {
+      "filePath": "\/Users\/hulilei\/Desktop\/work\/ft-sdk-ios\/Sources\/SessionReplay\/Recorder\/SRWireframe\/ViewTreeSnapshot\/ViewsRecorder\/SwiftUI\/ReflectionMirror.swift",
+      "kind": "IntegerLiteral",
+      "offset": 4537,
+      "length": 1,
+      "value": "0"
+    },
+    {
+      "filePath": "\/Users\/hulilei\/Desktop\/work\/ft-sdk-ios\/Sources\/SessionReplay\/Recorder\/SRWireframe\/ViewTreeSnapshot\/ViewsRecorder\/SwiftUI\/ReflectionMirror.swift",
+      "kind": "IntegerLiteral",
+      "offset": 4618,
+      "length": 1,
+      "value": "0"
+    },
+    {
+      "filePath": "\/Users\/hulilei\/Desktop\/work\/ft-sdk-ios\/Sources\/SessionReplay\/Recorder\/SRWireframe\/ViewTreeSnapshot\/ViewsRecorder\/SwiftUI\/ReflectionMirror.swift",
+      "kind": "IntegerLiteral",
+      "offset": 8974,
+      "length": 1,
+      "value": "0"
+    },
+    {
+      "filePath": "\/Users\/hulilei\/Desktop\/work\/ft-sdk-ios\/Sources\/SessionReplay\/Recorder\/SRWireframe\/ViewTreeSnapshot\/ViewsRecorder\/SwiftUI\/ReflectionMirror.swift",
+      "kind": "IntegerLiteral",
+      "offset": 8996,
+      "length": 5,
+      "value": "0x200"
+    },
+    {
+      "filePath": "\/Users\/hulilei\/Desktop\/work\/ft-sdk-ios\/Sources\/SessionReplay\/Recorder\/SRWireframe\/ViewTreeSnapshot\/ViewsRecorder\/SwiftUI\/ReflectionMirror.swift",
+      "kind": "IntegerLiteral",
+      "offset": 9020,
+      "length": 5,
+      "value": "0x201"
+    },
+    {
+      "filePath": "\/Users\/hulilei\/Desktop\/work\/ft-sdk-ios\/Sources\/SessionReplay\/Recorder\/SRWireframe\/ViewTreeSnapshot\/ViewsRecorder\/SwiftUI\/ReflectionMirror.swift",
+      "kind": "IntegerLiteral",
+      "offset": 9046,
+      "length": 5,
+      "value": "0x202"
+    },
+    {
+      "filePath": "\/Users\/hulilei\/Desktop\/work\/ft-sdk-ios\/Sources\/SessionReplay\/Recorder\/SRWireframe\/ViewTreeSnapshot\/ViewsRecorder\/SwiftUI\/ReflectionMirror.swift",
+      "kind": "IntegerLiteral",
+      "offset": 9076,
+      "length": 5,
+      "value": "0x203"
+    },
+    {
+      "filePath": "\/Users\/hulilei\/Desktop\/work\/ft-sdk-ios\/Sources\/SessionReplay\/Recorder\/SRWireframe\/ViewTreeSnapshot\/ViewsRecorder\/SwiftUI\/ReflectionMirror.swift",
+      "kind": "IntegerLiteral",
+      "offset": 9114,
+      "length": 5,
+      "value": "0x204"
+    },
+    {
+      "filePath": "\/Users\/hulilei\/Desktop\/work\/ft-sdk-ios\/Sources\/SessionReplay\/Recorder\/SRWireframe\/ViewTreeSnapshot\/ViewsRecorder\/SwiftUI\/ReflectionMirror.swift",
+      "kind": "IntegerLiteral",
+      "offset": 9138,
+      "length": 5,
+      "value": "0x300"
+    },
+    {
+      "filePath": "\/Users\/hulilei\/Desktop\/work\/ft-sdk-ios\/Sources\/SessionReplay\/Recorder\/SRWireframe\/ViewTreeSnapshot\/ViewsRecorder\/SwiftUI\/ReflectionMirror.swift",
+      "kind": "IntegerLiteral",
+      "offset": 9161,
+      "length": 5,
+      "value": "0x301"
+    },
+    {
+      "filePath": "\/Users\/hulilei\/Desktop\/work\/ft-sdk-ios\/Sources\/SessionReplay\/Recorder\/SRWireframe\/ViewTreeSnapshot\/ViewsRecorder\/SwiftUI\/ReflectionMirror.swift",
+      "kind": "IntegerLiteral",
+      "offset": 9187,
+      "length": 5,
+      "value": "0x302"
+    },
+    {
+      "filePath": "\/Users\/hulilei\/Desktop\/work\/ft-sdk-ios\/Sources\/SessionReplay\/Recorder\/SRWireframe\/ViewTreeSnapshot\/ViewsRecorder\/SwiftUI\/ReflectionMirror.swift",
+      "kind": "IntegerLiteral",
+      "offset": 9216,
+      "length": 5,
+      "value": "0x303"
+    },
+    {
+      "filePath": "\/Users\/hulilei\/Desktop\/work\/ft-sdk-ios\/Sources\/SessionReplay\/Recorder\/SRWireframe\/ViewTreeSnapshot\/ViewsRecorder\/SwiftUI\/ReflectionMirror.swift",
+      "kind": "IntegerLiteral",
+      "offset": 9242,
+      "length": 5,
+      "value": "0x304"
+    },
+    {
+      "filePath": "\/Users\/hulilei\/Desktop\/work\/ft-sdk-ios\/Sources\/SessionReplay\/Recorder\/SRWireframe\/ViewTreeSnapshot\/ViewsRecorder\/SwiftUI\/ReflectionMirror.swift",
+      "kind": "IntegerLiteral",
+      "offset": 9276,
+      "length": 5,
+      "value": "0x305"
+    },
+    {
+      "filePath": "\/Users\/hulilei\/Desktop\/work\/ft-sdk-ios\/Sources\/SessionReplay\/Recorder\/SRWireframe\/ViewTreeSnapshot\/ViewsRecorder\/SwiftUI\/ReflectionMirror.swift",
+      "kind": "IntegerLiteral",
+      "offset": 9313,
+      "length": 5,
+      "value": "0x306"
+    },
+    {
+      "filePath": "\/Users\/hulilei\/Desktop\/work\/ft-sdk-ios\/Sources\/SessionReplay\/Recorder\/SRWireframe\/ViewTreeSnapshot\/ViewsRecorder\/SwiftUI\/ReflectionMirror.swift",
+      "kind": "IntegerLiteral",
+      "offset": 9350,
+      "length": 5,
+      "value": "0x307"
+    },
+    {
+      "filePath": "\/Users\/hulilei\/Desktop\/work\/ft-sdk-ios\/Sources\/SessionReplay\/Recorder\/SRWireframe\/ViewTreeSnapshot\/ViewsRecorder\/SwiftUI\/ReflectionMirror.swift",
+      "kind": "IntegerLiteral",
+      "offset": 9385,
+      "length": 5,
+      "value": "0x400"
+    },
+    {
+      "filePath": "\/Users\/hulilei\/Desktop\/work\/ft-sdk-ios\/Sources\/SessionReplay\/Recorder\/SRWireframe\/ViewTreeSnapshot\/ViewsRecorder\/SwiftUI\/ReflectionMirror.swift",
+      "kind": "IntegerLiteral",
+      "offset": 9427,
+      "length": 5,
+      "value": "0x500"
+    },
+    {
+      "filePath": "\/Users\/hulilei\/Desktop\/work\/ft-sdk-ios\/Sources\/SessionReplay\/Recorder\/SRWireframe\/ViewTreeSnapshot\/ViewsRecorder\/SwiftUI\/ReflectionMirror.swift",
+      "kind": "IntegerLiteral",
+      "offset": 9456,
+      "length": 5,
+      "value": "0x501"
+    },
+    {
+      "filePath": "\/Users\/hulilei\/Desktop\/work\/ft-sdk-ios\/Sources\/SessionReplay\/Recorder\/SRWireframe\/ViewTreeSnapshot\/ViewsRecorder\/SwiftUI\/ReflectionMirror.swift",
+      "kind": "IntegerLiteral",
+      "offset": 9478,
+      "length": 5,
+      "value": "0x502"
+    },
+    {
+      "filePath": "\/Users\/hulilei\/Desktop\/work\/ft-sdk-ios\/Sources\/SessionReplay\/Recorder\/SRWireframe\/ViewTreeSnapshot\/ViewsRecorder\/SwiftUI\/ReflectionMirror.swift",
+      "kind": "IntegerLiteral",
+      "offset": 9499,
+      "length": 5,
+      "value": "0x503"
+    },
+    {
+      "filePath": "\/Users\/hulilei\/Desktop\/work\/ft-sdk-ios\/Sources\/SessionReplay\/Recorder\/SRWireframe\/ViewTreeSnapshot\/ViewsRecorder\/SwiftUI\/ReflectionMirror.swift",
+      "kind": "IntegerLiteral",
+      "offset": 9524,
+      "length": 5,
+      "value": "0x7FF"
+    },
+    {
+      "filePath": "\/Users\/hulilei\/Desktop\/work\/ft-sdk-ios\/Sources\/SessionReplay\/Recorder\/SRWireframe\/ViewTreeSnapshot\/ViewsRecorder\/SwiftUI\/ShapeResource.swift",
+      "kind": "StringLiteral",
+      "offset": 617,
+      "length": 15,
+      "value": "\"image\/svg+xml\""
+    },
+    {
+      "filePath": "\/Users\/hulilei\/Desktop\/work\/ft-sdk-ios\/Sources\/SessionReplay\/Recorder\/SRWireframe\/ViewTreeSnapshot\/ViewsRecorder\/SwiftUI\/FTSwiftUIReflection.swift",
+      "kind": "IntegerLiteral",
+      "offset": 2950,
+      "length": 1,
+      "value": "0"
+    },
+    {
+      "filePath": "\/Users\/hulilei\/Desktop\/work\/ft-sdk-ios\/Sources\/SessionReplay\/Recorder\/SRWireframe\/ViewTreeSnapshot\/ViewsRecorder\/SwiftUI\/FTSwiftUIReflection.swift",
+      "kind": "IntegerLiteral",
+      "offset": 3166,
+      "length": 1,
+      "value": "0"
+    },
+    {
+      "filePath": "\/Users\/hulilei\/Desktop\/work\/ft-sdk-ios\/Sources\/SessionReplay\/Recorder\/SRWireframe\/ViewTreeSnapshot\/ViewsRecorder\/SwiftUI\/FTSwiftUIReflection.swift",
+      "kind": "IntegerLiteral",
+      "offset": 3201,
+      "length": 1,
+      "value": "0"
+    },
+    {
+      "filePath": "\/Users\/hulilei\/Desktop\/work\/ft-sdk-ios\/Sources\/SessionReplay\/Recorder\/SRWireframe\/ViewTreeSnapshot\/ViewsRecorder\/SwiftUI\/FTSwiftUIReflection.swift",
+      "kind": "IntegerLiteral",
+      "offset": 3231,
+      "length": 1,
+      "value": "1"
+    },
+    {
+      "filePath": "\/Users\/hulilei\/Desktop\/work\/ft-sdk-ios\/Sources\/SessionReplay\/Recorder\/SRWireframe\/ViewTreeSnapshot\/ViewsRecorder\/SwiftUI\/FTSwiftUIReflection.swift",
+      "kind": "IntegerLiteral",
+      "offset": 4824,
+      "length": 1,
+      "value": "1"
+    },
+    {
+      "filePath": "\/Users\/hulilei\/Desktop\/work\/ft-sdk-ios\/Sources\/SessionReplay\/Recorder\/SRWireframe\/ViewTreeSnapshot\/ViewsRecorder\/SwiftUI\/FTSwiftUIReflection.swift",
+      "kind": "IntegerLiteral",
+      "offset": 4963,
+      "length": 1,
+      "value": "0"
+    },
+    {
+      "filePath": "\/Users\/hulilei\/Desktop\/work\/ft-sdk-ios\/Sources\/SessionReplay\/Recorder\/SRWireframe\/ViewTreeSnapshot\/ViewsRecorder\/SwiftUI\/FTSwiftUIReflection.swift",
+      "kind": "IntegerLiteral",
+      "offset": 5011,
+      "length": 1,
+      "value": "0"
+    },
+    {
+      "filePath": "\/Users\/hulilei\/Desktop\/work\/ft-sdk-ios\/Sources\/SessionReplay\/Recorder\/SRWireframe\/ViewTreeSnapshot\/ViewsRecorder\/SwiftUI\/FTSwiftUIReflection.swift",
+      "kind": "IntegerLiteral",
+      "offset": 5054,
+      "length": 1,
+      "value": "0"
+    },
+    {
+      "filePath": "\/Users\/hulilei\/Desktop\/work\/ft-sdk-ios\/Sources\/SessionReplay\/Recorder\/SRWireframe\/ViewTreeSnapshot\/ViewsRecorder\/SwiftUI\/FTSwiftUIReflection.swift",
+      "kind": "IntegerLiteral",
+      "offset": 5098,
+      "length": 1,
+      "value": "0"
+    },
+    {
+      "filePath": "\/Users\/hulilei\/Desktop\/work\/ft-sdk-ios\/Sources\/SessionReplay\/Recorder\/SRWireframe\/ViewTreeSnapshot\/ViewsRecorder\/SwiftUI\/FTSwiftUIReflection.swift",
+      "kind": "IntegerLiteral",
+      "offset": 5143,
+      "length": 1,
+      "value": "0"
+    },
+    {
+      "filePath": "\/Users\/hulilei\/Desktop\/work\/ft-sdk-ios\/Sources\/SessionReplay\/Recorder\/SRWireframe\/ViewTreeSnapshot\/ViewsRecorder\/SwiftUI\/SwiftUIWireframesBuilder.swift",
+      "kind": "IntegerLiteral",
+      "offset": 606,
+      "length": 1,
+      "value": "0"
+    },
+    {
+      "filePath": "\/Users\/hulilei\/Desktop\/work\/ft-sdk-ios\/Sources\/SessionReplay\/Recorder\/SRWireframe\/ViewTreeSnapshot\/ViewsRecorder\/SwiftUI\/SwiftUIWireframesBuilder.swift",
+      "kind": "IntegerLiteral",
+      "offset": 630,
+      "length": 1,
+      "value": "1"
+    },
+    {
+      "filePath": "\/Users\/hulilei\/Desktop\/work\/ft-sdk-ios\/Sources\/SessionReplay\/Recorder\/SRWireframe\/ViewTreeSnapshot\/ViewsRecorder\/SwiftUI\/SwiftUIWireframesBuilder.swift",
+      "kind": "IntegerLiteral",
+      "offset": 655,
+      "length": 1,
+      "value": "2"
+    },
+    {
+      "filePath": "\/Users\/hulilei\/Desktop\/work\/ft-sdk-ios\/Sources\/SessionReplay\/Recorder\/SRWireframe\/ViewTreeSnapshot\/ViewsRecorder\/SwiftUI\/SwiftUIWireframesBuilder.swift",
+      "kind": "IntegerLiteral",
+      "offset": 686,
+      "length": 1,
+      "value": "3"
+    },
+    {
+      "filePath": "\/Users\/hulilei\/Desktop\/work\/ft-sdk-ios\/Sources\/SessionReplay\/Recorder\/SRWireframe\/ViewTreeSnapshot\/ViewsRecorder\/SwiftUI\/SwiftUIWireframesBuilder.swift",
+      "kind": "IntegerLiteral",
+      "offset": 757,
+      "length": 1,
+      "value": "0"
+    },
+    {
+      "filePath": "\/Users\/hulilei\/Desktop\/work\/ft-sdk-ios\/Sources\/SessionReplay\/Recorder\/SRWireframe\/ViewTreeSnapshot\/ViewsRecorder\/SwiftUI\/SwiftUIWireframesBuilder.swift",
+      "kind": "IntegerLiteral",
+      "offset": 784,
+      "length": 1,
+      "value": "1"
+    },
+    {
+      "filePath": "\/Users\/hulilei\/Desktop\/work\/ft-sdk-ios\/Sources\/SessionReplay\/Recorder\/SRWireframe\/ViewTreeSnapshot\/ViewsRecorder\/SwiftUI\/SwiftUIWireframesBuilder.swift",
+      "kind": "IntegerLiteral",
+      "offset": 812,
+      "length": 1,
+      "value": "2"
+    },
+    {
+      "filePath": "\/Users\/hulilei\/Desktop\/work\/ft-sdk-ios\/Sources\/SessionReplay\/Recorder\/SRWireframe\/ViewTreeSnapshot\/ViewsRecorder\/SwiftUI\/SwiftUIWireframesBuilder.swift",
+      "kind": "Array",
+      "offset": 951,
+      "length": 2,
+      "value": "[]"
+    }
+  ]
+}

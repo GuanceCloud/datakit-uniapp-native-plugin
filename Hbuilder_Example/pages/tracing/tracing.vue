@@ -6,8 +6,7 @@
 
 <script>
 	import Utils from '../../utils.js';
-	import { getTracer } from '@/uni_modules/GC-JSPlugin/js_sdk/pluginManager.js';
-	var tracer = getTracer();
+	import { tracer } from '@/uni_modules/GC-UniPlugin';
 	let requestUrl = "http://10.100.64.166:8000/api/user";
 	export default {
 		data() {

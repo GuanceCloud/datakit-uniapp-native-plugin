@@ -1,0 +1,168 @@
+import {
+	GCMobileConfig,
+	GCRUMActionParams,
+	GCRUMAddResourceParams,
+	GCRUMCreateViewParams,
+	GCRUMErrorParams,
+	GCRUMResourceParams,
+	GCRUMStopViewParams,
+	GCRUMConfig,
+	GCRUMUserDataParams,
+	GCRUMViewParams,
+	GCLoggerConfig,
+	GCLoggerLogParams,
+	GCTraceHeaderParams,
+	GCTraceConfig,
+} from './interface.uts'
+
+function noopWithParams(_: any | null): void {}
+
+export class mobileAgent {
+	static sdkConfig(params: GCMobileConfig) {
+		noopWithParams(params)
+	}
+
+	static bindRUMUserData(params: GCRUMUserDataParams) {
+		noopWithParams(params)
+	}
+
+	static unbindRUMUserData() {}
+
+	static appendGlobalContext(params: any | null) {
+		noopWithParams(params)
+	}
+
+	static appendRUMGlobalContext(params: any | null) {
+		noopWithParams(params)
+	}
+
+	static appendLogGlobalContext(params: any | null) {
+		noopWithParams(params)
+	}
+
+	static appendBridgeContext(params: any | null) {
+		noopWithParams(params)
+	}
+
+	static flushSyncData() {}
+
+	static clearAllData() {}
+
+	static shutDown() {}
+
+	static manuallySetApplicationStart() {}
+}
+
+export class rum {
+	static setConfig(params: GCRUMConfig) {
+		noopWithParams(params)
+	}
+
+	static startAction(params: GCRUMActionParams) {
+		noopWithParams(params)
+	}
+
+	static addAction(params: GCRUMActionParams) {
+		noopWithParams(params)
+	}
+
+	static onCreateView(params: GCRUMCreateViewParams) {
+		noopWithParams(params)
+	}
+
+	static startView(params: GCRUMViewParams) {
+		noopWithParams(params)
+	}
+
+	static stopView(params: GCRUMStopViewParams | null) {
+		noopWithParams(params)
+	}
+
+	static addError(params: GCRUMErrorParams) {
+		noopWithParams(params)
+	}
+
+	static startResource(params: GCRUMResourceParams) {
+		noopWithParams(params)
+	}
+
+	static stopResource(params: GCRUMResourceParams) {
+		noopWithParams(params)
+	}
+
+	static addResource(params: GCRUMAddResourceParams) {
+		noopWithParams(params)
+	}
+}
+
+export class logger {
+	static setConfig(params: GCLoggerConfig) {
+		noopWithParams(params)
+	}
+
+	static logging(params: GCLoggerLogParams) {
+		noopWithParams(params)
+	}
+}
+
+export class tracer {
+	static setConfig(params: GCTraceConfig) {
+		noopWithParams(params)
+	}
+
+	static getTraceHeader(_: GCTraceHeaderParams): any | null {
+		return null
+	}
+}
+
+export class GCEnv {
+	static readonly PROD: string = 'prod'
+	static readonly GRAY: string = 'gray'
+	static readonly PRE: string = 'pre'
+	static readonly COMMON: string = 'common'
+	static readonly LOCAL: string = 'local'
+}
+
+export class GCDiscardStrategy {
+	static readonly DISCARD: string = 'discard'
+	static readonly DISCARD_OLDEST: string = 'discardOldest'
+}
+
+export class GCTraceType {
+	static readonly DDTRACE: string = 'ddTrace'
+	static readonly ZIPKIN_MULTI_HEADER: string = 'zipkinMultiHeader'
+	static readonly ZIPKIN_SINGLE_HEADER: string = 'zipkinSingleHeader'
+	static readonly TRACEPARENT: string = 'traceparent'
+	static readonly SKYWALKING: string = 'skywalking'
+	static readonly JAEGER: string = 'jaeger'
+}
+
+export class GCMonitorFrequency {
+	static readonly NORMAL: string = 'normal'
+	static readonly FREQUENT: string = 'frequent'
+	static readonly RARE: string = 'rare'
+}
+
+export class GCLogStatus {
+	static readonly INFO: string = 'info'
+	static readonly DEBUG: string = 'debug'
+	static readonly WARNING: string = 'warning'
+	static readonly ERROR: string = 'error'
+	static readonly CRITICAL: string = 'critical'
+	static readonly OK: string = 'ok'
+}
+
+export class GCErrorMonitorType {
+	static readonly BATTERY: string = 'battery'
+	static readonly MEMORY: string = 'memory'
+	static readonly CPU: string = 'cpu'
+	static readonly ALL: string = 'all'
+}
+
+export class GCDeviceMonitorType {
+	static readonly BATTERY: string = 'battery'
+	static readonly MEMORY: string = 'memory'
+	static readonly CPU: string = 'cpu'
+	static readonly FPS: string = 'fps'
+	static readonly ALL: string = 'all'
+}

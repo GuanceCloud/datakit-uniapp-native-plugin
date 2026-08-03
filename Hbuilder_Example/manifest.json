@@ -3,7 +3,7 @@
     "appid" : "__UNI__EDA429D",
     "description" : "",
     "versionName" : "1.0.0",
-    "versionCode" : 101,
+    "versionCode" : 107,
     "transformPx" : false,
     /* 5+App specific related */
     "app-plus" : {
@@ -42,7 +42,8 @@
             },
             /* iOS packaging configuration */
             "ios" : {
-                "dSYMs" : false
+                "dSYMs" : false,
+                "idfa" : true
             },
             /* SDK configuration */
             "sdkConfigs" : {
@@ -52,22 +53,7 @@
                 "include" : [ "node_modules" ]
             }
         },
-        "nativePlugins" : {
-            "GCUniPlugin" : {
-                "__plugin_info__" : {
-                    "name" : "Guance UniPlugin",
-                    "description" : "Guance UniApp Native Application Integration Library",
-                    "platforms" : "Android,iOS",
-                    "url" : "",
-                    "android_package_name" : "",
-                    "ios_bundle_id" : "",
-                    "isCloud" : false,
-                    "bought" : -1,
-                    "pid" : "",
-                    "parameters" : {}
-                }
-            }
-        }
+        "nativePlugins" : {}
     },
     /* Quick app specific related */
     "quickapp" : {},

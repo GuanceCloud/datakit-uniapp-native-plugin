@@ -9,8 +9,7 @@
 </template>
 
 <script>
-	import { getLogger } from '@/uni_modules/GC-JSPlugin/js_sdk/pluginManager.js';
-	var logger = getLogger();
+	import { logger } from '@/uni_modules/GC-UniPlugin';
 	export default {
 		data() {
 			return {}
@@ -21,8 +20,8 @@
 					'content':`Log Status: ${status}`,
 					'status':status,
 					'property':{
-						'log_property':'uni_test'
-					}
+					'log_property':'uni_test'
+				}
 				})
 			}
 		}

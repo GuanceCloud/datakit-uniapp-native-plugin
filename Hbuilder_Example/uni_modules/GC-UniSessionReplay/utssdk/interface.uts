@@ -1,0 +1,13 @@
+export type GCSessionReplayConfig = {
+	sampleRate?: number | null
+	sessionReplayOnErrorSampleRate?: number | null
+	touchPrivacy?: string | null
+	textAndInputPrivacy?: string | null
+	imagePrivacy?: string | null
+	enableSwiftUI?: boolean | null
+	enableLinkRUMKeys?: string[] | null
+}
+
+export type GCSessionReplay = {
+	setConfig(params: GCSessionReplayConfig): void
+}

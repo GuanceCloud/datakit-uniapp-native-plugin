@@ -1,12 +1,37 @@
 import App from './App'
 import {
-  gcErrorTracking,
   gcViewTracking
-} from '@/uni_modules/GC-JSPlugin'
+} from '@/uni_modules/GC-UniPlugin/js_sdk'
+import {
+  initializeGuanceSDK
+} from './sdk-bootstrap.js'
 
-gcErrorTracking.startTracking()
-gcViewTracking.startTracking()
+// This must precede View Tracking so the first native RUM View has a Session
+// Replay sampling context. The UTS hook separately handles the earlier WebView load.
+initializeGuanceSDK()
+
 const jsCode = `   
+    (function() {
+      var bridge = window.FTWebViewJavascriptBridge;
+      if (!bridge || bridge.__gcSessionReplayEventDebug || !bridge.sendEvent) {
+        return;
+      }
+      bridge.__gcSessionReplayEventDebug = true;
+      var originalSendEvent = bridge.sendEvent;
+      bridge.sendEvent = function(data) {
+        var event = data;
+        if (typeof data === 'string') {
+          try {
+            event = JSON.parse(data);
+          } catch (_) {}
+        }
+        if (event && event.name === 'session_replay') {
+          console.log('[DEBUG-SR-WEB-EVENT-4d9a] session_replay sent to native bridge');
+        }
+        return originalSendEvent.apply(this, arguments);
+      };
+    })();
+
     // Dynamically create and load external script
     var script = document.createElement('script');
     script.src = 'https://static.guance.com/browser-sdk/v3/dataflux-rum.js';
@@ -22,7 +47,7 @@ const jsCode = `
         version: "1.0.0",
         service: "browser",
         sessionSampleRate: 100,
-        sessionReplaySampleRate: 70,
+        sessionReplaySampleRate: 100,
         compressIntakeRequests: true,
         trackInteractions: true,
         traceType: "ddtrace"
@@ -34,6 +59,7 @@ const jsCode = `
 gcViewTracking.evalSessionReplayJS(jsCode);
 // #ifndef VUE3
 import Vue from 'vue'
+gcViewTracking.startTracking()
 Vue.config.productionTip = false
 App.mpType = 'app'
 const app = new Vue({
@@ -46,6 +72,7 @@ app.$mount()
 import { createSSRApp } from 'vue'
 export function createApp() {
   const app = createSSRApp(App)
+  gcViewTracking.startTracking(app)
   return {
     app
   }

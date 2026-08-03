@@ -1,0 +1,69 @@
+import { MyApiOptions, MyApiResult, MyApi, MyApiSync } from '../interface.uts';
+import { MyApiFailImpl } from '../unierror';
+
+/**
+ * Asynchronous method.
+ *
+ * Usage in a uni-app project (Vue/NVue):
+ * 1. Import the method: import { myApi } from "@/uni_modules/uts-api"
+ * 2. Call the method:
+ * myApi({
+ *   paramA: false,
+ *   complete: (res) => {
+ *      console.log(res)
+ *   }
+ * });
+ *
+ * Usage in a uni-app x project (UVue):
+ * 1. Import the method and parameter type: import { myApi, MyApiOptions } from "@/uni_modules/uts-api";
+ * 2. Call the method:
+ * let options = {
+ *   paramA: false,
+ *   complete: (res : any) => {
+ *     console.log(res)
+ *   }
+ * } as MyApiOptions;
+ * myApi(options);
+ */
+export const myApi : MyApi = function (options : MyApiOptions) {
+  if (options.paramA == true) {
+    // Return data.
+    const res : MyApiResult = {
+      fieldA: 85,
+      fieldB: true,
+      fieldC: 'some message'
+    };
+    options.success?.(res);
+    options.complete?.(res);
+  } else {
+    // Return an error.
+    const err = new MyApiFailImpl(9010001);
+    options.fail?.(err)
+    options.complete?.(err)
+  }
+}
+
+/**
+ * Synchronous method.
+ *
+ * Usage in a uni-app project (Vue/NVue):
+ * 1. Import the method: import { myApiSync } from "@/uni_modules/uts-api"
+ * 2. Call the method: myApiSync(true)
+ *
+ * Usage in a uni-app x project (UVue):
+ * 1. Import the method and parameter type: import { myApiSync } from "@/uni_modules/uts-api";
+ * 2. Call the method: myApiSync(true)
+ */
+export const myApiSync : MyApiSync = function (paramA : boolean) : MyApiResult {
+  // Return the actual value produced by the plugin.
+  const res : MyApiResult = {
+    fieldA: 85,
+    fieldB: paramA,
+    fieldC: 'some message'
+  };
+  return res;
+}
+
+/**
+ * For more plugin development information, see https://doc.dcloud.net.cn/uni-app-x/plugin/uts-for-harmony.html.
+ */

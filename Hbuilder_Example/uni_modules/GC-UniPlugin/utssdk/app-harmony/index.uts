@@ -210,3 +210,166 @@ export function tracerSetConfig(options: TracerConfigOptions): void {
 export function tracerGetTraceHeader(options: TraceHeaderOptions): Record<string, string> | null {
   return TracerModule.getTraceHeader(options);
 }
+
+// The common JS helpers introduced by feature-uts use class-based exports.
+// Keep the original Harmony function exports above for compatibility, and
+// expose equivalent classes so all three native platforms share one JS API.
+export class mobileAgent {
+  static sdkConfig(params: SDKConfigOptions) {
+    sdkConfig(params)
+  }
+
+  static bindRUMUserData(params: BindRUMUserDataOptions) {
+    bindRUMUserData(params)
+  }
+
+  static unbindRUMUserData() {
+    unbindRUMUserData()
+  }
+
+  static appendGlobalContext(params: GlobalContextOptions) {
+    appendGlobalContext(params)
+  }
+
+  static appendRUMGlobalContext(params: GlobalContextOptions) {
+    appendRUMGlobalContext(params)
+  }
+
+  static appendLogGlobalContext(params: GlobalContextOptions) {
+    appendLogGlobalContext(params)
+  }
+
+  static appendBridgeContext(params: GlobalContextOptions) {
+    appendBridgeContext(params)
+  }
+
+  static flushSyncData() {
+    flushSyncData()
+  }
+
+  static clearAllData() {
+    clearAllData()
+  }
+
+  static shutDown() {
+    shutDown()
+  }
+
+  static manuallySetApplicationStart() {
+    manuallySetApplicationStart()
+  }
+}
+
+export class rum {
+  static setConfig(params: RUMConfigOptions) {
+    rumSetConfig(params)
+  }
+
+  static startAction(params: ActionOptions) {
+    rumStartAction(params)
+  }
+
+  static addAction(params: ActionOptions) {
+    rumAddAction(params)
+  }
+
+  static onCreateView(params: CreateViewOptions) {
+    rumOnCreateView(params)
+  }
+
+  static startView(params: ViewOptions) {
+    rumStartView(params)
+  }
+
+  static stopView(params?: ViewOptions) {
+    rumStopView(params)
+  }
+
+  static addError(params: ErrorOptions) {
+    rumAddError(params)
+  }
+
+  static startResource(params: ResourceOptions) {
+    rumStartResource(params)
+  }
+
+  static stopResource(params: ResourceStopOptions) {
+    rumStopResource(params)
+  }
+
+  static addResource(params: ResourceAddOptions) {
+    rumAddResource(params)
+  }
+}
+
+export class logger {
+  static setConfig(params: LoggerConfigOptions) {
+    loggerSetConfig(params)
+  }
+
+  static logging(params: LoggingOptions) {
+    loggerLogging(params)
+  }
+}
+
+export class tracer {
+  static setConfig(params: TracerConfigOptions) {
+    tracerSetConfig(params)
+  }
+
+  static getTraceHeader(params: TraceHeaderOptions): Record<string, string> | null {
+    return tracerGetTraceHeader(params)
+  }
+}
+
+export class GCEnv {
+  static readonly PROD: string = 'prod'
+  static readonly GRAY: string = 'gray'
+  static readonly PRE: string = 'pre'
+  static readonly COMMON: string = 'common'
+  static readonly LOCAL: string = 'local'
+}
+
+export class GCDiscardStrategy {
+  static readonly DISCARD: string = 'discard'
+  static readonly DISCARD_OLDEST: string = 'discardOldest'
+}
+
+export class GCTraceType {
+  static readonly DDTRACE: string = 'ddTrace'
+  static readonly ZIPKIN_MULTI_HEADER: string = 'zipkinMultiHeader'
+  static readonly ZIPKIN_SINGLE_HEADER: string = 'zipkinSingleHeader'
+  static readonly TRACEPARENT: string = 'traceparent'
+  static readonly SKYWALKING: string = 'skywalking'
+  static readonly JAEGER: string = 'jaeger'
+}
+
+export class GCMonitorFrequency {
+  static readonly NORMAL: string = 'normal'
+  static readonly FREQUENT: string = 'frequent'
+  static readonly RARE: string = 'rare'
+}
+
+export class GCLogStatus {
+  static readonly INFO: string = 'info'
+  static readonly DEBUG: string = 'debug'
+  static readonly WARNING: string = 'warning'
+  static readonly ERROR: string = 'error'
+  static readonly CRITICAL: string = 'critical'
+  static readonly OK: string = 'ok'
+}
+
+export class GCErrorMonitorType {
+  static readonly BATTERY: string = 'battery'
+  static readonly MEMORY: string = 'memory'
+  static readonly CPU: string = 'cpu'
+  static readonly ALL: string = 'all'
+}
+
+export class GCDeviceMonitorType {
+  static readonly BATTERY: string = 'battery'
+  static readonly MEMORY: string = 'memory'
+  static readonly CPU: string = 'cpu'
+  static readonly FPS: string = 'fps'
+  static readonly ALL: string = 'all'
+}

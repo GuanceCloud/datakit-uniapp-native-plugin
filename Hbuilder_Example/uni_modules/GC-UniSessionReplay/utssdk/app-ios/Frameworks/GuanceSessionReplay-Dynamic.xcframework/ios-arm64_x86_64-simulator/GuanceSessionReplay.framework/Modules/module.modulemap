@@ -1,0 +1,10 @@
+framework module GuanceSessionReplay {
+  umbrella header "GuanceSessionReplay.h"
+  export *
+
+  module * { export * }
+}
+
+module GuanceSessionReplay.Swift {
+  header "GuanceSessionReplay-Swift.h"
+}
