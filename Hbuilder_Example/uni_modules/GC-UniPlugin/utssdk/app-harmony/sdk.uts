@@ -11,9 +11,9 @@ import type {
 } from '../interface.uts';
 
 // Import HarmonyOS FT SDK from local oh_modules package
-import { FTSDK } from 'ft_sdk';
-import { FTSDKConfig } from 'ft_sdk';
-import { UserData } from 'ft_sdk';
+import { FTSDK } from '@guancecloud/ft_sdk';
+import { FTSDKConfig } from '@guancecloud/ft_sdk';
+import { UserData } from '@guancecloud/ft_sdk';
 import { Context } from '@kit.AbilityKit';
 
 // Bridge context (corresponds to Android bridgeContext)

@@ -1,6 +1,7 @@
 {
   "dependencies": {
-    "ft_sdk": "./libs/ft_sdk.har",
-	"ft_native": "./libs/ft_native.har"
+    "@guancecloud/ft_sdk": "0.1.14",
+    "@guancecloud/ft_sdk_ext": "0.1.14",
+    "@guancecloud/ft_native": "0.1.0"
   }
 }

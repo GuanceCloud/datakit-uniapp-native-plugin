@@ -16,14 +16,13 @@ import type {
 } from '../interface.uts';
 
 // Import HarmonyOS FT SDK from local oh_modules package
-import { FTSDK } from 'ft_sdk';
-import { FTRUMConfig } from 'ft_sdk';
-import { FTRUMGlobalManager } from 'ft_sdk';
-import { AppState } from 'ft_sdk';
-import { ResourceParams } from 'ft_sdk';
-import { NetStatusBean } from 'ft_sdk';
-import { LogCacheDiscard } from 'ft_sdk';
-import { FTNativeCrashHandler } from 'ft_native';
+import { FTSDK } from '@guancecloud/ft_sdk';
+import { FTRUMConfig } from '@guancecloud/ft_sdk';
+import { FTRUMGlobalManager } from '@guancecloud/ft_sdk';
+import { AppState } from '@guancecloud/ft_sdk';
+import { ResourceParams } from '@guancecloud/ft_sdk';
+import { NetStatusBean } from '@guancecloud/ft_sdk';
+import { LogCacheDiscard } from '@guancecloud/ft_sdk';
 
 // Import bridge context
 import { getBridgeContext } from './sdk.uts';
@@ -58,7 +57,6 @@ export function setConfig(options: RUMConfigOptions): void {
       }
       if (options.enableTrackNativeCrash !== undefined) {
         rumConfig.setEnableTrackAppCrash(options.enableTrackNativeCrash);
-		rumConfig.setNativeCrashHandler(new FTNativeCrashHandler()) 
       }
       if (options.enableTrackNativeAppANR !== undefined) {
         rumConfig.setEnableTrackAppANR(options.enableTrackNativeAppANR);

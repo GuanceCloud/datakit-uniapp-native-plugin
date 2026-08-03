@@ -9,10 +9,10 @@ import type {
 } from '../interface.uts';
 
 // Import HarmonyOS FT SDK from local oh_modules package
-import { FTSDK } from 'ft_sdk';
-import { FTTraceConfig } from 'ft_sdk';
-import { FTTraceManager } from 'ft_sdk';
-import { TraceType } from 'ft_sdk';
+import { FTSDK } from '@guancecloud/ft_sdk';
+import { FTTraceConfig } from '@guancecloud/ft_sdk';
+import { FTTraceManager } from '@guancecloud/ft_sdk';
+import { TraceType } from '@guancecloud/ft_sdk';
 
 /**
  * Tracer Configuration

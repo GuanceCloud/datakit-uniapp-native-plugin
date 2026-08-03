@@ -10,11 +10,11 @@ import type {
 } from '../interface.uts';
 
 // Import HarmonyOS FT SDK from local oh_modules package
-import { FTSDK } from 'ft_sdk';
-import { FTLoggerConfig } from 'ft_sdk';
-import { FTLogger } from 'ft_sdk';
-import { Status } from 'ft_sdk';
-import { LogCacheDiscard } from 'ft_sdk';
+import { FTSDK } from '@guancecloud/ft_sdk';
+import { FTLoggerConfig } from '@guancecloud/ft_sdk';
+import { FTLogger } from '@guancecloud/ft_sdk';
+import { Status } from '@guancecloud/ft_sdk';
+import { LogCacheDiscard } from '@guancecloud/ft_sdk';
 
 // Import bridge context
 import { getBridgeContext } from './sdk.uts';

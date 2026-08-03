@@ -43,6 +43,7 @@ export function initializeGuanceSDK() {
 	rum.setConfig({
 		androidAppId: SDKConst.ANDROID_APP_ID,
 		iOSAppId: SDKConst.IOS_APP_ID,
+		harmonyAppId: SDKConst.HARMONY_APP_ID,
 		errorMonitorType: ['cpu', 'memory'],
 		deviceMonitorType: 'all',
 		enableNativeUserResource: true,

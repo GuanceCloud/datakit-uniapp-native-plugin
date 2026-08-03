@@ -3,6 +3,7 @@ export const DATAWAY_URL = ''
 export const CLIENT_TOKEN = ''
 export const ANDROID_APP_ID = 'android_uniapp_app_id'
 export const IOS_APP_ID = 'guance_ios_uniapp_id'
+export const HARMONY_APP_ID  = 'com_uniapp_harmony'
 export const TRACK_ID = 'track_id'
 import {gcRequest} from '@/uni_modules/GC-UniPlugin/js_sdk';
 export default {
