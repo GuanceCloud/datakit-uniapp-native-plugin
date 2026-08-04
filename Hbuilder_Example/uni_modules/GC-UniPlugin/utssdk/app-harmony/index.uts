@@ -49,6 +49,8 @@ import {
 const pendingViewLoadTimes: Map<string, number> = new Map();
 const bridgeContext: Map<string, any> = new Map();
 let currentViewName = '';
+let uniAppJSViewTrackingEnabled = false;
+let uniAppJSActionTrackingEnabled = true;
 
 bridgeContext.set('sdk_bridge_info', 'uniapp:0.2.7');
 
@@ -215,12 +217,19 @@ export class rum {
       if (params.sessionOnErrorSampleRate !== undefined && params.sessionOnErrorSampleRate !== null) {
         config.setSessionErrorSampleRate(params.sessionOnErrorSampleRate);
       }
+      // In UniApp Harmony, this option controls the JS Action collector. It
+      // preserves template method names and navigator/TabBar metadata that the
+      // native ArkUI collector cannot expose, so native Action collection must
+      // remain disabled to avoid duplicate or anonymous Actions.
       if (params.enableNativeUserAction !== undefined && params.enableNativeUserAction !== null) {
-        config.setEnableTraceUserAction(params.enableNativeUserAction);
+        uniAppJSActionTrackingEnabled = params.enableNativeUserAction;
       }
-      if (params.enableNativeUserView !== undefined && params.enableNativeUserView !== null) {
-        config.setEnableTraceUserView(params.enableNativeUserView);
-      }
+      config.setEnableTraceUserAction(false);
+      // In UniApp Harmony, this option controls the JS View collector. The
+      // native collector only sees ArkUI page instance ids, so it must remain
+      // disabled to avoid competing with JS for the current RUM View.
+      uniAppJSViewTrackingEnabled = params.enableNativeUserView === true;
+      config.setEnableTraceUserView(false);
       if (params.enableNativeUserResource !== undefined && params.enableNativeUserResource !== null) {
         config.setEnableTraceUserResource(params.enableNativeUserResource);
       }
@@ -280,6 +289,14 @@ export class rum {
       params.actionType || 'click',
       mergeRumBridgeContext(params.property)
     );
+  }
+
+  static isUniAppJSViewTrackingEnabled(): boolean {
+    return uniAppJSViewTrackingEnabled;
+  }
+
+  static isUniAppJSActionTrackingEnabled(): boolean {
+    return uniAppJSActionTrackingEnabled;
   }
 
   static addAction(params: GCRUMActionParams) {

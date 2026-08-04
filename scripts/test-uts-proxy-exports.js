@@ -101,6 +101,30 @@ assert.doesNotMatch(
   /^export function\b/m,
   'HarmonyOS must expose the SDK only through the shared class-based API'
 );
+assert.match(harmonyEntry, /let uniAppJSActionTrackingEnabled = true;/);
+assert.match(
+  harmonyEntry,
+  /uniAppJSActionTrackingEnabled = params\.enableNativeUserAction;/
+);
+assert.match(harmonyEntry, /config\.setEnableTraceUserAction\(false\)/);
+assert.doesNotMatch(
+  harmonyEntry,
+  /config\.setEnableTraceUserAction\(params\.enableNativeUserAction\)/
+);
+assert.doesNotMatch(harmonyEntry, /uniAppActionTrackingHandler/);
+assert.match(harmonyEntry, /static isUniAppJSActionTrackingEnabled\(\): boolean/);
+assert.match(harmonyEntry, /let uniAppJSViewTrackingEnabled = false;/);
+assert.match(
+  harmonyEntry,
+  /uniAppJSViewTrackingEnabled = params\.enableNativeUserView === true;/
+);
+assert.match(harmonyEntry, /config\.setEnableTraceUserView\(false\)/);
+assert.doesNotMatch(
+  harmonyEntry,
+  /config\.setEnableTraceUserView\(params\.enableNativeUserView\)/
+);
+assert.match(harmonyEntry, /static isUniAppJSViewTrackingEnabled\(\): boolean/);
+assert.match(harmonyEntry, /return null;/);
 
 const bridgeSource = read(
   'Hbuilder_Example/uni_modules/GC-UniPlugin/utssdk/bridge.uts'
@@ -193,6 +217,162 @@ assert.match(errorTracking, /type:\s*'uniapp_error'/);
 const appLifecycleEntry = read('Hbuilder_Example/App.vue');
 assert.match(appLifecycleEntry, /onError:\s*function\(error\)/);
 assert.match(appLifecycleEntry, /gcErrorTracking\.captureAppError\(error\)/);
+
+const jsSdkEntry = read('Hbuilder_Example/uni_modules/GC-UniPlugin/js_sdk/index.js');
+assert.match(jsSdkEntry, /import\s*\{\s*gcActionTracking\s*\}/);
+assert.match(jsSdkEntry, /#ifdef APP-HARMONY\s+gcActionTracking\.startTracking\(\);/);
+
+const viewTracking = read(
+  'Hbuilder_Example/uni_modules/GC-UniPlugin/js_sdk/View/GCViewTracking.js'
+);
+assert.match(viewTracking, /#ifdef APP-PLUS \|\| APP-HARMONY/);
+assert.match(viewTracking, /isJSViewTrackingEnabled\(\)/);
+assert.match(viewTracking, /isUniAppJSViewTrackingEnabled/);
+
+const actionTracking = read(
+  'Hbuilder_Example/uni_modules/GC-UniPlugin/js_sdk/Action/GCActionTracking.js'
+);
+assert.match(actionTracking, /const VD_SYNC_EVENT = 'vdSync'/);
+assert.match(actionTracking, /const VDOM_EVENT_ACTION = 20/);
+assert.match(actionTracking, /return globalThis\.UniServiceJSBridge \|\| null/);
+assert.match(actionTracking, /bridge\.subscribe\(VD_SYNC_EVENT, this\.handleVdSync\)/);
+assert.match(actionTracking, /bridge\.subscribe\(INVOKE_SERVICE_API_EVENT, this\.handleServiceAPI\)/);
+assert.match(actionTracking, /scheduleStartTracking\(\)/);
+assert.match(actionTracking, /action_source:\s*'uniapp_js_event'/);
+assert.match(actionTracking, /isValidOperationName\(name\)/);
+assert.match(actionTracking, /isInternalOperationName\(name\)/);
+assert.match(actionTracking, /name\.includes\('__Common__'\)/);
+assert.match(actionTracking, /hasInternalEventHandler\(node, eventType\)/);
+assert.match(actionTracking, /installTabSwitchInterceptor\(\)/);
+assert.match(actionTracking, /options\.from === 'tabBar'/);
+assert.match(actionTracking, /trackTabSwitch\(url, pageId\)/);
+assert.match(actionTracking, /getTabBarItem\(url\)/);
+assert.match(actionTracking, /action_target_page_path/);
+assert.match(actionTracking, /isJSActionTrackingEnabled\(\)/);
+assert.match(actionTracking, /isUniAppJSActionTrackingEnabled/);
+
+const actionTrackingRuntime = actionTracking
+  .replace(/import\s*\{[\s\S]*?\}\s*from\s*'@\/uni_modules\/GC-UniPlugin';/, '')
+  .replace('export function normalizeUniAppEventType', 'function normalizeUniAppEventType')
+  .replace('export const gcActionTracking', 'const gcActionTracking');
+const capturedActions = [];
+const interceptors = {};
+const eventHandler = new Function('return ($event) => $options.bindUser()')();
+const internalHandler = function () {};
+Object.defineProperty(internalHandler, 'name', { value: '__Common__/' });
+const pageNode = {
+  nodeId: 0,
+  childNodes: [{
+    nodeId: 7,
+    listeners: { onClick: [{ value: eventHandler }] },
+    childNodes: []
+  }, {
+    nodeId: 8,
+    nodeName: 'NAVIGATOR',
+    attributes: { url: '../tracing/tracing' },
+    childNodes: [{ nodeValue: 'Network Link Tracing', childNodes: [] }]
+  }, {
+    nodeId: 9,
+    listeners: { onClick: [{ value: internalHandler }] },
+    childNodes: [{ nodeValue: 'TAB2', childNodes: [] }]
+  }]
+};
+const { normalizeUniAppEventType, gcActionTracking } = new Function(
+  'gcRum',
+  'getCurrentPages',
+  '__uniConfig',
+  'uni',
+  `${actionTrackingRuntime}\nreturn { normalizeUniAppEventType, gcActionTracking };`
+)(
+  { addAction: (action) => capturedActions.push(action) },
+  () => [{
+    $page: { id: 42, fullPath: '1' },
+    route: 'pages/index/index',
+    __page_container__: pageNode
+  }],
+  {
+    tabBar: {
+      list: [{ pagePath: 'pages/routertest/tab2', text: 'TAB2' }]
+    }
+  },
+  {
+    addInterceptor: (name, interceptor) => {
+      interceptors[name] = interceptor;
+    }
+  }
+);
+assert.strictEqual(normalizeUniAppEventType('onClick'), 'click');
+assert.strictEqual(normalizeUniAppEventType('onTap'), 'tap');
+assert.strictEqual(normalizeUniAppEventType('onLongpress'), 'longpress');
+assert.strictEqual(normalizeUniAppEventType('onClickOnce'), 'click');
+gcActionTracking.handleVdSync([[20, 7, { type: 'onClick' }]], 42);
+assert.deepStrictEqual(capturedActions, [{
+  actionName: 'bindUser',
+  actionType: 'click',
+  property: {
+    action_source: 'uniapp_js_event',
+    action_event_type: 'click',
+    action_page_path: 'pages/index/index',
+    action_node_id: '7',
+    action_page_id: '42'
+  }
+}]);
+gcActionTracking.handleServiceAPI({
+  name: 'navigateTo',
+  args: { url: '../tracing/tracing' }
+}, 42);
+assert.deepStrictEqual(capturedActions[1], {
+  actionName: 'Network Link Tracing',
+  actionType: 'click',
+  property: {
+    action_source: 'uniapp_js_navigator',
+    action_event_type: 'click',
+    action_page_path: 'pages/index/index',
+    action_page_id: '42',
+    action_route_api: 'navigateTo',
+    action_route_url: '../tracing/tracing',
+    action_node_id: '8'
+  }
+});
+gcActionTracking.installTabSwitchInterceptor();
+interceptors.switchTab.invoke({
+  from: 'tabBar',
+  url: '/pages/routertest/tab2'
+});
+assert.deepStrictEqual(capturedActions[2], {
+  actionName: 'TAB2',
+  actionType: 'click',
+  property: {
+    action_source: 'uniapp_js_tabbar',
+    action_event_type: 'click',
+    action_page_path: 'pages/routertest/tab2',
+    action_page_id: '42',
+    action_route_api: 'switchTab',
+    action_route_url: '/pages/routertest/tab2',
+    action_target_page_path: 'pages/routertest/tab2',
+    action_source_page_path: 'pages/index/index',
+    action_tab_text: 'TAB2',
+    action_tab_index: '0'
+  }
+});
+gcActionTracking.handleServiceAPI({
+  name: 'switchTab',
+  args: { url: '/pages/routertest/tab2' }
+}, 42);
+assert.strictEqual(capturedActions.length, 3, 'A TabBar switch must only create one Action');
+gcActionTracking.handleVdSync([[20, 9, { type: 'onClick' }]], 42);
+assert.strictEqual(
+  capturedActions.length,
+  3,
+  'Harmony internal __Common__ listeners must not be reported as Actions'
+);
+gcActionTracking.rum.isUniAppJSActionTrackingEnabled = () => false;
+gcActionTracking.handleVdSync([[20, 7, { type: 'onClick' }]], 42);
+assert.strictEqual(
+  capturedActions.length,
+  3,
+  'enableNativeUserAction: false must disable the UniApp JS Action collector'
+);
 
 const replayInterface = read(
   'Hbuilder_Example/uni_modules/GC-UniSessionReplay/utssdk/interface.uts'

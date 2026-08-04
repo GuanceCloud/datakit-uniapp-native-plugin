@@ -38,7 +38,7 @@ class PageMonitor {
 		console.log(`[FTLog] View tracking initialized (version: ${FT_JS_PLUGIN_VERSION})`);
 
 		try {
-			//	#ifdef APP-PLUS
+			// #ifdef APP-PLUS || APP-HARMONY
 
 			// 1. Record app launch time (execute as early as possible)
 			this.recordAppLaunchTime();
@@ -108,6 +108,14 @@ class PageMonitor {
 		console.log('[FTLog] First page fallback check:' + pagePath);
 		this.rumStartView();
 		this.firstPageDetected = true;
+	}
+
+	isJSViewTrackingEnabled() {
+		// #ifdef APP-HARMONY
+		return typeof this.rum.isUniAppJSViewTrackingEnabled === 'function' &&
+			this.rum.isUniAppJSViewTrackingEnabled();
+		// #endif
+		return true;
 	}
 	getCurrentPagePath(){
 		const page = getCurrentPages().pop()
@@ -237,6 +245,9 @@ class PageMonitor {
 	}
 
 	rumStartView(){
+		if (!this.isJSViewTrackingEnabled()) {
+			return;
+		}
 		console.log('[FTLog] this.currentPage:'+this.currentPage);
 		if (this.currentPage) {
 			const loadEnd = Date.now() * 1000000;
@@ -359,6 +370,9 @@ class PageMonitor {
 	}
 
 	activateView(pagePath) {
+		if (!this.isJSViewTrackingEnabled()) {
+			return;
+		}
 		const normalizedPath = this.normalizePagePath(pagePath);
 		if (!normalizedPath || this.activeViewPath === normalizedPath) {
 			return;
@@ -394,6 +408,9 @@ class PageMonitor {
 	}
 
 	reportCreateView(pagePath, duration) {
+		if (!this.isJSViewTrackingEnabled()) {
+			return;
+		}
 		const {
 			view_name
 		} = this.parseUrl(pagePath);

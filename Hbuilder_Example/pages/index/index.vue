@@ -105,6 +105,7 @@
 			  rum.setConfig({
 				  androidAppId: SDKConst.ANDROID_APP_ID,
 				  iOSAppId: SDKConst.IOS_APP_ID,
+				  harmonyAppId: SDKConst.HARMONY_APP_ID,
 				  sampleRate: 1,
 				  sessionOnErrorSampleRate: 1,
 				  enableNativeUserAction: true,

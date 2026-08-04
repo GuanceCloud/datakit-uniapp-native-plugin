@@ -1,3 +1,11 @@
+import {
+	gcActionTracking
+} from './Action/GCActionTracking.js';
+
+// #ifdef APP-HARMONY
+gcActionTracking.startTracking();
+// #endif
+
 export {
 	mobileAgent,
 	rum,
@@ -29,3 +37,6 @@ export {
 export {
 	gcViewTracking
 } from './View/GCViewTracking.js';
+export {
+	gcActionTracking
+};
