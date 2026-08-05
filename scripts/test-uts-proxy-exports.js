@@ -196,6 +196,24 @@ for (const name of ['mobileAgent', 'rum', 'logger', 'tracer']) {
   );
 }
 
+const tab3Page = read('Hbuilder_Example/pages/routertest/tab3.vue');
+assert.match(tab3Page, /<!-- #ifdef APP-HARMONY -->/);
+assert.match(tab3Page, /Trigger Harmony Native Crash/);
+assert.match(tab3Page, /uni\.__createAppCrash\(\)/);
+assert.match(tab3Page, /Trigger Harmony Native ANR \(10s\)/);
+assert.match(tab3Page, /blockHarmonyMainThread\(10000\)/);
+
+const harmonyAnrTestHelper = read(
+  'Hbuilder_Example/uni_modules/gc-test/utssdk/app-harmony/index.uts'
+);
+assert.match(harmonyAnrTestHelper, /export const blockHarmonyMainThread\b/);
+assert.match(harmonyAnrTestHelper, /while \(Date\.now\(\) < endTime\)/);
+
+assert.match(
+  harmonyEntry,
+  /await manager\.startView\(params\.viewName, mergeRumBridgeContext\(params\.property\)\);/
+);
+
 const requestHelper = read(
   'Hbuilder_Example/uni_modules/GC-UniPlugin/js_sdk/Request/GCRequest.js'
 );
@@ -211,6 +229,7 @@ for (const name of ['rum', 'tracer']) {
 const errorTracking = read(
   'Hbuilder_Example/uni_modules/GC-UniPlugin/js_sdk/Error/GCErrorTracking.js'
 );
+assert.match(errorTracking, /const FT_JS_PLUGIN_VERSION = ['"]0\.2\.7-alpha\.1['"];/);
 assert.match(errorTracking, /captureAppError\(error\)/);
 assert.match(errorTracking, /type:\s*'uniapp_error'/);
 

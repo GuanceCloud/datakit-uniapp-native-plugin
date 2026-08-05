@@ -65,5 +65,17 @@ export const myApiSync : MyApiSync = function (paramA : boolean) : MyApiResult {
 }
 
 /**
+ * Deliberately occupies the synchronous UTS call thread. In a Harmony UniApp
+ * page this is the native UI thread, which makes it suitable for validating
+ * enableTrackNativeAppANR in the demo only.
+ */
+export const blockHarmonyMainThread = function (durationMs : number) : void {
+  const endTime = Date.now() + (durationMs > 0 ? durationMs : 10000);
+  while (Date.now() < endTime) {
+    // Keep the native UI thread busy until the requested test duration elapses.
+  }
+}
+
+/**
  * For more plugin development information, see https://doc.dcloud.net.cn/uni-app-x/plugin/uts-for-harmony.html.
  */

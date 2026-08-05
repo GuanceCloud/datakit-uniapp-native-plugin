@@ -59,7 +59,7 @@
 						"nvue": "-",
 						"android": "-",
 						"ios": "-",
-						"harmony": "-"
+						"harmony": "u"
 					},
 					"mp": {
 						"weixin": "-",
@@ -86,7 +86,7 @@
 					"app": {
 						"android": "-",
 						"ios": "-",
-						"harmony": "-"
+						"harmony": "u"
 					},
 					"mp": {
 						"weixin": "-"
