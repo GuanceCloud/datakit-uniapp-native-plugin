@@ -2,7 +2,7 @@
 
 Guance UniApp UTS plugin package.
 
-This package provides the Android and iOS UTS implementation and the customer-facing SDK entry.
+This package provides the Android, iOS, and HarmonyOS UTS implementation and the customer-facing SDK entry.
 
 Requires HBuilderX 4.25.0 or later because the plugin uses UTS native hybrid files and Android custom Maven repositories.
 
