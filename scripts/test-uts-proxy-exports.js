@@ -131,6 +131,14 @@ const bridgeSource = read(
 );
 assert.match(bridgeSource, /export function appendBridgeContextState\b/);
 assert.doesNotMatch(bridgeSource, /export function appendBridgeContext\b/);
+assert.match(harmonyEntry, /import \{ GC_UTS_BRIDGE_VERSION \} from '\.\.\/bridge\.uts';/);
+assert.match(
+  harmonyEntry,
+  /const sdkBridgeInfo: Record<string, any> = \{\};\s+sdkBridgeInfo\.uniapp = GC_UTS_BRIDGE_VERSION;\s+bridgeContext\.set\('sdk_bridge_info', sdkBridgeInfo\);/,
+  'HarmonyOS must report sdk_bridge_info as a taskpool-serializable JSON object'
+);
+assert.doesNotMatch(harmonyEntry, /createSdkBridgeInfo\(\)/);
+assert.doesNotMatch(harmonyEntry, /sdk_bridge_info', 'uniapp:/);
 
 for (const relativePath of [
   'Hbuilder_Example/uni_modules/GC-UniPlugin/utssdk/app-ios/index.uts',

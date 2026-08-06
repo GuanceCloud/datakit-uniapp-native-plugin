@@ -22,6 +22,7 @@ import type {
   GCTraceHeaderParams
 } from '../interface.uts';
 import type { DataModifier, DataModifierValue, LineDataModifier } from '@guancecloud/ft_sdk';
+import { GC_UTS_BRIDGE_VERSION } from '../bridge.uts';
 import { Context } from '@kit.AbilityKit';
 import {
   AppState,
@@ -52,7 +53,9 @@ let currentViewName = '';
 let uniAppJSViewTrackingEnabled = false;
 let uniAppJSActionTrackingEnabled = true;
 
-bridgeContext.set('sdk_bridge_info', 'uniapp:0.2.7');
+const sdkBridgeInfo: Record<string, any> = {};
+sdkBridgeInfo.uniapp = GC_UTS_BRIDGE_VERSION;
+bridgeContext.set('sdk_bridge_info', sdkBridgeInfo);
 
 export class mobileAgent {
   static sdkConfig(params: GCMobileConfig) {
