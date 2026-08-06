@@ -23,6 +23,9 @@ export {
 	gcRequest
 } from './Request/GCRequest.js';
 export {
+	gcHarmonyNetworkTracking
+} from './Request/GCHarmonyNetworkTracking.js';
+export {
 	gcPageMixin
 } from './View/GCPageMixin.js';
 export {

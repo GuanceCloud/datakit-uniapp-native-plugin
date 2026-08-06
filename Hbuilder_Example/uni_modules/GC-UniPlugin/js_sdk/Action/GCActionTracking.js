@@ -255,7 +255,8 @@ class ActionMonitor {
 				actionProperty.action_node_id = String(nodeId);
 			}
 
-			this.rum.addAction({
+
+			this.rum.startAction({
 				actionName,
 				actionType: eventType,
 				property: actionProperty

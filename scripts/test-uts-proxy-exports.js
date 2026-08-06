@@ -270,6 +270,16 @@ assert.match(actionTracking, /getTabBarItem\(url\)/);
 assert.match(actionTracking, /action_target_page_path/);
 assert.match(actionTracking, /isJSActionTrackingEnabled\(\)/);
 assert.match(actionTracking, /isUniAppJSActionTrackingEnabled/);
+assert.match(
+  actionTracking,
+  /this\.rum\.startAction\(\{\s*actionName,\s*actionType: eventType,/,
+  'Harmony automatic Actions must use startAction so related Errors, Resources, and Long Tasks receive action_id'
+);
+assert.doesNotMatch(
+  actionTracking,
+  /this\.rum\.addAction\(/,
+  'Harmony automatic Actions must not use immediate addAction records'
+);
 
 const actionTrackingRuntime = actionTracking
   .replace(/import\s*\{[\s\S]*?\}\s*from\s*'@\/uni_modules\/GC-UniPlugin';/, '')
@@ -304,7 +314,7 @@ const { normalizeUniAppEventType, gcActionTracking } = new Function(
   'uni',
   `${actionTrackingRuntime}\nreturn { normalizeUniAppEventType, gcActionTracking };`
 )(
-  { addAction: (action) => capturedActions.push(action) },
+  { startAction: (action) => capturedActions.push(action) },
   () => [{
     $page: { id: 42, fullPath: '1' },
     route: 'pages/index/index',

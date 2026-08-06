@@ -2,6 +2,9 @@ import {
 	rum,
 	tracer
 } from '@/uni_modules/GC-UniPlugin';
+import {
+	gcHarmonyNetworkTracking
+} from './GCHarmonyNetworkTracking.js';
 
 // Get platform information
 const platform = uni.getSystemInfoSync().platform;
@@ -29,18 +32,24 @@ export const gcRequest = {
 		} else {
 			filter = options.filterPlatform.includes(platform);
 		}
+		// Harmony requests are collected by the native SDK bridge when the
+		// DCloud uni.request interceptor is enabled. gcRequest still provides
+		// the existing manual SDK fallback if automatic tracking is disabled.
+		const shouldCollectResource = !filter && !gcHarmonyNetworkTracking.isTracking();
 		var traceHeader = {}
-		if (filter == false) {
+		if (shouldCollectResource) {
 			// trace association RUM
-			var traceHeader = tracer.getTraceHeader({
+			traceHeader = tracer.getTraceHeader({
 				'key': key,
 				'url': options.url,
 			})
 		}
 		traceHeader = Object.assign({}, traceHeader, options.header)
-		rum.startResource({
-			'key': key,
-		});
+		if (shouldCollectResource) {
+			rum.startResource({
+				'key': key,
+			});
+		}
 		var responseHeader;
 		var responseBody;
 		var resourceStatus;
@@ -48,7 +57,7 @@ export const gcRequest = {
 			...options,
 			header: traceHeader,
 			success: (res) => {
-				if (!filter) {
+				if (shouldCollectResource) {
 					responseHeader = res.header;
 					responseBody = res.data.toString();
 					resourceStatus = res.statusCode;
@@ -58,7 +67,7 @@ export const gcRequest = {
 				}
 			},
 			fail: (err) => {
-				if (!filter) {
+				if (shouldCollectResource) {
 					responseBody = err.errMsg;
 				}
 				if (!this.isEmpty(options.fail)) {
@@ -66,12 +75,15 @@ export const gcRequest = {
 				}
 			},
 			complete: (res) => {
-				if (!filter) {
+				if (shouldCollectResource) {
 					rum.stopResource({
 						'key': key,
 					})
 					rum.addResource({
 						'key': key,
+						'property': {
+							'resource_id': key,
+						},
 						'content': {
 							'url': options.url,
 							'httpMethod': options.method,

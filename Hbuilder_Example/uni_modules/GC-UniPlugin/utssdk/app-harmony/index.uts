@@ -52,6 +52,7 @@ const bridgeContext: Map<string, any> = new Map();
 let currentViewName = '';
 let uniAppJSViewTrackingEnabled = false;
 let uniAppJSActionTrackingEnabled = true;
+let harmonyUniRequestAutoTrackingEnabled = false;
 
 const sdkBridgeInfo: Record<string, any> = {};
 sdkBridgeInfo.uniapp = GC_UTS_BRIDGE_VERSION;
@@ -236,6 +237,9 @@ export class rum {
       if (params.enableNativeUserResource !== undefined && params.enableNativeUserResource !== null) {
         config.setEnableTraceUserResource(params.enableNativeUserResource);
       }
+      // uni.request is implemented by DCloud's NetworkKit wrapper on HarmonyOS.
+      // The JS interceptor delegates to the native RUM and Trace SDK APIs.
+      harmonyUniRequestAutoTrackingEnabled = params.enableNativeUserResource === true;
       if (params.enableResourceHostIP !== undefined && params.enableResourceHostIP !== null) {
         config.setEnableResourceHostIP(params.enableResourceHostIP);
       }
@@ -300,6 +304,10 @@ export class rum {
 
   static isUniAppJSActionTrackingEnabled(): boolean {
     return uniAppJSActionTrackingEnabled;
+  }
+
+  static isHarmonyUniRequestAutoTrackingEnabled(): boolean {
+    return harmonyUniRequestAutoTrackingEnabled;
   }
 
   static addAction(params: GCRUMActionParams) {
