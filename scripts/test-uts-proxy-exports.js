@@ -230,13 +230,6 @@ const errorTracking = read(
   'Hbuilder_Example/uni_modules/GC-UniPlugin/js_sdk/Error/GCErrorTracking.js'
 );
 assert.match(errorTracking, /const FT_JS_PLUGIN_VERSION = ['"]0\.2\.7-alpha\.1['"];/);
-assert.match(errorTracking, /captureAppError\(error\)/);
-assert.match(errorTracking, /type:\s*'uniapp_error'/);
-
-const appLifecycleEntry = read('Hbuilder_Example/App.vue');
-assert.match(appLifecycleEntry, /onError:\s*function\(error\)/);
-assert.match(appLifecycleEntry, /gcErrorTracking\.captureAppError\(error\)/);
-
 const jsSdkEntry = read('Hbuilder_Example/uni_modules/GC-UniPlugin/js_sdk/index.js');
 assert.match(jsSdkEntry, /import\s*\{\s*gcActionTracking\s*\}/);
 assert.match(jsSdkEntry, /#ifdef APP-HARMONY\s+gcActionTracking\.startTracking\(\);/);

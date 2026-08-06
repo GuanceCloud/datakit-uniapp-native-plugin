@@ -2,16 +2,9 @@
 	import {
 		initializeGuanceSDK
 	} from './sdk-bootstrap.js'
-	import {
-		gcErrorTracking
-	} from '@/uni_modules/GC-UniPlugin/js_sdk'
-
 	export default {
 		onLaunch: function() {
 			initializeGuanceSDK()
-		},
-		onError: function(error) {
-			gcErrorTracking.captureAppError(error)
 		}
 	}
 </script>

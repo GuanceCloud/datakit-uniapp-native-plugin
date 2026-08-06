@@ -384,6 +384,13 @@ class PageMonitor {
 		if (!view_name) {
 			return;
 		}
+		// Explicitly close the current View before starting the next one. Do not
+		// rely on the native startView implementation to implicitly close it:
+		// that path can preserve stale View context during a page transition.
+		if (this.activeViewPath) {
+			this.rum.stopView(null);
+			this.activeViewPath = null;
+		}
 		console.log('[FTLog] startView：' + view_name);
 		this.rum.startView({
 			'viewName': view_name,
@@ -466,7 +473,7 @@ class PageMonitor {
 			qureyJsonStr
 		};
 	}
-	
+
 	evalJS(){
 		var pages = getCurrentPages()
 		if (pages.length > 0 && this.sessionReplayJS) {
