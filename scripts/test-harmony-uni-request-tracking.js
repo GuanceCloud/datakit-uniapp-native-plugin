@@ -89,7 +89,6 @@ assert.strictEqual(successOptions.success(successResponse), successResponse);
 assert.strictEqual(resourceStarts.length, 1);
 assert.deepStrictEqual(resourceStarts[0], { key: 'trace-resource-key' });
 assert.strictEqual(resourceStops.length, 1);
-assert.deepStrictEqual(resources[0].property, { resource_id: 'trace-resource-key' });
 assert.deepStrictEqual(resources[0].content, {
   url: 'https://example.com/success',
   httpMethod: 'post',
@@ -108,7 +107,6 @@ const failure = { errMsg: 'request:fail timeout', stack: 'timeout-stack' };
 assert.strictEqual(failOptions.fail(failure), failure);
 assert.strictEqual(resourceStarts.length, 2);
 assert.strictEqual(resourceStops.length, 2);
-assert.deepStrictEqual(resources[1].property, { resource_id: resourceStarts[1].key });
 assert.deepStrictEqual(resources[1].content, {
   url: 'https://example.com/fail',
   httpMethod: 'GET',

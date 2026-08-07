@@ -33,21 +33,11 @@ function stringifyResponseBody(value) {
 	}
 }
 
-function resourceProperty(key) {
-	// `key` drives the native Resource lifecycle but is not serialized by the
-	// Harmony bridge. Persist the same value so Resource/Error correlation can
-	// use the standard resource_id field.
-	return {
-		resource_id: key
-	};
-}
-
 function completeResource(request, response) {
 	try {
 		rum.stopResource({ key: request.key });
 		rum.addResource({
 			key: request.key,
-			property: resourceProperty(request.key),
 			content: {
 				url: request.url,
 				httpMethod: request.method,
@@ -68,7 +58,6 @@ function completeResourceError(request, error) {
 		rum.stopResource({ key: request.key });
 		rum.addResource({
 			key: request.key,
-			property: resourceProperty(request.key),
 			content: {
 				url: request.url,
 				httpMethod: request.method,
