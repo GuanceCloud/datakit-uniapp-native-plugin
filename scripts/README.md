@@ -28,6 +28,16 @@ root-import smoke patterns used by the app entry and request helper.
 node test-uts-proxy-exports.js
 ```
 
+## test-harmony-webview-rum-bridge.js
+
+Verify the Harmony normal WebView RUM bridge: native controller attachment,
+JavaScriptProxy registration before the target URL loads, and Harmony-only
+native component selection while Android/iOS retain the standard `<web-view>`.
+
+```bash
+node test-harmony-webview-rum-bridge.js
+```
+
 ## test-hybrid-ios-uts-integration.js
 
 Verify the checked-in DCloud hybrid iOS host wiring: dynamic UTS framework

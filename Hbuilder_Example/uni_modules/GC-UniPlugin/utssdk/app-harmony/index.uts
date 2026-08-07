@@ -4,6 +4,7 @@
  * Keep this platform entry self-contained, like app-android/index.uts and
  * app-ios/index.uts. Only the shared class API is exported.
  */
+import './GCNativeWebView.ets';
 import type {
   GCLoggerConfig,
   GCLoggerLogParams,
@@ -24,6 +25,7 @@ import type {
 import type { DataModifier, DataModifierValue, LineDataModifier } from '@guancecloud/ft_sdk';
 import { GC_UTS_BRIDGE_VERSION } from '../bridge.uts';
 import { Context } from '@kit.AbilityKit';
+import webview from '@ohos.web.webview';
 import {
   AppState,
   DBCacheDiscard,
@@ -38,6 +40,7 @@ import {
   FTSDKConfig,
   FTTraceConfig,
   FTTraceManager,
+  FTWebViewHandler,
   LogCacheDiscard,
   NetStatusBean,
   ResourceParams,
@@ -53,6 +56,8 @@ let currentViewName = '';
 let uniAppJSViewTrackingEnabled = false;
 let uniAppJSActionTrackingEnabled = true;
 let harmonyUniRequestAutoTrackingEnabled = false;
+let activeRumConfig: FTRUMConfig | null = null;
+const attachedWebViewHandlers: Map<webview.WebviewController, FTWebViewHandler> = new Map();
 
 const sdkBridgeInfo: Record<string, any> = {};
 sdkBridgeInfo.uniapp = GC_UTS_BRIDGE_VERSION;
@@ -266,7 +271,7 @@ export class rum {
       if (params.enableTraceWebView !== undefined && params.enableTraceWebView !== null) {
         config.setEnableTraceWebView(params.enableTraceWebView);
       }
-      if (params.allowWebViewHost) {
+      if (params.allowWebViewHost !== undefined) {
         config.setAllowWebViewHost(params.allowWebViewHost);
       }
       if (params.globalContext) {
@@ -285,6 +290,7 @@ export class rum {
         config.setRumCacheDiscardStrategy(rumDiscard);
       }
       FTSDK.installRUMConfig(config);
+      activeRumConfig = config;
     } catch (error) {
       console.error('[GC-UniPlugin] rumSetConfig failed:', error);
     }
@@ -375,6 +381,48 @@ export class rum {
     applyHarmonyResourceTiming(netStatus, content);
     FTRUMGlobalManager.getInstance().addResource(params.key, resource, netStatus);
   }
+
+  /**
+   * Attach the SDK's direct JavaScriptProxy bridge to a native controller.
+   * Call this from a Harmony native/UTS WebView controller-attached callback,
+   * before its page is loaded. GCNativeWebView.ets is the built-in Harmony
+   * native component implementation used by the example page.
+   */
+  static attachWebView(controller: webview.WebviewController, viewName?: string | null) {
+    const config = activeRumConfig;
+    if (config === null || !config.isEnableTraceWebView()) {
+      return;
+    }
+    try {
+      const attachedHandler = attachedWebViewHandlers.get(controller);
+      if (attachedHandler !== null && attachedHandler !== undefined) {
+        attachedHandler.setNativeViewName(harmonyWebViewName(viewName));
+        attachedHandler.setWebView(controller, config);
+        return;
+      }
+      const handler = new FTWebViewHandler();
+      attachedWebViewHandlers.set(controller, handler);
+      handler.setNativeViewName(harmonyWebViewName(viewName));
+      handler.setWebView(controller, config);
+    } catch (error) {
+      console.error('[GC-UniPlugin] attachWebView failed:', error);
+    }
+  }
+
+  /** Release a direct JavaScriptProxy bridge when its native WebView is destroyed. */
+  static detachWebView(controller: webview.WebviewController) {
+    const handler = attachedWebViewHandlers.get(controller);
+    if (handler === null || handler === undefined) {
+      return;
+    }
+    try {
+      handler.clearWebController();
+    } catch (error) {
+      console.error('[GC-UniPlugin] detachWebView failed:', error);
+    }
+    attachedWebViewHandlers.delete(controller);
+  }
+
 }
 
 export class logger {
@@ -462,6 +510,10 @@ export class tracer {
 
 function getHarmonyContext(): Context | undefined {
   return undefined;
+}
+
+function harmonyWebViewName(value?: string | null): string {
+  return value !== undefined && value !== null && value.length > 0 ? value : 'webview';
 }
 
 async function startHarmonyView(params: GCRUMViewParams): Promise<void> {

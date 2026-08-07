@@ -1,6 +1,18 @@
 <template>
   <view class="container">
-    <web-view :src="webviewUrl" @error="handleWebviewError"></web-view>
+    <!-- #ifdef APP-HARMONY -->
+    <embed
+      class="harmony-webview"
+      tag="gcwebview"
+      :options="harmonyWebviewOptions"
+    ></embed>
+    <!-- #endif -->
+    <!-- #ifndef APP-HARMONY -->
+    <web-view
+      :src="webviewUrl"
+      @error="handleWebviewError"
+    ></web-view>
+    <!-- #endif -->
   </view>
 </template>
 
@@ -8,7 +20,11 @@
 export default {
   data() {
     return {
-      webviewUrl: 'http://10.100.64.166/test/rum/'
+      webviewUrl: 'http://10.100.64.166/test/rum/',
+      harmonyWebviewOptions: {
+        src: 'http://10.100.64.166/test/rum/',
+        viewName: 'webview'
+      }
     };
   },
   methods: {
@@ -29,6 +45,11 @@ export default {
   height: 100vh;
 }
 web-view {
+  width: 100%;
+  height: 100%;
+}
+.harmony-webview {
+  display: block;
   width: 100%;
   height: 100%;
 }

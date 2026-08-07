@@ -6,10 +6,12 @@ import {
   initializeGuanceSDK
 } from './sdk-bootstrap.js'
 
-// This must precede View Tracking so the first native RUM View has a Session
-// Replay sampling context. The UTS hook separately handles the earlier WebView load.
 initializeGuanceSDK()
 
+// Session Replay is iOS-only in this plugin. Keep the optional replay bootstrap
+// out of Harmony builds so normal WebView RUM does not wait for a `records`
+// bridge that is intentionally not installed there.
+// #ifdef APP-IOS
 const jsCode = `   
     (function() {
       var bridge = window.FTWebViewJavascriptBridge;
@@ -57,6 +59,7 @@ const jsCode = `
     document.head.appendChild(script);
 `;
 gcViewTracking.evalSessionReplayJS(jsCode);
+// #endif
 // #ifndef VUE3
 import Vue from 'vue'
 gcViewTracking.startTracking()
