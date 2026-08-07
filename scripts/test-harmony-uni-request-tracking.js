@@ -103,7 +103,7 @@ assert.deepStrictEqual(resources[0].content, {
 
 const failOptions = { url: 'https://example.com/fail', header: {} };
 interceptors.request.invoke(failOptions);
-const failure = { errMsg: 'request:fail timeout', stack: 'timeout-stack' };
+const failure = { errMsg: 'request:fail timeout' };
 assert.strictEqual(failOptions.fail(failure), failure);
 assert.strictEqual(resourceStarts.length, 2);
 assert.strictEqual(resourceStops.length, 2);
@@ -114,8 +114,12 @@ assert.deepStrictEqual(resources[1].content, {
   responseBody: '',
   resourceStatus: 0,
   errorMessage: 'request:fail timeout',
-  errorStack: 'timeout-stack'
+  errorStack: 'request:fail timeout'
 });
+assert.doesNotMatch(
+  read('Hbuilder_Example/uni_modules/GC-UniPlugin/js_sdk/Request/GCHarmonyNetworkTracking.js'),
+  /rum\.addError\(/
+);
 
 const gcRequestSource = read(
   'Hbuilder_Example/uni_modules/GC-UniPlugin/js_sdk/Request/GCRequest.js'

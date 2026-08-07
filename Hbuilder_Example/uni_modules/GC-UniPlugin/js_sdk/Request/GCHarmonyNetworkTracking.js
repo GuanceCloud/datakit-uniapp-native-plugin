@@ -55,6 +55,11 @@ function completeResource(request, response) {
 
 function completeResourceError(request, error) {
 	try {
+		const errorMessage = error.errMsg || error.message || String(error);
+		// Harmony SDK generates the correlated network Error from a failed
+		// Resource when it has an error stack. uni.request timeout objects do
+		// not consistently contain one, so preserve the message as a fallback.
+		const errorStack = error.stack || errorMessage;
 		rum.stopResource({ key: request.key });
 		rum.addResource({
 			key: request.key,
@@ -64,11 +69,11 @@ function completeResourceError(request, error) {
 				requestHeader: request.requestHeaders,
 				responseBody: stringifyResponseBody(error.data),
 				resourceStatus: error.statusCode || 0,
-				errorMessage: error.errMsg || error.message || String(error),
-				errorStack: error.stack || ''
+				errorMessage: errorMessage,
+				errorStack: errorStack
 			}
 		});
-		console.warn('[GC-UniPlugin] Harmony uni.request resource failed:', error.errMsg || error.message || String(error), request.url, request.key);
+		console.warn('[GC-UniPlugin] Harmony uni.request resource failed:', errorMessage, request.url, request.key);
 	} catch (trackingError) {
 		console.error('[GC-UniPlugin] Harmony uni.request tracking fail failed:', trackingError);
 	}
