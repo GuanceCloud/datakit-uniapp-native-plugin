@@ -12,11 +12,31 @@ const harmonySource = read(
   'Hbuilder_Example/uni_modules/GC-UniPlugin/utssdk/app-harmony/index.uts'
 );
 assert.match(harmonySource, /FTWebViewHandler/);
+assert.match(
+  harmonySource,
+  /function getHarmonyContext\(\): Context \| undefined\s*\{[\s\S]*?return getContext\(\) as Context;\s*\}/,
+  'FTSDK must receive the Harmony application context for native static tags'
+);
 assert.match(harmonySource, /static attachWebView\(controller: webview\.WebviewController/);
 assert.match(harmonySource, /handler\.setWebView\(controller, config\)/);
 assert.match(harmonySource, /static detachWebView\(controller: webview\.WebviewController/);
 assert.match(harmonySource, /handler\.clearWebController\(\)/);
 assert.match(harmonySource, /config\.setAllowWebViewHost\(params\.allowWebViewHost\)/);
+assert.match(
+  harmonySource,
+  /FTSDK\.installRUMConfig\(config\);[\s\S]*?syncBridgeContextToRUMGlobalContext\(\);/,
+  'WebView RUM must receive bridge context through the SDK dynamic tags'
+);
+assert.match(
+  harmonySource,
+  /function syncBridgeContextToRUMGlobalContext\(\): void \{[\s\S]*?FTSDK\.appendRUMGlobalContext\(context\);/,
+  'bridge context must be forwarded to Browser RUM data'
+);
+assert.match(
+  harmonySource,
+  /function stringifyBridgeContextValue\(value: any\): string \{[\s\S]*?JSON\.stringify\(value\)/,
+  'object bridge values such as sdk_bridge_info must be preserved as JSON'
+);
 
 const nativeWebViewSource = read(
   'Hbuilder_Example/uni_modules/GC-UniPlugin/utssdk/app-harmony/GCNativeWebView.ets'

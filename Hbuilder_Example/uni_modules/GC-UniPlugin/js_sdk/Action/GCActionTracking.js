@@ -39,6 +39,7 @@ class ActionMonitor {
 		this.pendingAppLaunchActions = [];
 		this.appLaunchRetryTimer = null;
 		this.appLaunchRetryAttempts = 0;
+		this.actionTrackingHandler = null;
 		this.retryTimer = null;
 		this.retryAttempts = 0;
 		this.lastTabSwitch = {
@@ -130,8 +131,10 @@ class ActionMonitor {
 	queueAppLaunchAction(lifecycle) {
 		const isHotStart = lifecycle === 'hot';
 		this.pendingAppLaunchActions.push({
-			actionName: isHotStart ? 'launch_hot' : 'launch_cold',
-			actionType: isHotStart ? 'app hot start' : 'app cold start',
+			// Keep the native SDK contract: `action_name` is the human-readable
+			// description while `action_type` identifies the launch kind.
+			actionName: isHotStart ? 'app hot start' : 'app cold start',
+			actionType: isHotStart ? 'launch_hot' : 'launch_cold',
 			lifecycle: isHotStart ? 'hot_start' : 'cold_start'
 		});
 		this.reportPendingAppLaunchActions();
@@ -194,6 +197,16 @@ class ActionMonitor {
 		}
 	}
 
+	// This has the same callback shape as the native FTActionTrackingHandler:
+	// `resolveHandlerAction(wrapper)` may return a HandlerAction-like object
+	// (`getActionName` / `getProperty`) or a plain `{ actionName, property }`.
+	// Returning null skips the Action, matching the native SDK contract.
+	setActionTrackingHandler(handler) {
+		this.actionTrackingHandler = handler &&
+			(typeof handler === 'function' || typeof handler.resolveHandlerAction === 'function') ?
+			handler : null;
+	}
+
 	handleVdSync(actions, pageId) {
 		if (!Array.isArray(actions)) {
 			return;
@@ -234,7 +247,6 @@ class ActionMonitor {
 		const page = this.getPage(pageId);
 		const node = this.findNavigatorNode(page && (page.__page_container__ ||
 			(page.$vm && page.$vm.__page_container__)), args.url);
-		const operationName = this.getNodeText(node) || payload.name;
 		const property = {
 			action_source: 'uniapp_js_navigator',
 			action_route_api: payload.name,
@@ -244,7 +256,7 @@ class ActionMonitor {
 			eventType: 'click',
 			nodeId: node && node.nodeId,
 			pageId,
-			operationName,
+			operationName: node ? null : payload.name,
 			property
 		});
 	}
@@ -296,7 +308,7 @@ class ActionMonitor {
 		this.trackAction({
 			eventType: 'click',
 			pageId: actionPageId,
-			operationName: tabText || 'switchTab',
+			operationName: this.getTabActionName(tabText, tab && tab.index),
 			property
 		});
 	}
@@ -327,17 +339,39 @@ class ActionMonitor {
 		try {
 			const pagePath = this.getPagePath(pageId);
 			const viewName = pagePath ? pagePath.split('?')[0] : 'unknown_view';
-			const resolvedOperationName = operationName || this.getOperationName(pageId, nodeId, event, eventType);
-			if (!this.isValidOperationName(resolvedOperationName)) {
+			const node = this.getActionNode(pageId, nodeId);
+			const handlerAction = this.resolveHandlerAction({
+				node,
+				pageId,
+				pagePath: viewName,
+				event,
+				eventType,
+				property
+			});
+			if (handlerAction.skip) {
 				return;
 			}
-			const actionName = resolvedOperationName;
+			const defaultAction = this.getDefaultActionName({
+				node,
+				pageId,
+				nodeId,
+				event,
+				eventType
+			});
+			const actionName = handlerAction.actionName || operationName || defaultAction.actionName;
+			if (!this.isValidOperationName(actionName)) {
+				return;
+			}
 			const actionProperty = {
 				action_source: 'uniapp_js_event',
 				action_event_type: eventType,
 				action_page_path: viewName,
-				...(property || {})
+				...(property || {}),
+				...(handlerAction.property || {})
 			};
+			if (defaultAction.position !== null) {
+				actionProperty.action_position = defaultAction.position;
+			}
 			if (pageId !== undefined && pageId !== null) {
 				actionProperty.action_page_id = String(pageId);
 			}
@@ -354,6 +388,210 @@ class ActionMonitor {
 		} catch (error) {
 			console.warn('[FTLog] UniApp JS Action collection failed:', error);
 		}
+	}
+
+	getActionNode(pageId, nodeId) {
+		const page = this.getPage(pageId);
+		return this.findNodeById(page && (page.__page_container__ ||
+			(page.$vm && page.$vm.__page_container__)), nodeId);
+	}
+
+	resolveHandlerAction(context) {
+		const handler = this.actionTrackingHandler;
+		if (!handler) {
+			return {
+				skip: false,
+				actionName: null,
+				property: null
+			};
+		}
+
+		try {
+			const wrapper = {
+				getSource: () => context.node || null,
+				getSourceType: () => context.eventType,
+				getExtra: () => ({
+					pageId: context.pageId === undefined || context.pageId === null ? null : String(context.pageId),
+					pagePath: context.pagePath,
+					event: context.event || null,
+					property: context.property || null
+				})
+			};
+			const action = typeof handler === 'function' ? handler(wrapper) :
+				handler.resolveHandlerAction(wrapper);
+			if (action === null || action === undefined) {
+				return {
+					skip: true,
+					actionName: null,
+					property: null
+				};
+			}
+
+			const actionName = typeof action === 'string' ? action :
+				(typeof action.getActionName === 'function' ? action.getActionName() : action.actionName);
+			return {
+				skip: !this.isValidOperationName(actionName),
+				actionName,
+				property: typeof action === 'object' && typeof action.getProperty === 'function' ?
+					action.getProperty() : action.property
+			};
+		} catch (error) {
+			console.warn('[FTLog] UniApp Action tracking handler failed:', error);
+			return {
+				skip: true,
+				actionName: null,
+				property: null
+			};
+		}
+	}
+
+	getDefaultActionName({
+		node,
+		pageId,
+		nodeId,
+		event,
+		eventType
+	}) {
+		if (!node) {
+			return {
+				actionName: this.getOperationName(pageId, nodeId, event, eventType) || eventType,
+				position: null
+			};
+		}
+		if (this.hasInternalEventHandler(node, event && event.type)) {
+			return {
+				actionName: null,
+				position: null
+			};
+		}
+
+		const componentName = this.getComponentName(node);
+		const text = this.getNodeText(node);
+		const resourceId = this.getResourceId(node, event);
+		const position = this.getListPosition(pageId, node, event);
+		let actionName = componentName;
+		if (text) {
+			actionName += '/' + text;
+		}
+		if (resourceId) {
+			actionName += '#' + resourceId;
+		}
+		if (position !== null) {
+			actionName += '#position:' + position;
+		}
+		return {
+			actionName,
+			position
+		};
+	}
+
+	getComponentName(node) {
+		const rawName = node && (node.nodeName || node.tagName || node.type || node.componentName);
+		const normalizedName = typeof rawName === 'string' ? rawName
+			.trim()
+			.replace(/^uni[-_]?/i, '')
+			.toLowerCase() : '';
+		if (!normalizedName || normalizedName === '#text') {
+			return 'View';
+		}
+		return normalizedName.split(/[-_\s]+/).filter(Boolean).map((part) =>
+			part.charAt(0).toUpperCase() + part.slice(1)
+		).join('') || 'View';
+	}
+
+	getResourceId(node, event) {
+		const attributes = node && node.attributes ? node.attributes : {};
+		const eventTarget = event && (event.currentTarget || event.target);
+		const candidates = [
+			attributes.id,
+			node && node.id,
+			eventTarget && eventTarget.id
+		];
+		const resourceId = candidates.find((candidate) => candidate !== undefined && candidate !== null &&
+			String(candidate).trim());
+		return resourceId === undefined ? '' : String(resourceId).trim();
+	}
+
+	getListPosition(pageId, node, event) {
+		const eventTarget = event && (event.currentTarget || event.target);
+		const eventDataset = eventTarget && eventTarget.dataset ? eventTarget.dataset : {};
+		const nodeAttributes = node && node.attributes ? node.attributes : {};
+		const detail = event && event.detail ? event.detail : {};
+		const candidates = [
+			event && event.position,
+			event && event.index,
+			detail.position,
+			detail.index,
+			eventTarget && eventTarget.position,
+			eventTarget && eventTarget.index,
+			eventDataset.position,
+			eventDataset.index,
+			eventDataset.itemIndex,
+			eventDataset.itemindex,
+			node && node.position,
+			node && node.index,
+			nodeAttributes.position,
+			nodeAttributes.index,
+			nodeAttributes['data-position'],
+			nodeAttributes['data-index']
+		];
+		const position = candidates.find((candidate) => candidate !== undefined && candidate !== null &&
+			String(candidate).trim() !== '');
+		if (position !== undefined) {
+			return String(position);
+		}
+
+		const page = this.getPage(pageId);
+		const rootNode = page && (page.__page_container__ || (page.$vm && page.$vm.__page_container__));
+		const nodePath = this.findNodePathById(rootNode, node.nodeId);
+		for (let index = 0; nodePath && index < nodePath.length - 1; index += 1) {
+			const parent = nodePath[index];
+			if (!this.isListContainer(parent)) {
+				continue;
+			}
+			const item = nodePath[index + 1];
+			const children = Array.isArray(parent.childNodes) ? parent.childNodes : [];
+			const itemPosition = children.indexOf(item);
+			if (itemPosition >= 0) {
+				return String(itemPosition);
+			}
+		}
+		return null;
+	}
+
+	findNodePathById(node, nodeId, path = []) {
+		if (!node) {
+			return null;
+		}
+		const nextPath = path.concat(node);
+		if (String(node.nodeId) === String(nodeId)) {
+			return nextPath;
+		}
+		const children = Array.isArray(node.childNodes) ? node.childNodes : [];
+		for (let index = 0; index < children.length; index += 1) {
+			const result = this.findNodePathById(children[index], nodeId, nextPath);
+			if (result) {
+				return result;
+			}
+		}
+		return null;
+	}
+
+	isListContainer(node) {
+		const name = this.getComponentName(node).toLowerCase();
+		return name === 'list' || name === 'listview' || name === 'recyclerlist' ||
+			name === 'recycler' || name === 'scrollview';
+	}
+
+	getTabActionName(tabText, tabIndex) {
+		let actionName = 'Tab';
+		if (tabText) {
+			actionName += '/' + tabText;
+		}
+		if (typeof tabIndex === 'number') {
+			actionName += '#position:' + tabIndex;
+		}
+		return actionName;
 	}
 
 	getOperationName(pageId, nodeId, event, eventType) {

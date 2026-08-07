@@ -2,6 +2,7 @@
 	<view class="btn-list">
 		<!-- #ifdef APP-HARMONY -->
 		<button type="warn" @click="triggerHarmonyNativeCrash()">Trigger Harmony Native Crash</button>
+		<button type="warn" @click="triggerHarmonyLongTask()">Trigger Harmony Long Task (3s)</button>
 		<button type="warn" @click="triggerHarmonyNativeANR()">Trigger Harmony Native ANR (10s)</button>
 		<!-- #endif -->
 	</view>
@@ -23,6 +24,20 @@
 					success: (result) => {
 						if (result.confirm) {
 							uni.__createAppCrash()
+						}
+					}
+				})
+				// #endif
+			},
+			triggerHarmonyLongTask() {
+				// #ifdef APP-HARMONY
+				uni.showModal({
+					title: 'Trigger Long Task',
+					content: 'This blocks the Harmony UI thread for 3 seconds. enableTrackNativeFreeze must be enabled and nativeFreezeDurationMs must be below 3000.',
+					confirmText: 'Block 3s',
+					success: (result) => {
+						if (result.confirm) {
+							blockHarmonyMainThread(3000)
 						}
 					}
 				})

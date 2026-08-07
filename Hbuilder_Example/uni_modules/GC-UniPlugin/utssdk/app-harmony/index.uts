@@ -191,6 +191,9 @@ export class mobileAgent {
       const key = keys[i];
       bridgeContext.set(key, context[key]);
     }
+    if (activeRumConfig !== null) {
+      syncBridgeContextToRUMGlobalContext();
+    }
   }
 
   static flushSyncData() {
@@ -291,6 +294,10 @@ export class rum {
       }
       FTSDK.installRUMConfig(config);
       activeRumConfig = config;
+      // WebView RUM is received by FTWebViewHandler and does not pass through
+      // mergeRumBridgeContext(). Keep the same bridge metadata in the SDK's
+      // dynamic RUM tags so Browser RUM Actions include sdk_bridge_info too.
+      syncBridgeContextToRUMGlobalContext();
     } catch (error) {
       console.error('[GC-UniPlugin] rumSetConfig failed:', error);
     }
@@ -509,7 +516,9 @@ export class tracer {
 }
 
 function getHarmonyContext(): Context | undefined {
-  return undefined;
+  // FTSDK needs the application context to initialize native static tags,
+  // including sdk_pkg_info used when WebView RUM data is merged.
+  return getContext() as Context;
 }
 
 function harmonyWebViewName(value?: string | null): string {
@@ -683,6 +692,32 @@ function mergeRumBridgeContext(property?: any | null): Record<string, object> {
     result[key] = toHarmonyObject(value);
   });
   return result;
+}
+
+function syncBridgeContextToRUMGlobalContext(): void {
+  const context = new Map<string, string>();
+  bridgeContext.forEach((value, key) => {
+    context.set(key, stringifyBridgeContextValue(value));
+  });
+  if (context.size > 0) {
+    FTSDK.appendRUMGlobalContext(context);
+  }
+}
+
+function stringifyBridgeContextValue(value: any): string {
+  if (typeof value === 'string') {
+    return value;
+  }
+  try {
+    const json = JSON.stringify(value);
+    if (json !== undefined) {
+      return json;
+    }
+  } catch (_) {
+    // Fall through to String() so a malformed optional context does not block
+    // RUM collection.
+  }
+  return String(value);
 }
 
 function mergeLogBridgeContext(property?: any | null): Map<string, object> {

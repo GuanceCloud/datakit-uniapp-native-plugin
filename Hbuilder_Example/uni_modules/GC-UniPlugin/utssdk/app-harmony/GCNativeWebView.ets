@@ -37,7 +37,6 @@ struct GCNativeWebView {
       console.error('[GC-UniPlugin] Harmony WebView controller is unavailable');
       return;
     }
-    this.didAttachBridge = true;
     try {
       const config = FTSDK.getRumConfig();
       if (config !== null && config.isEnableTraceWebView()) {
@@ -46,6 +45,7 @@ struct GCNativeWebView {
         // running the document. Register the native bridge here so Browser RUM
         // sees it during DATAFLUX_RUM.init().
         this.handler.setWebView(controller, config);
+        this.didAttachBridge = true;
       }
     } catch (error) {
       // A telemetry integration failure must never prevent the application

@@ -208,7 +208,9 @@ const tab3Page = read('Hbuilder_Example/pages/routertest/tab3.vue');
 assert.match(tab3Page, /<!-- #ifdef APP-HARMONY -->/);
 assert.match(tab3Page, /Trigger Harmony Native Crash/);
 assert.match(tab3Page, /uni\.__createAppCrash\(\)/);
+assert.match(tab3Page, /Trigger Harmony Long Task \(3s\)/);
 assert.match(tab3Page, /Trigger Harmony Native ANR \(10s\)/);
+assert.match(tab3Page, /blockHarmonyMainThread\(3000\)/);
 assert.match(tab3Page, /blockHarmonyMainThread\(10000\)/);
 
 const harmonyAnrTestHelper = read(
@@ -351,6 +353,10 @@ assert.match(actionTracking, /launch_cold/);
 assert.match(actionTracking, /app cold start/);
 assert.match(actionTracking, /launch_hot/);
 assert.match(actionTracking, /app hot start/);
+assert.match(actionTracking, /getDefaultActionName\(/);
+assert.match(actionTracking, /setActionTrackingHandler\(handler\)/);
+assert.match(actionTracking, /resolveHandlerAction\(wrapper\)/);
+assert.match(actionTracking, /#position:/);
 assert.match(actionTracking, /isJSActionTrackingEnabled\(\)/);
 assert.match(actionTracking, /isUniAppJSActionTrackingEnabled/);
 assert.match(
@@ -378,8 +384,10 @@ const pageNode = {
   nodeId: 0,
   childNodes: [{
     nodeId: 7,
+    nodeName: 'BUTTON',
+    attributes: { id: 'btn_login' },
     listeners: { onClick: [{ value: eventHandler }] },
-    childNodes: []
+    childNodes: [{ nodeValue: '登录', childNodes: [] }]
   }, {
     nodeId: 8,
     nodeName: 'NAVIGATOR',
@@ -389,6 +397,16 @@ const pageNode = {
     nodeId: 9,
     listeners: { onClick: [{ value: internalHandler }] },
     childNodes: [{ nodeValue: 'TAB2', childNodes: [] }]
+  }, {
+    nodeId: 10,
+    nodeName: 'SCROLL-VIEW',
+    childNodes: [{
+      nodeId: 11,
+      nodeName: 'BUTTON',
+      attributes: { id: 'btn_list_login' },
+      listeners: { onClick: [{ value: eventHandler }] },
+      childNodes: [{ nodeValue: '列表登录', childNodes: [] }]
+    }]
   }]
 };
 const { normalizeUniAppEventType, gcActionTracking } = new Function(
@@ -422,7 +440,7 @@ assert.strictEqual(normalizeUniAppEventType('onLongpress'), 'longpress');
 assert.strictEqual(normalizeUniAppEventType('onClickOnce'), 'click');
 gcActionTracking.handleVdSync([[20, 7, { type: 'onClick' }]], 42);
 assert.deepStrictEqual(capturedActions, [{
-  actionName: 'bindUser',
+  actionName: 'Button/登录#btn_login',
   actionType: 'click',
   property: {
     action_source: 'uniapp_js_event',
@@ -432,12 +450,25 @@ assert.deepStrictEqual(capturedActions, [{
     action_page_id: '42'
   }
 }]);
+gcActionTracking.handleVdSync([[20, 11, { type: 'onClick' }]], 42);
+assert.deepStrictEqual(capturedActions[1], {
+  actionName: 'Button/列表登录#btn_list_login#position:0',
+  actionType: 'click',
+  property: {
+    action_source: 'uniapp_js_event',
+    action_event_type: 'click',
+    action_page_path: 'pages/index/index',
+    action_position: '0',
+    action_node_id: '11',
+    action_page_id: '42'
+  }
+});
 gcActionTracking.handleServiceAPI({
   name: 'navigateTo',
   args: { url: '../tracing/tracing' }
 }, 42);
-assert.deepStrictEqual(capturedActions[1], {
-  actionName: 'Network Link Tracing',
+assert.deepStrictEqual(capturedActions[2], {
+  actionName: 'Navigator/Network Link Tracing',
   actionType: 'click',
   property: {
     action_source: 'uniapp_js_navigator',
@@ -454,8 +485,8 @@ interceptors.switchTab.invoke({
   from: 'tabBar',
   url: '/pages/routertest/tab2'
 });
-assert.deepStrictEqual(capturedActions[2], {
-  actionName: 'TAB2',
+assert.deepStrictEqual(capturedActions[3], {
+  actionName: 'Tab/TAB2#position:0',
   actionType: 'click',
   property: {
     action_source: 'uniapp_js_tabbar',
@@ -470,12 +501,43 @@ assert.deepStrictEqual(capturedActions[2], {
     action_tab_index: '0'
   }
 });
+let actionHandlerWrapper = null;
+gcActionTracking.setActionTrackingHandler({
+  resolveHandlerAction: (wrapper) => {
+    actionHandlerWrapper = wrapper;
+    return {
+      getActionName: () => 'custom_login_action',
+      getProperty: () => ({ action_name_source: 'handler' })
+    };
+  }
+});
+gcActionTracking.handleVdSync([[20, 7, { type: 'onClick' }]], 42);
+assert.strictEqual(actionHandlerWrapper.getSource().nodeName, 'BUTTON');
+assert.deepStrictEqual(actionHandlerWrapper.getExtra(), {
+  pageId: '42',
+  pagePath: 'pages/index/index',
+  event: { type: 'onClick' },
+  property: null
+});
+assert.deepStrictEqual(capturedActions[4], {
+  actionName: 'custom_login_action',
+  actionType: 'click',
+  property: {
+    action_source: 'uniapp_js_event',
+    action_event_type: 'click',
+    action_page_path: 'pages/index/index',
+    action_name_source: 'handler',
+    action_node_id: '7',
+    action_page_id: '42'
+  }
+});
+gcActionTracking.setActionTrackingHandler(null);
 gcActionTracking.installAppLifecycleTracking();
 assert.strictEqual(appShowListeners.length, 1);
 appShowListeners[0]();
-assert.deepStrictEqual(capturedActions[3], {
-  actionName: 'launch_cold',
-  actionType: 'app cold start',
+assert.deepStrictEqual(capturedActions[5], {
+  actionName: 'app cold start',
+  actionType: 'launch_cold',
   property: {
     action_source: 'uniapp_js_lifecycle',
     action_lifecycle: 'cold_start',
@@ -484,9 +546,9 @@ assert.deepStrictEqual(capturedActions[3], {
   }
 });
 appShowListeners[0]();
-assert.deepStrictEqual(capturedActions[4], {
-  actionName: 'launch_hot',
-  actionType: 'app hot start',
+assert.deepStrictEqual(capturedActions[6], {
+  actionName: 'app hot start',
+  actionType: 'launch_hot',
   property: {
     action_source: 'uniapp_js_lifecycle',
     action_lifecycle: 'hot_start',
@@ -498,18 +560,18 @@ gcActionTracking.handleServiceAPI({
   name: 'switchTab',
   args: { url: '/pages/routertest/tab2' }
 }, 42);
-assert.strictEqual(capturedActions.length, 5, 'A TabBar switch must only create one Action');
+assert.strictEqual(capturedActions.length, 7, 'A TabBar switch must only create one Action');
 gcActionTracking.handleVdSync([[20, 9, { type: 'onClick' }]], 42);
 assert.strictEqual(
   capturedActions.length,
-  5,
+  7,
   'Harmony internal __Common__ listeners must not be reported as Actions'
 );
 gcActionTracking.rum.isUniAppJSActionTrackingEnabled = () => false;
 gcActionTracking.handleVdSync([[20, 7, { type: 'onClick' }]], 42);
 assert.strictEqual(
   capturedActions.length,
-  5,
+  7,
   'enableNativeUserAction: false must disable the UniApp JS Action collector'
 );
 
