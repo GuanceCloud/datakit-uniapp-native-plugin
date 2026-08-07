@@ -268,6 +268,12 @@ assert.match(actionTracking, /options\.from === 'tabBar'/);
 assert.match(actionTracking, /trackTabSwitch\(url, pageId\)/);
 assert.match(actionTracking, /getTabBarItem\(url\)/);
 assert.match(actionTracking, /action_target_page_path/);
+assert.match(actionTracking, /installAppLifecycleTracking\(\)/);
+assert.match(actionTracking, /uni\.onAppShow\(/);
+assert.match(actionTracking, /launch_cold/);
+assert.match(actionTracking, /app cold start/);
+assert.match(actionTracking, /launch_hot/);
+assert.match(actionTracking, /app hot start/);
 assert.match(actionTracking, /isJSActionTrackingEnabled\(\)/);
 assert.match(actionTracking, /isUniAppJSActionTrackingEnabled/);
 assert.match(
@@ -287,6 +293,7 @@ const actionTrackingRuntime = actionTracking
   .replace('export const gcActionTracking', 'const gcActionTracking');
 const capturedActions = [];
 const interceptors = {};
+const appShowListeners = [];
 const eventHandler = new Function('return ($event) => $options.bindUser()')();
 const internalHandler = function () {};
 Object.defineProperty(internalHandler, 'name', { value: '__Common__/' });
@@ -328,7 +335,8 @@ const { normalizeUniAppEventType, gcActionTracking } = new Function(
   {
     addInterceptor: (name, interceptor) => {
       interceptors[name] = interceptor;
-    }
+    },
+    onAppShow: (listener) => appShowListeners.push(listener)
   }
 );
 assert.strictEqual(normalizeUniAppEventType('onClick'), 'click');
@@ -385,22 +393,46 @@ assert.deepStrictEqual(capturedActions[2], {
     action_tab_index: '0'
   }
 });
+gcActionTracking.installAppLifecycleTracking();
+assert.strictEqual(appShowListeners.length, 1);
+appShowListeners[0]();
+assert.deepStrictEqual(capturedActions[3], {
+  actionName: 'launch_cold',
+  actionType: 'app cold start',
+  property: {
+    action_source: 'uniapp_js_lifecycle',
+    action_lifecycle: 'cold_start',
+    action_page_path: 'pages/index/index',
+    action_page_id: '42'
+  }
+});
+appShowListeners[0]();
+assert.deepStrictEqual(capturedActions[4], {
+  actionName: 'launch_hot',
+  actionType: 'app hot start',
+  property: {
+    action_source: 'uniapp_js_lifecycle',
+    action_lifecycle: 'hot_start',
+    action_page_path: 'pages/index/index',
+    action_page_id: '42'
+  }
+});
 gcActionTracking.handleServiceAPI({
   name: 'switchTab',
   args: { url: '/pages/routertest/tab2' }
 }, 42);
-assert.strictEqual(capturedActions.length, 3, 'A TabBar switch must only create one Action');
+assert.strictEqual(capturedActions.length, 5, 'A TabBar switch must only create one Action');
 gcActionTracking.handleVdSync([[20, 9, { type: 'onClick' }]], 42);
 assert.strictEqual(
   capturedActions.length,
-  3,
+  5,
   'Harmony internal __Common__ listeners must not be reported as Actions'
 );
 gcActionTracking.rum.isUniAppJSActionTrackingEnabled = () => false;
 gcActionTracking.handleVdSync([[20, 7, { type: 'onClick' }]], 42);
 assert.strictEqual(
   capturedActions.length,
-  3,
+  5,
   'enableNativeUserAction: false must disable the UniApp JS Action collector'
 );
 

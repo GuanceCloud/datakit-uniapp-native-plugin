@@ -34,6 +34,11 @@ class ActionMonitor {
 	constructor() {
 		this.initialized = false;
 		this.tabSwitchInterceptorInstalled = false;
+		this.appLifecycleTrackingInstalled = false;
+		this.hasObservedAppShow = false;
+		this.pendingAppLaunchActions = [];
+		this.appLaunchRetryTimer = null;
+		this.appLaunchRetryAttempts = 0;
 		this.retryTimer = null;
 		this.retryAttempts = 0;
 		this.lastTabSwitch = {
@@ -51,6 +56,10 @@ class ActionMonitor {
 		}
 
 		// #ifdef APP-HARMONY
+		// Register this before the bridge is ready. `uni.onAppShow` queues hooks
+		// until the App instance exists, which lets us observe the initial show as
+		// well as every foreground return.
+		this.installAppLifecycleTracking();
 		this.installTabSwitchInterceptor();
 		const bridge = this.getHarmonyBridge();
 		if (!bridge || typeof bridge.subscribe !== 'function') {
@@ -102,6 +111,87 @@ class ActionMonitor {
 			this.rum.isUniAppJSActionTrackingEnabled();
 		// #endif
 		return true;
+	}
+
+	installAppLifecycleTracking() {
+		if (this.appLifecycleTrackingInstalled || typeof uni === 'undefined' || !uni ||
+			typeof uni.onAppShow !== 'function') {
+			return;
+		}
+
+		uni.onAppShow(() => {
+			const lifecycle = this.hasObservedAppShow ? 'hot' : 'cold';
+			this.hasObservedAppShow = true;
+			this.queueAppLaunchAction(lifecycle);
+		});
+		this.appLifecycleTrackingInstalled = true;
+	}
+
+	queueAppLaunchAction(lifecycle) {
+		const isHotStart = lifecycle === 'hot';
+		this.pendingAppLaunchActions.push({
+			actionName: isHotStart ? 'launch_hot' : 'launch_cold',
+			actionType: isHotStart ? 'app hot start' : 'app cold start',
+			lifecycle: isHotStart ? 'hot_start' : 'cold_start'
+		});
+		this.reportPendingAppLaunchActions();
+	}
+
+	reportPendingAppLaunchActions() {
+		if (this.pendingAppLaunchActions.length === 0) {
+			return;
+		}
+
+		const pageId = this.getActivePageId();
+		const pagePath = this.getPagePath(pageId);
+		if (!pagePath && this.appLaunchRetryAttempts < 20 && typeof setTimeout === 'function') {
+			this.scheduleAppLaunchActionRetry();
+			return;
+		}
+
+		const viewName = pagePath ? pagePath.split('?')[0] : 'unknown_view';
+		const pendingActions = this.pendingAppLaunchActions.splice(0);
+		this.appLaunchRetryAttempts = 0;
+		pendingActions.forEach((launchAction) => {
+			this.trackAppLaunchAction(launchAction, viewName, pageId);
+		});
+	}
+
+	scheduleAppLaunchActionRetry() {
+		if (this.appLaunchRetryTimer !== null) {
+			return;
+		}
+
+		this.appLaunchRetryAttempts += 1;
+		this.appLaunchRetryTimer = setTimeout(() => {
+			this.appLaunchRetryTimer = null;
+			this.reportPendingAppLaunchActions();
+		}, 50);
+	}
+
+	trackAppLaunchAction(launchAction, viewName, pageId) {
+		if (!this.isJSActionTrackingEnabled()) {
+			return;
+		}
+
+		try {
+			const property = {
+				action_source: 'uniapp_js_lifecycle',
+				action_lifecycle: launchAction.lifecycle,
+				action_page_path: viewName
+			};
+			if (pageId !== undefined && pageId !== null) {
+				property.action_page_id = String(pageId);
+			}
+
+			this.rum.startAction({
+				actionName: launchAction.actionName,
+				actionType: launchAction.actionType,
+				property
+			});
+		} catch (error) {
+			console.warn('[FTLog] UniApp application launch Action collection failed:', error);
+		}
 	}
 
 	handleVdSync(actions, pageId) {
