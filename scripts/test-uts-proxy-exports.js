@@ -248,6 +248,83 @@ const viewTracking = read(
 assert.match(viewTracking, /#ifdef APP-PLUS \|\| APP-HARMONY/);
 assert.match(viewTracking, /isJSViewTrackingEnabled\(\)/);
 assert.match(viewTracking, /isUniAppJSViewTrackingEnabled/);
+assert.match(viewTracking, /this\.pendingPageLoads = new Map\(\)/);
+assert.doesNotMatch(viewTracking, /pendingViewLoadMap/);
+assert.doesNotMatch(viewTracking, /plus\.runtime\.launchTime/);
+
+const viewTrackingRuntime = viewTracking
+  .replace(/import\s*\{[\s\S]*?\}\s*from\s*'@\/uni_modules\/GC-UniPlugin';/, '')
+  .replace(/import Vue from 'vue';/, '')
+  .replace('export const gcViewTracking = new PageMonitor();', 'return { PageMonitor };');
+let currentPages = [];
+const reportedViews = [];
+const startedViews = [];
+const rumMock = {
+  isUniAppJSViewTrackingEnabled: () => true,
+  onCreateView: (params) => reportedViews.push(params),
+  startView: (params) => startedViews.push(params),
+  stopView: () => {}
+};
+const { PageMonitor } = new Function(
+  'gcRum',
+  'getCurrentPages',
+  'uni',
+  'plus',
+  `${viewTrackingRuntime}`
+)(rumMock, () => currentPages, { addInterceptor: () => {} }, undefined);
+const originalDateNow = Date.now;
+try {
+  const pageMonitor = new PageMonitor();
+  const firstVm = { route: 'pages/routertest/page' };
+  const secondVm = { route: 'pages/routertest/page' };
+  const firstPage = { $vm: firstVm, route: firstVm.route };
+  const secondPage = { $vm: secondVm, route: secondVm.route };
+
+  // Timers belong to page instances. An older page with the same route cannot
+  // consume the new page's start time.
+  currentPages = [firstPage];
+  Date.now = () => 1000;
+  pageMonitor.handlePageLoad(firstVm);
+  currentPages = [firstPage, secondPage];
+  Date.now = () => 2000;
+  pageMonitor.handlePageLoad(secondVm);
+  Date.now = () => 5000;
+  pageMonitor.handlePageReady(firstVm);
+  assert.strictEqual(reportedViews.length, 0);
+  pageMonitor.handlePageReady(secondVm);
+  assert.deepStrictEqual(reportedViews, [{
+    viewName: 'pages/routertest/page',
+    loadTime: 3000000000
+  }]);
+
+  // App background time is not page loading time. A page hidden before ready
+  // must never create a multi-minute or multi-hour loading duration.
+  const pausedVm = { route: 'pages/routertest/paused' };
+  currentPages = [{ $vm: pausedVm, route: pausedVm.route }];
+  Date.now = () => 6000;
+  pageMonitor.handlePageLoad(pausedVm);
+  pageMonitor.handleAppHide();
+  Date.now = () => 186000;
+  pageMonitor.handlePageReady(pausedVm);
+  assert.strictEqual(reportedViews.length, 1);
+
+  // A page discovered after its load lifecycle has begun gets a View but never
+  // manufactures load time from the process launch timestamp.
+  const restoredMonitor = new PageMonitor();
+  restoredMonitor.initialized = true;
+  currentPages = [{ $vm: { route: 'pages/routertest/tab2' }, route: 'pages/routertest/tab2' }];
+  restoredMonitor.checkInitialPage();
+  assert.strictEqual(reportedViews.length, 1);
+  assert.strictEqual(startedViews.at(-1).viewName, 'pages/routertest/tab2');
+} finally {
+  Date.now = originalDateNow;
+}
+
+const appSource = read('Hbuilder_Example/App.vue');
+assert.match(appSource, /gcViewTracking\.handleAppShow\(\)/);
+assert.match(appSource, /gcViewTracking\.handleAppHide\(\)/);
+const indexPage = read('Hbuilder_Example/pages/index/index.vue');
+assert.doesNotMatch(indexPage, /gcPageMixin/);
 
 const actionTracking = read(
   'Hbuilder_Example/uni_modules/GC-UniPlugin/js_sdk/Action/GCActionTracking.js'

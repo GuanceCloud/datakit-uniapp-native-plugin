@@ -27,9 +27,6 @@
 
 <script>
 	import {
-		gcPageMixin
-	} from '@/uni_modules/GC-UniPlugin/js_sdk';
-	import {
 		logger,
 		mobileAgent as ftMobileSDK,
 		rum,
@@ -40,7 +37,6 @@
 		data() {
 			return {}
 		},
-		mixins:[gcPageMixin],
 		onReady(){
 			console.log('index onReady')
 		},

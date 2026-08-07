@@ -13,15 +13,14 @@ class PageMonitor {
 		// Plugin status
 		this.initialized = false;
 		this.pageHookInstalled = false;
-		// Homepage status flag
-		this.firstPageDetected = false;
-		this.appLaunched = false;
 		// Page data
-		this.loadStart = null;
 		this.currentPage = null;
 		this.activeViewPath = null;
 		this.navBackPagesLength = 0;
-		this.pendingViewLoadMap = {};
+		// A page load belongs to a page instance rather than a route. A tab page
+		// can be cached and multiple instances can have the same route.
+		this.pendingPageLoads = new Map();
+		this.isAppActive = true;
 		this.sessionReplayJS = null;
 		// Store event listeners for easy destruction
 		this.eventListeners = [];
@@ -40,8 +39,6 @@ class PageMonitor {
 		try {
 			// #ifdef APP-PLUS || APP-HARMONY
 
-			// 1. Record app launch time (execute as early as possible)
-			this.recordAppLaunchTime();
 			this.pageHookInstalled = this.installPageHooks(app);
 
 			// Monitor App lifecycle
@@ -96,18 +93,23 @@ class PageMonitor {
 		return false;
 	}
 	checkInitialPage() {
-		if (!this.initialized || this.firstPageDetected) return;
+		if (!this.initialized) return;
 
-		const pagePath = this.getCurrentPagePath();
+		const pages = getCurrentPages();
+		const currentPage = pages.length > 0 ? pages[pages.length - 1] : null;
+		const pagePath = this.getPagePath(currentPage);
 		if (!pagePath) {
 			return;
 		}
 
+		// The lifecycle of this page has already started (for example after a hot
+		// reload), so it has no trustworthy onLoad timestamp. Record the View
+		// without fabricating a loading duration from the app process start time.
 		this.currentPage = pagePath;
-		this.loadStart = this.getLaunchStartTime();
-		console.log('[FTLog] First page fallback check:' + pagePath);
-		this.rumStartView();
-		this.firstPageDetected = true;
+		console.log('[FTLog] Existing page detected without a load lifecycle:' + pagePath);
+		if (!currentPage || !this.pendingPageLoads.has(currentPage.$vm)) {
+			this.activateView(pagePath);
+		}
 	}
 
 	isJSViewTrackingEnabled() {
@@ -147,17 +149,12 @@ class PageMonitor {
 
 			// Listen for App display
 			addAppListener('resume', () => {
-				const pagePath = this.getCurrentPagePath();
-				if (!pagePath) return;
-				this.currentPage = pagePath;
-				console.log('[FTLog] App display (resume) detected:' + pagePath);
-				this.activateView(pagePath);
+				this.handleAppShow();
 			});
 
 			// Listen for App hiding
 			addAppListener('pause', () => {
-				console.log('[FTLog] App hiding (pause) detected');
-				this.deactivateView();
+				this.handleAppHide();
 			});
 
 			console.log('[FTLog] watchAppLifecycle internal logic executed successfully');
@@ -168,19 +165,26 @@ class PageMonitor {
 		}
 	}
 
-	// Record app launch time (core: execute as early as possible)
-	recordAppLaunchTime() {
-		// Weex App cold start time (obtained through native events)
-		if (typeof plus !== 'undefined') {
-			// If native launch time is available (supported by some Android devices)
-			if (plus.runtime.launchTime) {
-				this.appLaunchTime = plus.runtime.launchTime;
-			} else {
-				// Otherwise use current time as launch time (slightly larger error, but as a fallback)
-				this.appLaunchTime = Date.now();
-			}
-			this.appLaunched = true;
+	handleAppShow() {
+		this.isAppActive = true;
+		const pages = getCurrentPages();
+		const currentPage = pages.length > 0 ? pages[pages.length - 1] : null;
+		const pagePath = this.getPagePath(currentPage);
+		if (!pagePath) return;
+		this.currentPage = pagePath;
+		console.log('[FTLog] App display detected:' + pagePath);
+		if (!currentPage || !this.pendingPageLoads.has(currentPage.$vm)) {
+			this.activateView(pagePath);
 		}
+	}
+
+	handleAppHide() {
+		console.log('[FTLog] App hiding detected');
+		this.isAppActive = false;
+		// Date.now() includes background time. Do not report a page that becomes
+		// ready after it was hidden as a visible page load.
+		this.pendingPageLoads.clear();
+		this.deactivateView();
 	}
 
 	// Monitor route changes
@@ -188,7 +192,9 @@ class PageMonitor {
 		const registerRouteInterceptor = (name) => {
 			uni.addInterceptor(name, {
 				invoke: (e) => {
-					this.rumRecordNewView(e.url);
+					if (!this.pageHookInstalled) {
+						this.rumRecordNewView(e.url);
+					}
 				},
 				success: () => {
 					if (!this.pageHookInstalled) {
@@ -229,14 +235,7 @@ class PageMonitor {
 	// Record new page
 	rumRecordNewView(url) {
 		const pagePath = this.normalizePagePath(url);
-		this.loadStart = Date.now() * 1000000;
 		this.currentPage = pagePath;
-		if (!pagePath) {
-			return;
-		}
-		this.pendingViewLoadMap[pagePath] = {
-			startTime: this.loadStart
-		};
 	}
 
 	// Stop old page monitoring and start new page monitoring
@@ -250,14 +249,8 @@ class PageMonitor {
 		}
 		console.log('[FTLog] this.currentPage:'+this.currentPage);
 		if (this.currentPage) {
-			const loadEnd = Date.now() * 1000000;
-				let duration = (loadEnd - this.loadStart);
-				if (this.loadStart !== null && duration >= 0) {
-					this.reportCreateView(this.currentPage, duration);
-				}
-				this.activateView(this.currentPage);
-			}
-			this.loadStart = null;
+			this.activateView(this.currentPage);
+		}
 	}
 	// Handle back navigation
 	navigateBack() {
@@ -276,34 +269,33 @@ class PageMonitor {
 		if (!pagePath) return;
 
 		this.currentPage = pagePath;
-		if (!this.pendingViewLoadMap[pagePath]) {
-			const startTime = this.firstPageDetected ? null : this.getLaunchStartTime();
-			this.pendingViewLoadMap[pagePath] = {
-				startTime
-			};
-		}
-		if (!this.firstPageDetected) {
-			this.firstPageDetected = true;
+		if (this.isAppActive) {
+			this.pendingPageLoads.set(vm, {
+				pagePath,
+				startTime: Date.now() * 1000000
+			});
 		}
 	}
 
 	handlePageReady(vm) {
 		if (!this.isPageVm(vm)) return;
 
-		const pagePath = this.getPagePathFromVm(vm);
-		if (!pagePath) return;
-
-		const pendingView = this.pendingViewLoadMap[pagePath];
-		if (!pendingView || pendingView.startTime === null) {
+		const pendingView = this.pendingPageLoads.get(vm);
+		if (!pendingView) {
 			return;
 		}
+		this.pendingPageLoads.delete(vm);
 
+		// A later page can become current before this page's onReady. That older
+		// lifecycle must not create a View or consume its elapsed time.
+		if (!this.isAppActive || !this.isCurrentPageVm(vm)) {
+			return;
+		}
 		const duration = Date.now() * 1000000 - pendingView.startTime;
 		if (duration >= 0) {
-			this.reportCreateView(pagePath, duration);
+			this.reportCreateView(pendingView.pagePath, duration);
 		}
-
-		delete this.pendingViewLoadMap[pagePath];
+		this.activateView(pendingView.pagePath);
 	}
 
 	handlePageShow(vm) {
@@ -313,7 +305,11 @@ class PageMonitor {
 		if (!pagePath) return;
 
 		this.currentPage = pagePath;
-		this.activateView(pagePath);
+		// A freshly created page has a pending onLoad → onReady interval. Wait for
+		// onReady so onCreateView and startView receive the same View lifecycle.
+		if (!this.pendingPageLoads.has(vm)) {
+			this.activateView(pagePath);
+		}
 	}
 
 	handlePageHide(vm) {
@@ -322,6 +318,7 @@ class PageMonitor {
 		const pagePath = this.getPagePathFromVm(vm);
 		if (!pagePath) return;
 
+		this.pendingPageLoads.delete(vm);
 		this.deactivateView(pagePath);
 	}
 
@@ -331,7 +328,7 @@ class PageMonitor {
 		const pagePath = this.getPagePathFromVm(vm);
 		if (!pagePath) return;
 
-		delete this.pendingViewLoadMap[pagePath];
+		this.pendingPageLoads.delete(vm);
 		this.deactivateView(pagePath);
 	}
 
@@ -339,6 +336,11 @@ class PageMonitor {
 		if (!vm) return false;
 		const pages = getCurrentPages();
 		return pages.some(page => page.$vm === vm);
+	}
+
+	isCurrentPageVm(vm) {
+		const pages = getCurrentPages();
+		return pages.length > 0 && pages[pages.length - 1].$vm === vm;
 	}
 
 	getPagePath(page) {
@@ -363,10 +365,6 @@ class PageMonitor {
 		const pages = getCurrentPages();
 		const page = pages.find(item => item.$vm === vm);
 		return this.getPagePath(page);
-	}
-
-	getLaunchStartTime() {
-		return this.appLaunchTime ? this.appLaunchTime * 1000000 : Date.now() * 1000000;
 	}
 
 	activateView(pagePath) {
