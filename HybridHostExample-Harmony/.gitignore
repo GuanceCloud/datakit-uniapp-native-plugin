@@ -1,0 +1,26 @@
+# The DCloud offline SDK host is downloaded/generated locally by scripts/bootstrap-host.mjs.
+host/
+
+# HBuilderX / DevEco generated state
+uniapp/.hbuilderx/
+uniapp/unpackage/
+*.hap
+*.app
+*.har
+*.hsp
+*.hvp
+oh_modules/
+.hvigor/
+.idea/
+build/
+
+# Local signing material and user-specific runtime values
+*.p12
+*.p7b
+*.cer
+*.pfx
+*.keystore
+*.mobileprovision
+
+# The repository-wide rule ignores Markdown build artifacts; this is source documentation.
+!README.md
