@@ -112,7 +112,8 @@ for (const relativePath of [
 
 for (const relativePath of [
   'Hbuilder_Example/uni_modules/GC-UniSessionReplay/utssdk/index.uts',
-  'Hbuilder_Example/uni_modules/GC-UniSessionReplay/utssdk/app-ios/index.uts'
+  'Hbuilder_Example/uni_modules/GC-UniSessionReplay/utssdk/app-ios/index.uts',
+  'Hbuilder_Example/uni_modules/GC-UniSessionReplay/utssdk/app-android/index.uts'
 ]) {
   assertStaticBridgeExports(relativePath, {
     GCUniSessionReplay: ['setConfig']
@@ -131,6 +132,15 @@ for (const relativePath of [
     ]
   });
 }
+
+const replayFallbackSource = read(
+  'Hbuilder_Example/uni_modules/GC-UniSessionReplay/utssdk/index.uts'
+);
+assert.doesNotMatch(
+  replayFallbackSource,
+  /\([^)]*\b_+\s*:/,
+  'Session Replay UTS parameters must not use Kotlin-reserved underscore-only names'
+);
 
 const baseIOSNativeSource = read(
   'Hbuilder_Example/uni_modules/GC-UniPlugin/utssdk/app-ios/GCUniPluginNative.swift'

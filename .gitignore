@@ -151,3 +151,13 @@ HybridHostExample-iOS/**/DerivedData/
 HybridHostExample-iOS/**/.derived-data-*
 HybridHostExample-iOS/**/build/
 HybridHostExample-iOS/**/.DS_Store
+
+# Locally generated Gradle and IDE state for the Android hybrid host example.
+HybridHostExample-Android/.gradle/
+HybridHostExample-Android/**/.gradle/
+HybridHostExample-Android/**/build/
+HybridHostExample-Android/**/local.properties
+HybridHostExample-Android/**/.idea/
+HybridHostExample-Android/**/*.iml
+HybridHostExample-Android/**/src/main/assets/apps/
+HybridHostExample-Android/**/src/main/assets/uni_modules/
