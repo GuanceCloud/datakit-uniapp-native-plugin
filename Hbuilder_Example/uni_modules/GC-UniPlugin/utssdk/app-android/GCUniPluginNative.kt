@@ -30,7 +30,6 @@ import com.ft.sdk.garble.bean.Status
 import com.ft.sdk.garble.bean.UserData
 import com.ft.sdk.garble.utils.Constants
 import com.ft.sdk.garble.utils.Utils as FTUtils
-import io.dcloud.uts.console
 import java.util.Locale
 import java.util.concurrent.ConcurrentHashMap
 
@@ -60,25 +59,8 @@ private object FTUniAppStartManager {
 
 object GCUniPluginNative {
     private const val DEFAULT_ERROR_TYPE = "uniapp_crash"
-    private var nativeDebugEnabled = false
     private val bridgeContext = ConcurrentHashMap<String, Any>().apply {
         put("sdk_bridge_info", "{\"uniapp\":\"0.2.7-alpha.1\"}")
-    }
-
-    private fun updateNativeDebugEnabled(params: JSONObject) {
-        nativeDebugEnabled = booleanValue(firstValue(params, "debug", "enableSDKDebugLog"))
-    }
-
-    private fun debugLog(message: String) {
-        if (!nativeDebugEnabled) {
-            return
-        }
-        val content = "[AndroidBridge] $message"
-        console.log("[GC-UniPlugin][AndroidNative] $content")
-    }
-
-    private fun jsonLength(json: String?): Int {
-        return json?.length ?: 0
     }
 
     private fun parseObject(json: String?): JSONObject {
@@ -557,121 +539,76 @@ object GCUniPluginNative {
     @JvmStatic
     fun sdkConfig(json: String?) {
         val params = parseObject(json)
-        updateNativeDebugEnabled(params)
-        debugLog("sdkConfig called, jsonLength=${jsonLength(json)}")
-        debugLog("sdkConfig params=${json ?: "null"}")
-        debugLog(
-            "sdkConfig parsed, hasDatakit=${params.containsKey("datakitUrl")}, " +
-                "hasDataway=${params.containsKey("datawayUrl")}, " +
-                "hasMetrics=${params.containsKey("metricsUrl")}, debug=${stringValue(params["debug"])}"
-        )
-        val config = createMobileConfig(params) ?: run {
-            debugLog("sdkConfig skipped, missing datakitUrl or datawayUrl/clientToken")
-            return
-        }
+        val config = createMobileConfig(params) ?: return
         FTSdk.install(config)
         if (!booleanValue(firstValue(params, "offlinePackage", "offlinePakcage"))) {
             FTUniAppStartManager.start()
         }
-        debugLog("sdkConfig returned")
     }
 
     @JvmStatic
     fun bindRUMUserData(json: String?) {
-        debugLog("bindRUMUserData called, jsonLength=${jsonLength(json)}")
         val params = parseObject(json)
-        val userId = stringValue(params["userId"]) ?: run {
-            debugLog("bindRUMUserData skipped, missing userId")
-            return
-        }
+        val userId = stringValue(params["userId"]) ?: return
         val userData = UserData()
         userData.setId(userId)
         stringValue(params["userName"])?.let { userData.setName(it) }
         stringValue(params["userEmail"])?.let { userData.setEmail(it) }
         stringMap(params["extra"])?.let { userData.setExts(HashMap(it)) }
         FTSdk.bindRumUserData(userData)
-        debugLog("bindRUMUserData returned")
     }
 
     @JvmStatic
     fun unbindRUMUserData() {
-        debugLog("unbindRUMUserData called")
         FTSdk.unbindRumUserData()
-        debugLog("unbindRUMUserData returned")
     }
 
     @JvmStatic
     fun appendGlobalContext(json: String?) {
-        debugLog("appendGlobalContext called, jsonLength=${jsonLength(json)}")
         objectMap(parseObject(json))?.let { FTSdk.appendGlobalContext(it) }
-        debugLog("appendGlobalContext returned")
     }
 
     @JvmStatic
     fun appendRUMGlobalContext(json: String?) {
-        debugLog("appendRUMGlobalContext called, jsonLength=${jsonLength(json)}")
         objectMap(parseObject(json))?.let { FTSdk.appendRUMGlobalContext(it) }
-        debugLog("appendRUMGlobalContext returned")
     }
 
     @JvmStatic
     fun appendLogGlobalContext(json: String?) {
-        debugLog("appendLogGlobalContext called, jsonLength=${jsonLength(json)}")
         objectMap(parseObject(json))?.let { FTSdk.appendLogGlobalContext(it) }
-        debugLog("appendLogGlobalContext returned")
     }
 
     @JvmStatic
     fun appendBridgeContext(json: String?) {
-        debugLog("appendBridgeContext called, jsonLength=${jsonLength(json)}")
         objectMap(parseObject(json))?.let { bridgeContext.putAll(it) }
-        debugLog("appendBridgeContext returned, bridgeContextSize=${bridgeContext.size}")
     }
 
     @JvmStatic
     fun flushSyncData() {
-        debugLog("flushSyncData called")
         FTSdk.flushSyncData()
-        debugLog("flushSyncData returned")
     }
 
     @JvmStatic
     fun clearAllData() {
-        debugLog("clearAllData called")
         FTSdk.clearAllData()
-        debugLog("clearAllData returned")
     }
 
     @JvmStatic
     fun shutDown() {
-        debugLog("shutDown called")
         FTSdk.shutDown()
-        debugLog("shutDown returned")
     }
 
     @JvmStatic
     fun manuallySetApplicationStart() {
-        debugLog("manuallySetApplicationStart called")
         FTUniAppStartManager.start()
-        debugLog("manuallySetApplicationStart returned")
     }
 
     @JvmStatic
     fun setRumConfig(json: String?) {
-        debugLog("setRumConfig called, jsonLength=${jsonLength(json)}")
-        debugLog("setRumConfig params=${json ?: "null"}")
         val params = parseObject(json)
-        debugLog(
-            "setRumConfig parsed, hasAndroidAppId=${params.containsKey("androidAppId")}, " +
-                "hasAppId=${params.containsKey("appId")}, sampleRate=${stringValue(firstValue(params, "samplerate", "sampleRate"))}"
-        )
-        val config = createRumConfig(params) ?: run {
-            debugLog("setRumConfig skipped, missing androidAppId or appId")
-            return
-        }
+        val config = createRumConfig(params) ?: return
         FTSdk.initRUMWithConfig(config)
         FTUniAppStartManager.uploadColdBootTimeWhenManualStart()
-        debugLog("setRumConfig returned")
     }
 
     @JvmStatic
@@ -757,20 +694,13 @@ object GCUniPluginNative {
 
     @JvmStatic
     fun setLoggerConfig(json: String?) {
-        debugLog("setLoggerConfig called, jsonLength=${jsonLength(json)}")
-        debugLog("setLoggerConfig params=${json ?: "null"}")
         FTSdk.initLogWithConfig(createLoggerConfig(parseObject(json)))
-        debugLog("setLoggerConfig returned")
     }
 
     @JvmStatic
     fun logging(json: String?) {
-        debugLog("logging called, jsonLength=${jsonLength(json)}")
         val params = parseObject(json)
-        val content = stringValue(params["content"]) ?: run {
-            debugLog("logging skipped, missing content")
-            return
-        }
+        val content = stringValue(params["content"]) ?: return
         val status = logStatus(params["status"])
         val property = mergeBridgeContext(params["property"])
         if (status != null) {
@@ -778,35 +708,23 @@ object GCUniPluginNative {
         } else {
             FTLogger.getInstance().logBackground(content, stringValue(params["status"]) ?: "info", property)
         }
-        debugLog("logging returned, status=${stringValue(params["status"]) ?: "info"}")
     }
 
     @JvmStatic
     fun setTraceConfig(json: String?) {
-        debugLog("setTraceConfig called, jsonLength=${jsonLength(json)}")
-        debugLog("setTraceConfig params=${json ?: "null"}")
         FTSdk.initTraceWithConfig(createTraceConfig(parseObject(json)))
-        debugLog("setTraceConfig returned")
     }
 
     @JvmStatic
     fun getTraceHeader(json: String?): String? {
-        debugLog("getTraceHeader called, jsonLength=${jsonLength(json)}")
-        val params = parseNullableObject(json) ?: run {
-            debugLog("getTraceHeader skipped, empty params")
-            return null
-        }
-        val url = stringValue(params["url"]) ?: run {
-            debugLog("getTraceHeader skipped, missing url")
-            return null
-        }
+        val params = parseNullableObject(json) ?: return null
+        val url = stringValue(params["url"]) ?: return null
         val key = stringValue(params["key"])
         val result = if (key == null) {
             FTTraceManager.get().getTraceHeader(url)
         } else {
             FTTraceManager.get().getTraceHeader(key, url)
         }
-        debugLog("getTraceHeader returned, headerCount=${result?.size ?: 0}")
         return JSON.toJSONString(result)
     }
 }

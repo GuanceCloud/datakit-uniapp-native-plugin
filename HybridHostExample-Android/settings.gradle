@@ -1,0 +1,3 @@
+include ':simpleDemo'
+include ':unimoduleGCUniPlugin'
+include ':unimoduleGCUniSessionReplay'
