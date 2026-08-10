@@ -1,31 +1,16 @@
 import Foundation
+#if canImport(DCloudUTSFoundation)
 import DCloudUTSFoundation
+#endif
 import GuanceSDK
 
 @objc public class GCUniPluginNative: NSObject {
-    private static var nativeDebugEnabled = false
-
     private static func runOnMainSync(_ block: () -> Void) {
         if Thread.isMainThread {
             block()
         } else {
             DispatchQueue.main.sync(execute: block)
         }
-    }
-
-    private static func updateNativeDebugEnabled(_ params: [String: Any]) {
-        nativeDebugEnabled = boolValue(params["debug"], default: boolValue(params["enableSDKDebugLog"]))
-    }
-
-    private static func debugLog(_ message: String) {
-        guard nativeDebugEnabled else {
-            return
-        }
-        console.log("[GC-UniPlugin][iOSNative] " + message)
-    }
-
-    private static func jsonLength(_ json: String?) -> Int {
-        return json?.count ?? 0
     }
 
     private static func parseObject(_ json: String?) -> [String: Any] {
@@ -466,97 +451,70 @@ import GuanceSDK
 
     @objc public static func sdkConfig(_ json: String?) {
         let params = parseObject(json)
-        updateNativeDebugEnabled(params)
-        debugLog("sdkConfig called, jsonLength=\(jsonLength(json))")
-        debugLog("sdkConfig params=\(json ?? "null")")
         guard let config = createMobileConfig(params) else {
-            debugLog("sdkConfig skipped, missing datakitUrl, datawayUrl/clientToken or metricsUrl")
             return
         }
         runOnMainSync {
             FTMobileAgent.start(withConfigOptions: config)
         }
-        debugLog("sdkConfig returned")
     }
 
     @objc public static func bindRUMUser(_ userId: String,
                                          _ userName: String?,
                                          _ userEmail: String?,
                                          _ extraJson: String?) {
-        debugLog("bindRUMUser called, userId=\(userId), extraJsonLength=\(jsonLength(extraJson))")
         FTMobileAgent.sharedInstance().bindUser(withUserID: userId,
                                                 userName: userName,
                                                 userEmail: userEmail,
                                                 extra: parseNullableObject(extraJson))
-        debugLog("bindRUMUser returned")
     }
 
     @objc public static func unbindRUMUserData() {
-        debugLog("unbindRUMUserData called")
         FTMobileAgent.sharedInstance().unbindUser()
-        debugLog("unbindRUMUserData returned")
     }
 
     @objc public static func appendGlobalContext(_ json: String?) {
-        debugLog("appendGlobalContext called, jsonLength=\(jsonLength(json))")
         if let context = stringDictionary(parseObject(json)) {
             FTMobileAgent.appendGlobalContext(context)
         }
-        debugLog("appendGlobalContext returned")
     }
 
     @objc public static func appendRUMGlobalContext(_ json: String?) {
-        debugLog("appendRUMGlobalContext called, jsonLength=\(jsonLength(json))")
         if let context = stringDictionary(parseObject(json)) {
             FTMobileAgent.appendRUMGlobalContext(context)
         }
-        debugLog("appendRUMGlobalContext returned")
     }
 
     @objc public static func appendLogGlobalContext(_ json: String?) {
-        debugLog("appendLogGlobalContext called, jsonLength=\(jsonLength(json))")
         if let context = stringDictionary(parseObject(json)) {
             FTMobileAgent.appendLogGlobalContext(context)
         }
-        debugLog("appendLogGlobalContext returned")
     }
 
     @objc public static func appendBridgeContext(_ json: String?) {
-        debugLog("appendBridgeContext called, jsonLength=\(jsonLength(json))")
         _ = parseObject(json)
-        debugLog("appendBridgeContext returned")
     }
 
     @objc public static func flushSyncData() {
-        debugLog("flushSyncData called")
         FTMobileAgent.sharedInstance().flushSyncData()
-        debugLog("flushSyncData returned")
     }
 
     @objc public static func clearAllData() {
-        debugLog("clearAllData called")
         FTMobileAgent.clearAllData()
-        debugLog("clearAllData returned")
     }
 
     @objc public static func shutDown() {
-        debugLog("shutDown called")
         FTMobileAgent.shutDown()
-        debugLog("shutDown returned")
     }
 
     @objc public static func setRumConfig(_ json: String?) {
-        debugLog("setRumConfig called, jsonLength=\(jsonLength(json))")
-        debugLog("setRumConfig params=\(json ?? "null")")
         let params = parseObject(json)
         guard let config = createRumConfig(params) else {
-            debugLog("setRumConfig skipped, missing iOSAppId or appId")
             return
         }
         runOnMainSync {
             FTMobileAgent.sharedInstance().startRum(withConfigOptions: config)
         }
-        debugLog("setRumConfig returned")
     }
 
     @objc public static func startAction(_ json: String?) {
@@ -668,44 +626,33 @@ import GuanceSDK
     }
 
     @objc public static func setLoggerConfig(_ json: String?) {
-        debugLog("setLoggerConfig called, jsonLength=\(jsonLength(json))")
-        debugLog("setLoggerConfig params=\(json ?? "null")")
         let config = createLoggerConfig(parseObject(json))
         runOnMainSync {
             FTMobileAgent.sharedInstance().startLogger(withConfigOptions: config)
         }
-        debugLog("setLoggerConfig returned")
     }
 
     @objc public static func logging(_ json: String?) {
-        debugLog("logging called, jsonLength=\(jsonLength(json))")
         let params = parseObject(json)
         guard let content = stringValue(params["content"]) else {
-            debugLog("logging skipped, missing content")
             return
         }
         FTMobileAgent.sharedInstance().logging(content,
                                                status: loggerStatus(params["status"]),
                                                property: dictionaryValue(params["property"]))
-        debugLog("logging returned")
     }
 
     @objc public static func setTraceConfig(_ json: String?) {
-        debugLog("setTraceConfig called, jsonLength=\(jsonLength(json))")
-        debugLog("setTraceConfig params=\(json ?? "null")")
         let config = createTraceConfig(parseObject(json))
         runOnMainSync {
             FTMobileAgent.sharedInstance().startTrace(withConfigOptions: config)
         }
-        debugLog("setTraceConfig returned")
     }
 
     @objc public static func getTraceHeader(_ json: String?) -> String? {
-        debugLog("getTraceHeader called, jsonLength=\(jsonLength(json))")
         guard let params = parseNullableObject(json),
               let urlString = stringValue(params["url"]),
               let url = URL(string: urlString) else {
-            debugLog("getTraceHeader skipped, missing url")
             return nil
         }
         let result: NSDictionary?
@@ -714,7 +661,6 @@ import GuanceSDK
         } else {
             result = FTExternalDataManager.shared().getTraceHeader(with: url) as NSDictionary?
         }
-        debugLog("getTraceHeader returned, hasResult=\(result != nil)")
         return stringify(result)
     }
 }

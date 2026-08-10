@@ -770,23 +770,11 @@ public func prepareAddResourceParams(_ params: Any?) -> Any {
     result["isBlackResource"] = filterBlackResource(resourceUrl)
     return result
 }
-public var gcUTSDebugEnabled = false
-public func updateUTSDebugEnabled(_ params: GCMobileConfig?) {
-    gcUTSDebugEnabled = params != nil && (params as! GCMobileConfig).debug == true
-}
-public func debugLog(_ message: String) {
-    if (gcUTSDebugEnabled) {
-        console.log("[GC-UniPlugin][iOS][UTS] " + message)
-    }
-}
 public func stringifyParams(_ params: Any?) -> String {
     if (params == nil) {
         return "{}"
     }
     return JSON.stringify(params) ?? "{}"
-}
-public func debugLogConfig(_ methodName: String, _ json: String) {
-    debugLog(methodName + " params=" + json)
 }
 public func parseJSONResult(_ result: String?) -> Any? {
     if (result == nil || (result as! String).length === 0) {
@@ -801,17 +789,14 @@ public func stringifyNullableParams(_ params: Any?) -> String? {
     return JSON.stringify(params)
 }
 public func bindRUMUserCompat(_ userId: String, _ userName: String?, _ userEmail: String?, _ extra: Any?) {
-    GCUniPluginNative.bindRUMUser(userId, userName, userEmail, stringifyNullableParams(extra))
+    GCUniPluginHostNative.bindRUMUser(userId, userName, userEmail, stringifyNullableParams(extra))
 }
 @objc(UTSSDKModulesGCUniPluginMobileAgent)
 @objcMembers
 public class mobileAgent : NSObject {
     public static func sdkConfig(_ params: GCMobileConfig) {
-        updateUTSDebugEnabled(params)
         var json = stringifyParams(normalizeSdkConfigParams(params))
-        debugLogConfig("sdkConfig", json)
-        GCUniPluginNative.sdkConfig(json)
-        debugLog("sdkConfig returned")
+        GCUniPluginHostNative.sdkConfig(json)
     }
     public static func bindRUMUserData(_ params: GCRUMUserDataParams) {
         if (params == nil || params.userId == nil) {
@@ -820,31 +805,30 @@ public class mobileAgent : NSObject {
         bindRUMUserCompat(params.userId, params.userName, params.userEmail, params.extra)
     }
     public static func unbindRUMUserData() {
-        GCUniPluginNative.unbindRUMUserData()
+        GCUniPluginHostNative.unbindRUMUserData()
     }
     public static func appendGlobalContext(_ params: Any?) {
-        GCUniPluginNative.appendGlobalContext(stringifyParams(params))
+        GCUniPluginHostNative.appendGlobalContext(stringifyParams(params))
     }
     public static func appendRUMGlobalContext(_ params: Any?) {
-        GCUniPluginNative.appendRUMGlobalContext(stringifyParams(params))
+        GCUniPluginHostNative.appendRUMGlobalContext(stringifyParams(params))
     }
     public static func appendLogGlobalContext(_ params: Any?) {
-        GCUniPluginNative.appendLogGlobalContext(stringifyParams(params))
+        GCUniPluginHostNative.appendLogGlobalContext(stringifyParams(params))
     }
     public static func appendBridgeContext(_ params: Any?) {
         appendBridgeContextState(params)
     }
     public static func flushSyncData() {
-        GCUniPluginNative.flushSyncData()
+        GCUniPluginHostNative.flushSyncData()
     }
     public static func clearAllData() {
-        GCUniPluginNative.clearAllData()
+        GCUniPluginHostNative.clearAllData()
     }
     public static func shutDown() {
-        GCUniPluginNative.shutDown()
+        GCUniPluginHostNative.shutDown()
     }
     public static func manuallySetApplicationStart() {
-        debugLog("manuallySetApplicationStart is Android only")
     }
 }
 @objc(UTSSDKModulesGCUniPluginRum)
@@ -852,37 +836,35 @@ public class mobileAgent : NSObject {
 public class rum : NSObject {
     public static func setConfig(_ params: GCRUMConfig) {
         var json = stringifyParams(normalizeRumConfigParams(params))
-        debugLogConfig("setRumConfig", json)
-        GCUniPluginNative.setRumConfig(json)
-        debugLog("setRumConfig returned")
+        GCUniPluginHostNative.setRumConfig(json)
     }
     public static func startAction(_ params: GCRUMActionParams) {
-        GCUniPluginNative.startAction(stringifyParams(mergePropertyForParams(params)))
+        GCUniPluginHostNative.startAction(stringifyParams(mergePropertyForParams(params)))
     }
     public static func addAction(_ params: GCRUMActionParams) {
-        GCUniPluginNative.addAction(stringifyParams(mergePropertyForParams(params)))
+        GCUniPluginHostNative.addAction(stringifyParams(mergePropertyForParams(params)))
     }
     public static func onCreateView(_ params: GCRUMCreateViewParams) {
-        GCUniPluginNative.onCreateView(stringifyParams(cloneParams(params)))
+        GCUniPluginHostNative.onCreateView(stringifyParams(cloneParams(params)))
     }
     public static func startView(_ params: GCRUMViewParams) {
-        GCUniPluginNative.startView(stringifyParams(mergePropertyForParams(params)))
+        GCUniPluginHostNative.startView(stringifyParams(mergePropertyForParams(params)))
     }
     public static func stopView(_ params: GCRUMStopViewParams?) {
-        GCUniPluginNative.stopView(stringifyParams(cloneParams(params)))
+        GCUniPluginHostNative.stopView(stringifyParams(cloneParams(params)))
     }
     public static func addError(_ params: GCRUMErrorParams) {
-        GCUniPluginNative.addError(stringifyParams(mergePropertyForParams(params)))
+        GCUniPluginHostNative.addError(stringifyParams(mergePropertyForParams(params)))
     }
     public static func startResource(_ params: GCRUMResourceParams) {
-        GCUniPluginNative.startResource(stringifyParams(mergePropertyForParams(params)))
+        GCUniPluginHostNative.startResource(stringifyParams(mergePropertyForParams(params)))
     }
     public static func stopResource(_ params: GCRUMResourceParams) {
-        GCUniPluginNative.stopResource(stringifyParams(cloneParams(params)))
+        GCUniPluginHostNative.stopResource(stringifyParams(cloneParams(params)))
     }
     public static func addResource(_ params: GCRUMAddResourceParams) {
         var result = prepareAddResourceParams(params)
-        GCUniPluginNative.addResource(stringifyParams(result))
+        GCUniPluginHostNative.addResource(stringifyParams(result))
     }
 }
 @objc(UTSSDKModulesGCUniPluginLogger)
@@ -890,12 +872,10 @@ public class rum : NSObject {
 public class logger : NSObject {
     public static func setConfig(_ params: GCLoggerConfig) {
         var json = stringifyParams(normalizeLoggerConfigParams(params))
-        debugLogConfig("setLoggerConfig", json)
-        GCUniPluginNative.setLoggerConfig(json)
-        debugLog("setLoggerConfig returned")
+        GCUniPluginHostNative.setLoggerConfig(json)
     }
     public static func logging(_ params: GCLoggerLogParams) {
-        GCUniPluginNative.logging(stringifyParams(normalizeLoggingParams(params)))
+        GCUniPluginHostNative.logging(stringifyParams(normalizeLoggingParams(params)))
     }
 }
 @objc(UTSSDKModulesGCUniPluginTracer)
@@ -903,15 +883,11 @@ public class logger : NSObject {
 public class tracer : NSObject {
     public static func setConfig(_ params: GCTraceConfig) {
         var json = stringifyParams(normalizeTraceConfigParams(params))
-        debugLogConfig("setTraceConfig", json)
-        GCUniPluginNative.setTraceConfig(json)
-        debugLog("setTraceConfig returned")
+        GCUniPluginHostNative.setTraceConfig(json)
     }
     public static func getTraceHeader(_ params: GCTraceHeaderParams) -> Any? {
         var json = stringifyParams(params)
-        debugLog("getTraceHeader called, jsonLength=" + json.length.toString())
-        var result = GCUniPluginNative.getTraceHeader(json)
-        debugLog("getTraceHeader returned, hasResult=" + (result == nil ? "false" : "true"))
+        var result = GCUniPluginHostNative.getTraceHeader(json)
         return parseJSONResult(result)
     }
 }

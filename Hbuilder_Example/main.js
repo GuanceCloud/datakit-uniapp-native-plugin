@@ -11,27 +11,6 @@ import {
 initializeGuanceSDK()
 
 const jsCode = `   
-    (function() {
-      var bridge = window.FTWebViewJavascriptBridge;
-      if (!bridge || bridge.__gcSessionReplayEventDebug || !bridge.sendEvent) {
-        return;
-      }
-      bridge.__gcSessionReplayEventDebug = true;
-      var originalSendEvent = bridge.sendEvent;
-      bridge.sendEvent = function(data) {
-        var event = data;
-        if (typeof data === 'string') {
-          try {
-            event = JSON.parse(data);
-          } catch (_) {}
-        }
-        if (event && event.name === 'session_replay') {
-          console.log('[DEBUG-SR-WEB-EVENT-4d9a] session_replay sent to native bridge');
-        }
-        return originalSendEvent.apply(this, arguments);
-      };
-    })();
-
     // Dynamically create and load external script
     var script = document.createElement('script');
     script.src = 'https://static.guance.com/browser-sdk/v3/dataflux-rum.js';

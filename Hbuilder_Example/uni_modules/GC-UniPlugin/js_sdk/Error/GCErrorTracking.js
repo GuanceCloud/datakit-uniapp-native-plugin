@@ -48,7 +48,6 @@ export const gcErrorTracking = {
 			return;
 		}
 		try {
-			console.log(`[FTLog] Error tracking initialized (version: ${FT_JS_PLUGIN_VERSION})`);
 			setupAppStateTracking();
 			this.captureConsoleError();
 			// #ifdef VUE3

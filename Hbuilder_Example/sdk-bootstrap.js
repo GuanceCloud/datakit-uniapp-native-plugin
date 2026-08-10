@@ -8,14 +8,13 @@ import {
 	rum,
 	tracer
 } from '@/uni_modules/GC-UniPlugin'
-// #ifdef APP
 import {
 	GCUniSessionReplay,
 	GCSessionReplayImagePrivacy,
 	GCSessionReplayTextAndInputPrivacy,
 	GCSessionReplayTouchPrivacy
 } from '@/uni_modules/GC-UniSessionReplay'
-// #endif
+
 
 let initialized = false
 
@@ -34,6 +33,7 @@ export function initializeGuanceSDK() {
 		clientToken: SDKConst.CLIENT_TOKEN,
 		autoSync: true,
 		debug: true,
+		offlinePackage: true,
 		env: 'common',
 		globalContext: {
 			sdk_globalContext: 'custom_sdk_globalContext'
@@ -53,24 +53,22 @@ export function initializeGuanceSDK() {
 		rumDiscardStrategy: 'discardOldest',
 		rumCacheLimitCount: 10000,
 		enableTraceWebView: true,
+		enableNativeUserAction: true,
 		globalContext: {
 			track_id: SDKConst.TRACK_ID,
 			rum_globalContext: 'custom_rum_globalContext'
 		}
 	})
 
-	// #ifdef APP
-	if (uni.getSystemInfoSync().platform === 'ios') {
-		GCUniSessionReplay.setConfig({
-			sampleRate: 100,
-			sessionReplayOnErrorSampleRate: 0,
-			touchPrivacy: GCSessionReplayTouchPrivacy.SHOW,
-			textAndInputPrivacy: GCSessionReplayTextAndInputPrivacy.MASK_SENSITIVE_INPUTS,
-			imagePrivacy: GCSessionReplayImagePrivacy.MASK_NONE,
-			enableLinkRUMKeys: ['wgt_id']
-		})
-	}
-	// #endif
+
+	GCUniSessionReplay.setConfig({
+		sampleRate: 100,
+		sessionReplayOnErrorSampleRate: 0,
+		touchPrivacy: GCSessionReplayTouchPrivacy.SHOW,
+		textAndInputPrivacy: GCSessionReplayTextAndInputPrivacy.MASK_SENSITIVE_INPUTS,
+		imagePrivacy: GCSessionReplayImagePrivacy.MASK_NONE,
+		enableLinkRUMKeys: ['wgt_id']
+	})
 
 	gcErrorTracking.startTracking()
 	logger.setConfig({

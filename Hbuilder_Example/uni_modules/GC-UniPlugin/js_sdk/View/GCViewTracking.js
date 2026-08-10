@@ -22,7 +22,12 @@ class PageMonitor {
 		this.activeViewPath = null;
 		this.navBackPagesLength = 0;
 		this.pendingViewLoadMap = {};
+		this.pageLoadStartMap = {};
+		this.pendingViewShowMap = {};
+		this.loadedViewPathMap = {};
+		this.loadedPageVms = new WeakSet();
 		this.sessionReplayJS = null;
+		this.sessionReplayInjectedWebViews = new WeakSet();
 		// Store event listeners for easy destruction
 		this.eventListeners = [];
 		// Native RUM plugin
@@ -98,12 +103,24 @@ class PageMonitor {
 	checkInitialPage() {
 		if (!this.initialized || this.firstPageDetected) return;
 
-		const pagePath = this.getCurrentPagePath();
+		const page = getCurrentPages().pop();
+		const pagePath = this.getPagePath(page);
 		if (!pagePath) {
 			return;
 		}
 
 		this.currentPage = pagePath;
+		if (this.pageHookInstalled) {
+			// The page hooks own loadTime. A page already present here may have
+			// finished rendering, so there is no trustworthy load start to report.
+			if (page.$vm) {
+				this.loadedPageVms.add(page.$vm);
+			}
+			this.loadedViewPathMap[this.getViewKey(pagePath)] = true;
+			this.activateView(pagePath);
+			this.firstPageDetected = true;
+			return;
+		}
 		this.loadStart = this.getLaunchStartTime();
 		console.log('[FTLog] First page fallback check:' + pagePath);
 		this.rumStartView();
@@ -114,6 +131,9 @@ class PageMonitor {
 		return this.getPagePath(page);
 	}
 	evalSessionReplayJS(js) {
+		if (this.sessionReplayJS !== js) {
+			this.sessionReplayInjectedWebViews = new WeakSet();
+		}
 		this.sessionReplayJS = js;
 	}
 	// Check initial page and record
@@ -177,15 +197,20 @@ class PageMonitor {
 
 	// Monitor route changes
 	startWatchRouter() {
-		const registerRouteInterceptor = (name) => {
+		const registerRouteInterceptor = (name, collectLoadedView = true) => {
+			let routePagePath = null;
 			uni.addInterceptor(name, {
 				invoke: (e) => {
-					this.rumRecordNewView(e.url);
+					routePagePath = this.rumRecordNewView(e.url);
 				},
 				success: () => {
+					const targetPagePath = routePagePath || this.currentPage;
+					routePagePath = null;
 					if (!this.pageHookInstalled) {
 						this.rumStartView();
+						return;
 					}
+					this.scheduleRouteFallback(targetPagePath, Date.now(), 0, collectLoadedView);
 				}
 			});
 		};
@@ -200,7 +225,7 @@ class PageMonitor {
 		registerRouteInterceptor('reLaunch');
 
 		// Listen for switchTab
-		registerRouteInterceptor('switchTab');
+		registerRouteInterceptor('switchTab', false);
 
 		// Listen for navigateBack
 		uni.addInterceptor('navigateBack', {
@@ -211,24 +236,117 @@ class PageMonitor {
 				}
 			},
 			success: () => {
-				if (!this.pageHookInstalled && this.navBackPagesLength > 1) {
-					this.navigateBack();
+				if (this.navBackPagesLength > 1) {
+					if (!this.pageHookInstalled) {
+						this.navigateBack();
+						return;
+					}
+					this.scheduleViewActivationFallback();
 				}
 			}
 		});
 	}
 
+	scheduleRouteFallback(pagePath, loadEndTime, attempt = 0, collectLoadedView = true) {
+		if (!pagePath) return;
+		setTimeout(() => {
+			const completed = this.completeRouteFallback(
+				pagePath,
+				loadEndTime,
+				attempt >= 5,
+				collectLoadedView
+			);
+			if (!completed && attempt < 5) {
+				this.scheduleRouteFallback(pagePath, loadEndTime, attempt + 1, collectLoadedView);
+			}
+		}, attempt === 0 ? 0 : 20);
+	}
+
+	completeRouteFallback(
+		pagePath,
+		loadEndTime,
+		allowWithoutCurrentPage = false,
+		collectLoadedView = true
+	) {
+		const normalizedPath = this.normalizePagePath(pagePath);
+		const viewKey = this.getViewKey(normalizedPath);
+		if (!viewKey) return true;
+
+		const currentPagePath = this.getCurrentPagePath();
+		const currentViewKey = this.getViewKey(currentPagePath);
+		if (currentViewKey !== viewKey && !allowWithoutCurrentPage) {
+			return false;
+		}
+		if (this.getViewKey(this.currentPage) !== viewKey) {
+			return true;
+		}
+		if (this.loadedViewPathMap[viewKey] && !collectLoadedView) {
+			delete this.pageLoadStartMap[viewKey];
+			delete this.pendingViewShowMap[viewKey];
+			this.takePendingViewLoad(normalizedPath);
+			this.loadStart = null;
+			this.activateView(normalizedPath, false);
+			return true;
+		}
+
+		let pendingView = this.pageLoadStartMap[viewKey];
+		if (pendingView) {
+			delete this.pageLoadStartMap[viewKey];
+		} else {
+			pendingView = this.takePendingViewLoad(normalizedPath);
+		}
+
+		if (pendingView) {
+			const duration = Math.max(0, loadEndTime - pendingView.startTime) * 1000000;
+			const reportPath = pendingView.pagePath || normalizedPath;
+			this.reportCreateView(reportPath, duration);
+			this.loadedViewPathMap[viewKey] = true;
+			if (pendingView.pageVm) {
+				this.loadedPageVms.add(pendingView.pageVm);
+			}
+			const pages = getCurrentPages();
+			const currentPage = pages[pages.length - 1];
+			if (currentPage && currentPage.$vm) {
+				this.loadedPageVms.add(currentPage.$vm);
+			}
+			this.loadStart = null;
+		}
+		delete this.pendingViewShowMap[viewKey];
+
+		if (pendingView || this.loadedViewPathMap[viewKey]) {
+			// The lifecycle fallback may start View collection, but it must not
+			// broaden Session Replay injection beyond a confirmed page VM.
+			this.activateView(normalizedPath, false);
+		}
+		return true;
+	}
+
+	scheduleViewActivationFallback(attempt = 0) {
+		setTimeout(() => {
+			const pagePath = this.getCurrentPagePath();
+			if (!pagePath && attempt < 5) {
+				this.scheduleViewActivationFallback(attempt + 1);
+				return;
+			}
+			if (!pagePath) return;
+			this.currentPage = pagePath;
+			this.activateView(pagePath, false);
+		}, attempt === 0 ? 0 : 20);
+	}
+
 	// Record new page
 	rumRecordNewView(url) {
-		const pagePath = this.normalizePagePath(url);
-		this.loadStart = Date.now() * 1000000;
+		const pagePath = this.resolvePagePath(url);
+		const startTime = Date.now();
+		this.loadStart = startTime * 1000000;
 		this.currentPage = pagePath;
 		if (!pagePath) {
 			return;
 		}
 		this.pendingViewLoadMap[pagePath] = {
-			startTime: this.loadStart
+			startTime
 		};
+		return pagePath;
 	}
 
 	// Stop old page monitoring and start new page monitoring
@@ -259,55 +377,96 @@ class PageMonitor {
 	}
 
 	handlePageLoad(vm) {
-		if (!this.isPageVm(vm)) return;
-
-		const pagePath = this.getPagePathFromVm(vm);
+		// onLoad can run before getCurrentPages() exposes page.$vm, so use the
+		// lifecycle receiver directly instead of filtering by page.$vm identity.
+		const pagePath = this.getLifecyclePagePath(vm);
 		if (!pagePath) return;
 
 		this.currentPage = pagePath;
-		if (!this.pendingViewLoadMap[pagePath]) {
-			const startTime = this.firstPageDetected ? null : this.getLaunchStartTime();
-			this.pendingViewLoadMap[pagePath] = {
-				startTime
-			};
-		}
+		if (this.loadedPageVms.has(vm)) return;
+
+		const viewKey = this.getViewKey(pagePath);
+		const pendingView = this.takePendingViewLoad(pagePath);
+		if (this.loadedViewPathMap[viewKey] && !pendingView) return;
+		if (this.pageLoadStartMap[viewKey]) return;
+
+		delete this.loadedViewPathMap[viewKey];
+		this.pageLoadStartMap[viewKey] = {
+			pagePath,
+			pageVm: vm,
+			startTime: pendingView ? pendingView.startTime : Date.now()
+		};
 		if (!this.firstPageDetected) {
 			this.firstPageDetected = true;
 		}
 	}
 
-	handlePageReady(vm) {
-		if (!this.isPageVm(vm)) return;
+	takePendingViewLoad(pagePath) {
+		const pendingPath = this.getPendingViewLoadPath(pagePath);
+		const pendingView = pendingPath ? this.pendingViewLoadMap[pendingPath] : null;
+		if (pendingPath) {
+			delete this.pendingViewLoadMap[pendingPath];
+		}
+		return pendingView;
+	}
 
-		const pagePath = this.getPagePathFromVm(vm);
+	getPendingViewLoadPath(pagePath) {
+		if (this.pendingViewLoadMap[pagePath]) return pagePath;
+		const viewKey = this.getViewKey(pagePath);
+		return Object.keys(this.pendingViewLoadMap).find(path => {
+			return this.getViewKey(path) === viewKey;
+		});
+	}
+
+	hasPendingViewLoad(pagePath) {
+		return Boolean(this.getPendingViewLoadPath(pagePath));
+	}
+
+	handlePageReady(vm) {
+		const pagePath = this.getLifecyclePagePath(vm);
 		if (!pagePath) return;
 
-		const pendingView = this.pendingViewLoadMap[pagePath];
-		if (!pendingView || pendingView.startTime === null) {
+		const viewKey = this.getViewKey(pagePath);
+		const pendingView = this.pageLoadStartMap[viewKey];
+		if (!pendingView || this.loadedPageVms.has(vm)) {
 			return;
 		}
 
-		const duration = Date.now() * 1000000 - pendingView.startTime;
-		if (duration >= 0) {
-			this.reportCreateView(pagePath, duration);
-		}
+		const duration = Math.max(0, Date.now() - pendingView.startTime) * 1000000;
+		this.reportCreateView(pendingView.pagePath, duration);
 
-		delete this.pendingViewLoadMap[pagePath];
+		delete this.pageLoadStartMap[viewKey];
+		this.loadedViewPathMap[viewKey] = true;
+		this.loadedPageVms.add(pendingView.pageVm);
+		this.loadedPageVms.add(vm);
+		const pendingShow = this.pendingViewShowMap[viewKey];
+		if (pendingShow) {
+			delete this.pendingViewShowMap[viewKey];
+			this.activateView(pendingShow.pagePath, pendingShow.injectSessionReplay);
+		}
 	}
 
 	handlePageShow(vm) {
-		if (!this.isPageVm(vm)) return;
-
-		const pagePath = this.getPagePathFromVm(vm);
+		const pagePath = this.getLifecyclePagePath(vm);
 		if (!pagePath) return;
 
 		this.currentPage = pagePath;
-		this.activateView(pagePath);
+		const viewKey = this.getViewKey(pagePath);
+		const pageLoad = this.pageLoadStartMap[viewKey];
+		const pendingRoutePath = this.getPendingViewLoadPath(pagePath);
+		if (pageLoad || pendingRoutePath) {
+			this.pendingViewShowMap[viewKey] = {
+				pagePath: pageLoad ? pageLoad.pagePath : pendingRoutePath,
+				injectSessionReplay: this.isPageVm(vm)
+			};
+			return;
+		}
+		// View collection accepts lifecycle proxies. Session Replay injection
+		// keeps the original page.$vm identity boundary.
+		this.activateView(pagePath, this.isPageVm(vm));
 	}
 
 	handlePageHide(vm) {
-		if (!this.isPageVm(vm)) return;
-
 		const pagePath = this.getPagePathFromVm(vm);
 		if (!pagePath) return;
 
@@ -315,12 +474,19 @@ class PageMonitor {
 	}
 
 	handlePageUnload(vm) {
-		if (!this.isPageVm(vm)) return;
-
 		const pagePath = this.getPagePathFromVm(vm);
 		if (!pagePath) return;
 
+		const viewKey = this.getViewKey(pagePath);
+		const pendingView = this.pageLoadStartMap[viewKey];
 		delete this.pendingViewLoadMap[pagePath];
+		delete this.pageLoadStartMap[viewKey];
+		delete this.pendingViewShowMap[viewKey];
+		delete this.loadedViewPathMap[viewKey];
+		if (pendingView) {
+			this.loadedPageVms.delete(pendingView.pageVm);
+		}
+		this.loadedPageVms.delete(vm);
 		this.deactivateView(pagePath);
 	}
 
@@ -354,31 +520,75 @@ class PageMonitor {
 		return this.getPagePath(page);
 	}
 
+	getLifecyclePagePath(vm) {
+		const vmPagePath = this.getPagePathFromVm(vm);
+		if (vmPagePath) return vmPagePath;
+		if (this.currentPage && this.hasPendingViewLoad(this.currentPage)) {
+			return this.currentPage;
+		}
+		return this.getCurrentPagePath();
+	}
+
 	getLaunchStartTime() {
 		return this.appLaunchTime ? this.appLaunchTime * 1000000 : Date.now() * 1000000;
 	}
 
-	activateView(pagePath) {
-		const normalizedPath = this.normalizePagePath(pagePath);
-		if (!normalizedPath || this.activeViewPath === normalizedPath) {
-			return;
+	getViewKey(pagePath) {
+		return this.parseUrl(pagePath).view_name;
+	}
+
+	resolvePagePath(url) {
+		if (!url || typeof url !== 'string') {
+			return null;
 		}
-		const {
-			view_name,
-			qureyJsonStr
-		} = this.parseUrl(normalizedPath);
-		if (!view_name) {
-			return;
+		const trimmedUrl = url.trim();
+		if (!trimmedUrl.startsWith('./') && !trimmedUrl.startsWith('../')) {
+			return this.normalizePagePath(trimmedUrl);
 		}
-		console.log('[FTLog] startView：' + view_name);
-		this.rum.startView({
-			'viewName': view_name,
-			'property': {
-				'view_url_query': qureyJsonStr
+
+		const queryIndex = trimmedUrl.indexOf('?');
+		const relativePath = queryIndex >= 0 ? trimmedUrl.slice(0, queryIndex) : trimmedUrl;
+		const query = queryIndex >= 0 ? trimmedUrl.slice(queryIndex) : '';
+		const currentViewName = this.getViewKey(this.getCurrentPagePath());
+		const pathSegments = currentViewName ? currentViewName.split('/') : [];
+		pathSegments.pop();
+		relativePath.split('/').forEach(segment => {
+			if (!segment || segment === '.') return;
+			if (segment === '..') {
+				pathSegments.pop();
+				return;
 			}
+			pathSegments.push(segment);
 		});
-		this.activeViewPath = normalizedPath;
-		this.evalJS();
+		return this.normalizePagePath(pathSegments.join('/') + query);
+	}
+
+	activateView(pagePath, injectSessionReplay = true) {
+		const normalizedPath = this.normalizePagePath(pagePath);
+		if (!normalizedPath) {
+			return;
+		}
+		if (this.activeViewPath !== normalizedPath) {
+			const {
+				view_name,
+				qureyJsonStr
+			} = this.parseUrl(normalizedPath);
+			if (!view_name) {
+				return;
+			}
+			const params = {
+				'viewName': view_name,
+				'property': {
+					'view_url_query': qureyJsonStr
+				}
+			};
+			console.log('[FTLog] startView:', params);
+			this.rum.startView(params);
+			this.activeViewPath = normalizedPath;
+		}
+		if (injectSessionReplay) {
+			this.evalJS();
+		}
 	}
 
 	deactivateView(pagePath = null) {
@@ -400,10 +610,12 @@ class PageMonitor {
 		if (!view_name) {
 			return;
 		}
-		this.rum.onCreateView({
+		const params = {
 			'viewName': view_name,
 			'loadTime': duration,
-		});
+		};
+		console.log('[FTLog] onCreateView:', params);
+		this.rum.onCreateView(params);
 	}
 
 	normalizePagePath(url) {
@@ -455,64 +667,11 @@ class PageMonitor {
 		if (pages.length > 0 && this.sessionReplayJS) {
 			let pageInstance = pages[pages.length - 1]
 			let webView = pageInstance.$getAppWebview()
-			if (webView) {
-				webView.evalJS(this.buildSessionReplayInjectionJS());
+			if (webView && !this.sessionReplayInjectedWebViews.has(webView)) {
+				webView.evalJS(this.sessionReplayJS);
+				this.sessionReplayInjectedWebViews.add(webView);
 			}
 		}
-	}
-
-	buildSessionReplayInjectionJS() {
-		const sessionReplayJS = this.sessionReplayJS;
-		return `
-;(function () {
-	var stateKey = '__GC_UNI_SESSION_REPLAY_BOOTSTRAP_STATE__';
-	if (window[stateKey] === 'waiting' || window[stateKey] === 'started') {
-		return;
-	}
-	window[stateKey] = 'waiting';
-	var attempt = 0;
-	var maxAttempts = 200;
-
-	function hasRecordsBridge() {
-		var bridge = window.FTWebViewJavascriptBridge;
-		if (!bridge || typeof bridge.getCapabilities !== 'function') {
-			return false;
-		}
-		var capabilities = bridge.getCapabilities();
-		if (Array.isArray(capabilities)) {
-			return capabilities.indexOf('records') !== -1;
-		}
-		return typeof capabilities === 'string' && capabilities.indexOf('records') !== -1;
-	}
-
-	function startSessionReplay() {
-		try {
-			(function () {
-${sessionReplayJS}
-			}).call(window);
-			window[stateKey] = 'started';
-		} catch (error) {
-			window[stateKey] = null;
-			console.error('[FTLog] Session Replay Web SDK injection failed:', error);
-		}
-	}
-
-	function waitForBridge() {
-		if (hasRecordsBridge()) {
-			startSessionReplay();
-			return;
-		}
-		attempt += 1;
-		if (attempt < maxAttempts) {
-			setTimeout(waitForBridge, 50);
-			return;
-		}
-		window[stateKey] = null;
-		console.warn('[FTLog] Session Replay Web SDK injection skipped because the Native records bridge is unavailable.');
-	}
-
-	waitForBridge();
-})();`;
 	}
 }
 

@@ -2,7 +2,7 @@
   "id": "GC-UniSessionReplay",
   "displayName": "GC-UniSessionReplay",
   "version": "0.2.7-alpha.1",
-  "description": "Optional Guance Session Replay support for UniApp on iOS",
+  "description": "Optional Guance Session Replay support for UniApp",
   "keywords": [
     "GC-UniSessionReplay",
     "Session Replay",
@@ -38,9 +38,7 @@
     "widescreen": "-"
   },
   "uni_modules": {
-    "dependencies": [
-      "GC-UniPlugin"
-    ],
+	"dependencies": ["GC-UniPlugin"],
     "encrypt": [],
     "platforms": {
       "cloud": {
@@ -61,7 +59,7 @@
           "app": {
             "vue": "u",
             "nvue": "-",
-            "android": "-",
+            "android": "u",
             "ios": "u",
             "harmony": "-"
           },
@@ -88,7 +86,7 @@
             "chrome": "-"
           },
           "app": {
-            "android": "-",
+            "android": "u",
             "ios": "u",
             "harmony": "-"
           },

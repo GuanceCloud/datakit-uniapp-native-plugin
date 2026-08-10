@@ -3,17 +3,15 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 54;
+	objectVersion = 55;
 	objects = {
 
 /* Begin PBXBuildFile section */
 		1751FB486DED8C8FE95EE3CF /* Pods_HBuilder.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 054E54C10C0CB2D994695752 /* Pods_HBuilder.framework */; };
-		1DCEEE3FB91A5FE65E38E1CC /* GuanceSessionReplay-Dynamic.xcframework in Embed Guance UTS Frameworks */ = {isa = PBXBuildFile; fileRef = 64E29F1C2A27641F62B02D30 /* GuanceSessionReplay-Dynamic.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		2F0BA3F9215B48A700F67004 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2F0BA3F8215B48A700F67004 /* Images.xcassets */; };
 		2F0BA4DC215BA12300F67004 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2F0BA4DB215BA12300F67004 /* LaunchScreen.storyboard */; };
 		2FDE6A45296D7618004C7701 /* DCloud.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FDE6A44296D7618004C7701 /* DCloud.swift */; };
-		317CBDE407745E4E7B394762 /* unimoduleGCUniSessionReplay.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 573DE4E7F36E37D111918907 /* unimoduleGCUniSessionReplay.framework */; };
-		5E104C96251A3E8D07F86631 /* GuanceSDK-Dynamic.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 70AFEBB3B001F3745EA5A999 /* GuanceSDK-Dynamic.xcframework */; };
+		6614C5549E671AA033CC9CF5 /* unimoduleGCUniSessionReplay.framework in Embed Guance UTS Frameworks */ = {isa = PBXBuildFile; fileRef = 25D0F7D070C8F1FBA5F93DDD /* unimoduleGCUniSessionReplay.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		67065F3A2243868400DC71CA /* Default-896h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 67065F1E2243868300DC71CA /* Default-896h@2x.png */; };
 		67065F3B2243868400DC71CA /* Default-Landscape-812h@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 67065F1F2243868300DC71CA /* Default-Landscape-812h@3x.png */; };
 		67065F3C2243868400DC71CA /* Default-Landscape-896h@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 67065F202243868300DC71CA /* Default-Landscape-896h@3x.png */; };
@@ -52,7 +50,6 @@
 		67B7CAD621DE1F160083E96A /* bds_easr_wakeup_words.dat in Resources */ = {isa = PBXBuildFile; fileRef = 67B7CACE21DE1F150083E96A /* bds_easr_wakeup_words.dat */; };
 		67B7CAD721DE1F160083E96A /* bds_easr_dnn_wakeup_model.dat in Resources */ = {isa = PBXBuildFile; fileRef = 67B7CACF21DE1F150083E96A /* bds_easr_dnn_wakeup_model.dat */; };
 		67E9CDCF22968D2E0076E0FB /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 67E9CDCD22968D2E0076E0FB /* Localizable.strings */; };
-		76D8D4FCD0770A80731D89AF /* GuanceSessionReplay-Dynamic.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 64E29F1C2A27641F62B02D30 /* GuanceSessionReplay-Dynamic.xcframework */; };
 		8EED62A6198A1D13000A4449 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 8EED62A4198A1D13000A4449 /* InfoPlist.strings */; };
 		8EED62A8198A1D13000A4449 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 8EED62A7198A1D13000A4449 /* main.m */; };
 		8EED62AC198A1D13000A4449 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 8EED62AB198A1D13000A4449 /* AppDelegate.m */; };
@@ -60,82 +57,137 @@
 		8EED6590198A3DF7000A4449 /* Pandora in Resources */ = {isa = PBXBuildFile; fileRef = 8EED658F198A3DF7000A4449 /* Pandora */; };
 		93A4B3322FF65FFD00FF4DC5 /* libmp3lame.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 93A4B3312FF65FFD00FF4DC5 /* libmp3lame.a */; };
 		97A515B92450496100BC028D /* DCTestUniPlugin.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9759EDCE245048CF0076CC51 /* DCTestUniPlugin.framework */; };
-		C38C7C780A5147586585C4E2 /* unimoduleGCUniSessionReplay.framework in Embed Guance UTS Frameworks */ = {isa = PBXBuildFile; fileRef = 573DE4E7F36E37D111918907 /* unimoduleGCUniSessionReplay.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		C8CEA20C74CD27AABB1F3132 /* unimoduleGCUniPlugin.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1CBE658307B2BB2B2DA8D1C2 /* unimoduleGCUniPlugin.framework */; };
-		E385832EC510DC118CC1AB6D /* unimoduleGCUniPlugin.framework in Embed Guance UTS Frameworks */ = {isa = PBXBuildFile; fileRef = 1CBE658307B2BB2B2DA8D1C2 /* unimoduleGCUniPlugin.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		E4AE4601E2A74C2E02684E48 /* GuanceSDK-Dynamic.xcframework in Embed Guance UTS Frameworks */ = {isa = PBXBuildFile; fileRef = 70AFEBB3B001F3745EA5A999 /* GuanceSDK-Dynamic.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		D9030822E1A569F49F68368A /* unimoduleGCUniPlugin.framework in Embed Guance UTS Frameworks */ = {isa = PBXBuildFile; fileRef = 990037E3EB0A65DE84CC663E /* unimoduleGCUniPlugin.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		E900F69DAFBD9F813AFBA8F8 /* unimoduleGCUniPlugin.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 990037E3EB0A65DE84CC663E /* unimoduleGCUniPlugin.framework */; };
+		EB09AFE994BF9060F523831F /* unimoduleGCUniSessionReplay.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 25D0F7D070C8F1FBA5F93DDD /* unimoduleGCUniSessionReplay.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
-		17C174C03010EAD60072FEC2 /* PBXContainerItemProxy */ = {
+		055F58682DC9061AC4ACA27E /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 84A305E4C09F9443FB7E8FF7 /* UTSFrameworks/unimoduleGCUniPlugin/unimoduleGCUniPlugin.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 533666DD791AD4CAED24D1BF;
+			remoteInfo = unimoduleGCUniPlugin.framework;
+		};
+		089B2F735A34A46402C52FFD /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 84A305E4C09F9443FB7E8FF7 /* UTSFrameworks/unimoduleGCUniPlugin/unimoduleGCUniPlugin.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 74B04449667AD447615548CD;
+			remoteInfo = unimoduleGCUniPlugin;
+		};
+		17C1BE373021D04C00DCAF32 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 84A305E4C09F9443FB7E8FF7 /* UTSFrameworks/unimoduleGCUniPlugin/unimoduleGCUniPlugin.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 533666DD791AD4CAED24D1BF;
+			remoteInfo = unimoduleGCUniPlugin;
+		};
+		17C1BE3A3021D04C00DCAF32 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = CAC56D651F8E4056BA302368 /* UTSFrameworks/unimoduleGCUniPlugin/unimoduleGCUniPlugin.xcodeproj */;
 			proxyType = 2;
-			remoteGlobalIDString = 49EEFAC48077B83B58A3ED2A;
+			remoteGlobalIDString = 533666DD791AD4CAED24D1BF;
 			remoteInfo = unimoduleGCUniPlugin;
 		};
-		17C174C33010EAD60072FEC2 /* PBXContainerItemProxy */ = {
+		17C1BE3D3021D04C00DCAF32 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 654E3A5281883D6506965403 /* UTSFrameworks/unimoduleGCUniPlugin/unimoduleGCUniPlugin.xcodeproj */;
 			proxyType = 2;
-			remoteGlobalIDString = 49EEFAC48077B83B58A3ED2A;
+			remoteGlobalIDString = 533666DD791AD4CAED24D1BF;
 			remoteInfo = unimoduleGCUniPlugin;
 		};
-		17C174C63010EAD60072FEC2 /* PBXContainerItemProxy */ = {
+		17C1BE403021D04C00DCAF32 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = EC885A32830FC7BEC5E8439A /* UTSFrameworks/unimoduleGCUniPlugin/unimoduleGCUniPlugin.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 533666DD791AD4CAED24D1BF;
+			remoteInfo = unimoduleGCUniPlugin;
+		};
+		17C1BE433021D04C00DCAF32 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 681B47A720FA98EDC5DB76A1 /* UTSFrameworks/unimoduleGCUniPlugin/unimoduleGCUniPlugin.xcodeproj */;
 			proxyType = 2;
-			remoteGlobalIDString = 49EEFAC48077B83B58A3ED2A;
+			remoteGlobalIDString = 533666DD791AD4CAED24D1BF;
 			remoteInfo = unimoduleGCUniPlugin;
 		};
-		17C174C93010EAD60072FEC2 /* PBXContainerItemProxy */ = {
+		17C1BE463021D04C00DCAF32 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 3B89154720EA18A71E09711C /* UTSFrameworks/unimoduleGCUniPlugin/unimoduleGCUniPlugin.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 533666DD791AD4CAED24D1BF;
+			remoteInfo = unimoduleGCUniPlugin;
+		};
+		17C1BE493021D04C00DCAF32 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 161E56E7BB5EF432A139CB1C /* UTSFrameworks/unimoduleGCUniPlugin/unimoduleGCUniPlugin.xcodeproj */;
 			proxyType = 2;
-			remoteGlobalIDString = 49EEFAC48077B83B58A3ED2A;
+			remoteGlobalIDString = 533666DD791AD4CAED24D1BF;
 			remoteInfo = unimoduleGCUniPlugin;
 		};
-		17C174CC3010EAD60072FEC2 /* PBXContainerItemProxy */ = {
+		17C1BE4C3021D04C00DCAF32 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = AA58CC2EBCCB71DC0B8CC287 /* UTSFrameworks/unimoduleGCUniSessionReplay/unimoduleGCUniSessionReplay.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = B1FA1FC6113033D3D0A1F9E6;
+			remoteInfo = unimoduleGCUniSessionReplay;
+		};
+		17C1BE4F3021D04C00DCAF32 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 4C34779DF0027CD98865B5C8 /* UTSFrameworks/unimoduleGCUniSessionReplay/unimoduleGCUniSessionReplay.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = B1FA1FC6113033D3D0A1F9E6;
+			remoteInfo = unimoduleGCUniSessionReplay;
+		};
+		17C1BE523021D04C00DCAF32 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 643CFFBC6581086DB4FD1172 /* UTSFrameworks/unimoduleGCUniSessionReplay/unimoduleGCUniSessionReplay.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = B1FA1FC6113033D3D0A1F9E6;
+			remoteInfo = unimoduleGCUniSessionReplay;
+		};
+		17C1BE553021D04C00DCAF32 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = CB43A21233CB84676E226D3E /* UTSFrameworks/unimoduleGCUniSessionReplay/unimoduleGCUniSessionReplay.xcodeproj */;
 			proxyType = 2;
-			remoteGlobalIDString = C7AA98C5E38EB8F34CC24253;
+			remoteGlobalIDString = B1FA1FC6113033D3D0A1F9E6;
 			remoteInfo = unimoduleGCUniSessionReplay;
 		};
-		17C174CF3010EAD60072FEC2 /* PBXContainerItemProxy */ = {
+		17C1BE583021D04C00DCAF32 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = DD59E6FBEBD24EDCAED90729 /* UTSFrameworks/unimoduleGCUniSessionReplay/unimoduleGCUniSessionReplay.xcodeproj */;
 			proxyType = 2;
-			remoteGlobalIDString = C7AA98C5E38EB8F34CC24253;
+			remoteGlobalIDString = B1FA1FC6113033D3D0A1F9E6;
 			remoteInfo = unimoduleGCUniSessionReplay;
 		};
-		17C174D23010EAD60072FEC2 /* PBXContainerItemProxy */ = {
+		17C1BE5B3021D04C00DCAF32 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 8D80A4794114AD5EC4B421FB /* UTSFrameworks/unimoduleGCUniSessionReplay/unimoduleGCUniSessionReplay.xcodeproj */;
 			proxyType = 2;
-			remoteGlobalIDString = C7AA98C5E38EB8F34CC24253;
+			remoteGlobalIDString = B1FA1FC6113033D3D0A1F9E6;
 			remoteInfo = unimoduleGCUniSessionReplay;
 		};
-		17C174D53010EAD60072FEC2 /* PBXContainerItemProxy */ = {
+		17C1BE5E3021D04C00DCAF32 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = BB6263E170119FE465F17905 /* UTSFrameworks/unimoduleGCUniSessionReplay/unimoduleGCUniSessionReplay.xcodeproj */;
 			proxyType = 2;
-			remoteGlobalIDString = C7AA98C5E38EB8F34CC24253;
+			remoteGlobalIDString = B1FA1FC6113033D3D0A1F9E6;
 			remoteInfo = unimoduleGCUniSessionReplay;
 		};
-		1FABF78053FEB7455348E974 /* PBXContainerItemProxy */ = {
+		1E040C95A862D5CFE180BBDB /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
-			containerPortal = BB6263E170119FE465F17905 /* UTSFrameworks/unimoduleGCUniSessionReplay/unimoduleGCUniSessionReplay.xcodeproj */;
+			containerPortal = 643CFFBC6581086DB4FD1172 /* UTSFrameworks/unimoduleGCUniSessionReplay/unimoduleGCUniSessionReplay.xcodeproj */;
 			proxyType = 1;
-			remoteGlobalIDString = ADF31D7D31E1587F5F62398B;
+			remoteGlobalIDString = BE79EA3EDABD9D78C45CC668;
 			remoteInfo = unimoduleGCUniSessionReplay;
 		};
-		90884D00545B32D2648584F1 /* PBXContainerItemProxy */ = {
+		455B24B8A9415073243A3F37 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
-			containerPortal = 654E3A5281883D6506965403 /* UTSFrameworks/unimoduleGCUniPlugin/unimoduleGCUniPlugin.xcodeproj */;
+			containerPortal = 643CFFBC6581086DB4FD1172 /* UTSFrameworks/unimoduleGCUniSessionReplay/unimoduleGCUniSessionReplay.xcodeproj */;
 			proxyType = 2;
-			remoteGlobalIDString = 49EEFAC48077B83B58A3ED2A;
-			remoteInfo = unimoduleGCUniPlugin.framework;
+			remoteGlobalIDString = B1FA1FC6113033D3D0A1F9E6;
+			remoteInfo = unimoduleGCUniSessionReplay.framework;
 		};
 		9759EDCD245048CF0076CC51 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -151,37 +203,9 @@
 			remoteGlobalIDString = 9759EDBD245048A40076CC51;
 			remoteInfo = DCTestUniPlugin;
 		};
-		AF00424ED87AC9D17A887A63 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = BB6263E170119FE465F17905 /* UTSFrameworks/unimoduleGCUniSessionReplay/unimoduleGCUniSessionReplay.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = C7AA98C5E38EB8F34CC24253;
-			remoteInfo = unimoduleGCUniSessionReplay.framework;
-		};
-		E03520325C49BF18338AB85D /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 654E3A5281883D6506965403 /* UTSFrameworks/unimoduleGCUniPlugin/unimoduleGCUniPlugin.xcodeproj */;
-			proxyType = 1;
-			remoteGlobalIDString = C4E01C7B3649AFD7BD439112;
-			remoteInfo = unimoduleGCUniPlugin;
-		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
-		53C10C60A796D0D492DEBF6B /* Embed Guance UTS Frameworks */ = {
-			isa = PBXCopyFilesBuildPhase;
-			buildActionMask = 2147483647;
-			dstPath = "";
-			dstSubfolderSpec = 10;
-			files = (
-				E4AE4601E2A74C2E02684E48 /* GuanceSDK-Dynamic.xcframework in Embed Guance UTS Frameworks */,
-				1DCEEE3FB91A5FE65E38E1CC /* GuanceSessionReplay-Dynamic.xcframework in Embed Guance UTS Frameworks */,
-				E385832EC510DC118CC1AB6D /* unimoduleGCUniPlugin.framework in Embed Guance UTS Frameworks */,
-				C38C7C780A5147586585C4E2 /* unimoduleGCUniSessionReplay.framework in Embed Guance UTS Frameworks */,
-			);
-			name = "Embed Guance UTS Frameworks";
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 		7A4980F42126ADAD00D20880 /* Embed Frameworks */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
@@ -190,6 +214,18 @@
 			files = (
 			);
 			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		8EA664412C65541D27DBBD23 /* Embed Guance UTS Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				D9030822E1A569F49F68368A /* unimoduleGCUniPlugin.framework in Embed Guance UTS Frameworks */,
+				6614C5549E671AA033CC9CF5 /* unimoduleGCUniSessionReplay.framework in Embed Guance UTS Frameworks */,
+			);
+			name = "Embed Guance UTS Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXCopyFilesBuildPhase section */
@@ -228,6 +264,8 @@
 		2F9FE7EE2BD8E85F001137CC /* PrivacyInfo.xcprivacy */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; name = PrivacyInfo.xcprivacy; path = ../SDK/PrivacyInfo.xcprivacy; sourceTree = "<group>"; };
 		2FDE6A43296D7617004C7701 /* HBuilder-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "HBuilder-Bridging-Header.h"; sourceTree = "<group>"; };
 		2FDE6A44296D7618004C7701 /* DCloud.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DCloud.swift; sourceTree = "<group>"; };
+		3B89154720EA18A71E09711C /* UTSFrameworks/unimoduleGCUniPlugin/unimoduleGCUniPlugin.xcodeproj */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = "wrapper.pb-project"; path = UTSFrameworks/unimoduleGCUniPlugin/unimoduleGCUniPlugin.xcodeproj; sourceTree = SOURCE_ROOT; };
+		4C34779DF0027CD98865B5C8 /* UTSFrameworks/unimoduleGCUniSessionReplay/unimoduleGCUniSessionReplay.xcodeproj */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = "wrapper.pb-project"; path = UTSFrameworks/unimoduleGCUniSessionReplay/unimoduleGCUniSessionReplay.xcodeproj; sourceTree = SOURCE_ROOT; };
 		4FA53F7B26E5D14400BAD6A0 /* uni-jsframework-vue3.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = "uni-jsframework-vue3.js"; sourceTree = "<group>"; };
 		4FF0AB46259062C700A54D59 /* UIImage+ExtendedCacheData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+ExtendedCacheData.h"; sourceTree = "<group>"; };
 		4FF0AB47259062C700A54D59 /* SDAnimatedImageRep.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SDAnimatedImageRep.h; sourceTree = "<group>"; };
@@ -350,7 +388,7 @@
 		4FF0ABC6259062C700A54D59 /* SDImageCachesManagerOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SDImageCachesManagerOperation.h; sourceTree = "<group>"; };
 		4FF0ABC7259062C700A54D59 /* UIColor+SDHexString.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIColor+SDHexString.h"; sourceTree = "<group>"; };
 		4FF0ABC8259062C700A54D59 /* SDImageAssetManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SDImageAssetManager.h; sourceTree = "<group>"; };
-		64E29F1C2A27641F62B02D30 /* GuanceSessionReplay-Dynamic.xcframework */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = wrapper.xcframework; name = "GuanceSessionReplay-Dynamic.xcframework"; path = "SharedFrameworks/GuanceSessionReplay-Dynamic.xcframework"; sourceTree = "<group>"; };
+		643CFFBC6581086DB4FD1172 /* UTSFrameworks/unimoduleGCUniSessionReplay/unimoduleGCUniSessionReplay.xcodeproj */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = "wrapper.pb-project"; path = UTSFrameworks/unimoduleGCUniSessionReplay/unimoduleGCUniSessionReplay.xcodeproj; sourceTree = SOURCE_ROOT; };
 		654E3A5281883D6506965403 /* UTSFrameworks/unimoduleGCUniPlugin/unimoduleGCUniPlugin.xcodeproj */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = "wrapper.pb-project"; path = UTSFrameworks/unimoduleGCUniPlugin/unimoduleGCUniPlugin.xcodeproj; sourceTree = SOURCE_ROOT; };
 		67065F1E2243868300DC71CA /* Default-896h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-896h@2x.png"; sourceTree = "<group>"; };
 		67065F1F2243868300DC71CA /* Default-Landscape-812h@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-Landscape-812h@3x.png"; sourceTree = "<group>"; };
@@ -396,8 +434,8 @@
 		67E9CDCE22968D2E0076E0FB /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/Localizable.strings"; sourceTree = "<group>"; };
 		67E9CDD022968D350076E0FB /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
 		681B47A720FA98EDC5DB76A1 /* UTSFrameworks/unimoduleGCUniPlugin/unimoduleGCUniPlugin.xcodeproj */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = "wrapper.pb-project"; path = UTSFrameworks/unimoduleGCUniPlugin/unimoduleGCUniPlugin.xcodeproj; sourceTree = SOURCE_ROOT; };
-		70AFEBB3B001F3745EA5A999 /* GuanceSDK-Dynamic.xcframework */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = wrapper.xcframework; name = "GuanceSDK-Dynamic.xcframework"; path = "SharedFrameworks/GuanceSDK-Dynamic.xcframework"; sourceTree = "<group>"; };
 		7F7445F98D6634613BF31CE0 /* Pods-HBuilder.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-HBuilder.debug.xcconfig"; path = "Target Support Files/Pods-HBuilder/Pods-HBuilder.debug.xcconfig"; sourceTree = "<group>"; };
+		84A305E4C09F9443FB7E8FF7 /* UTSFrameworks/unimoduleGCUniPlugin/unimoduleGCUniPlugin.xcodeproj */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = "wrapper.pb-project"; path = UTSFrameworks/unimoduleGCUniPlugin/unimoduleGCUniPlugin.xcodeproj; sourceTree = SOURCE_ROOT; };
 		8D80A4794114AD5EC4B421FB /* UTSFrameworks/unimoduleGCUniSessionReplay/unimoduleGCUniSessionReplay.xcodeproj */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = "wrapper.pb-project"; path = UTSFrameworks/unimoduleGCUniSessionReplay/unimoduleGCUniSessionReplay.xcodeproj; sourceTree = SOURCE_ROOT; };
 		8EED6298198A1D13000A4449 /* UniPluginDemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = UniPluginDemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		8EED62A3198A1D13000A4449 /* HBuilder-uniPlugin-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "HBuilder-uniPlugin-Info.plist"; sourceTree = "<group>"; };
@@ -487,10 +525,12 @@
 		95D879FC2583A6A800244F71 /* WXAComponent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WXAComponent.h; sourceTree = "<group>"; };
 		95D879FD2583A6A800244F71 /* WXBridgeProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WXBridgeProtocol.h; sourceTree = "<group>"; };
 		9759EDC9245048CF0076CC51 /* DCTestUniPlugin.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = DCTestUniPlugin.xcodeproj; path = DCTestUniPlugin/DCTestUniPlugin.xcodeproj; sourceTree = "<group>"; };
+		AA58CC2EBCCB71DC0B8CC287 /* UTSFrameworks/unimoduleGCUniSessionReplay/unimoduleGCUniSessionReplay.xcodeproj */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = "wrapper.pb-project"; path = UTSFrameworks/unimoduleGCUniSessionReplay/unimoduleGCUniSessionReplay.xcodeproj; sourceTree = SOURCE_ROOT; };
 		BB6263E170119FE465F17905 /* UTSFrameworks/unimoduleGCUniSessionReplay/unimoduleGCUniSessionReplay.xcodeproj */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = "wrapper.pb-project"; path = UTSFrameworks/unimoduleGCUniSessionReplay/unimoduleGCUniSessionReplay.xcodeproj; sourceTree = SOURCE_ROOT; };
 		CAC56D651F8E4056BA302368 /* UTSFrameworks/unimoduleGCUniPlugin/unimoduleGCUniPlugin.xcodeproj */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = "wrapper.pb-project"; path = UTSFrameworks/unimoduleGCUniPlugin/unimoduleGCUniPlugin.xcodeproj; sourceTree = SOURCE_ROOT; };
 		CB43A21233CB84676E226D3E /* UTSFrameworks/unimoduleGCUniSessionReplay/unimoduleGCUniSessionReplay.xcodeproj */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = "wrapper.pb-project"; path = UTSFrameworks/unimoduleGCUniSessionReplay/unimoduleGCUniSessionReplay.xcodeproj; sourceTree = SOURCE_ROOT; };
 		DD59E6FBEBD24EDCAED90729 /* UTSFrameworks/unimoduleGCUniSessionReplay/unimoduleGCUniSessionReplay.xcodeproj */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = "wrapper.pb-project"; path = UTSFrameworks/unimoduleGCUniSessionReplay/unimoduleGCUniSessionReplay.xcodeproj; sourceTree = SOURCE_ROOT; };
+		EC885A32830FC7BEC5E8439A /* UTSFrameworks/unimoduleGCUniPlugin/unimoduleGCUniPlugin.xcodeproj */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = "wrapper.pb-project"; path = UTSFrameworks/unimoduleGCUniPlugin/unimoduleGCUniPlugin.xcodeproj; sourceTree = SOURCE_ROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -501,20 +541,27 @@
 				93A4B3322FF65FFD00FF4DC5 /* libmp3lame.a in Frameworks */,
 				97A515B92450496100BC028D /* DCTestUniPlugin.framework in Frameworks */,
 				1751FB486DED8C8FE95EE3CF /* Pods_HBuilder.framework in Frameworks */,
-				5E104C96251A3E8D07F86631 /* GuanceSDK-Dynamic.xcframework in Frameworks */,
-				76D8D4FCD0770A80731D89AF /* GuanceSessionReplay-Dynamic.xcframework in Frameworks */,
-				C8CEA20C74CD27AABB1F3132 /* unimoduleGCUniPlugin.framework in Frameworks */,
-				317CBDE407745E4E7B394762 /* unimoduleGCUniSessionReplay.framework in Frameworks */,
+				E900F69DAFBD9F813AFBA8F8 /* unimoduleGCUniPlugin.framework in Frameworks */,
+				EB09AFE994BF9060F523831F /* unimoduleGCUniSessionReplay.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		05B5DF8FE4CCCE98B444841E /* Products Products */ = {
+			isa = PBXGroup;
+			children = (
+				990037E3EB0A65DE84CC663E /* unimoduleGCUniPlugin.framework */,
+				25D0F7D070C8F1FBA5F93DDD /* unimoduleGCUniSessionReplay.framework */,
+			);
+			name = "Products Products";
+			sourceTree = "<group>";
+		};
 		17C1746D3010E90E0072FEC2 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				17C174D03010EAD60072FEC2 /* unimoduleGCUniSessionReplay.framework */,
+				17C1BE593021D04C00DCAF32 /* unimoduleGCUniSessionReplay.framework */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -522,7 +569,7 @@
 		17C1746F3010E90E0072FEC2 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				17C174C73010EAD60072FEC2 /* unimoduleGCUniPlugin.framework */,
+				17C1BE443021D04C00DCAF32 /* unimoduleGCUniPlugin.framework */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -530,7 +577,7 @@
 		17C1747D3010E9610072FEC2 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				17C174CA3010EAD60072FEC2 /* unimoduleGCUniPlugin.framework */,
+				17C1BE4A3021D04C00DCAF32 /* unimoduleGCUniPlugin.framework */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -538,7 +585,7 @@
 		17C1747F3010E9610072FEC2 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				17C174CD3010EAD60072FEC2 /* unimoduleGCUniSessionReplay.framework */,
+				17C1BE563021D04C00DCAF32 /* unimoduleGCUniSessionReplay.framework */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -546,7 +593,7 @@
 		17C174973010E9860072FEC2 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				17C174C13010EAD60072FEC2 /* unimoduleGCUniPlugin.framework */,
+				17C1BE3B3021D04C00DCAF32 /* unimoduleGCUniPlugin.framework */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -554,7 +601,7 @@
 		17C174993010E9860072FEC2 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				17C174D33010EAD60072FEC2 /* unimoduleGCUniSessionReplay.framework */,
+				17C1BE5C3021D04C00DCAF32 /* unimoduleGCUniSessionReplay.framework */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -562,7 +609,7 @@
 		17C174BB3010EAD50072FEC2 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				17C174C43010EAD60072FEC2 /* unimoduleGCUniPlugin.framework */,
+				17C1BE3E3021D04C00DCAF32 /* unimoduleGCUniPlugin.framework */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -570,28 +617,57 @@
 		17C174BD3010EAD50072FEC2 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				17C174D63010EAD60072FEC2 /* unimoduleGCUniSessionReplay.framework */,
+				17C1BE5F3021D04C00DCAF32 /* unimoduleGCUniSessionReplay.framework */,
 			);
 			name = Products;
 			sourceTree = "<group>";
 		};
-		2AFD491E45FD9F6031FC3886 /* Guance Shared Frameworks */ = {
+		17C1BDC530218FAD00DCAF32 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				70AFEBB3B001F3745EA5A999 /* GuanceSDK-Dynamic.xcframework */,
-				64E29F1C2A27641F62B02D30 /* GuanceSessionReplay-Dynamic.xcframework */,
+				17C1BE473021D04C00DCAF32 /* unimoduleGCUniPlugin.framework */,
 			);
-			name = "Guance Shared Frameworks";
+			name = Products;
 			sourceTree = "<group>";
 		};
-		2EEE138ECFA920C6D859247A /* Guance UTS Modules */ = {
+		17C1BDC730218FAD00DCAF32 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				654E3A5281883D6506965403 /* UTSFrameworks/unimoduleGCUniPlugin/unimoduleGCUniPlugin.xcodeproj */,
-				55CD52EB911BEAE482DF3635 /* Products Products */,
-				BB6263E170119FE465F17905 /* UTSFrameworks/unimoduleGCUniSessionReplay/unimoduleGCUniSessionReplay.xcodeproj */,
+				17C1BE503021D04C00DCAF32 /* unimoduleGCUniSessionReplay.framework */,
 			);
-			name = "Guance UTS Modules";
+			name = Products;
+			sourceTree = "<group>";
+		};
+		17C1BDFD302192B900DCAF32 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				17C1BE413021D04C00DCAF32 /* unimoduleGCUniPlugin.framework */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		17C1BDFF302192B900DCAF32 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				17C1BE4D3021D04C00DCAF32 /* unimoduleGCUniSessionReplay.framework */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		17C1BE323021D04900DCAF32 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				17C1BE383021D04C00DCAF32 /* unimoduleGCUniPlugin.framework */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		17C1BE343021D04900DCAF32 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				17C1BE533021D04C00DCAF32 /* unimoduleGCUniSessionReplay.framework */,
+			);
+			name = Products;
 			sourceTree = "<group>";
 		};
 		2F0BA3FA215B4A4100F67004 /* inc */ = {
@@ -858,13 +934,14 @@
 			path = Private;
 			sourceTree = "<group>";
 		};
-		55CD52EB911BEAE482DF3635 /* Products Products */ = {
+		5EF57CFFDD31D496AA2950EA /* Guance UTS Modules */ = {
 			isa = PBXGroup;
 			children = (
-				1CBE658307B2BB2B2DA8D1C2 /* unimoduleGCUniPlugin.framework */,
-				573DE4E7F36E37D111918907 /* unimoduleGCUniSessionReplay.framework */,
+				84A305E4C09F9443FB7E8FF7 /* UTSFrameworks/unimoduleGCUniPlugin/unimoduleGCUniPlugin.xcodeproj */,
+				05B5DF8FE4CCCE98B444841E /* Products Products */,
+				643CFFBC6581086DB4FD1172 /* UTSFrameworks/unimoduleGCUniSessionReplay/unimoduleGCUniSessionReplay.xcodeproj */,
 			);
-			name = "Products Products";
+			name = "Guance UTS Modules";
 			sourceTree = "<group>";
 		};
 		67B7CAC721DE1F150083E96A /* BDSClientEASRResources */ = {
@@ -900,8 +977,7 @@
 				8EED629A198A1D13000A4449 /* Frameworks */,
 				8EED6299198A1D13000A4449 /* Products */,
 				7B24A92211D27A6D6A40A126 /* Pods */,
-				2EEE138ECFA920C6D859247A /* Guance UTS Modules */,
-				2AFD491E45FD9F6031FC3886 /* Guance Shared Frameworks */,
+				5EF57CFFDD31D496AA2950EA /* Guance UTS Modules */,
 			);
 			sourceTree = "<group>";
 		};
@@ -1103,14 +1179,14 @@
 				7A4980F42126ADAD00D20880 /* Embed Frameworks */,
 				1ABA8FA9856BAF61BA6E0232 /* [CP] Embed Pods Frameworks */,
 				76E426FAD45818A9D3D0ACAD /* [CP] Copy Pods Resources */,
-				53C10C60A796D0D492DEBF6B /* Embed Guance UTS Frameworks */,
+				8EA664412C65541D27DBBD23 /* Embed Guance UTS Frameworks */,
 			);
 			buildRules = (
 			);
 			dependencies = (
 				97A515B72450495A00BC028D /* PBXTargetDependency */,
-				5DBC65A1D5608FED6CD22173 /* PBXTargetDependency */,
-				7E59045575FB089F257B27BF /* PBXTargetDependency */,
+				30A437F0FBBB1124B6FCBEF4 /* PBXTargetDependency */,
+				F3BF165C0D0EC6B0EF7EA244 /* PBXTargetDependency */,
 			);
 			name = HBuilder;
 			productName = "HBuilder-Hello";
@@ -1127,14 +1203,14 @@
 				ORGANIZATIONNAME = DCloud;
 				TargetAttributes = {
 					8EED6297198A1D13000A4449 = {
-						DevelopmentTeam = YQM5H857L5;
+						DevelopmentTeam = RRLM22BB37;
 						LastSwiftMigration = 1320;
-						ProvisioningStyle = Manual;
+						ProvisioningStyle = Automatic;
 					};
 				};
 			};
 			buildConfigurationList = 8EED6293198A1D13000A4449 /* Build configuration list for PBXProject "HBuilder-uniPlugin" */;
-			compatibilityVersion = "Xcode 3.2";
+			compatibilityVersion = "Xcode 13.0";
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
 			knownRegions = (
@@ -1152,6 +1228,10 @@
 					ProjectRef = 9759EDC9245048CF0076CC51 /* DCTestUniPlugin.xcodeproj */;
 				},
 				{
+					ProductGroup = 17C1BE323021D04900DCAF32 /* Products */;
+					ProjectRef = 84A305E4C09F9443FB7E8FF7 /* UTSFrameworks/unimoduleGCUniPlugin/unimoduleGCUniPlugin.xcodeproj */;
+				},
+				{
 					ProductGroup = 17C174973010E9860072FEC2 /* Products */;
 					ProjectRef = CAC56D651F8E4056BA302368 /* UTSFrameworks/unimoduleGCUniPlugin/unimoduleGCUniPlugin.xcodeproj */;
 				},
@@ -1160,12 +1240,32 @@
 					ProjectRef = 654E3A5281883D6506965403 /* UTSFrameworks/unimoduleGCUniPlugin/unimoduleGCUniPlugin.xcodeproj */;
 				},
 				{
+					ProductGroup = 17C1BDFD302192B900DCAF32 /* Products */;
+					ProjectRef = EC885A32830FC7BEC5E8439A /* UTSFrameworks/unimoduleGCUniPlugin/unimoduleGCUniPlugin.xcodeproj */;
+				},
+				{
 					ProductGroup = 17C1746F3010E90E0072FEC2 /* Products */;
 					ProjectRef = 681B47A720FA98EDC5DB76A1 /* UTSFrameworks/unimoduleGCUniPlugin/unimoduleGCUniPlugin.xcodeproj */;
 				},
 				{
+					ProductGroup = 17C1BDC530218FAD00DCAF32 /* Products */;
+					ProjectRef = 3B89154720EA18A71E09711C /* UTSFrameworks/unimoduleGCUniPlugin/unimoduleGCUniPlugin.xcodeproj */;
+				},
+				{
 					ProductGroup = 17C1747D3010E9610072FEC2 /* Products */;
 					ProjectRef = 161E56E7BB5EF432A139CB1C /* UTSFrameworks/unimoduleGCUniPlugin/unimoduleGCUniPlugin.xcodeproj */;
+				},
+				{
+					ProductGroup = 17C1BDFF302192B900DCAF32 /* Products */;
+					ProjectRef = AA58CC2EBCCB71DC0B8CC287 /* UTSFrameworks/unimoduleGCUniSessionReplay/unimoduleGCUniSessionReplay.xcodeproj */;
+				},
+				{
+					ProductGroup = 17C1BDC730218FAD00DCAF32 /* Products */;
+					ProjectRef = 4C34779DF0027CD98865B5C8 /* UTSFrameworks/unimoduleGCUniSessionReplay/unimoduleGCUniSessionReplay.xcodeproj */;
+				},
+				{
+					ProductGroup = 17C1BE343021D04900DCAF32 /* Products */;
+					ProjectRef = 643CFFBC6581086DB4FD1172 /* UTSFrameworks/unimoduleGCUniSessionReplay/unimoduleGCUniSessionReplay.xcodeproj */;
 				},
 				{
 					ProductGroup = 17C1747F3010E9610072FEC2 /* Products */;
@@ -1192,74 +1292,109 @@
 /* End PBXProject section */
 
 /* Begin PBXReferenceProxy section */
-		17C174C13010EAD60072FEC2 /* unimoduleGCUniPlugin.framework */ = {
+		17C1BE383021D04C00DCAF32 /* unimoduleGCUniPlugin.framework */ = {
 			isa = PBXReferenceProxy;
 			fileType = wrapper.framework;
 			path = unimoduleGCUniPlugin.framework;
-			remoteRef = 17C174C03010EAD60072FEC2 /* PBXContainerItemProxy */;
+			remoteRef = 17C1BE373021D04C00DCAF32 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
-		17C174C43010EAD60072FEC2 /* unimoduleGCUniPlugin.framework */ = {
+		17C1BE3B3021D04C00DCAF32 /* unimoduleGCUniPlugin.framework */ = {
 			isa = PBXReferenceProxy;
 			fileType = wrapper.framework;
 			path = unimoduleGCUniPlugin.framework;
-			remoteRef = 17C174C33010EAD60072FEC2 /* PBXContainerItemProxy */;
+			remoteRef = 17C1BE3A3021D04C00DCAF32 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
-		17C174C73010EAD60072FEC2 /* unimoduleGCUniPlugin.framework */ = {
+		17C1BE3E3021D04C00DCAF32 /* unimoduleGCUniPlugin.framework */ = {
 			isa = PBXReferenceProxy;
 			fileType = wrapper.framework;
 			path = unimoduleGCUniPlugin.framework;
-			remoteRef = 17C174C63010EAD60072FEC2 /* PBXContainerItemProxy */;
+			remoteRef = 17C1BE3D3021D04C00DCAF32 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
-		17C174CA3010EAD60072FEC2 /* unimoduleGCUniPlugin.framework */ = {
+		17C1BE413021D04C00DCAF32 /* unimoduleGCUniPlugin.framework */ = {
 			isa = PBXReferenceProxy;
 			fileType = wrapper.framework;
 			path = unimoduleGCUniPlugin.framework;
-			remoteRef = 17C174C93010EAD60072FEC2 /* PBXContainerItemProxy */;
+			remoteRef = 17C1BE403021D04C00DCAF32 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
-		17C174CD3010EAD60072FEC2 /* unimoduleGCUniSessionReplay.framework */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.framework;
-			path = unimoduleGCUniSessionReplay.framework;
-			remoteRef = 17C174CC3010EAD60072FEC2 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		17C174D03010EAD60072FEC2 /* unimoduleGCUniSessionReplay.framework */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.framework;
-			path = unimoduleGCUniSessionReplay.framework;
-			remoteRef = 17C174CF3010EAD60072FEC2 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		17C174D33010EAD60072FEC2 /* unimoduleGCUniSessionReplay.framework */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.framework;
-			path = unimoduleGCUniSessionReplay.framework;
-			remoteRef = 17C174D23010EAD60072FEC2 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		17C174D63010EAD60072FEC2 /* unimoduleGCUniSessionReplay.framework */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.framework;
-			path = unimoduleGCUniSessionReplay.framework;
-			remoteRef = 17C174D53010EAD60072FEC2 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		1CBE658307B2BB2B2DA8D1C2 /* unimoduleGCUniPlugin.framework */ = {
+		17C1BE443021D04C00DCAF32 /* unimoduleGCUniPlugin.framework */ = {
 			isa = PBXReferenceProxy;
 			fileType = wrapper.framework;
 			path = unimoduleGCUniPlugin.framework;
-			remoteRef = 90884D00545B32D2648584F1 /* PBXContainerItemProxy */;
+			remoteRef = 17C1BE433021D04C00DCAF32 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
-		573DE4E7F36E37D111918907 /* unimoduleGCUniSessionReplay.framework */ = {
+		17C1BE473021D04C00DCAF32 /* unimoduleGCUniPlugin.framework */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			path = unimoduleGCUniPlugin.framework;
+			remoteRef = 17C1BE463021D04C00DCAF32 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		17C1BE4A3021D04C00DCAF32 /* unimoduleGCUniPlugin.framework */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			path = unimoduleGCUniPlugin.framework;
+			remoteRef = 17C1BE493021D04C00DCAF32 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		17C1BE4D3021D04C00DCAF32 /* unimoduleGCUniSessionReplay.framework */ = {
 			isa = PBXReferenceProxy;
 			fileType = wrapper.framework;
 			path = unimoduleGCUniSessionReplay.framework;
-			remoteRef = AF00424ED87AC9D17A887A63 /* PBXContainerItemProxy */;
+			remoteRef = 17C1BE4C3021D04C00DCAF32 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		17C1BE503021D04C00DCAF32 /* unimoduleGCUniSessionReplay.framework */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			path = unimoduleGCUniSessionReplay.framework;
+			remoteRef = 17C1BE4F3021D04C00DCAF32 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		17C1BE533021D04C00DCAF32 /* unimoduleGCUniSessionReplay.framework */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			path = unimoduleGCUniSessionReplay.framework;
+			remoteRef = 17C1BE523021D04C00DCAF32 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		17C1BE563021D04C00DCAF32 /* unimoduleGCUniSessionReplay.framework */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			path = unimoduleGCUniSessionReplay.framework;
+			remoteRef = 17C1BE553021D04C00DCAF32 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		17C1BE593021D04C00DCAF32 /* unimoduleGCUniSessionReplay.framework */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			path = unimoduleGCUniSessionReplay.framework;
+			remoteRef = 17C1BE583021D04C00DCAF32 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		17C1BE5C3021D04C00DCAF32 /* unimoduleGCUniSessionReplay.framework */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			path = unimoduleGCUniSessionReplay.framework;
+			remoteRef = 17C1BE5B3021D04C00DCAF32 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		17C1BE5F3021D04C00DCAF32 /* unimoduleGCUniSessionReplay.framework */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			path = unimoduleGCUniSessionReplay.framework;
+			remoteRef = 17C1BE5E3021D04C00DCAF32 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		25D0F7D070C8F1FBA5F93DDD /* unimoduleGCUniSessionReplay.framework */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			path = unimoduleGCUniSessionReplay.framework;
+			remoteRef = 455B24B8A9415073243A3F37 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 		9759EDCE245048CF0076CC51 /* DCTestUniPlugin.framework */ = {
@@ -1267,6 +1402,13 @@
 			fileType = wrapper.framework;
 			path = DCTestUniPlugin.framework;
 			remoteRef = 9759EDCD245048CF0076CC51 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		990037E3EB0A65DE84CC663E /* unimoduleGCUniPlugin.framework */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			path = unimoduleGCUniPlugin.framework;
+			remoteRef = 055F58682DC9061AC4ACA27E /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 /* End PBXReferenceProxy section */
@@ -1423,18 +1565,18 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
-		5DBC65A1D5608FED6CD22173 /* PBXTargetDependency */ = {
+		30A437F0FBBB1124B6FCBEF4 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			targetProxy = E03520325C49BF18338AB85D /* PBXContainerItemProxy */;
-		};
-		7E59045575FB089F257B27BF /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			targetProxy = 1FABF78053FEB7455348E974 /* PBXContainerItemProxy */;
+			targetProxy = 089B2F735A34A46402C52FFD /* PBXContainerItemProxy */;
 		};
 		97A515B72450495A00BC028D /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			name = DCTestUniPlugin;
 			targetProxy = 97A515B62450495A00BC028D /* PBXContainerItemProxy */;
+		};
+		F3BF165C0D0EC6B0EF7EA244 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			targetProxy = 1E040C95A862D5CFE180BBDB /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
@@ -1544,10 +1686,8 @@
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_ARC = YES;
 				CODE_SIGN_IDENTITY = "Apple Development";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				CODE_SIGN_STYLE = Manual;
-				DEVELOPMENT_TEAM = YQM5H857L5;
-				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = YQM5H857L5;
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = RRLM22BB37;
 				ENABLE_BITCODE = NO;
 				ENABLE_TESTABILITY = YES;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -1581,11 +1721,10 @@
 					"$(inherited)",
 					"-ObjC",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.dcloud.XXX;
+				PRODUCT_BUNDLE_IDENTIFIER = io.dcloud.test.demo;
 				PRODUCT_NAME = UniPluginDemo;
-				PROVISIONING_PROFILE = "a7e03077-46db-4b91-b0c4-20fd613c1e14";
-				PROVISIONING_PROFILE_SPECIFIER = wildcard;
-				"PROVISIONING_PROFILE_SPECIFIER[sdk=iphoneos*]" = "dev-wildcard";
+				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "HBuilder-Hello/HBuilder-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
@@ -1605,10 +1744,9 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_ARC = YES;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "Apple Distribution";
-				CODE_SIGN_STYLE = Manual;
-				DEVELOPMENT_TEAM = YQM5H857L5;
+				CODE_SIGN_IDENTITY = "Apple Development";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = RRLM22BB37;
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1641,10 +1779,10 @@
 					"$(inherited)",
 					"-ObjC",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = io.dcloud.H;
+				PRODUCT_BUNDLE_IDENTIFIER = io.dcloud.test.demo;
 				PRODUCT_NAME = UniPluginDemo;
 				PROVISIONING_PROFILE = "";
-				PROVISIONING_PROFILE_SPECIFIER = wildcard;
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "HBuilder-Hello/HBuilder-Bridging-Header.h";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 1;
