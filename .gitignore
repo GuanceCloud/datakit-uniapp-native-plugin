@@ -98,6 +98,10 @@ xcuserdata/
 *.dSYM.zip
 *.dSYM
 
+# Keep matching symbols for dynamic XCFrameworks distributed with UTS modules.
+!Hbuilder_Example/uni_modules/*/utssdk/app-ios/Frameworks/*.xcframework/*/dSYMs/*.dSYM/
+!Hbuilder_Example/uni_modules/*/utssdk/app-ios/Frameworks/*.xcframework/*/dSYMs/*.dSYM/**
+
 # CocoaPods
 #
 # We recommend against adding the Pods directory to your .gitignore. However

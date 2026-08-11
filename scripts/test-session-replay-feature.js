@@ -94,18 +94,26 @@ for (const relativePath of [
 }
 
 for (const relativePath of [
-    'Hbuilder_Example/uni_modules/GC-UniPlugin/utssdk/app-ios/Frameworks/GuanceSDK-Dynamic.xcframework/Info.plist',
-    'Hbuilder_Example/uni_modules/GC-UniSessionReplay/utssdk/app-ios/Frameworks/GuanceSessionReplay-Dynamic.xcframework/Info.plist'
+    'Hbuilder_Example/uni_modules/GC-UniPlugin/utssdk/app-ios/Frameworks/GuanceSDK.xcframework/Info.plist',
+    'Hbuilder_Example/uni_modules/GC-UniSessionReplay/utssdk/app-ios/Frameworks/GuanceSessionReplay.xcframework/Info.plist'
 ]) {
     assert(fs.existsSync(path.join(root, relativePath)), `${relativePath} must exist`);
 }
 assert.strictEqual(
     fs.existsSync(path.join(
         root,
-        'Hbuilder_Example/uni_modules/GC-UniSessionReplay/utssdk/app-ios/Frameworks/GuanceSDK-Dynamic.xcframework'
+        'Hbuilder_Example/uni_modules/GC-UniSessionReplay/utssdk/app-ios/Frameworks/GuanceSDK.xcframework'
     )),
     false,
     'Session Replay must use the core module GuanceSDK dependency without bundling a second copy'
+);
+assert.strictEqual(
+    fs.existsSync(path.join(
+        root,
+        'Hbuilder_Example/uni_modules/GC-UniSessionReplay/utssdk/app-ios/Frameworks/GuanceSDK-Dynamic.xcframework'
+    )),
+    false,
+    'Session Replay must not bundle the legacy-named Core XCFramework either'
 );
 
 const interfaceSource = read(

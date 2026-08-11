@@ -9,11 +9,11 @@
 /* Begin PBXBuildFile section */
 		3E4DA932390941F47F7BE6A2 /* GuanceUniAppCoreHostBridge.swift in Sources */ = {isa = PBXBuildFile; fileRef = 887940105B7B6313C855C1EE /* GuanceUniAppCoreHostBridge.swift */; };
 		4B8B12D1DA1F052B8BC1D5B5 /* GuanceUniAppSessionReplayHostBridge.swift in Sources */ = {isa = PBXBuildFile; fileRef = C21F13154656D92C90239F9C /* GuanceUniAppSessionReplayHostBridge.swift */; };
-		5A5FE59540C1D918FCB108CA /* GuanceSDK-Dynamic.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = DC65939B8BFD3ECC75B0E1E9 /* GuanceSDK-Dynamic.xcframework */; };
+		5A5FE59540C1D918FCB108CA /* GuanceSDK.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = DC65939B8BFD3ECC75B0E1E9 /* GuanceSDK.xcframework */; };
 		6937B726695B41EF392E7310 /* GCSessionReplayNative.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20B87CB5D80CF403B3A2D46A /* GCSessionReplayNative.swift */; };
 		99B618C421B90AB1008ADE79 /* WebKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 42CDB17B15D8D34E26E8D38C /* WebKit.framework */; };
 		9AAD67A06517D6A76F25D331 /* GCUniPluginNative.swift in Sources */ = {isa = PBXBuildFile; fileRef = B86F050EB0FEA4273973B1BD /* GCUniPluginNative.swift */; };
-		A95EAEF97031494FBD3CBF40 /* GuanceSessionReplay-Dynamic.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 56BE5A178E5995A46B3F6A68 /* GuanceSessionReplay-Dynamic.xcframework */; };
+		A95EAEF97031494FBD3CBF40 /* GuanceSessionReplay.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 56BE5A178E5995A46B3F6A68 /* GuanceSessionReplay.xcframework */; };
 		C16F547EA6073D9702B63D50 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 47B03F484DF5D975C19ACB4B /* Foundation.framework */; };
 /* End PBXBuildFile section */
 
@@ -21,12 +21,12 @@
 		20B87CB5D80CF403B3A2D46A /* GCSessionReplayNative.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = GCSessionReplayNative.swift; path = ../Sources/SessionReplay/GCSessionReplayNative.swift; sourceTree = "<group>"; };
 		42CDB17B15D8D34E26E8D38C /* WebKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WebKit.framework; path = System/Library/Frameworks/WebKit.framework; sourceTree = SDKROOT; };
 		47B03F484DF5D975C19ACB4B /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS18.0.sdk/System/Library/Frameworks/Foundation.framework; sourceTree = DEVELOPER_DIR; };
-		56BE5A178E5995A46B3F6A68 /* GuanceSessionReplay-Dynamic.xcframework */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = wrapper.xcframework; name = "GuanceSessionReplay-Dynamic.xcframework"; path = "../../../../Hbuilder_Example/uni_modules/GC-UniSessionReplay/utssdk/app-ios/Frameworks/GuanceSessionReplay-Dynamic.xcframework"; sourceTree = "<group>"; };
+		56BE5A178E5995A46B3F6A68 /* GuanceSessionReplay.xcframework */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = wrapper.xcframework; name = "GuanceSessionReplay.xcframework"; path = "../../../../Hbuilder_Example/uni_modules/GC-UniSessionReplay/utssdk/app-ios/Frameworks/GuanceSessionReplay.xcframework"; sourceTree = "<group>"; };
 		76E736FF8527FC1F48FE2F0F /* GuanceUniAppHostBridge.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = GuanceUniAppHostBridge.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		887940105B7B6313C855C1EE /* GuanceUniAppCoreHostBridge.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = GuanceUniAppCoreHostBridge.swift; path = ../Sources/Core/GuanceUniAppCoreHostBridge.swift; sourceTree = "<group>"; };
 		B86F050EB0FEA4273973B1BD /* GCUniPluginNative.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = GCUniPluginNative.swift; path = ../Sources/Core/GCUniPluginNative.swift; sourceTree = "<group>"; };
 		C21F13154656D92C90239F9C /* GuanceUniAppSessionReplayHostBridge.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = GuanceUniAppSessionReplayHostBridge.swift; path = ../Sources/SessionReplay/GuanceUniAppSessionReplayHostBridge.swift; sourceTree = "<group>"; };
-		DC65939B8BFD3ECC75B0E1E9 /* GuanceSDK-Dynamic.xcframework */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = wrapper.xcframework; name = "GuanceSDK-Dynamic.xcframework"; path = "../../../../Hbuilder_Example/uni_modules/GC-UniPlugin/utssdk/app-ios/Frameworks/GuanceSDK-Dynamic.xcframework"; sourceTree = "<group>"; };
+		DC65939B8BFD3ECC75B0E1E9 /* GuanceSDK.xcframework */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = wrapper.xcframework; name = "GuanceSDK.xcframework"; path = "../../../../Hbuilder_Example/uni_modules/GC-UniPlugin/utssdk/app-ios/Frameworks/GuanceSDK.xcframework"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -35,8 +35,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				C16F547EA6073D9702B63D50 /* Foundation.framework in Frameworks */,
-				5A5FE59540C1D918FCB108CA /* GuanceSDK-Dynamic.xcframework in Frameworks */,
-				A95EAEF97031494FBD3CBF40 /* GuanceSessionReplay-Dynamic.xcframework in Frameworks */,
+				5A5FE59540C1D918FCB108CA /* GuanceSDK.xcframework in Frameworks */,
+				A95EAEF97031494FBD3CBF40 /* GuanceSessionReplay.xcframework in Frameworks */,
 				99B618C421B90AB1008ADE79 /* WebKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -55,8 +55,8 @@
 		87B47D80AD37D202B955B535 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				DC65939B8BFD3ECC75B0E1E9 /* GuanceSDK-Dynamic.xcframework */,
-				56BE5A178E5995A46B3F6A68 /* GuanceSessionReplay-Dynamic.xcframework */,
+				DC65939B8BFD3ECC75B0E1E9 /* GuanceSDK.xcframework */,
+				56BE5A178E5995A46B3F6A68 /* GuanceSessionReplay.xcframework */,
 				42CDB17B15D8D34E26E8D38C /* WebKit.framework */,
 			);
 			name = Frameworks;

@@ -61,8 +61,8 @@ assertNotIncludes(generator, 'selected_sources.merge!(session_replay_sources)', 
 assertNotIncludes(generator, 'shared_framework_names', 'HostBridge generator');
 assert(generator.includes('create_host_bridge_static_framework_project'));
 assert(staticBridgeProject.includes('MACH_O_TYPE = staticlib;'));
-assert(staticBridgeProject.includes('GuanceSDK-Dynamic.xcframework'));
-assert(staticBridgeProject.includes('GuanceSessionReplay-Dynamic.xcframework'));
+assert(staticBridgeProject.includes('GuanceSDK.xcframework'));
+assert(staticBridgeProject.includes('GuanceSessionReplay.xcframework'));
 assert(staticBridgeBuildScript.includes('-create-xcframework'));
 assert(staticBridgeBuildScript.includes('CODE_SIGNING_ALLOWED=NO'));
 assert(staticBridgeBuildScript.includes('GuanceUniAppHostBridge.xcframework'));
@@ -84,6 +84,8 @@ for (const project of [coreProject, replayProject]) {
   assert(project.includes('DCloudUTSFoundation.framework'));
   assertNotIncludes(project, 'GuanceSDK-Dynamic.xcframework', 'UTS runtime framework project');
   assertNotIncludes(project, 'GuanceSessionReplay-Dynamic.xcframework', 'UTS runtime framework project');
+  assertNotIncludes(project, 'GuanceSDK.xcframework', 'UTS runtime framework project');
+  assertNotIncludes(project, 'GuanceSessionReplay.xcframework', 'UTS runtime framework project');
   assertNotIncludes(project, 'SharedFrameworks', 'UTS runtime framework search path');
 }
 assert(replayProject.includes('WebKit.framework'));
