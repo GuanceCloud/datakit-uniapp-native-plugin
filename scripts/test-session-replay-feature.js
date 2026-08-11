@@ -131,6 +131,9 @@ const androidNativeSource = read(
 const nativeSource = read(
     'Hbuilder_Example/uni_modules/GC-UniSessionReplay/utssdk/app-ios/GCSessionReplayNative.swift'
 );
+const hostReplayNativeSource = read(
+    'HybridHostExample-iOS/HBuilder-uniPluginDemo/GuanceUniAppHostBridge/Sources/SessionReplay/GCSessionReplayNative.swift'
+);
 const baseNativeSource = read(
     'Hbuilder_Example/uni_modules/GC-UniPlugin/utssdk/app-ios/GCUniPluginNative.swift'
 );
@@ -170,10 +173,9 @@ assertIncludes(
 assertIncludes(nativeSource, 'private static let installHookOnce', 'native hook');
 assertIncludes(baseNativeSource, 'import GuanceSDK', 'base dynamic framework import');
 assert(!baseNativeSource.includes('import FTMobileSDK'));
-assertIncludes(nativeSource, 'import GuanceSDK', 'base dynamic framework import');
+assertIncludes(nativeSource, '#if canImport(GuanceSDK)\nimport GuanceSDK\n#endif', 'UTS Core SDK compatibility import');
+assertIncludes(nativeSource, '#if canImport(GuanceSessionReplay)\nimport GuanceSessionReplay\n#endif', 'UTS Session Replay framework import');
 assertIncludes(nativeSource, 'import GuanceSessionReplay', 'Session Replay dynamic framework import');
-assertIncludes(nativeSource, '#elseif GUANCE_UNI_COCOAPODS_SESSION_REPLAY', 'CocoaPods Session Replay module compatibility');
-assertIncludes(nativeSource, 'GC-UniSessionReplay requires GuanceSessionReplay', 'Session Replay dependency guard');
 assert(!nativeSource.includes('import FTMobileSDK'));
 assert(!nativeSource.includes('import FTSessionReplay'));
 assertIncludes(nativeSource, '#selector(WKWebView.load(_:))', 'native hook');
@@ -187,11 +189,14 @@ assertIncludes(nativeSource, 'let activeBeforeStart = isNativeSessionReplayActiv
 assertIncludes(nativeSource, 'if !activeBeforeStart {', 'duplicate start guard');
 assertIncludes(nativeSource, 'objc_getProtocol("FTSRWebTrackingProtocol")', 'duplicate start guard');
 assertIncludes(nativeSource, 'isBaseSDKAndRUMReady()', 'native prerequisites');
-assertIncludes(nativeSource, 'NSClassFromString("FTSDKAgent")', 'native prerequisite state owner');
-assert(!nativeSource.includes('NSClassFromString("FTMobileAgent")'));
+assertIncludes(nativeSource, 'NSClassFromString("FTMobileAgent")', 'native prerequisite state owner');
+assert(!nativeSource.includes('NSClassFromString("FTSDKAgent")'));
 assertIncludes(nativeSource, 'NSSelectorFromString("rumConfig")', 'RUM prerequisite');
 assertIncludes(nativeSource, 'replaceBridgeWithoutSessionReplayCapability', 'bridge refresh');
-assertIncludes(nativeSource, 'handler.enable(webView)', 'bridge enable');
+assertIncludes(nativeSource, 'NSClassFromString("FTWKWebViewHandler")', 'runtime Core WebView handler lookup');
+assertIncludes(nativeSource, 'NSSelectorFromString("enableWebView:")', 'runtime Core WebView bridge enable');
+assert(!nativeSource.includes('FTWKWebViewHandler.sharedInstance()'));
+assert(!nativeSource.includes('handler: FTWKWebViewHandler'));
 assertIncludes(nativeSource, 'webView.evaluateJavaScript(bridgeSource)', 'current document repair');
 assertIncludes(nativeSource, 'bridgeSource.contains("records")', 'records capability');
 assert(!nativeSource.includes('[DEBUG-SR-BRIDGE-7f81]'));
@@ -199,6 +204,9 @@ assert(!nativeSource.includes('FTRumSessionReplay.startWithSessionReplayConfig e
 assert(!nativeSource.includes('FTWKWebViewHandler received session_replay'));
 assertIncludes(nativeSource, 'case "show":\n            config.touchPrivacy = FTTouchPrivacyLevel(rawValue: 0)!', 'touch privacy mapping');
 assertIncludes(nativeSource, 'case "hide":\n            config.touchPrivacy = FTTouchPrivacyLevel(rawValue: 1)!', 'touch privacy mapping');
+assertIncludes(hostReplayNativeSource, '#if GUANCE_UNI_COCOAPODS_SESSION_REPLAY\nimport GuanceSDK', 'HostBridge CocoaPods umbrella module import');
+assertIncludes(hostReplayNativeSource, 'GC-UniSessionReplay requires GuanceSessionReplay', 'HostBridge dependency guard');
+assertIncludes(hostReplayNativeSource, 'NSClassFromString("FTWKWebViewHandler")', 'HostBridge runtime Core WebView handler lookup');
 
 assertIncludes(viewTrackingSource, 'evalSessionReplayJS(js)', 'View Tracking API');
 assertIncludes(viewTrackingSource, 'webView.evalJS(this.sessionReplayJS)', 'page WebView Browser SDK injection');

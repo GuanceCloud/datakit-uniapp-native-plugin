@@ -2,11 +2,10 @@ import Foundation
 #if canImport(DCloudUTSFoundation)
 import DCloudUTSFoundation
 #endif
+#if GUANCE_UNI_COCOAPODS_SESSION_REPLAY
 import GuanceSDK
-#if canImport(GuanceSessionReplay)
+#elseif canImport(GuanceSessionReplay)
 import GuanceSessionReplay
-#elseif GUANCE_UNI_COCOAPODS_SESSION_REPLAY
-// CocoaPods exposes FTSessionReplay through the GuanceSDK module.
 #else
 #error("GC-UniSessionReplay requires GuanceSessionReplay, or GuanceSDK/SessionReplay with -DGUANCE_UNI_COCOAPODS_SESSION_REPLAY.")
 #endif
@@ -260,9 +259,7 @@ import WebKit
     }
 
     private static func isBaseSDKAndRUMReady() -> Bool {
-        // FTMobileAgent is only a public compatibility proxy. Installation state
-        // and the retained RUM configuration live on FTSDKAgent.
-        guard let agentClass = NSClassFromString("FTSDKAgent") else {
+        guard let agentClass = NSClassFromString("FTMobileAgent") else {
             return false
         }
 
@@ -293,20 +290,22 @@ import WebKit
     }
 
     private static func prepare(webView: WKWebView, includeCurrentDocument: Bool) {
-        let handler = FTWKWebViewHandler.sharedInstance()
+        guard let handler = webViewHandler() else {
+            return
+        }
         let existingBridgeSource = ftBridgeSource(in: webView)
         if existingBridgeSource != nil && existingBridgeSource?.contains("records") == false {
             replaceBridgeWithoutSessionReplayCapability(handler: handler, webView: webView)
         }
-        handler.enable(webView)
+        enableBridge(handler: handler, webView: webView)
 
         let bridgeSource = ftBridgeSource(in: webView)
-        guard includeCurrentDocument else {
+        guard let bridgeSource, bridgeSource.contains("records") else {
+            NSLog("[GC-UniSessionReplay] No records-capable bridge script was found for WebView %llu", webView.hash)
             return
         }
 
-        guard let bridgeSource, bridgeSource.contains("records") else {
-            NSLog("[GC-UniSessionReplay] No records-capable bridge script was found for WebView %llu", webView.hash)
+        guard includeCurrentDocument else {
             return
         }
 
@@ -329,8 +328,28 @@ import WebKit
             .source
     }
 
+    private static func webViewHandler() -> NSObject? {
+        guard
+            let handlerClass = NSClassFromString("FTWKWebViewHandler"),
+            let handler = (handlerClass as AnyObject)
+                .perform(NSSelectorFromString("sharedInstance"))?
+                .takeUnretainedValue() as? NSObject
+        else {
+            return nil
+        }
+        return handler
+    }
+
+    private static func enableBridge(handler: NSObject, webView: WKWebView) {
+        let enableSelector = NSSelectorFromString("enableWebView:")
+        guard handler.responds(to: enableSelector) else {
+            return
+        }
+        handler.perform(enableSelector, with: webView)
+    }
+
     private static func replaceBridgeWithoutSessionReplayCapability(
-        handler: FTWKWebViewHandler,
+        handler: NSObject,
         webView: WKWebView
     ) {
         let disableSelector = NSSelectorFromString("disableWebView:")

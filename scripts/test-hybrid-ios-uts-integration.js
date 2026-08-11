@@ -156,8 +156,8 @@ assert(replayBridge.includes('@objc(GuanceUniAppSessionReplayHostBridge)'));
 assert(replayBridge.includes('sessionReplayIsAvailable()'));
 assert(replayBridge.includes('GuanceSDK/SessionReplay'));
 assert(replayBridge.includes('GuanceSessionReplay'));
-assert(sharedReplayImplementation.includes('#if canImport(GuanceSessionReplay)'));
-assert(sharedReplayImplementation.includes('#elseif GUANCE_UNI_COCOAPODS_SESSION_REPLAY'));
+assert(sharedReplayImplementation.includes('#if GUANCE_UNI_COCOAPODS_SESSION_REPLAY'));
+assert(sharedReplayImplementation.includes('#elseif canImport(GuanceSessionReplay)'));
 assert(sharedReplayImplementation.includes('GC-UniSessionReplay requires GuanceSessionReplay'));
 assert(replayAdapter.includes('Link the static GuanceUniAppHostBridge'));
 
@@ -171,6 +171,8 @@ for (const artifact of [
 }
 assertNotIncludes(hostProject, 'GuanceSDK-Dynamic.xcframework', 'HostBridge host project');
 assertNotIncludes(hostProject, 'GuanceSessionReplay-Dynamic.xcframework', 'HostBridge host project');
+assertNotIncludes(hostProject, 'GuanceSDK.xcframework', 'HostBridge host project');
+assertNotIncludes(hostProject, 'GuanceSessionReplay.xcframework', 'HostBridge host project');
 
 const hybridWorkspace = read(`${host}/GuanceHybrid.xcworkspace/contents.xcworkspacedata`);
 assert(hybridWorkspace.includes('group:HBuilder-uniPlugin.xcodeproj'));

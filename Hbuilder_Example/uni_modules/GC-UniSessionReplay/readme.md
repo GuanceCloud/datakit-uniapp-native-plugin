@@ -79,12 +79,19 @@ without reloading it.
 If a native host has already started Session Replay, `setConfig` keeps the
 host-owned recorder and only prepares the UniApp WebView bridge. The supplied
 configuration is not applied to an already running recorder. The host and UTS
-modules must resolve one shared dynamic `GuanceSDK` 1.6.6 artifact rather than
-link separate SDK binaries. This module bundles
-`GuanceSDK-Dynamic.xcframework` and
-`GuanceSessionReplay-Dynamic.xcframework` in its iOS `Frameworks` directory;
-it does not declare a CocoaPods dependency. `GuanceSessionReplay` loads
-`GuanceSDK` through `@rpath`.
+modules must resolve one shared dynamic `GuanceSDK` artifact rather than link
+separate SDK binaries. `GC-UniPlugin` owns `GuanceSDK.xcframework`; this
+optional module bundles only `GuanceSessionReplay.xcframework` in its iOS
+`Frameworks` directory. Its native bridge discovers `FTWKWebViewHandler`
+through the Objective-C runtime, so compiling the optional UTS module does not
+require a second local Core XCFramework. At runtime, `GuanceSessionReplay`
+loads the single Core framework supplied by `GC-UniPlugin` through `@rpath`.
+
+Hybrid CocoaPods hosts use a separate compatibility path. The HostBridge
+depends on `GuanceSDK/Agent` and `GuanceSDK/SessionReplay` and defines
+`GUANCE_UNI_COCOAPODS_SESSION_REPLAY`, so its Session Replay source imports the
+umbrella `GuanceSDK` module instead of the standalone `GuanceSessionReplay`
+module.
 
 For local custom-base verification, `GC-UniPlugin` bundles the single patched
 `ft-sdk` AAR and its `ft-native` AAR in `utssdk/app-android/libs`; the optional
