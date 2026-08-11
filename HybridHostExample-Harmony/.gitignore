@@ -1,9 +1,17 @@
-# The DCloud offline SDK host is downloaded/generated locally by scripts/bootstrap-host.mjs.
-host/
+# HBuilderX injects both the compiled H5 bundle and UTS static modules here.
+# They are application build inputs, not host source code.
+# Keep the empty target directory visible in a fresh clone; all injected files
+# inside it remain local build input.
+HBuilder-uniPluginDemo/entry/src/main/resources/resfile/apps/HBuilder/**
+!HBuilder-uniPluginDemo/entry/src/main/resources/resfile/apps/HBuilder/.gitkeep
+HBuilder-uniPluginDemo/entry/src/main/ets/uni_modules/index.generated.ets
+HBuilder-uniPluginDemo/uni_modules/
 
-# HBuilderX / DevEco generated state
-uniapp/.hbuilderx/
-uniapp/unpackage/
+# DevEco / OHPM generated state
+HBuilder-uniPluginDemo/oh_modules/
+HBuilder-uniPluginDemo/.hvigor/
+HBuilder-uniPluginDemo/entry/build/
+HBuilder-uniPluginDemo/oh-package-lock.json5
 *.hap
 *.app
 *.har

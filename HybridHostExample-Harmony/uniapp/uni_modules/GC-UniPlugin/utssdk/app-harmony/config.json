@@ -1,7 +1,0 @@
-{
-  "dependencies": {
-    "@guancecloud/ft_sdk": "0.1.15",
-    "@guancecloud/ft_sdk_ext": "0.1.15",
-    "@guancecloud/ft_native": "0.1.1"
-  }
-}

@@ -1,1 +1,0 @@
-../../../../Hbuilder_Example/uni_modules/GC-UniPlugin/readme.md
