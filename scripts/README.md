@@ -20,6 +20,30 @@ protection, and Browser SDK readiness gate.
 node test-session-replay-feature.js
 ```
 
+## test-view-tracking.js
+
+Run focused View Tracking state-machine checks for Vue 2/Vue 3 mixin
+installation, initial `onReady - onLoad` timing, repeated visibility,
+foreground/background transitions, `reLaunch` and unavailable load times,
+URL query properties, route failure cleanup, and Session Replay injection.
+
+```bash
+node test-view-tracking.js
+```
+
+Detailed View Tracking lifecycle logs are disabled by default. Enable them
+temporarily while validating Vue 2/Vue 3 runtime behavior:
+
+```js
+gcViewTracking.setDebugEnabled(true)
+// Disable again after validation.
+gcViewTracking.setDebugEnabled(false)
+```
+
+Debug entries use the `[FTLog][ViewTracking][Debug]` prefix and include the
+event, page path, millisecond timestamp, and the reason for actual
+`startView`/`stopView` calls.
+
 ## test-uts-proxy-exports.js
 
 Verify the public root UTS proxy API, its legacy constant groups, and the

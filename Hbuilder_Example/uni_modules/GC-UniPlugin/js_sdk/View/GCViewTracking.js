@@ -3,6 +3,10 @@ import {
 } from '@/uni_modules/GC-UniPlugin';
 
 const FT_JS_PLUGIN_VERSION = '0.2.7-alpha.1';
+const LOAD_TIME_UNAVAILABLE = -1;
+const RELOAD_LOAD_TIME = 0;
+const LIFECYCLE_FALLBACK_TIMEOUT_MS = 5000;
+const PAGE_READY_FALLBACK_TIMEOUT_MS = 5000;
 
 // #ifndef VUE3
 import Vue from 'vue';
@@ -10,53 +14,63 @@ import Vue from 'vue';
 
 class PageMonitor {
 	constructor() {
-		// Plugin status
 		this.initialized = false;
 		this.pageHookInstalled = false;
-		// Homepage status flag
-		this.firstPageDetected = false;
-		this.appLaunched = false;
-		// Page data
-		this.loadStart = null;
+		this.appInForeground = true;
+		this.debugEnabled = false;
+
 		this.currentPage = null;
+		this.currentPageState = null;
 		this.activeViewPath = null;
-		this.navBackPagesLength = 0;
-		this.pendingViewLoadMap = {};
-		this.pageLoadStartMap = {};
-		this.pendingViewShowMap = {};
-		this.loadedViewPathMap = {};
-		this.loadedPageVms = new WeakSet();
+		this.activePageState = null;
+
+		this.routeTransactionId = 0;
+		this.pendingRouteTransactions = [];
+		this.pageStateByVm = new WeakMap();
+		this.latestPageStateByViewKey = {};
+
 		this.sessionReplayJS = null;
 		this.sessionReplayInjectedWebViews = new WeakSet();
-		// Store event listeners for easy destruction
 		this.eventListeners = [];
-		// Native RUM plugin
 		this.rum = gcRum;
 	}
 
-	// Initialize monitoring
-	startTracking(app) {
+	setDebugEnabled(enabled) {
+		this.debugEnabled = enabled === true;
+		if (this.debugEnabled) {
+			this.debugLog('debug', this.currentPage, {
+				reason: 'enabled'
+			});
+		}
+	}
 
+	debugLog(event, pagePath, details = null) {
+		if (!this.debugEnabled) return;
+		const payload = {
+			event,
+			pagePath: this.normalizePagePath(pagePath),
+			timestamp: Date.now()
+		};
+		if (details && typeof details === 'object') {
+			Object.keys(details).forEach(key => {
+				payload[key] = details[key];
+			});
+		}
+		console.log('[FTLog][ViewTracking][Debug]', payload);
+	}
+
+	startTracking(app) {
 		if (this.initialized) return;
 		this.initialized = true;
 
 		console.log(`[FTLog] View tracking initialized (version: ${FT_JS_PLUGIN_VERSION})`);
 
 		try {
-			//	#ifdef APP-PLUS
-
-			// 1. Record app launch time (execute as early as possible)
-			this.recordAppLaunchTime();
+			// #ifdef APP-PLUS
 			this.pageHookInstalled = this.installPageHooks(app);
-
-			// Monitor App lifecycle
 			this.watchAppLifecycle();
-
-			// Monitor route changes
 			this.startWatchRouter();
-
 			this.checkInitialPage();
-
 			console.log('[FTLog] View tracking plugin initialized successfully');
 			// #endif
 		} catch (error) {
@@ -64,6 +78,7 @@ class PageMonitor {
 			this.initialized = false;
 		}
 	}
+
 	installPageHooks(app) {
 		const mixin = {
 			onLoad() {
@@ -83,12 +98,14 @@ class PageMonitor {
 			}
 		};
 
+		// Vue 3: startTracking(app) is called after createSSRApp(App).
 		if (app && typeof app.mixin === 'function') {
 			app.mixin(mixin);
 			console.log('[FTLog] View tracking page hooks installed through app.mixin');
 			return true;
 		}
 
+		// Vue 2: startTracking() is called before the root Vue instance is created.
 		// #ifndef VUE3
 		if (typeof Vue !== 'undefined' && Vue && typeof Vue.mixin === 'function') {
 			Vue.mixin(mixin);
@@ -97,440 +114,684 @@ class PageMonitor {
 		}
 		// #endif
 
-		console.warn('[FTLog] View tracking page hooks were not installed, falling back to router success timing');
+		console.warn('[FTLog] View tracking page hooks were not installed; loadTime will use -1');
 		return false;
 	}
+
 	checkInitialPage() {
-		if (!this.initialized || this.firstPageDetected) return;
+		if (!this.initialized) return;
 
-		const page = getCurrentPages().pop();
+		const page = this.getCurrentPage();
 		const pagePath = this.getPagePath(page);
-		if (!pagePath) {
-			return;
-		}
+		if (!pagePath) return;
 
-		this.currentPage = pagePath;
-		if (this.pageHookInstalled) {
-			// The page hooks own loadTime. A page already present here may have
-			// finished rendering, so there is no trustworthy load start to report.
-			if (page.$vm) {
-				this.loadedPageVms.add(page.$vm);
-			}
-			this.loadedViewPathMap[this.getViewKey(pagePath)] = true;
-			this.activateView(pagePath);
-			this.firstPageDetected = true;
-			return;
+		let state = this.getPageState(page && page.$vm, pagePath, false);
+		if (!state) {
+			// Tracking started after onLoad, so lifecycle load timing is unavailable.
+			state = this.createPageState(page && page.$vm, pagePath, null, false);
+			state.ready = true;
+			state.needDuration = false;
+			state.initialLoadTime = LOAD_TIME_UNAVAILABLE;
 		}
-		this.loadStart = this.getLaunchStartTime();
-		console.log('[FTLog] First page fallback check:' + pagePath);
-		this.rumStartView();
-		this.firstPageDetected = true;
+		this.showPageState(state, 'initial-page');
 	}
-	getCurrentPagePath(){
-		const page = getCurrentPages().pop()
-		return this.getPagePath(page);
-	}
+
 	evalSessionReplayJS(js) {
 		if (this.sessionReplayJS !== js) {
 			this.sessionReplayInjectedWebViews = new WeakSet();
 		}
 		this.sessionReplayJS = js;
 	}
-	// Check initial page and record
+
 	watchAppLifecycle() {
-		try {
-			const addAppListener = (event, callback) => {
-				try {
-					if (typeof plus !== 'undefined') {
-						plus.globalEvent.addEventListener(event, callback);
-						this.eventListeners.push({
-							event,
-							callback
-						});
-						return true;
-					}
+		const addAppListener = (event, callback) => {
+			try {
+				if (typeof plus === 'undefined') {
 					console.warn(`[FTLog] Unsupported event listener type: ${event}`);
-					return false;
-				} catch (e) {
-					console.error(`[FTLog] Failed to add event listener ${event}:`, e);
-					return false;
+					return;
 				}
-			};
-
-			// Listen for App display
-			addAppListener('resume', () => {
-				const pagePath = this.getCurrentPagePath();
-				if (!pagePath) return;
-				this.currentPage = pagePath;
-				console.log('[FTLog] App display (resume) detected:' + pagePath);
-				this.activateView(pagePath);
-			});
-
-			// Listen for App hiding
-			addAppListener('pause', () => {
-				console.log('[FTLog] App hiding (pause) detected');
-				this.deactivateView();
-			});
-
-			console.log('[FTLog] watchAppLifecycle internal logic executed successfully');
-		} catch (error) {
-			console.error('[FTLog] Error executing watchAppLifecycle method:', error);
-			// Throw error for upper layer to catch, avoid silent failure
-			throw error;
-		}
-	}
-
-	// Record app launch time (core: execute as early as possible)
-	recordAppLaunchTime() {
-		// Weex App cold start time (obtained through native events)
-		if (typeof plus !== 'undefined') {
-			// If native launch time is available (supported by some Android devices)
-			if (plus.runtime.launchTime) {
-				this.appLaunchTime = plus.runtime.launchTime;
-			} else {
-				// Otherwise use current time as launch time (slightly larger error, but as a fallback)
-				this.appLaunchTime = Date.now();
+				plus.globalEvent.addEventListener(event, callback);
+				this.eventListeners.push({
+					event,
+					callback
+				});
+			} catch (error) {
+				console.error(`[FTLog] Failed to add event listener ${event}:`, error);
 			}
-			this.appLaunched = true;
-		}
-	}
-
-	// Monitor route changes
-	startWatchRouter() {
-		const registerRouteInterceptor = (name, collectLoadedView = true) => {
-			let routePagePath = null;
-			uni.addInterceptor(name, {
-				invoke: (e) => {
-					routePagePath = this.rumRecordNewView(e.url);
-				},
-				success: () => {
-					const targetPagePath = routePagePath || this.currentPage;
-					routePagePath = null;
-					if (!this.pageHookInstalled) {
-						this.rumStartView();
-						return;
-					}
-					this.scheduleRouteFallback(targetPagePath, Date.now(), 0, collectLoadedView);
-				}
-			});
 		};
 
-		// Listen for navigateTo
-		registerRouteInterceptor('navigateTo');
+		addAppListener('resume', () => this.handleAppResume());
+		addAppListener('pause', () => this.handleAppPause());
+	}
 
-		// Listen for redirectTo
-		registerRouteInterceptor('redirectTo');
+	handleAppResume() {
+		this.appInForeground = true;
+		const page = this.getCurrentPage();
+		const pagePath = this.getPagePath(page);
+		this.debugLog('lifecycle', pagePath, {
+			lifecycle: 'app:resume'
+		});
+		if (!pagePath) return;
 
-		// Listen for reLaunch
-		registerRouteInterceptor('reLaunch');
+		let state = this.getPageState(page && page.$vm, pagePath, true);
+		if (!state) {
+			// The page lifecycle is not observable (for example tracking started late).
+			state = this.createPageState(page && page.$vm, pagePath, null, false);
+			state.ready = true;
+			state.needDuration = false;
+			state.initialLoadTime = LOAD_TIME_UNAVAILABLE;
+		}
+		console.log('[FTLog] App resume detected:', state.pagePath);
+		this.showPageState(state, 'app:resume');
+	}
 
-		// Listen for switchTab
-		registerRouteInterceptor('switchTab', false);
+	handleAppPause() {
+		this.appInForeground = false;
+		this.debugLog('lifecycle', this.activeViewPath || this.currentPage, {
+			lifecycle: 'app:pause'
+		});
+		console.log('[FTLog] App pause detected');
+		this.cancelPageReadyFallback(this.currentPageState);
+		this.deactivateView(null, 'app:pause');
+	}
 
-		// Listen for navigateBack
+	startWatchRouter() {
+		this.registerRouteInterceptor('navigateTo');
+		this.registerRouteInterceptor('redirectTo');
+		this.registerRouteInterceptor('switchTab');
+		this.registerRouteInterceptor('reLaunch');
+
 		uni.addInterceptor('navigateBack', {
-			invoke: () => {
-				this.navBackPagesLength = getCurrentPages().length;
-				if (this.navBackPagesLength > 1) {
-					this.currentPage = null;
-				}
-			},
 			success: () => {
-				if (this.navBackPagesLength > 1) {
-					if (!this.pageHookInstalled) {
-						this.navigateBack();
-						return;
-					}
-					this.scheduleViewActivationFallback();
+				if (!this.pageHookInstalled) {
+					this.startCurrentPageWithoutLifecycle();
 				}
 			}
 		});
 	}
 
-	scheduleRouteFallback(pagePath, loadEndTime, attempt = 0, collectLoadedView = true) {
-		if (!pagePath) return;
-		setTimeout(() => {
-			const completed = this.completeRouteFallback(
-				pagePath,
-				loadEndTime,
-				attempt >= 5,
-				collectLoadedView
-			);
-			if (!completed && attempt < 5) {
-				this.scheduleRouteFallback(pagePath, loadEndTime, attempt + 1, collectLoadedView);
+	registerRouteInterceptor(routeType) {
+		const transactions = [];
+		uni.addInterceptor(routeType, {
+			invoke: (options) => {
+				const transaction = this.createRouteTransaction(
+					options && options.url,
+					routeType
+				);
+				transactions.push(transaction);
+			},
+			success: () => {
+				const transaction = transactions.shift();
+				if (!transaction) return;
+				transaction.succeeded = true;
+				if (!this.pageHookInstalled) {
+					this.startRouteWithoutLifecycle(transaction, 'route-hooks-unavailable');
+				} else {
+					this.scheduleRouteLifecycleFallback(transaction);
+				}
+			},
+			fail: () => {
+				this.cancelRouteTransaction(transactions.shift());
 			}
-		}, attempt === 0 ? 0 : 20);
+		});
 	}
 
-	completeRouteFallback(
-		pagePath,
-		loadEndTime,
-		allowWithoutCurrentPage = false,
-		collectLoadedView = true
-	) {
-		const normalizedPath = this.normalizePagePath(pagePath);
-		const viewKey = this.getViewKey(normalizedPath);
-		if (!viewKey) return true;
+	createRouteTransaction(url, routeType) {
+		const pagePath = this.resolvePagePath(url);
+		if (!pagePath) return null;
 
-		const currentPagePath = this.getCurrentPagePath();
-		const currentViewKey = this.getViewKey(currentPagePath);
-		if (currentViewKey !== viewKey && !allowWithoutCurrentPage) {
-			return false;
-		}
-		if (this.getViewKey(this.currentPage) !== viewKey) {
-			return true;
-		}
-		if (this.loadedViewPathMap[viewKey] && !collectLoadedView) {
-			delete this.pageLoadStartMap[viewKey];
-			delete this.pendingViewShowMap[viewKey];
-			this.takePendingViewLoad(normalizedPath);
-			this.loadStart = null;
-			this.activateView(normalizedPath, false);
-			return true;
-		}
-
-		let pendingView = this.pageLoadStartMap[viewKey];
-		if (pendingView) {
-			delete this.pageLoadStartMap[viewKey];
-		} else {
-			pendingView = this.takePendingViewLoad(normalizedPath);
-		}
-
-		if (pendingView) {
-			const duration = Math.max(0, loadEndTime - pendingView.startTime) * 1000000;
-			const reportPath = pendingView.pagePath || normalizedPath;
-			this.reportCreateView(reportPath, duration);
-			this.loadedViewPathMap[viewKey] = true;
-			if (pendingView.pageVm) {
-				this.loadedPageVms.add(pendingView.pageVm);
-			}
-			const pages = getCurrentPages();
-			const currentPage = pages[pages.length - 1];
-			if (currentPage && currentPage.$vm) {
-				this.loadedPageVms.add(currentPage.$vm);
-			}
-			this.loadStart = null;
-		}
-		delete this.pendingViewShowMap[viewKey];
-
-		if (pendingView || this.loadedViewPathMap[viewKey]) {
-			// The lifecycle fallback may start View collection, but it must not
-			// broaden Session Replay injection beyond a confirmed page VM.
-			this.activateView(normalizedPath, false);
-		}
-		return true;
+		const transaction = {
+			id: ++this.routeTransactionId,
+			pagePath,
+			routeType,
+			claimed: false,
+			failed: false,
+			succeeded: false
+		};
+		this.pendingRouteTransactions.push(transaction);
+		return transaction;
 	}
 
-	scheduleViewActivationFallback(attempt = 0) {
-		setTimeout(() => {
-			const pagePath = this.getCurrentPagePath();
-			if (!pagePath && attempt < 5) {
-				this.scheduleViewActivationFallback(attempt + 1);
+	cancelRouteTransaction(transaction) {
+		if (!transaction) return;
+		transaction.failed = true;
+		if (transaction.lifecycleFallbackTimer) {
+			clearTimeout(transaction.lifecycleFallbackTimer);
+			transaction.lifecycleFallbackTimer = null;
+		}
+		this.removePendingRouteTransaction(transaction);
+	}
+
+	scheduleRouteLifecycleFallback(transaction) {
+		if (!transaction || transaction.failed || transaction.claimed) return;
+		transaction.lifecycleFallbackTimer = setTimeout(() => {
+			transaction.lifecycleFallbackTimer = null;
+			if (transaction.failed || transaction.claimed) return;
+			const currentPath = this.getCurrentPagePath();
+			if (this.getViewKey(currentPath) !== this.getViewKey(transaction.pagePath)) {
+				this.removePendingRouteTransaction(transaction);
 				return;
 			}
-			if (!pagePath) return;
-			this.currentPage = pagePath;
-			this.activateView(pagePath, false);
-		}, attempt === 0 ? 0 : 20);
+			console.warn('[FTLog] Page lifecycle was not observed; loadTime uses -1:',
+				transaction.pagePath);
+			transaction.claimed = true;
+			this.startRouteWithoutLifecycle(transaction, 'route-lifecycle-timeout');
+		}, LIFECYCLE_FALLBACK_TIMEOUT_MS);
 	}
 
-	// Record new page
-	rumRecordNewView(url) {
-		const pagePath = this.resolvePagePath(url);
-		const startTime = Date.now();
-		this.loadStart = startTime * 1000000;
-		this.currentPage = pagePath;
-		if (!pagePath) {
-			return;
+	removePendingRouteTransaction(transaction) {
+		const index = this.pendingRouteTransactions.indexOf(transaction);
+		if (index >= 0) {
+			this.pendingRouteTransactions.splice(index, 1);
 		}
-		this.pendingViewLoadMap[pagePath] = {
-			startTime
-		};
-		return pagePath;
 	}
 
-	// Stop old page monitoring and start new page monitoring
-	rumStopView(){
-		this.deactivateView();
-	}
-
-	rumStartView(){
-		console.log('[FTLog] this.currentPage:'+this.currentPage);
-		if (this.currentPage) {
-			const loadEnd = Date.now() * 1000000;
-				let duration = (loadEnd - this.loadStart);
-				if (this.loadStart !== null && duration >= 0) {
-					this.reportCreateView(this.currentPage, duration);
-				}
-				this.activateView(this.currentPage);
-			}
-			this.loadStart = null;
-	}
-	// Handle back navigation
-	navigateBack() {
-		const pages = getCurrentPages();
-		if (pages.length > 0) {
-			const pageInstance = pages[pages.length - 1];
-			this.currentPage = this.getPagePath(pageInstance);
-			this.activateView(this.currentPage);
+	takePendingRouteTransaction(pagePath) {
+		const normalizedPath = this.normalizePagePath(pagePath);
+		const viewKey = this.getViewKey(normalizedPath);
+		let transaction = this.pendingRouteTransactions.find(item => {
+			return !item.failed && !item.claimed && item.pagePath === normalizedPath;
+		});
+		if (!transaction) {
+			transaction = this.pendingRouteTransactions.find(item => {
+				return !item.failed && !item.claimed && this.getViewKey(item.pagePath) === viewKey;
+			});
 		}
+		if (!transaction) return null;
+
+		transaction.claimed = true;
+		if (transaction.lifecycleFallbackTimer) {
+			clearTimeout(transaction.lifecycleFallbackTimer);
+			transaction.lifecycleFallbackTimer = null;
+		}
+		this.removePendingRouteTransaction(transaction);
+		return transaction;
+	}
+
+	startRouteWithoutLifecycle(transaction, reason = 'route-without-lifecycle') {
+		if (!transaction || transaction.failed) return;
+		this.removePendingRouteTransaction(transaction);
+
+		const page = this.getCurrentPage();
+		const currentPath = this.getPagePath(page);
+		const currentPageMatches =
+			this.getViewKey(currentPath) === this.getViewKey(transaction.pagePath);
+		const pagePath = transaction.pagePath;
+
+		let state = this.getPageState(
+			currentPageMatches && page ? page.$vm : null,
+			pagePath,
+			false
+		);
+		if (!state) {
+			state = this.createPageState(
+				currentPageMatches && page ? page.$vm : null,
+				pagePath,
+				transaction,
+				false
+			);
+			state.ready = true;
+			state.needDuration = false;
+			state.initialLoadTime = LOAD_TIME_UNAVAILABLE;
+		}
+		this.showPageState(state, reason);
+	}
+
+	startCurrentPageWithoutLifecycle() {
+		const page = this.getCurrentPage();
+		const pagePath = this.getPagePath(page);
+		if (!pagePath) return;
+
+		let state = this.getPageState(page && page.$vm, pagePath, true);
+		if (!state) {
+			state = this.createPageState(page && page.$vm, pagePath, null, false);
+			state.ready = true;
+			state.needDuration = false;
+			state.initialLoadTime = LOAD_TIME_UNAVAILABLE;
+		}
+		this.showPageState(state, 'navigateBack-hooks-unavailable');
 	}
 
 	handlePageLoad(vm) {
-		// onLoad can run before getCurrentPages() exposes page.$vm, so use the
-		// lifecycle receiver directly instead of filtering by page.$vm identity.
-		const pagePath = this.getLifecyclePagePath(vm);
-		if (!pagePath) return;
-
-		this.currentPage = pagePath;
-		if (this.loadedPageVms.has(vm)) return;
-
-		const viewKey = this.getViewKey(pagePath);
-		const pendingView = this.takePendingViewLoad(pagePath);
-		if (this.loadedViewPathMap[viewKey] && !pendingView) return;
-		if (this.pageLoadStartMap[viewKey]) return;
-
-		delete this.loadedViewPathMap[viewKey];
-		this.pageLoadStartMap[viewKey] = {
-			pagePath,
-			pageVm: vm,
-			startTime: pendingView ? pendingView.startTime : Date.now()
-		};
-		if (!this.firstPageDetected) {
-			this.firstPageDetected = true;
-		}
-	}
-
-	takePendingViewLoad(pagePath) {
-		const pendingPath = this.getPendingViewLoadPath(pagePath);
-		const pendingView = pendingPath ? this.pendingViewLoadMap[pendingPath] : null;
-		if (pendingPath) {
-			delete this.pendingViewLoadMap[pendingPath];
-		}
-		return pendingView;
-	}
-
-	getPendingViewLoadPath(pagePath) {
-		if (this.pendingViewLoadMap[pagePath]) return pagePath;
-		const viewKey = this.getViewKey(pagePath);
-		return Object.keys(this.pendingViewLoadMap).find(path => {
-			return this.getViewKey(path) === viewKey;
+		if (this.isAppLifecycleVm(vm)) return;
+		const lifecyclePath = this.getLifecyclePagePath(vm);
+		this.debugLog('lifecycle', lifecyclePath, {
+			lifecycle: 'onLoad'
 		});
-	}
+		if (!lifecyclePath) return;
 
-	hasPendingViewLoad(pagePath) {
-		return Boolean(this.getPendingViewLoadPath(pagePath));
+		const transaction = this.takePendingRouteTransaction(lifecyclePath);
+		const pagePath = transaction ? transaction.pagePath : lifecyclePath;
+		let state = this.getPageState(vm, pagePath, false);
+		if (!state) {
+			state = this.createPageState(vm, pagePath, transaction, true);
+		} else if (state.startCount === 0 && state.initialLoadTime === null) {
+			this.cancelPageReadyFallback(state);
+			this.updatePageStatePath(state, pagePath);
+			state.routeTransaction = transaction || state.routeTransaction;
+			state.needDuration = true;
+			state.loadStart = Date.now();
+			state.ready = false;
+		}
+		this.bindPageStateVm(state, vm);
 	}
 
 	handlePageReady(vm) {
-		const pagePath = this.getLifecyclePagePath(vm);
-		if (!pagePath) return;
+		if (this.isAppLifecycleVm(vm)) return;
+		const lifecyclePath = this.getLifecyclePagePath(vm);
+		this.debugLog('lifecycle', lifecyclePath, {
+			lifecycle: 'onReady'
+		});
+		if (!lifecyclePath) return;
 
-		const viewKey = this.getViewKey(pagePath);
-		const pendingView = this.pageLoadStartMap[viewKey];
-		if (!pendingView || this.loadedPageVms.has(vm)) {
-			return;
+		let state = this.getPageState(vm, lifecyclePath, true);
+		if (!state) {
+			const transaction = this.takePendingRouteTransaction(lifecyclePath);
+			state = this.createPageState(
+				vm,
+				transaction ? transaction.pagePath : lifecyclePath,
+				transaction,
+				false
+			);
 		}
-
-		const duration = Math.max(0, Date.now() - pendingView.startTime) * 1000000;
-		this.reportCreateView(pendingView.pagePath, duration);
-
-		delete this.pageLoadStartMap[viewKey];
-		this.loadedViewPathMap[viewKey] = true;
-		this.loadedPageVms.add(pendingView.pageVm);
-		this.loadedPageVms.add(vm);
-		const pendingShow = this.pendingViewShowMap[viewKey];
-		if (pendingShow) {
-			delete this.pendingViewShowMap[viewKey];
-			this.activateView(pendingShow.pagePath, pendingShow.injectSessionReplay);
+		this.bindPageStateVm(state, vm);
+		state.ready = true;
+		this.cancelPageReadyFallback(state);
+		if (state.needDuration && state.initialLoadTime === null) {
+			state.initialLoadTime = this.calculateInitialLoadTime(state);
+			state.needDuration = false;
 		}
+		this.tryActivateVisiblePageState(state, true, 'page:onReady');
 	}
 
 	handlePageShow(vm) {
-		const pagePath = this.getLifecyclePagePath(vm);
-		if (!pagePath) return;
+		if (this.isAppLifecycleVm(vm)) return;
+		const lifecyclePath = this.getLifecyclePagePath(vm);
+		this.debugLog('lifecycle', lifecyclePath, {
+			lifecycle: 'onShow'
+		});
+		if (!lifecyclePath) return;
 
-		this.currentPage = pagePath;
-		const viewKey = this.getViewKey(pagePath);
-		const pageLoad = this.pageLoadStartMap[viewKey];
-		const pendingRoutePath = this.getPendingViewLoadPath(pagePath);
-		if (pageLoad || pendingRoutePath) {
-			this.pendingViewShowMap[viewKey] = {
-				pagePath: pageLoad ? pageLoad.pagePath : pendingRoutePath,
-				injectSessionReplay: this.isPageVm(vm)
-			};
-			return;
+		const transaction = this.takePendingRouteTransaction(lifecyclePath);
+		const pagePath = transaction ? transaction.pagePath : lifecyclePath;
+		let state = this.getPageState(vm, pagePath, true);
+		if (!state) {
+			state = this.createPageState(vm, pagePath, transaction, false);
 		}
-		// View collection accepts lifecycle proxies. Session Replay injection
-		// keeps the original page.$vm identity boundary.
-		this.activateView(pagePath, this.isPageVm(vm));
+		this.bindPageStateVm(state, vm);
+		if (transaction) {
+			this.updatePageStatePath(state, transaction.pagePath);
+			state.routeTransaction = transaction;
+		}
+
+		state.visible = true;
+		this.latestPageStateByViewKey[state.viewKey] = state;
+		this.currentPageState = state;
+		this.currentPage = state.pagePath;
+
+		this.tryActivateVisiblePageState(state, true, 'page:onShow');
 	}
 
 	handlePageHide(vm) {
+		if (this.isAppLifecycleVm(vm)) return;
 		const pagePath = this.getPagePathFromVm(vm);
-		if (!pagePath) return;
-
-		this.deactivateView(pagePath);
+		this.debugLog('lifecycle', pagePath, {
+			lifecycle: 'onHide'
+		});
+		const state = this.getPageState(vm, pagePath, true);
+		if (state) {
+			state.visible = false;
+			this.cancelPageReadyFallback(state);
+			if (this.currentPageState === state) {
+				this.currentPageState = null;
+			}
+			this.deactivatePageState(state, 'page:onHide');
+			return;
+		}
+		this.deactivateView(pagePath, 'page:onHide-without-state');
 	}
 
 	handlePageUnload(vm) {
+		if (this.isAppLifecycleVm(vm)) return;
 		const pagePath = this.getPagePathFromVm(vm);
-		if (!pagePath) return;
-
-		const viewKey = this.getViewKey(pagePath);
-		const pendingView = this.pageLoadStartMap[viewKey];
-		delete this.pendingViewLoadMap[pagePath];
-		delete this.pageLoadStartMap[viewKey];
-		delete this.pendingViewShowMap[viewKey];
-		delete this.loadedViewPathMap[viewKey];
-		if (pendingView) {
-			this.loadedPageVms.delete(pendingView.pageVm);
+		this.debugLog('lifecycle', pagePath, {
+			lifecycle: 'onUnload'
+		});
+		const state = this.getPageState(vm, pagePath, true);
+		if (!state) {
+			this.deactivateView(pagePath, 'page:onUnload-without-state');
+			return;
 		}
-		this.loadedPageVms.delete(vm);
-		this.deactivateView(pagePath);
+
+		state.visible = false;
+		this.cancelPageReadyFallback(state);
+		this.deactivatePageState(state, 'page:onUnload');
+		if (this.currentPageState === state) {
+			this.currentPageState = null;
+		}
+		if (this.latestPageStateByViewKey[state.viewKey] === state) {
+			delete this.latestPageStateByViewKey[state.viewKey];
+		}
+		if (this.canUseWeakKey(vm)) {
+			this.pageStateByVm.delete(vm);
+		}
+	}
+
+	createPageState(vm, pagePath, transaction, needDuration) {
+		const normalizedPath = this.normalizePagePath(pagePath);
+		const state = {
+			pagePath: normalizedPath,
+			viewKey: this.getViewKey(normalizedPath),
+			pageVm: null,
+			confirmedPageVm: null,
+			routeTransaction: transaction,
+			needDuration,
+			loadStart: needDuration ? Date.now() : null,
+			ready: false,
+			visible: false,
+			initialLoadTime: null,
+			readyFallbackTimer: null,
+			startCount: 0
+		};
+		this.bindPageStateVm(state, vm);
+		if (state.viewKey) {
+			this.latestPageStateByViewKey[state.viewKey] = state;
+		}
+		return state;
+	}
+
+	bindPageStateVm(state, vm) {
+		if (!state || !this.canUseWeakKey(vm)) return;
+		state.pageVm = vm;
+		this.pageStateByVm.set(vm, state);
+		if (this.isPageVm(vm)) {
+			state.confirmedPageVm = vm;
+		}
+	}
+
+	updatePageStatePath(state, pagePath) {
+		const normalizedPath = this.normalizePagePath(pagePath);
+		if (!state || !normalizedPath || state.pagePath === normalizedPath) return;
+		const oldViewKey = state.viewKey;
+		state.pagePath = normalizedPath;
+		state.viewKey = this.getViewKey(normalizedPath);
+		if (oldViewKey && this.latestPageStateByViewKey[oldViewKey] === state) {
+			delete this.latestPageStateByViewKey[oldViewKey];
+		}
+		if (state.viewKey) {
+			this.latestPageStateByViewKey[state.viewKey] = state;
+		}
+	}
+
+	getPageState(vm, pagePath, allowViewKeyFallback) {
+		if (this.canUseWeakKey(vm)) {
+			const state = this.pageStateByVm.get(vm);
+			if (state) return state;
+		}
+		if (!allowViewKeyFallback) return null;
+		const viewKey = this.getViewKey(pagePath);
+		const candidate = viewKey ? this.latestPageStateByViewKey[viewKey] || null : null;
+		if (
+			candidate &&
+			this.isPageVm(vm) &&
+			candidate.confirmedPageVm &&
+			candidate.confirmedPageVm !== vm
+		) {
+			return null;
+		}
+		return candidate;
+	}
+
+	showPageState(state, reason = 'show-page-state') {
+		if (!state) return;
+		state.visible = true;
+		this.latestPageStateByViewKey[state.viewKey] = state;
+		this.currentPageState = state;
+		this.currentPage = state.pagePath;
+		this.tryActivateVisiblePageState(state, true, reason);
+	}
+
+	resolveInitialLoadTimeForShow(state) {
+		if (!state) return false;
+		if (state.startCount > 0 || state.initialLoadTime !== null) return true;
+		if (state.needDuration && typeof state.loadStart === 'number') {
+			// The first visible View waits for initial rendering to complete so that
+			// loadTime represents onReady - onLoad rather than onShow - onLoad.
+			if (!state.ready) return false;
+			state.initialLoadTime = this.calculateInitialLoadTime(state);
+		} else {
+			state.initialLoadTime = LOAD_TIME_UNAVAILABLE;
+		}
+		state.needDuration = false;
+		return true;
+	}
+
+	tryActivateVisiblePageState(state, injectSessionReplay, reason) {
+		if (!state || !state.visible) return;
+		if (!this.resolveInitialLoadTimeForShow(state)) {
+			if (this.activePageState && this.activePageState !== state) {
+				this.deactivateView(null, `view-replaced-before-${reason}`);
+			}
+			this.schedulePageReadyFallback(state);
+			return;
+		}
+		this.cancelPageReadyFallback(state);
+		if (this.appInForeground) {
+			this.activatePageState(state, injectSessionReplay, reason);
+		}
+	}
+
+	schedulePageReadyFallback(state) {
+		if (
+			!state ||
+			state.ready ||
+			state.startCount > 0 ||
+			state.initialLoadTime !== null ||
+			state.readyFallbackTimer !== null
+		) {
+			return;
+		}
+		state.readyFallbackTimer = setTimeout(() => {
+			state.readyFallbackTimer = null;
+			if (state.ready || state.startCount > 0 || !state.visible) return;
+			state.needDuration = false;
+			state.initialLoadTime = LOAD_TIME_UNAVAILABLE;
+			console.warn('[FTLog] Page onReady was not observed; loadTime uses -1:',
+				state.pagePath);
+			this.tryActivateVisiblePageState(state, true, 'page:onReady-timeout');
+		}, PAGE_READY_FALLBACK_TIMEOUT_MS);
+	}
+
+	cancelPageReadyFallback(state) {
+		if (!state || state.readyFallbackTimer === null) return;
+		clearTimeout(state.readyFallbackTimer);
+		state.readyFallbackTimer = null;
+	}
+
+	calculateInitialLoadTime(state) {
+		if (!state) return LOAD_TIME_UNAVAILABLE;
+		if (typeof state.loadStart !== 'number') {
+			return LOAD_TIME_UNAVAILABLE;
+		}
+		return Math.max(0, Date.now() - state.loadStart) * 1000000;
+	}
+
+	getNextLoadTime(state) {
+		if (!state) return null;
+		return state.startCount > 0 ? RELOAD_LOAD_TIME : state.initialLoadTime;
+	}
+
+	activatePageState(state, injectSessionReplay = true, reason = 'activate-page-state') {
+		if (!state || !state.visible || !this.appInForeground) return;
+		if (this.activePageState !== state) {
+			const loadTime = this.getNextLoadTime(state);
+			if (loadTime === null) return;
+			if (this.activePageState) {
+				this.deactivateView(null, `view-replaced-before-${reason}`);
+			}
+			const parsedUrl = this.parseUrl(state.pagePath);
+			if (!parsedUrl.view_name) return;
+			const params = {
+				viewName: parsedUrl.view_name,
+				property: {
+					view_url_query: parsedUrl.queryJsonStr
+				}
+			};
+			this.reportCreateView(state.pagePath, loadTime);
+			this.debugLog('startView', state.pagePath, {
+				reason,
+				loadTime
+			});
+			console.log('[FTLog] startView:', params);
+			this.rum.startView(params);
+			state.startCount += 1;
+			this.activePageState = state;
+			this.activeViewPath = state.pagePath;
+		}
+		if (injectSessionReplay && this.shouldInjectSessionReplay(state)) {
+			this.evalJS(state);
+		}
+	}
+
+	// Kept as a small compatibility wrapper for callers inside older integrations.
+	activateView(pagePath, injectSessionReplay = true) {
+		let state = this.getPageState(null, pagePath, true);
+		if (!state) {
+			state = this.createPageState(null, pagePath, null, false);
+			state.ready = true;
+			state.needDuration = false;
+			state.initialLoadTime = LOAD_TIME_UNAVAILABLE;
+		}
+		state.visible = true;
+		this.currentPageState = state;
+		this.currentPage = state.pagePath;
+		this.activatePageState(state, injectSessionReplay, 'compatibility-activateView');
+	}
+
+	deactivatePageState(state, reason = 'deactivate-page-state') {
+		if (!state || this.activePageState !== state) return;
+		this.deactivateView(null, reason);
+	}
+
+	deactivateView(pagePath = null, reason = 'deactivate-view') {
+		if (!this.activePageState) return;
+		const normalizedPath = this.normalizePagePath(pagePath);
+		if (normalizedPath && normalizedPath !== this.activeViewPath) return;
+		this.debugLog('stopView', this.activeViewPath, {
+			reason
+		});
+		this.rum.stopView(null);
+		this.activePageState = null;
+		this.activeViewPath = null;
+	}
+
+	reportCreateView(pagePath, duration) {
+		const viewName = this.getViewKey(pagePath);
+		if (!viewName) return;
+		const params = {
+			viewName,
+			loadTime: duration
+		};
+		console.log('[FTLog] onCreateView:', params);
+		this.rum.onCreateView(params);
+	}
+
+	shouldInjectSessionReplay(state) {
+		if (!this.sessionReplayJS || !state || !state.visible || !this.appInForeground) {
+			return false;
+		}
+		const page = this.getCurrentPage();
+		if (!page) return false;
+		if (state.confirmedPageVm && page.$vm && state.confirmedPageVm !== page.$vm) {
+			return false;
+		}
+		return this.getViewKey(this.getPagePath(page)) === state.viewKey;
+	}
+
+	evalJS(state = this.currentPageState) {
+		if (!this.shouldInjectSessionReplay(state)) return;
+		const page = this.getCurrentPage();
+		if (!page || typeof page.$getAppWebview !== 'function') return;
+
+		try {
+			const webView = page.$getAppWebview();
+			if (!this.canUseWeakKey(webView) || this.sessionReplayInjectedWebViews.has(webView)) {
+				return;
+			}
+			webView.evalJS(this.sessionReplayJS);
+			this.sessionReplayInjectedWebViews.add(webView);
+		} catch (error) {
+			console.error('[FTLog] Session Replay JS injection failed:', error);
+		}
+	}
+
+	getCurrentPage() {
+		const pages = typeof getCurrentPages === 'function' ? getCurrentPages() : [];
+		return pages.length > 0 ? pages[pages.length - 1] : null;
+	}
+
+	getCurrentPagePath() {
+		return this.getPagePath(this.getCurrentPage());
 	}
 
 	isPageVm(vm) {
-		if (!vm) return false;
-		const pages = getCurrentPages();
-		return pages.some(page => page.$vm === vm);
+		if (!this.canUseWeakKey(vm)) return false;
+		const pages = typeof getCurrentPages === 'function' ? getCurrentPages() : [];
+		return pages.some(page => page && page.$vm === vm);
 	}
 
 	getPagePath(page) {
-		if (!page) {
-			return null;
-		}
-		const fullPath = page.$page && page.$page.fullPath;
-		if (fullPath) {
-			return this.normalizePagePath(fullPath);
+		if (!page) return null;
+		if (page.$page && page.$page.fullPath) {
+			return this.normalizePagePath(page.$page.fullPath);
 		}
 		return this.normalizePagePath(page.route);
 	}
 
 	getPagePathFromVm(vm) {
 		if (!vm) return null;
-		if (vm.$page && vm.$page.fullPath) {
-			return this.normalizePagePath(vm.$page.fullPath);
+		let vmPage = null;
+		try {
+			vmPage = vm.$page;
+		} catch (error) {
+			// The uni-app $page getter can run before the page scope is attached.
 		}
-		if (vm.route) {
-			return this.normalizePagePath(vm.route);
+		if (vmPage && vmPage.fullPath) {
+			return this.normalizePagePath(vmPage.fullPath);
 		}
-		const pages = getCurrentPages();
-		const page = pages.find(item => item.$vm === vm);
-		return this.getPagePath(page);
+		const pages = typeof getCurrentPages === 'function' ? getCurrentPages() : [];
+		const page = pages.find(item => item && item.$vm === vm);
+		const pagePath = this.getPagePath(page);
+		if (pagePath) return pagePath;
+		let route = null;
+		try {
+			route = vm.route;
+		} catch (error) {
+			// Route access is best-effort while the page instance is being attached.
+		}
+		return this.normalizePagePath(route);
+	}
+
+	isAppLifecycleVm(vm) {
+		if (!vm) return false;
+		try {
+			const options = vm.$options;
+			return Boolean(
+				(options && options.mpType === 'app') ||
+				vm.mpType === 'app' ||
+				vm.$mpType === 'app'
+			);
+		} catch (error) {
+			return false;
+		}
 	}
 
 	getLifecyclePagePath(vm) {
 		const vmPagePath = this.getPagePathFromVm(vm);
 		if (vmPagePath) return vmPagePath;
-		if (this.currentPage && this.hasPendingViewLoad(this.currentPage)) {
-			return this.currentPage;
-		}
+		const pending = this.pendingRouteTransactions.find(item => !item.failed && !item.claimed);
+		if (pending) return pending.pagePath;
 		return this.getCurrentPagePath();
-	}
-
-	getLaunchStartTime() {
-		return this.appLaunchTime ? this.appLaunchTime * 1000000 : Date.now() * 1000000;
 	}
 
 	getViewKey(pagePath) {
@@ -538,9 +799,7 @@ class PageMonitor {
 	}
 
 	resolvePagePath(url) {
-		if (!url || typeof url !== 'string') {
-			return null;
-		}
+		if (!url || typeof url !== 'string') return null;
 		const trimmedUrl = url.trim();
 		if (!trimmedUrl.startsWith('./') && !trimmedUrl.startsWith('../')) {
 			return this.normalizePagePath(trimmedUrl);
@@ -563,115 +822,58 @@ class PageMonitor {
 		return this.normalizePagePath(pathSegments.join('/') + query);
 	}
 
-	activateView(pagePath, injectSessionReplay = true) {
-		const normalizedPath = this.normalizePagePath(pagePath);
-		if (!normalizedPath) {
-			return;
-		}
-		if (this.activeViewPath !== normalizedPath) {
-			const {
-				view_name,
-				qureyJsonStr
-			} = this.parseUrl(normalizedPath);
-			if (!view_name) {
-				return;
-			}
-			const params = {
-				'viewName': view_name,
-				'property': {
-					'view_url_query': qureyJsonStr
-				}
-			};
-			console.log('[FTLog] startView:', params);
-			this.rum.startView(params);
-			this.activeViewPath = normalizedPath;
-		}
-		if (injectSessionReplay) {
-			this.evalJS();
-		}
-	}
-
-	deactivateView(pagePath = null) {
-		const normalizedPath = pagePath ? this.normalizePagePath(pagePath) : this.activeViewPath;
-		if (!this.activeViewPath) {
-			return;
-		}
-		if (normalizedPath && normalizedPath !== this.activeViewPath) {
-			return;
-		}
-		this.rum.stopView(null);
-		this.activeViewPath = null;
-	}
-
-	reportCreateView(pagePath, duration) {
-		const {
-			view_name
-		} = this.parseUrl(pagePath);
-		if (!view_name) {
-			return;
-		}
-		const params = {
-			'viewName': view_name,
-			'loadTime': duration,
-		};
-		console.log('[FTLog] onCreateView:', params);
-		this.rum.onCreateView(params);
-	}
-
 	normalizePagePath(url) {
-		if (!url || typeof url !== 'string') {
-			return null;
-		}
+		if (!url || typeof url !== 'string') return null;
 		let normalizedUrl = url.trim();
-		if (!normalizedUrl) {
-			return null;
-		}
-		if (normalizedUrl.startsWith('./')) {
+		if (!normalizedUrl) return null;
+		while (normalizedUrl.startsWith('./')) {
 			normalizedUrl = normalizedUrl.slice(2);
 		}
-		if (normalizedUrl.charAt(0) === '/') {
+		while (normalizedUrl.startsWith('/')) {
 			normalizedUrl = normalizedUrl.slice(1);
 		}
-		return normalizedUrl;
+		return normalizedUrl || null;
 	}
 
 	parseUrl(url) {
-		const view_url_query = {};
-		let view_name = '';
+		const viewUrlQuery = {};
 		const normalizedUrl = this.normalizePagePath(url);
+		let viewName = '';
 		if (normalizedUrl) {
-			const urlParts = normalizedUrl.split('?');
-			view_name = urlParts[0];
-			if (urlParts.length > 1) {
-				const queryString = urlParts[1];
-				const params = queryString.split('&');
-
-				params.forEach(param => {
-					const [key, value] = param.split('=');
-					if (key) {
-						view_url_query[decodeURIComponent(key)] = value ? decodeURIComponent(value) :
-							'';
-					}
+			const queryIndex = normalizedUrl.indexOf('?');
+			viewName = queryIndex >= 0 ? normalizedUrl.slice(0, queryIndex) : normalizedUrl;
+			const queryString = queryIndex >= 0 ? normalizedUrl.slice(queryIndex + 1) : '';
+			if (queryString) {
+				queryString.split('&').forEach(item => {
+					if (!item) return;
+					const separatorIndex = item.indexOf('=');
+					const rawKey = separatorIndex >= 0 ? item.slice(0, separatorIndex) : item;
+					const rawValue = separatorIndex >= 0 ? item.slice(separatorIndex + 1) : '';
+					if (!rawKey) return;
+					viewUrlQuery[this.decodeQueryComponent(rawKey)] =
+						this.decodeQueryComponent(rawValue);
 				});
 			}
 		}
-		const qureyJsonStr = JSON.stringify(view_url_query);
+		const queryJsonStr = JSON.stringify(viewUrlQuery);
 		return {
-			view_name,
-			qureyJsonStr
+			view_name: viewName,
+			queryJsonStr,
+			// Preserve the misspelled field for source compatibility.
+			qureyJsonStr: queryJsonStr
 		};
 	}
-	
-	evalJS(){
-		var pages = getCurrentPages()
-		if (pages.length > 0 && this.sessionReplayJS) {
-			let pageInstance = pages[pages.length - 1]
-			let webView = pageInstance.$getAppWebview()
-			if (webView && !this.sessionReplayInjectedWebViews.has(webView)) {
-				webView.evalJS(this.sessionReplayJS);
-				this.sessionReplayInjectedWebViews.add(webView);
-			}
+
+	decodeQueryComponent(value) {
+		try {
+			return decodeURIComponent(String(value).replace(/\+/g, ' '));
+		} catch (error) {
+			return String(value);
 		}
+	}
+
+	canUseWeakKey(value) {
+		return (typeof value === 'object' && value !== null) || typeof value === 'function';
 	}
 }
 
