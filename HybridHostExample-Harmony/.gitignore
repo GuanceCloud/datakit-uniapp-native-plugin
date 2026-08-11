@@ -1,11 +1,9 @@
-# HBuilderX injects both the compiled H5 bundle and UTS static modules here.
-# They are application build inputs, not host source code.
-# Keep the empty target directory visible in a fresh clone; all injected files
-# inside it remain local build input.
-HBuilder-uniPluginDemo/entry/src/main/resources/resfile/apps/HBuilder/**
-!HBuilder-uniPluginDemo/entry/src/main/resources/resfile/apps/HBuilder/.gitkeep
-HBuilder-uniPluginDemo/entry/src/main/ets/uni_modules/index.generated.ets
-HBuilder-uniPluginDemo/uni_modules/
+# Keep the injected H5 bundle and UTS static modules in Git so this project is
+# a runnable resource-injection example. Module build outputs stay ignored.
+HBuilder-uniPluginDemo/uni_modules/*/build/
+HBuilder-uniPluginDemo/uni_modules/*/oh_modules/
+HBuilder-uniPluginDemo/uni_modules/*/oh-package-lock.json5
+HBuilder-uniPluginDemo/uni_modules/*/.DS_Store
 
 # DevEco / OHPM generated state
 HBuilder-uniPluginDemo/oh_modules/

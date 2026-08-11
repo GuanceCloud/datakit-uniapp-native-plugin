@@ -1,6 +1,7 @@
 # 将现有 UniApp 放入 HarmonyOS 原生工程
 
 本工程用于把已编译的 UniApp 资源和 UTS 静态模块打入 HarmonyOS HAP。
+仓库已包含一份可直接构建的 `www` 资源和 HarmonyOS UTS 静态模块示例。
 
 ## 1. 编译 UniApp
 
