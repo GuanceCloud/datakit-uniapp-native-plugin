@@ -111,8 +111,6 @@ export class mobileAgent {
 
 	static appendBridgeContext(params: any | null) {
 		appendBridgeContextState(params)
-		const json = stringifyParams(params)
-		GCUniPluginNative.appendBridgeContext(json)
 	}
 
 	static flushSyncData() {

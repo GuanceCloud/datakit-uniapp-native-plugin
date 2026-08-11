@@ -311,8 +311,6 @@ open class mobileAgent {
         }
         fun appendBridgeContext(params: Any?) {
             appendBridgeContextState(params)
-            val json = stringifyParams(params)
-            GCUniPluginNative.appendBridgeContext(json)
         }
         fun flushSyncData() {
             GCUniPluginNative.flushSyncData()

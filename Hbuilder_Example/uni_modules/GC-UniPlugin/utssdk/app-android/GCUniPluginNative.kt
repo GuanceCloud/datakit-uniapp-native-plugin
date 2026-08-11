@@ -31,7 +31,6 @@ import com.ft.sdk.garble.bean.UserData
 import com.ft.sdk.garble.utils.Constants
 import com.ft.sdk.garble.utils.Utils as FTUtils
 import java.util.Locale
-import java.util.concurrent.ConcurrentHashMap
 
 private object FTUniAppStartManager {
     private var alreadyColdLaunch = false
@@ -59,9 +58,6 @@ private object FTUniAppStartManager {
 
 object GCUniPluginNative {
     private const val DEFAULT_ERROR_TYPE = "uniapp_crash"
-    private val bridgeContext = ConcurrentHashMap<String, Any>().apply {
-        put("sdk_bridge_info", "{\"uniapp\":\"0.2.7-alpha.1\"}")
-    }
 
     private fun parseObject(json: String?): JSONObject {
         if (json.isNullOrBlank()) {
@@ -174,12 +170,6 @@ object GCUniPluginNative {
             val item = objectMap(entry.value) ?: continue
             result[key] = item
         }
-        return result
-    }
-
-    private fun mergeBridgeContext(value: Any?): HashMap<String, Any> {
-        val result = objectMap(value) ?: HashMap()
-        result.putAll(bridgeContext)
         return result
     }
 
@@ -583,11 +573,6 @@ object GCUniPluginNative {
     }
 
     @JvmStatic
-    fun appendBridgeContext(json: String?) {
-        objectMap(parseObject(json))?.let { bridgeContext.putAll(it) }
-    }
-
-    @JvmStatic
     fun flushSyncData() {
         FTSdk.flushSyncData()
     }
@@ -624,7 +609,7 @@ object GCUniPluginNative {
         val params = parseObject(json)
         val actionName = stringValue(params["actionName"]) ?: return
         val actionType = stringValue(params["actionType"]) ?: "click"
-        FTRUMGlobalManager.get().startAction(actionName, actionType, mergeBridgeContext(params["property"]))
+        FTRUMGlobalManager.get().startAction(actionName, actionType, objectMap(params["property"]) ?: HashMap())
     }
 
     @JvmStatic
@@ -632,7 +617,7 @@ object GCUniPluginNative {
         val params = parseObject(json)
         val actionName = stringValue(params["actionName"]) ?: return
         val actionType = stringValue(params["actionType"]) ?: "click"
-        FTRUMGlobalManager.get().addAction(actionName, actionType, mergeBridgeContext(params["property"]))
+        FTRUMGlobalManager.get().addAction(actionName, actionType, objectMap(params["property"]) ?: HashMap())
     }
 
     @JvmStatic
@@ -647,7 +632,7 @@ object GCUniPluginNative {
     fun startView(json: String?) {
         val params = parseObject(json)
         val viewName = stringValue(params["viewName"]) ?: return
-        FTRUMGlobalManager.get().startView(viewName, mergeBridgeContext(params["property"]))
+        FTRUMGlobalManager.get().startView(viewName, objectMap(params["property"]) ?: HashMap())
     }
 
     @JvmStatic
@@ -657,7 +642,7 @@ object GCUniPluginNative {
         if (property == null) {
             FTRUMGlobalManager.get().stopView()
         } else {
-            FTRUMGlobalManager.get().stopView(mergeBridgeContext(property))
+            FTRUMGlobalManager.get().stopView(objectMap(property) ?: HashMap())
         }
     }
 
@@ -667,14 +652,14 @@ object GCUniPluginNative {
         val message = stringValue(params["message"]) ?: ""
         val stack = stringValue(params["stack"]) ?: ""
         val type = stringValue(firstValue(params, "type", "errorType")) ?: DEFAULT_ERROR_TYPE
-        FTRUMGlobalManager.get().addError(stack, message, type, appState(params["state"]), mergeBridgeContext(params["property"]))
+        FTRUMGlobalManager.get().addError(stack, message, type, appState(params["state"]), objectMap(params["property"]) ?: HashMap())
     }
 
     @JvmStatic
     fun startResource(json: String?) {
         val params = parseObject(json)
         val key = stringValue(params["key"]) ?: return
-        FTRUMGlobalManager.get().startResource(key, mergeBridgeContext(params["property"]))
+        FTRUMGlobalManager.get().startResource(key, objectMap(params["property"]) ?: HashMap())
     }
 
     @JvmStatic
@@ -685,7 +670,7 @@ object GCUniPluginNative {
         if (property == null) {
             FTRUMGlobalManager.get().stopResource(key)
         } else {
-            FTRUMGlobalManager.get().stopResource(key, mergeBridgeContext(property))
+            FTRUMGlobalManager.get().stopResource(key, objectMap(property) ?: HashMap())
         }
     }
 
@@ -694,9 +679,9 @@ object GCUniPluginNative {
         val params = parseObject(json)
         val key = stringValue(params["key"]) ?: return
         val content = resourceContent(params["content"]) ?: return
-        content.property = mergeBridgeContext(params["property"])
+        content.property = objectMap(params["property"]) ?: HashMap()
         val status = netStatus(params["content"])
-        status.property = mergeBridgeContext(params["property"])
+        status.property = objectMap(params["property"]) ?: HashMap()
         FTRUMGlobalManager.get().addResource(key, content, status)
     }
 
@@ -710,7 +695,7 @@ object GCUniPluginNative {
         val params = parseObject(json)
         val content = stringValue(params["content"]) ?: return
         val status = logStatus(params["status"])
-        val property = mergeBridgeContext(params["property"])
+        val property = objectMap(params["property"]) ?: HashMap()
         if (status != null) {
             FTLogger.getInstance().logBackground(content, status, property)
         } else {
