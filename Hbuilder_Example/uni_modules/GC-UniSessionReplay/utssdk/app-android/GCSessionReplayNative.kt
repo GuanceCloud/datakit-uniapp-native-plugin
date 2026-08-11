@@ -29,19 +29,19 @@ object GCSessionReplayNative {
         }
     }
 
-    fun setConfig(json: String?) {
+    fun setConfig(json: String?): Boolean {
         if (!isRumWebViewBridgeReady()) {
             Log.e(
                 LOG_TAG,
                 "Session Replay initialization requires the Mobile SDK and RUM WebView tracing to be configured first"
             )
-            return
+            return false
         }
 
         val params = parseObject(json)
         val config = invokeOrNull("create the Session Replay configuration") {
             Class.forName(CONFIG_CLASS).getConstructor().newInstance()
-        } ?: return
+        } ?: return false
 
         percentage(params["sampleRate"])?.let { setFloat(config, "setSampleRate", it) }
         percentage(params["sessionReplayOnErrorSampleRate"])
@@ -62,13 +62,15 @@ object GCSessionReplayNative {
             }
         }
 
-        if (invokeSafely("initialize Session Replay") {
+        val initialized = invokeSafely("initialize Session Replay") {
             Class.forName(SDK_CLASS)
                 .getMethod("initSessionReplayConfig", Any::class.java)
                 .invoke(null, config)
-        }) {
+        }
+        if (initialized) {
             disableFirstViewBridge()
         }
+        return initialized
     }
 
     private fun isRumWebViewBridgeReady(): Boolean {

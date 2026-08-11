@@ -5,6 +5,22 @@ import DCloudUTSFoundation
 import GuanceSDK
 
 @objc public class GCUniPluginNative: NSObject {
+    private static func logInfo(_ message: String) {
+#if canImport(DCloudUTSFoundation)
+        console.log(message)
+#else
+        print(message)
+#endif
+    }
+
+    private static func logError(_ message: String) {
+#if canImport(DCloudUTSFoundation)
+        console.error(message)
+#else
+        print(message)
+#endif
+    }
+
     private static func runOnMainSync(_ block: () -> Void) {
         if Thread.isMainThread {
             block()
@@ -449,14 +465,19 @@ import GuanceSDK
         return model
     }
 
-    @objc public static func sdkConfig(_ json: String?) {
+    @discardableResult
+    @objc public static func sdkConfig(_ json: String?) -> Bool {
+        logInfo("[FTLog] GC-UniPlugin Mobile SDK initialization requested")
         let params = parseObject(json)
         guard let config = createMobileConfig(params) else {
-            return
+            logError("[FTLog] GC-UniPlugin Mobile SDK initialization failed: invalid configuration")
+            return false
         }
         runOnMainSync {
             FTMobileAgent.start(withConfigOptions: config)
         }
+        logInfo("[FTLog] GC-UniPlugin Mobile SDK initialized successfully")
+        return true
     }
 
     @objc public static func bindRUMUser(_ userId: String,
@@ -507,14 +528,19 @@ import GuanceSDK
         FTMobileAgent.shutDown()
     }
 
-    @objc public static func setRumConfig(_ json: String?) {
+    @discardableResult
+    @objc public static func setRumConfig(_ json: String?) -> Bool {
+        logInfo("[FTLog] GC-UniPlugin RUM initialization requested")
         let params = parseObject(json)
         guard let config = createRumConfig(params) else {
-            return
+            logError("[FTLog] GC-UniPlugin RUM initialization failed: invalid configuration")
+            return false
         }
         runOnMainSync {
             FTMobileAgent.sharedInstance().startRum(withConfigOptions: config)
         }
+        logInfo("[FTLog] GC-UniPlugin RUM initialized successfully")
+        return true
     }
 
     @objc public static func startAction(_ json: String?) {

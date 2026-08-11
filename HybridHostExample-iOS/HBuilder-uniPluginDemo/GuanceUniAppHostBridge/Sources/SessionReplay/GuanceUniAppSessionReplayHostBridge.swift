@@ -15,9 +15,9 @@ public final class GuanceUniAppSessionReplayHostBridge: NSObject {
         case "sessionReplay.installWebViewHook":
             GCSessionReplayNative.installWebViewHook()
         case "sessionReplay.setConfig":
-            GCSessionReplayNative.setConfig(payload.map { String($0) })
+            return GCSessionReplayNative.setConfig(payload.map { String($0) }) ? "true" : "false"
         default:
-            NSLog("[GC-UniSessionReplay] Unsupported HostBridge command: %@", command)
+            print("[GC-UniSessionReplay] Unsupported HostBridge command: \(command)")
         }
         return nil
     }
@@ -29,9 +29,8 @@ public final class GuanceUniAppSessionReplayHostBridge: NSObject {
         ]
         let missingClasses = requiredClasses.filter { NSClassFromString($0) == nil }
         guard missingClasses.isEmpty else {
-            NSLog(
-                "[GC-UniSessionReplay] Session Replay classes are unavailable (%@). CocoaPods hosts must include GuanceSDK/Agent and GuanceSDK/SessionReplay; SPM and XCFramework hosts must link GuanceSessionReplay.",
-                missingClasses.joined(separator: ", ")
+            print(
+                "[GC-UniSessionReplay] Session Replay classes are unavailable (\(missingClasses.joined(separator: ", "))). CocoaPods hosts must include GuanceSDK/Agent and GuanceSDK/SessionReplay; SPM and XCFramework hosts must link GuanceSessionReplay."
             )
             return false
         }

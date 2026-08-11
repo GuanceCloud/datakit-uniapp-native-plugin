@@ -537,13 +537,17 @@ object GCUniPluginNative {
     }
 
     @JvmStatic
-    fun sdkConfig(json: String?) {
+    fun sdkConfig(json: String?): Boolean {
         val params = parseObject(json)
-        val config = createMobileConfig(params) ?: return
+        val config = createMobileConfig(params)
+        if (config == null) {
+            return false
+        }
         FTSdk.install(config)
         if (!booleanValue(firstValue(params, "offlinePackage", "offlinePakcage"))) {
             FTUniAppStartManager.start()
         }
+        return true
     }
 
     @JvmStatic
@@ -604,11 +608,15 @@ object GCUniPluginNative {
     }
 
     @JvmStatic
-    fun setRumConfig(json: String?) {
+    fun setRumConfig(json: String?): Boolean {
         val params = parseObject(json)
-        val config = createRumConfig(params) ?: return
+        val config = createRumConfig(params)
+        if (config == null) {
+            return false
+        }
         FTSdk.initRUMWithConfig(config)
         FTUniAppStartManager.uploadColdBootTimeWhenManualStart()
+        return true
     }
 
     @JvmStatic

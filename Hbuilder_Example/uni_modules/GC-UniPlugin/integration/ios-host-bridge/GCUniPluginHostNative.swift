@@ -46,8 +46,9 @@ import Foundation
         return String(data: data, encoding: .utf8)
     }
 
-    @objc public static func sdkConfig(_ json: String?) {
-        _ = invoke("mobile.sdkConfig", payload: json)
+    @discardableResult
+    @objc public static func sdkConfig(_ json: String?) -> Bool {
+        invoke("mobile.sdkConfig", payload: json) == "true"
     }
 
     @objc public static func bindRUMUser(
@@ -101,8 +102,9 @@ import Foundation
         _ = invoke("mobile.shutDown")
     }
 
-    @objc public static func setRumConfig(_ json: String?) {
-        _ = invoke("rum.setConfig", payload: json)
+    @discardableResult
+    @objc public static func setRumConfig(_ json: String?) -> Bool {
+        invoke("rum.setConfig", payload: json) == "true"
     }
 
     @objc public static func startAction(_ json: String?) {

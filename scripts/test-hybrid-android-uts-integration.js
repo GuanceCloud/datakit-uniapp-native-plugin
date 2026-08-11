@@ -16,6 +16,8 @@ const settings = read('HybridHostExample-Android/settings.gradle');
 const app = read('HybridHostExample-Android/simpleDemo/build.gradle');
 const coreLibrary = read('HybridHostExample-Android/unimoduleGCUniPlugin/build.gradle');
 const replayLibrary = read('HybridHostExample-Android/unimoduleGCUniSessionReplay/build.gradle');
+const coreNative = read('HybridHostExample-Android/unimoduleGCUniPlugin/src/main/kotlin/GCUniPluginNative.kt');
+const replayNative = read('HybridHostExample-Android/unimoduleGCUniSessionReplay/src/main/kotlin/GCSessionReplayNative.kt');
 const syncSources = read('HybridHostExample-Android/scripts/sync_hbuilder_android_uts_sources.sh');
 const packager = read('HybridHostExample-Android/scripts/package_guance_uniapp_android.sh');
 
@@ -36,6 +38,9 @@ for (const [label, source] of [
 
 assertIncludes(coreLibrary, 'ft-sdk:1.7.4', 'core Android Library');
 assertIncludes(replayLibrary, 'ft-session-replay:0.1.7', 'Session Replay Android Library');
+assertIncludes(coreNative, 'fun sdkConfig(json: String?): Boolean', 'core Android initialization result');
+assertIncludes(coreNative, 'fun setRumConfig(json: String?): Boolean', 'core Android RUM result');
+assertIncludes(replayNative, 'fun setConfig(json: String?): Boolean', 'Session Replay Android initialization result');
 assertIncludes(syncSources, 'HBUILDER_ANDROID_UTS_EXPORT_DIR', 'source synchronization script');
 assertIncludes(syncSources, "sync_module 'GC-UniPlugin' 'unimoduleGCUniPlugin'", 'source synchronization script');
 assertIncludes(syncSources, "sync_module 'GC-UniSessionReplay' 'unimoduleGCUniSessionReplay'", 'source synchronization script');

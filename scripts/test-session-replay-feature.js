@@ -137,6 +137,12 @@ const hostReplayNativeSource = read(
 const baseNativeSource = read(
     'Hbuilder_Example/uni_modules/GC-UniPlugin/utssdk/app-ios/GCUniPluginNative.swift'
 );
+const baseIOSIndexSource = read(
+    'Hbuilder_Example/uni_modules/GC-UniPlugin/utssdk/app-ios/index.uts'
+);
+const baseAndroidIndexSource = read(
+    'Hbuilder_Example/uni_modules/GC-UniPlugin/utssdk/app-android/index.uts'
+);
 const viewTrackingSource = read(
     'Hbuilder_Example/uni_modules/GC-UniPlugin/js_sdk/View/GCViewTracking.js'
 );
@@ -144,15 +150,22 @@ const appSource = read('Hbuilder_Example/App.vue');
 const bootstrapSource = read('Hbuilder_Example/sdk-bootstrap.js');
 const mainSource = read('Hbuilder_Example/main.js');
 
-assertIncludes(interfaceSource, 'setConfig(params: GCSessionReplayConfig): void', 'UTS API');
+assertIncludes(interfaceSource, 'setConfig(params: GCSessionReplayConfig): void', 'UTS API contract');
+assertIncludes(iosIndexSource, 'GCSessionReplayNative.setConfig', 'iOS UTS native call');
+assert(!iosIndexSource.includes('return GCSessionReplayNative.setConfig'));
+assert(!androidIndexSource.includes('\t\treturn initialized'));
 assertIncludes(iosIndexSource, 'implements UTSiOSHookProxy', 'iOS hook');
 assertIncludes(iosIndexSource, 'GCSessionReplayNative.installWebViewHook()', 'iOS hook');
 assertIncludes(androidIndexSource, "from 'gc.unisessionreplay.android'", 'Android native import');
+assertIncludes(androidIndexSource, '[FTLog] GC-UniSessionReplay initialization requested', 'Android UTS initialization log');
+assertIncludes(androidIndexSource, '[FTLog] GC-UniSessionReplay initialized successfully', 'Android UTS success log');
+assertIncludes(androidIndexSource, '[FTLog] GC-UniSessionReplay initialization failed', 'Android UTS failure log');
 assertIncludes(androidIndexSource, 'application: android.app.Application', 'Android Hook Application type');
 assertIncludes(androidIndexSource, 'GCSessionReplayNative.setConfig', 'Android Session Replay API');
 assertIncludes(androidIndexSource, 'implements UTSAndroidHookProxy', 'Android early hook');
 assertIncludes(androidIndexSource, 'GCSessionReplayNative.enableFirstViewBridge()', 'Android early hook');
 assertIncludes(androidNativeSource, '"com.ft.sdk.FTUniAppWebViewBridge"', 'Android Native SDK lazy bridge activation');
+assertIncludes(androidNativeSource, 'fun setConfig(json: String?): Boolean', 'Android native initialization result');
 assertIncludes(androidNativeSource, 'Class.forName(CORE_BRIDGE_CLASS)', 'Android bridge reflection');
 assertIncludes(androidNativeSource, 'getMethod(DISABLE_FIRST_VIEW_BRIDGE_METHOD)', 'Android lazy bridge shutdown API');
 assertIncludes(androidNativeSource, 'disableFirstViewBridge()', 'Android lazy bridge shutdown');
@@ -167,12 +180,26 @@ assert(!androidNativeSource.includes('import com.ft.sdk.'));
 assert(!androidNativeSource.includes('enableSwiftUI'));
 assertIncludes(
     androidNativeSource,
-    'initialize Session Replay") {\n            Class.forName(SDK_CLASS)\n                .getMethod("initSessionReplayConfig", Any::class.java)\n                .invoke(null, config)\n        }) {\n            disableFirstViewBridge()',
+    'val initialized = invokeSafely("initialize Session Replay") {\n            Class.forName(SDK_CLASS)\n                .getMethod("initSessionReplayConfig", Any::class.java)\n                .invoke(null, config)\n        }\n        if (initialized) {\n            disableFirstViewBridge()\n        }\n        return initialized',
     'Android lazy bridge shutdown ordering'
 );
 assertIncludes(nativeSource, 'private static let installHookOnce', 'native hook');
 assertIncludes(baseNativeSource, 'import GuanceSDK', 'base dynamic framework import');
 assert(!baseNativeSource.includes('import FTMobileSDK'));
+assertIncludes(baseNativeSource, '@objc public static func sdkConfig(_ json: String?) -> Bool', 'Mobile SDK initialization result');
+assertIncludes(baseNativeSource, '@objc public static func setRumConfig(_ json: String?) -> Bool', 'RUM initialization result');
+assertIncludes(baseNativeSource, 'console.log(message)', 'iOS native console log');
+assertIncludes(baseNativeSource, 'console.error(message)', 'iOS native console error');
+assertIncludes(baseNativeSource, '[FTLog] GC-UniPlugin Mobile SDK initialized successfully', 'iOS Mobile SDK success log');
+assertIncludes(baseNativeSource, '[FTLog] GC-UniPlugin RUM initialized successfully', 'iOS RUM success log');
+for (const source of [baseAndroidIndexSource]) {
+    assertIncludes(source, '[FTLog] GC-UniPlugin Mobile SDK initialization requested', 'UTS Mobile SDK initialization log');
+    assertIncludes(source, '[FTLog] GC-UniPlugin Mobile SDK initialized successfully', 'UTS Mobile SDK success log');
+    assertIncludes(source, '[FTLog] GC-UniPlugin Mobile SDK initialization failed', 'UTS Mobile SDK failure log');
+    assertIncludes(source, '[FTLog] GC-UniPlugin RUM initialization requested', 'UTS RUM initialization log');
+    assertIncludes(source, '[FTLog] GC-UniPlugin RUM initialized successfully', 'UTS RUM success log');
+    assertIncludes(source, '[FTLog] GC-UniPlugin RUM initialization failed', 'UTS RUM failure log');
+}
 assertIncludes(nativeSource, '#if canImport(GuanceSDK)\nimport GuanceSDK\n#endif', 'UTS Core SDK compatibility import');
 assertIncludes(nativeSource, '#if canImport(GuanceSessionReplay)\nimport GuanceSessionReplay\n#endif', 'UTS Session Replay framework import');
 assertIncludes(nativeSource, 'import GuanceSessionReplay', 'Session Replay dynamic framework import');
@@ -181,11 +208,29 @@ assert(!nativeSource.includes('import FTSessionReplay'));
 assertIncludes(nativeSource, '#selector(WKWebView.load(_:))', 'native hook');
 assertIncludes(nativeSource, '#selector(WKWebView.loadHTMLString(_:baseURL:))', 'native hook');
 assertIncludes(nativeSource, '#selector(WKWebView.loadFileURL(_:allowingReadAccessTo:))', 'native hook');
+assertIncludes(nativeSource, 'WebView hook installation requested', 'native hook diagnostics');
+assertIncludes(nativeSource, 'WebView hooks installed successfully', 'native hook diagnostics');
+assertIncludes(nativeSource, 'WebView load captured:', 'native hook diagnostics');
+assertIncludes(nativeSource, 'preparing WebView bridge:', 'native hook diagnostics');
+assertIncludes(nativeSource, 'records bridge injected into current WebView document', 'native hook diagnostics');
 assertIncludes(nativeSource, 'NSHashTable<WKWebView>.weakObjects()', 'WebView capture');
 assertIncludes(nativeSource, 'webView.isInspectable = true', 'Safari Web Inspector support');
 assertIncludes(nativeSource, 'path.hasSuffix("/__uniappview.html")', 'UniApp WebView filter');
 assertIncludes(nativeSource, '"__UniViewStartTime__"', 'UniApp WebView filter');
 assertIncludes(nativeSource, 'let activeBeforeStart = isNativeSessionReplayActive()', 'duplicate start guard');
+assertIncludes(nativeSource, '@objc public static func setConfig(_ json: String?) -> Bool', 'iOS native initialization result');
+assertIncludes(nativeSource, 'var initialized = false', 'iOS native initialization result');
+assertIncludes(nativeSource, 'return initialized', 'iOS native initialization result');
+assertIncludes(nativeSource, 'console.log(message)', 'iOS native console log');
+assertIncludes(nativeSource, 'console.error(message)', 'iOS native console error');
+assertIncludes(
+    nativeSource,
+    'private static func logInfo(_ message: String) {\n#if DEBUG',
+    'iOS info diagnostics debug guard'
+);
+assertIncludes(nativeSource, '[FTLog] GC-UniSessionReplay initialized successfully', 'iOS native success log');
+assertIncludes(nativeSource, 'initialization failed: Mobile SDK or RUM is not ready', 'iOS native prerequisite error log');
+assertIncludes(nativeSource, 'initialization failed: native service was not registered', 'iOS native service error log');
 assertIncludes(nativeSource, 'if !activeBeforeStart {', 'duplicate start guard');
 assertIncludes(nativeSource, 'objc_getProtocol("FTSRWebTrackingProtocol")', 'duplicate start guard');
 assertIncludes(nativeSource, 'isBaseSDKAndRUMReady()', 'native prerequisites');
@@ -207,6 +252,13 @@ assertIncludes(nativeSource, 'case "hide":\n            config.touchPrivacy = FT
 assertIncludes(hostReplayNativeSource, '#if GUANCE_UNI_COCOAPODS_SESSION_REPLAY\nimport GuanceSDK', 'HostBridge CocoaPods umbrella module import');
 assertIncludes(hostReplayNativeSource, 'GC-UniSessionReplay requires GuanceSessionReplay', 'HostBridge dependency guard');
 assertIncludes(hostReplayNativeSource, 'NSClassFromString("FTWKWebViewHandler")', 'HostBridge runtime Core WebView handler lookup');
+assertIncludes(hostReplayNativeSource, '@objc public static func setConfig(_ json: String?) -> Bool', 'HostBridge initialization result');
+assertIncludes(hostReplayNativeSource, 'WebView load captured:', 'HostBridge hook diagnostics');
+assertIncludes(
+    hostReplayNativeSource,
+    'private static func logInfo(_ message: String) {\n#if DEBUG',
+    'HostBridge info diagnostics debug guard'
+);
 
 assertIncludes(viewTrackingSource, 'evalSessionReplayJS(js)', 'View Tracking API');
 assertIncludes(viewTrackingSource, 'webView.evalJS(this.sessionReplayJS)', 'page WebView Browser SDK injection');

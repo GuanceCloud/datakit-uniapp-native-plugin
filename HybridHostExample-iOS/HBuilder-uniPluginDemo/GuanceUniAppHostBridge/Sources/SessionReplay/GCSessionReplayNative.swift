@@ -18,37 +18,68 @@ import WebKit
     private static let capturedWebViews = NSHashTable<WKWebView>.weakObjects()
     private static var sessionReplayEnabled = false
 
-    private static let installHookOnce: Void = {
-        exchange(
+    private static func logInfo(_ message: String) {
+#if DEBUG
+#if canImport(DCloudUTSFoundation)
+        console.log(message)
+#else
+        print(message)
+#endif
+#endif
+    }
+
+    private static func logError(_ message: String) {
+#if canImport(DCloudUTSFoundation)
+        console.error(message)
+#else
+        print(message)
+#endif
+    }
+
+    private static let installHookOnce: Bool = {
+        let results = [
+            exchange(
             on: WKWebView.self,
             original: #selector(WKWebView.load(_:)),
             replacement: NSSelectorFromString("gc_sessionReplay_loadRequest:")
-        )
-        exchange(
+            ),
+            exchange(
             on: WKWebView.self,
             original: #selector(WKWebView.loadHTMLString(_:baseURL:)),
             replacement: NSSelectorFromString("gc_sessionReplay_loadHTMLString:baseURL:")
-        )
-        exchange(
+            ),
+            exchange(
             on: WKWebView.self,
             original: #selector(WKWebView.loadFileURL(_:allowingReadAccessTo:)),
             replacement: NSSelectorFromString("gc_sessionReplay_loadFileURL:allowingReadAccessToURL:")
-        )
+            )
+        ]
+        let installed = results.allSatisfy { $0 }
+        if installed {
+            logInfo("[FTLog] GC-UniSessionReplay WebView hooks installed successfully")
+        } else {
+            logError("[FTLog] GC-UniSessionReplay WebView hook installation failed")
+        }
+        return installed
     }()
 
     @objc public static func installWebViewHook() {
+        logInfo("[FTLog] GC-UniSessionReplay WebView hook installation requested")
         _ = installHookOnce
     }
 
-    @objc public static func setConfig(_ json: String?) {
+    @discardableResult
+    @objc public static func setConfig(_ json: String?) -> Bool {
+        var initialized = false
         runOnMainSync {
             precondition(Thread.isMainThread, "Session Replay must be initialized on the main thread")
+            logInfo("[FTLog] GC-UniSessionReplay initialization requested")
             let params = parseObject(json)
             let activeBeforeStart = isNativeSessionReplayActive()
             if !activeBeforeStart {
                 let baseSDKAndRUMReady = isBaseSDKAndRUMReady()
                 guard baseSDKAndRUMReady else {
-                    NSLog("[GC-UniSessionReplay] Initialize the Mobile SDK and RUM before Session Replay")
+                    logError("[FTLog] GC-UniSessionReplay initialization failed: Mobile SDK or RUM is not ready")
                     return
                 }
                 let config = makeSessionReplayConfig(params)
@@ -57,29 +88,40 @@ import WebKit
 
             sessionReplayEnabled = isNativeSessionReplayActive()
             guard sessionReplayEnabled else {
-                NSLog("[GC-UniSessionReplay] Native Session Replay did not start; WebView bridge preparation was skipped")
+                logError("[FTLog] GC-UniSessionReplay initialization failed: native service was not registered")
                 return
             }
+            initialized = true
+            logInfo("[FTLog] GC-UniSessionReplay initialized successfully")
 
-            for webView in capturedWebViews.allObjects {
+            let existingWebViews = capturedWebViews.allObjects
+            logInfo("[FTLog] GC-UniSessionReplay preparing \(existingWebViews.count) previously captured WebView(s)")
+            for webView in existingWebViews {
                 prepare(webView: webView, includeCurrentDocument: true)
             }
         }
+        return initialized
     }
 
     fileprivate static func capture(
         _ webView: WKWebView,
-        isUniAppLoad: Bool
+        isUniAppLoad: Bool,
+        loadTarget: String
     ) {
         runOnMainSync {
             let wasCaptured = capturedWebViews.contains(webView)
             guard wasCaptured || isUniAppLoad else {
+                logInfo("[FTLog] GC-UniSessionReplay WebView load ignored: id=\(webView.hash), target=\(loadTarget), reason=not-UniApp")
                 return
             }
             enableSafariWebInspector(for: webView)
             capturedWebViews.add(webView)
+            let reason = wasCaptured ? "previously-captured" : "UniApp-load"
+            logInfo("[FTLog] GC-UniSessionReplay WebView load captured: id=\(webView.hash), target=\(loadTarget), reason=\(reason)")
             if sessionReplayEnabled {
                 prepare(webView: webView, includeCurrentDocument: false)
+            } else {
+                logInfo("[FTLog] GC-UniSessionReplay WebView bridge preparation deferred until initialization: id=\(webView.hash)")
             }
         }
     }
@@ -108,15 +150,17 @@ import WebKit
         on type: AnyClass,
         original: Selector,
         replacement: Selector
-    ) {
+    ) -> Bool {
         guard
             let originalMethod = class_getInstanceMethod(type, original),
             let replacementMethod = class_getInstanceMethod(type, replacement)
         else {
-            NSLog("[GC-UniSessionReplay] Unable to install hook for %@", NSStringFromSelector(original))
-            return
+            logError("[FTLog] GC-UniSessionReplay unable to install hook for \(NSStringFromSelector(original))")
+            return false
         }
         method_exchangeImplementations(originalMethod, replacementMethod)
+        logInfo("[FTLog] GC-UniSessionReplay installed WebView hook: \(NSStringFromSelector(original))")
+        return true
     }
 
     private static func runOnMainSync(_ block: () -> Void) {
@@ -290,7 +334,9 @@ import WebKit
     }
 
     private static func prepare(webView: WKWebView, includeCurrentDocument: Bool) {
+        logInfo("[FTLog] GC-UniSessionReplay preparing WebView bridge: id=\(webView.hash), includeCurrentDocument=\(includeCurrentDocument)")
         guard let handler = webViewHandler() else {
+            logError("[FTLog] GC-UniSessionReplay FTWKWebViewHandler is unavailable; initialize GC-UniPlugin before Session Replay")
             return
         }
         let existingBridgeSource = ftBridgeSource(in: webView)
@@ -301,22 +347,29 @@ import WebKit
 
         let bridgeSource = ftBridgeSource(in: webView)
         guard let bridgeSource, bridgeSource.contains("records") else {
-            NSLog("[GC-UniSessionReplay] No records-capable bridge script was found for WebView %llu", webView.hash)
+            logError("[FTLog] GC-UniSessionReplay no records-capable bridge script was found for WebView \(webView.hash)")
             return
         }
 
         guard includeCurrentDocument else {
+            logInfo("[FTLog] GC-UniSessionReplay records bridge registered for next WebView document: id=\(webView.hash)")
             return
         }
 
         webView.evaluateJavaScript(bridgeReadinessCheck) { result, error in
+            if let error {
+                logError("[FTLog] GC-UniSessionReplay current document bridge check failed: id=\(webView.hash), error=\(error.localizedDescription)")
+            }
             let bridgeReady = (result as? Bool) == true
             if bridgeReady {
+                logInfo("[FTLog] GC-UniSessionReplay records bridge already active in current WebView document: id=\(webView.hash)")
                 return
             }
             webView.evaluateJavaScript(bridgeSource) { _, error in
                 if let error {
-                    NSLog("[GC-UniSessionReplay] Failed to inject the bridge into the current document: %@", error.localizedDescription)
+                    logError("[FTLog] GC-UniSessionReplay failed to inject the bridge into the current document: \(error.localizedDescription)")
+                } else {
+                    logInfo("[FTLog] GC-UniSessionReplay records bridge injected into current WebView document: id=\(webView.hash)")
                 }
             }
         }
@@ -343,6 +396,7 @@ import WebKit
     private static func enableBridge(handler: NSObject, webView: WKWebView) {
         let enableSelector = NSSelectorFromString("enableWebView:")
         guard handler.responds(to: enableSelector) else {
+            logError("[FTLog] GC-UniSessionReplay FTWKWebViewHandler cannot enable the UniApp WebView")
             return
         }
         handler.perform(enableSelector, with: webView)
@@ -354,7 +408,7 @@ import WebKit
     ) {
         let disableSelector = NSSelectorFromString("disableWebView:")
         guard handler.responds(to: disableSelector) else {
-            NSLog("[GC-UniSessionReplay] The existing WebView bridge cannot be refreshed")
+            logError("[FTLog] GC-UniSessionReplay existing WebView bridge cannot be refreshed")
             return
         }
         handler.perform(disableSelector, with: webView)
@@ -366,7 +420,8 @@ private extension WKWebView {
     dynamic func gc_sessionReplay_loadRequest(_ request: URLRequest) -> WKNavigation? {
         GCSessionReplayNative.capture(
             self,
-            isUniAppLoad: GCSessionReplayNative.isUniAppURL(request.url)
+            isUniAppLoad: GCSessionReplayNative.isUniAppURL(request.url),
+            loadTarget: request.url?.absoluteString ?? "request-without-URL"
         )
         return gc_sessionReplay_loadRequest(request)
     }
@@ -377,7 +432,8 @@ private extension WKWebView {
         let matchedURL = GCSessionReplayNative.isUniAppURL(baseURL)
         GCSessionReplayNative.capture(
             self,
-            isUniAppLoad: matchedHTML || matchedURL
+            isUniAppLoad: matchedHTML || matchedURL,
+            loadTarget: baseURL?.absoluteString ?? "HTML-string"
         )
         return gc_sessionReplay_loadHTMLString(string, baseURL: baseURL)
     }
@@ -386,7 +442,8 @@ private extension WKWebView {
     dynamic func gc_sessionReplay_loadFileURL(_ url: URL, allowingReadAccessTo readAccessURL: URL) -> WKNavigation? {
         GCSessionReplayNative.capture(
             self,
-            isUniAppLoad: GCSessionReplayNative.isUniAppURL(url)
+            isUniAppLoad: GCSessionReplayNative.isUniAppURL(url),
+            loadTarget: url.absoluteString
         )
         return gc_sessionReplay_loadFileURL(url, allowingReadAccessTo: readAccessURL)
     }

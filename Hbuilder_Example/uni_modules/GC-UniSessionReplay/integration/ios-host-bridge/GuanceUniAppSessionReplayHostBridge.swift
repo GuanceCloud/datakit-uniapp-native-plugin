@@ -15,7 +15,7 @@ public final class GuanceUniAppSessionReplayHostBridge: NSObject {
         case "sessionReplay.installWebViewHook":
             GCSessionReplayNative.installWebViewHook()
         case "sessionReplay.setConfig":
-            GCSessionReplayNative.setConfig(payload.map { String($0) })
+            return GCSessionReplayNative.setConfig(payload.map { String($0) }) ? "true" : "false"
         default:
             NSLog("[GC-UniSessionReplay] Unsupported HostBridge command: %@", command)
         }

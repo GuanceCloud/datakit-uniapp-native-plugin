@@ -5,21 +5,24 @@ import Foundation
     private static let commandSelector = NSSelectorFromString("handleCommand:payload:")
     private static var loggedUnavailableBridge = false
 
-    private static func invoke(_ command: String, payload: String? = nil) {
+    private static func invoke(_ command: String, payload: String? = nil) -> String? {
         guard let bridge = NSClassFromString(bridgeClassName) as? NSObject.Type else {
             logUnavailableBridge()
-            return
+            return nil
         }
         guard bridge.responds(to: commandSelector) else {
             logUnavailableBridge()
-            return
+            return nil
         }
 
-        _ = bridge.perform(
-            commandSelector,
-            with: command as NSString,
-            with: payload.map { $0 as NSString }
-        )
+        let value = bridge
+            .perform(
+                commandSelector,
+                with: command as NSString,
+                with: payload.map { $0 as NSString }
+            )?
+            .takeUnretainedValue()
+        return value as? String
     }
 
     private static func logUnavailableBridge() {
@@ -34,10 +37,11 @@ import Foundation
     }
 
     @objc public static func installWebViewHook() {
-        invoke("sessionReplay.installWebViewHook")
+        _ = invoke("sessionReplay.installWebViewHook")
     }
 
-    @objc public static func setConfig(_ json: String?) {
-        invoke("sessionReplay.setConfig", payload: json)
+    @discardableResult
+    @objc public static func setConfig(_ json: String?) -> Bool {
+        invoke("sessionReplay.setConfig", payload: json) == "true"
     }
 }

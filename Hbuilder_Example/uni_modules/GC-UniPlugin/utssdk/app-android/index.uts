@@ -45,6 +45,18 @@ function parseJSONResult(result: string | null): any | null {
 	return JSON.parse(result)
 }
 
+function debugLog(message: string) {
+	if (process.env.NODE_ENV === 'development') {
+		console.log(message)
+	}
+}
+
+function debugError(message: string) {
+	if (process.env.NODE_ENV === 'development') {
+		console.error(message)
+	}
+}
+
 function createBindRUMUserDataParams(userId: string, userName?: string | null, userEmail?: string | null, extra?: any | null): GCRUMUserDataParams {
 	return new GCRUMUserDataParams(
 		userId,
@@ -61,8 +73,14 @@ function bindRUMUserCompat(userId: string, userName?: string | null, userEmail?:
 
 export class mobileAgent {
 	static sdkConfig(params: GCMobileConfig) {
+		debugLog('[FTLog] GC-UniPlugin Mobile SDK initialization requested')
 		const json = stringifyParams(normalizeSdkConfigParams(params))
-		GCUniPluginNative.sdkConfig(json)
+		const initialized = GCUniPluginNative.sdkConfig(json)
+		if (initialized) {
+			debugLog('[FTLog] GC-UniPlugin Mobile SDK initialized successfully')
+		} else {
+			debugError('[FTLog] GC-UniPlugin Mobile SDK initialization failed')
+		}
 	}
 
 	static bindRUMUserData(params: GCRUMUserDataParams) {
@@ -116,8 +134,14 @@ export class mobileAgent {
 
 export class rum {
 	static setConfig(params: GCRUMConfig) {
+		debugLog('[FTLog] GC-UniPlugin RUM initialization requested')
 		const json = stringifyParams(normalizeRumConfigParams(params))
-		GCUniPluginNative.setRumConfig(json)
+		const initialized = GCUniPluginNative.setRumConfig(json)
+		if (initialized) {
+			debugLog('[FTLog] GC-UniPlugin RUM initialized successfully')
+		} else {
+			debugError('[FTLog] GC-UniPlugin RUM initialization failed')
+		}
 	}
 
 	static startAction(params: GCRUMActionParams) {

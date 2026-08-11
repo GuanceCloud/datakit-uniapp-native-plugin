@@ -11,7 +11,7 @@ public final class GuanceUniAppCoreHostBridge: NSObject {
 
         switch command as String {
         case "mobile.sdkConfig":
-            GCUniPluginNative.sdkConfig(json)
+            return GCUniPluginNative.sdkConfig(json) ? "true" : "false"
         case "mobile.bindRUMUser":
             bindRUMUser(json)
         case "mobile.unbindRUMUserData":
@@ -31,7 +31,7 @@ public final class GuanceUniAppCoreHostBridge: NSObject {
         case "mobile.shutDown":
             GCUniPluginNative.shutDown()
         case "rum.setConfig":
-            GCUniPluginNative.setRumConfig(json)
+            return GCUniPluginNative.setRumConfig(json) ? "true" : "false"
         case "rum.startAction":
             GCUniPluginNative.startAction(json)
         case "rum.addAction":

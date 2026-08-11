@@ -11,7 +11,7 @@ public final class GuanceUniAppCoreHostBridge: NSObject {
 
         switch command as String {
         case "mobile.sdkConfig":
-            GCUniPluginNative.sdkConfig(json)
+            return GCUniPluginNative.sdkConfig(json) ? "true" : "false"
         case "mobile.bindRUMUser":
             bindRUMUser(json)
         case "mobile.unbindRUMUserData":
@@ -31,7 +31,7 @@ public final class GuanceUniAppCoreHostBridge: NSObject {
         case "mobile.shutDown":
             GCUniPluginNative.shutDown()
         case "rum.setConfig":
-            GCUniPluginNative.setRumConfig(json)
+            return GCUniPluginNative.setRumConfig(json) ? "true" : "false"
         case "rum.startAction":
             GCUniPluginNative.startAction(json)
         case "rum.addAction":
@@ -59,7 +59,7 @@ public final class GuanceUniAppCoreHostBridge: NSObject {
         case "tracer.getTraceHeader":
             return GCUniPluginNative.getTraceHeader(json) as NSString?
         default:
-            NSLog("[GC-UniPlugin] Unsupported HostBridge command: %@", command)
+            print("[GC-UniPlugin] Unsupported HostBridge command: \(command)")
         }
         return nil
     }
@@ -71,7 +71,7 @@ public final class GuanceUniAppCoreHostBridge: NSObject {
             let values = try? JSONSerialization.jsonObject(with: data) as? [String: Any],
             let userId = values["userId"] as? String
         else {
-            NSLog("[GC-UniPlugin] HostBridge bindRUMUser requires userId")
+            print("[GC-UniPlugin] HostBridge bindRUMUser requires userId")
             return
         }
 

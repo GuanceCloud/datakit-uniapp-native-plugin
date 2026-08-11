@@ -9,9 +9,27 @@ function stringifyParams(params: GCSessionReplayConfig): string {
 	return JSON.stringify(params) ?? '{}'
 }
 
+function debugLog(message: string) {
+	if (process.env.NODE_ENV === 'development') {
+		console.log(message)
+	}
+}
+
+function debugError(message: string) {
+	if (process.env.NODE_ENV === 'development') {
+		console.error(message)
+	}
+}
+
 export class GCUniSessionReplay {
 	static setConfig(params: GCSessionReplayConfig) {
-		GCSessionReplayNative.setConfig(stringifyParams(params))
+		debugLog('[FTLog] GC-UniSessionReplay initialization requested')
+		const initialized = GCSessionReplayNative.setConfig(stringifyParams(params))
+		if (initialized) {
+			debugLog('[FTLog] GC-UniSessionReplay initialized successfully')
+		} else {
+			debugError('[FTLog] GC-UniSessionReplay initialization failed')
+		}
 	}
 }
 
