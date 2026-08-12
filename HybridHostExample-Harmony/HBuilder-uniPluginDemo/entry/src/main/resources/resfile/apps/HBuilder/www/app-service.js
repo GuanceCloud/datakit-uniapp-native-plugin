@@ -708,11 +708,6 @@ ${err.stack}`;
     constructor() {
       this.initialized = false;
       this.tabSwitchInterceptorInstalled = false;
-      this.appLifecycleTrackingInstalled = false;
-      this.hasObservedAppShow = false;
-      this.pendingAppLaunchActions = [];
-      this.appLaunchRetryTimer = null;
-      this.appLaunchRetryAttempts = 0;
       this.actionTrackingHandler = null;
       this.retryTimer = null;
       this.retryAttempts = 0;
@@ -728,7 +723,6 @@ ${err.stack}`;
       if (this.initialized) {
         return;
       }
-      this.installAppLifecycleTracking();
       this.installTabSwitchInterceptor();
       const bridge = this.getHarmonyBridge();
       if (!bridge || typeof bridge.subscribe !== "function") {
@@ -762,77 +756,6 @@ ${err.stack}`;
     }
     isJSActionTrackingEnabled() {
       return typeof this.rum.isUniAppJSActionTrackingEnabled !== "function" || this.rum.isUniAppJSActionTrackingEnabled();
-    }
-    installAppLifecycleTracking() {
-      if (this.appLifecycleTrackingInstalled || typeof uni === "undefined" || !uni || typeof uni.onAppShow !== "function") {
-        return;
-      }
-      uni.onAppShow(() => {
-        const lifecycle = this.hasObservedAppShow ? "hot" : "cold";
-        this.hasObservedAppShow = true;
-        this.queueAppLaunchAction(lifecycle);
-      });
-      this.appLifecycleTrackingInstalled = true;
-    }
-    queueAppLaunchAction(lifecycle) {
-      const isHotStart = lifecycle === "hot";
-      this.pendingAppLaunchActions.push({
-        // Keep the native SDK contract: `action_name` is the human-readable
-        // description while `action_type` identifies the launch kind.
-        actionName: isHotStart ? "app hot start" : "app cold start",
-        actionType: isHotStart ? "launch_hot" : "launch_cold",
-        lifecycle: isHotStart ? "hot_start" : "cold_start"
-      });
-      this.reportPendingAppLaunchActions();
-    }
-    reportPendingAppLaunchActions() {
-      if (this.pendingAppLaunchActions.length === 0) {
-        return;
-      }
-      const pageId = this.getActivePageId();
-      const pagePath = this.getPagePath(pageId);
-      if (!pagePath && this.appLaunchRetryAttempts < 20 && typeof setTimeout === "function") {
-        this.scheduleAppLaunchActionRetry();
-        return;
-      }
-      const viewName = pagePath ? pagePath.split("?")[0] : "unknown_view";
-      const pendingActions = this.pendingAppLaunchActions.splice(0);
-      this.appLaunchRetryAttempts = 0;
-      pendingActions.forEach((launchAction) => {
-        this.trackAppLaunchAction(launchAction, viewName, pageId);
-      });
-    }
-    scheduleAppLaunchActionRetry() {
-      if (this.appLaunchRetryTimer !== null) {
-        return;
-      }
-      this.appLaunchRetryAttempts += 1;
-      this.appLaunchRetryTimer = setTimeout(() => {
-        this.appLaunchRetryTimer = null;
-        this.reportPendingAppLaunchActions();
-      }, 50);
-    }
-    trackAppLaunchAction(launchAction, viewName, pageId) {
-      if (!this.isJSActionTrackingEnabled()) {
-        return;
-      }
-      try {
-        const property = {
-          action_source: "uniapp_js_lifecycle",
-          action_lifecycle: launchAction.lifecycle,
-          action_page_path: viewName
-        };
-        if (pageId !== void 0 && pageId !== null) {
-          property.action_page_id = String(pageId);
-        }
-        this.rum.startAction({
-          actionName: launchAction.actionName,
-          actionType: launchAction.actionType,
-          property
-        });
-      } catch (error) {
-        formatAppLog("warn", "at uni_modules/GC-UniPlugin/js_sdk/Action/GCActionTracking.js:196", "[FTLog] UniApp application launch Action collection failed:", error);
-      }
     }
     // This has the same callback shape as the native FTActionTrackingHandler:
     // `resolveHandlerAction(wrapper)` may return a HandlerAction-like object
