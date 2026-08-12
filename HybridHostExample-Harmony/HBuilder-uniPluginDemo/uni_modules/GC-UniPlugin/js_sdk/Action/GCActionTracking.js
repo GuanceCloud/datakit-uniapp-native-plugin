@@ -34,11 +34,6 @@ class ActionMonitor {
 	constructor() {
 		this.initialized = false;
 		this.tabSwitchInterceptorInstalled = false;
-		this.appLifecycleTrackingInstalled = false;
-		this.hasObservedAppShow = false;
-		this.pendingAppLaunchActions = [];
-		this.appLaunchRetryTimer = null;
-		this.appLaunchRetryAttempts = 0;
 		this.actionTrackingHandler = null;
 		this.retryTimer = null;
 		this.retryAttempts = 0;
@@ -57,10 +52,6 @@ class ActionMonitor {
 		}
 
 		// #ifdef APP-HARMONY
-		// Register this before the bridge is ready. `uni.onAppShow` queues hooks
-		// until the App instance exists, which lets us observe the initial show as
-		// well as every foreground return.
-		this.installAppLifecycleTracking();
 		this.installTabSwitchInterceptor();
 		const bridge = this.getHarmonyBridge();
 		if (!bridge || typeof bridge.subscribe !== 'function') {
@@ -78,14 +69,14 @@ class ActionMonitor {
 		bridge.subscribe(INVOKE_SERVICE_API_EVENT, this.handleServiceAPI);
 		this.initialized = true;
 		this.retryAttempts = 0;
-		console.log('[FTLog] UniApp JS Action tracking initialized', " at uni_modules/GC-UniPlugin/js_sdk/Action/GCActionTracking.js:81");
+		console.log('[FTLog] UniApp JS Action tracking initialized', " at uni_modules/GC-UniPlugin/js_sdk/Action/GCActionTracking.js:72");
 		// #endif
 	}
 
 	scheduleStartTracking() {
 		if (this.retryTimer !== null || this.retryAttempts >= 20 || typeof setTimeout !== 'function') {
 			if (this.retryAttempts >= 20) {
-				console.warn('[FTLog] UniApp JS Action bridge is unavailable; JS Action collection is disabled', " at uni_modules/GC-UniPlugin/js_sdk/Action/GCActionTracking.js:88");
+				console.warn('[FTLog] UniApp JS Action bridge is unavailable; JS Action collection is disabled', " at uni_modules/GC-UniPlugin/js_sdk/Action/GCActionTracking.js:79");
 			}
 			return;
 		}
@@ -112,89 +103,6 @@ class ActionMonitor {
 			this.rum.isUniAppJSActionTrackingEnabled();
 		// #endif
 		return true;
-	}
-
-	installAppLifecycleTracking() {
-		if (this.appLifecycleTrackingInstalled || typeof uni === 'undefined' || !uni ||
-			typeof uni.onAppShow !== 'function') {
-			return;
-		}
-
-		uni.onAppShow(() => {
-			const lifecycle = this.hasObservedAppShow ? 'hot' : 'cold';
-			this.hasObservedAppShow = true;
-			this.queueAppLaunchAction(lifecycle);
-		});
-		this.appLifecycleTrackingInstalled = true;
-	}
-
-	queueAppLaunchAction(lifecycle) {
-		const isHotStart = lifecycle === 'hot';
-		this.pendingAppLaunchActions.push({
-			// Keep the native SDK contract: `action_name` is the human-readable
-			// description while `action_type` identifies the launch kind.
-			actionName: isHotStart ? 'app hot start' : 'app cold start',
-			actionType: isHotStart ? 'launch_hot' : 'launch_cold',
-			lifecycle: isHotStart ? 'hot_start' : 'cold_start'
-		});
-		this.reportPendingAppLaunchActions();
-	}
-
-	reportPendingAppLaunchActions() {
-		if (this.pendingAppLaunchActions.length === 0) {
-			return;
-		}
-
-		const pageId = this.getActivePageId();
-		const pagePath = this.getPagePath(pageId);
-		if (!pagePath && this.appLaunchRetryAttempts < 20 && typeof setTimeout === 'function') {
-			this.scheduleAppLaunchActionRetry();
-			return;
-		}
-
-		const viewName = pagePath ? pagePath.split('?')[0] : 'unknown_view';
-		const pendingActions = this.pendingAppLaunchActions.splice(0);
-		this.appLaunchRetryAttempts = 0;
-		pendingActions.forEach((launchAction) => {
-			this.trackAppLaunchAction(launchAction, viewName, pageId);
-		});
-	}
-
-	scheduleAppLaunchActionRetry() {
-		if (this.appLaunchRetryTimer !== null) {
-			return;
-		}
-
-		this.appLaunchRetryAttempts += 1;
-		this.appLaunchRetryTimer = setTimeout(() => {
-			this.appLaunchRetryTimer = null;
-			this.reportPendingAppLaunchActions();
-		}, 50);
-	}
-
-	trackAppLaunchAction(launchAction, viewName, pageId) {
-		if (!this.isJSActionTrackingEnabled()) {
-			return;
-		}
-
-		try {
-			const property = {
-				action_source: 'uniapp_js_lifecycle',
-				action_lifecycle: launchAction.lifecycle,
-				action_page_path: viewName
-			};
-			if (pageId !== undefined && pageId !== null) {
-				property.action_page_id = String(pageId);
-			}
-
-			this.rum.startAction({
-				actionName: launchAction.actionName,
-				actionType: launchAction.actionType,
-				property
-			});
-		} catch (error) {
-			console.warn('[FTLog] UniApp application launch Action collection failed:', error, " at uni_modules/GC-UniPlugin/js_sdk/Action/GCActionTracking.js:196");
-		}
 	}
 
 	// This has the same callback shape as the native FTActionTrackingHandler:
@@ -386,7 +294,7 @@ class ActionMonitor {
 				property: actionProperty
 			});
 		} catch (error) {
-			console.warn('[FTLog] UniApp JS Action collection failed:', error, " at uni_modules/GC-UniPlugin/js_sdk/Action/GCActionTracking.js:389");
+			console.warn('[FTLog] UniApp JS Action collection failed:', error, " at uni_modules/GC-UniPlugin/js_sdk/Action/GCActionTracking.js:297");
 		}
 	}
 
@@ -436,7 +344,7 @@ class ActionMonitor {
 					action.getProperty() : action.property
 			};
 		} catch (error) {
-			console.warn('[FTLog] UniApp Action tracking handler failed:', error, " at uni_modules/GC-UniPlugin/js_sdk/Action/GCActionTracking.js:439");
+			console.warn('[FTLog] UniApp Action tracking handler failed:', error, " at uni_modules/GC-UniPlugin/js_sdk/Action/GCActionTracking.js:347");
 			return {
 				skip: true,
 				actionName: null,

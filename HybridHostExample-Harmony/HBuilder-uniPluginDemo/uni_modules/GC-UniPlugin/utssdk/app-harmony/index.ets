@@ -132,7 +132,7 @@ const GC_UTS_BRIDGE_VERSION: string = '0.2.7-alpha.1';
 const pendingViewLoadTimes: Map<string, number> = new Map();
 const bridgeContext: Map<string, Object> = new Map();
 let currentViewName = '';
-let uniAppJSViewTrackingEnabled = false;
+let uniAppJSViewTrackingEnabled = true;
 let uniAppJSActionTrackingEnabled = true;
 let harmonyUniRequestAutoTrackingEnabled = false;
 let activeRumConfig: FTRUMConfig | null = null;
@@ -292,11 +292,11 @@ class rum {
                 config.setSessionErrorSampleRate(params.sessionOnErrorSampleRate);
             }
             if (params.enableNativeUserAction !== undefined && params.enableNativeUserAction !== null) {
-                uniAppJSActionTrackingEnabled = params.enableNativeUserAction;
+                config.setEnableTraceUserAction(params.enableNativeUserAction);
             }
-            config.setEnableTraceUserAction(false);
-            uniAppJSViewTrackingEnabled = params.enableNativeUserView === true;
-            config.setEnableTraceUserView(false);
+            if (params.enableNativeUserView !== undefined && params.enableNativeUserView !== null) {
+                config.setEnableTraceUserView(params.enableNativeUserView);
+            }
             if (params.enableNativeUserResource !== undefined && params.enableNativeUserResource !== null) {
                 config.setEnableTraceUserResource(params.enableNativeUserResource);
             }
@@ -349,7 +349,7 @@ class rum {
             activeRumConfig = config;
             syncBridgeContextToRUMGlobalContext();
         } catch (error) {
-            UTS.console.error('[GC-UniPlugin] rumSetConfig failed:', error, " at uni_modules/GC-UniPlugin/utssdk/app-harmony/index.uts:302");
+            UTS.console.error('[GC-UniPlugin] rumSetConfig failed:', error, " at uni_modules/GC-UniPlugin/utssdk/app-harmony/index.uts:295");
         }
     }
     static startAction(params: GCRUMActionParams) {
@@ -428,7 +428,7 @@ class rum {
             handler.setNativeViewName(harmonyWebViewName(viewName));
             handler.setWebView(controller, config);
         } catch (error) {
-            UTS.console.error('[GC-UniPlugin] attachWebView failed:', error, " at uni_modules/GC-UniPlugin/utssdk/app-harmony/index.uts:415");
+            UTS.console.error('[GC-UniPlugin] attachWebView failed:', error, " at uni_modules/GC-UniPlugin/utssdk/app-harmony/index.uts:408");
         }
     }
     static detachWebView(controller: webview.WebviewController) {
@@ -439,7 +439,7 @@ class rum {
         try {
             handler.clearWebController();
         } catch (error) {
-            UTS.console.error('[GC-UniPlugin] detachWebView failed:', error, " at uni_modules/GC-UniPlugin/utssdk/app-harmony/index.uts:428");
+            UTS.console.error('[GC-UniPlugin] detachWebView failed:', error, " at uni_modules/GC-UniPlugin/utssdk/app-harmony/index.uts:421");
         }
         attachedWebViewHandlers.delete(controller);
     }
@@ -487,7 +487,7 @@ class logger {
             }
             FTSDK.installLogConfig(config);
         } catch (error) {
-            UTS.console.error('[GC-UniPlugin] loggerSetConfig failed:', error, " at uni_modules/GC-UniPlugin/utssdk/app-harmony/index.uts:478");
+            UTS.console.error('[GC-UniPlugin] loggerSetConfig failed:', error, " at uni_modules/GC-UniPlugin/utssdk/app-harmony/index.uts:471");
         }
     }
     static logging(params: GCLoggerLogParams) {
@@ -511,14 +511,14 @@ class tracer {
             }
             FTSDK.installTraceConfig(config);
         } catch (error) {
-            UTS.console.error('[GC-UniPlugin] tracerSetConfig failed:', error, " at uni_modules/GC-UniPlugin/utssdk/app-harmony/index.uts:504");
+            UTS.console.error('[GC-UniPlugin] tracerSetConfig failed:', error, " at uni_modules/GC-UniPlugin/utssdk/app-harmony/index.uts:497");
         }
     }
     static getTraceHeader(params: GCTraceHeaderParams): Object | null {
         try {
             return FTTraceManager.getInstance().getTraceHeader(params.key || params.url, params.url);
         } catch (error) {
-            UTS.console.error('[GC-UniPlugin] tracerGetTraceHeader failed:', error, " at uni_modules/GC-UniPlugin/utssdk/app-harmony/index.uts:512");
+            UTS.console.error('[GC-UniPlugin] tracerGetTraceHeader failed:', error, " at uni_modules/GC-UniPlugin/utssdk/app-harmony/index.uts:505");
             return null;
         }
     }
@@ -540,7 +540,7 @@ async function startHarmonyView(params: GCRUMViewParams): Promise<void> {
             pendingViewLoadTimes.delete(params.viewName);
         }
     } catch (error) {
-        UTS.console.error('[GC-UniPlugin] rumStartView failed:', error, " at uni_modules/GC-UniPlugin/utssdk/app-harmony/index.uts:539");
+        UTS.console.error('[GC-UniPlugin] rumStartView failed:', error, " at uni_modules/GC-UniPlugin/utssdk/app-harmony/index.uts:532");
     }
 }
 class HarmonyDataModifier implements DataModifier {
