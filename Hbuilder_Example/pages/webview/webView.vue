@@ -8,7 +8,7 @@
 export default {
   data() {
     return {
-      webviewUrl: 'http://10.100.64.166/test/rum/'
+      webviewUrl: 'http://10.100.64.166:8000'
     };
   },
   methods: {

@@ -15,22 +15,15 @@ const jsCode = `
     var script = document.createElement('script');
     script.src = 'https://static.guance.com/browser-sdk/v3/dataflux-rum.js';
     script.onload = function() {
-			DATAFLUX_RUM.setGlobalContextProperty('wgt_id', 'wgt_id_1');
-			DATAFLUX_RUM.setGlobalContextProperty('wgt_name', 'wgt_name_1');
+	  DATAFLUX_RUM.setGlobalContextProperty('wgt_id', 'wgt_id_1');
+	  DATAFLUX_RUM.setGlobalContextProperty('wgt_name', 'wgt_name_1');
       // Initialize after script loads
-      DATAFLUX_RUM.init({
-        applicationId: 'xxxx',
-        site: 'xxxxx',
-        clientToken: 'xxxxx',
-        env: "production",
-        version: "1.0.0",
-        service: "browser",
-        sessionSampleRate: 100,
-        sessionReplaySampleRate: 100,
-        compressIntakeRequests: true,
-        trackInteractions: true,
-        traceType: "ddtrace"
-      });
+	  window.DATAFLUX_RUM &&
+	    window.DATAFLUX_RUM.init({
+	      // Bridge mode still validates an intake origin, but sends RUM data through
+	      // FTWebViewJavascriptBridge instead of making requests to this address.
+	      datakitOrigin: window.location.origin,
+	    })
       window.DATAFLUX_RUM.startSessionReplayRecording();
     };
     document.head.appendChild(script);
