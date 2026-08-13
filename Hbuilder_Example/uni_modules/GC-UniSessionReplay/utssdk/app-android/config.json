@@ -4,12 +4,8 @@
     "com.cloudcare.ft.mobile.sdk.tracker.agent:ft-session-replay:0.1.7"
   ],
   "project": {
-    "plugins": [
-      "ft-plugin"
-    ],
-    "dependencies": [
-      "com.cloudcare.ft.mobile.sdk.tracker.plugin:ft-plugin:1.3.7"
-    ],
+    "plugins": [],
+    "dependencies": [],
     "repositories": [
       "maven { url 'https://mvnrepo.jiagouyun.com/repository/maven-releases' }"
     ]
