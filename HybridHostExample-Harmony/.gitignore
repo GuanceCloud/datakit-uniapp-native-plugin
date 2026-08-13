@@ -1,0 +1,32 @@
+# Keep the injected H5 bundle and UTS static modules in Git so this project is
+# a runnable resource-injection example. Module build outputs stay ignored.
+HBuilder-uniPluginDemo/uni_modules/*/build/
+HBuilder-uniPluginDemo/uni_modules/*/oh_modules/
+HBuilder-uniPluginDemo/uni_modules/*/oh-package-lock.json5
+HBuilder-uniPluginDemo/uni_modules/*/.DS_Store
+
+# DevEco / OHPM generated state
+HBuilder-uniPluginDemo/oh_modules/
+HBuilder-uniPluginDemo/.hvigor/
+HBuilder-uniPluginDemo/entry/build/
+HBuilder-uniPluginDemo/oh-package-lock.json5
+*.hap
+*.app
+*.har
+*.hsp
+*.hvp
+oh_modules/
+.hvigor/
+.idea/
+build/
+
+# Local signing material and user-specific runtime values
+*.p12
+*.p7b
+*.cer
+*.pfx
+*.keystore
+*.mobileprovision
+
+# The repository-wide rule ignores Markdown build artifacts; this is source documentation.
+!README.md

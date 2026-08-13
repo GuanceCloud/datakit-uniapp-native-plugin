@@ -22,7 +22,16 @@
 					'url': requestUrl,
 				})
 				console.log('Calling getTraceHeader:' + header)
+				// #ifdef APP-HARMONY
+				uni.request({
+					url: requestUrl,
+					header: header,
+					__gcResourceKey: key
+				})
+				// #endif
+				// #ifndef APP-HARMONY
 				Utils.request(requestUrl, header)
+				// #endif
 			}
 		},
 	}

@@ -1,0 +1,13 @@
+{
+  "modelVersion": "5.0.0",
+  "description": "Please describe the basic information.",
+  "dependencies": {
+    "@dcloudio/uni-app-runtime": "5.2.32026080401",
+    "@uni_modules/hmr-for-uni-app": "./libs/uni_modules__hmr_for_uni_app.har",
+    "@uni_modules/gc-uniplugin": "./uni_modules/GC-UniPlugin"
+  },
+  "devDependencies": {
+    "@ohos/hypium": "1.0.19",
+    "@ohos/hamock": "1.0.0"
+  }
+}

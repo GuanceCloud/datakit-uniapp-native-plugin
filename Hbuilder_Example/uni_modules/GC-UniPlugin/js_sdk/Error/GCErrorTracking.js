@@ -4,6 +4,7 @@ import {
 
 const EMPTY_MESSAGE = 'Unknown Error';
 const CONSOLE_ERROR = 'console_error';
+const FT_JS_PLUGIN_VERSION = '0.2.7-alpha.1';
 
 let originalConsoleError = null;
 let originalVueErrorHandler = null;

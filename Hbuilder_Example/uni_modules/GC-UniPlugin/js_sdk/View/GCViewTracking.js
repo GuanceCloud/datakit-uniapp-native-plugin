@@ -66,7 +66,7 @@ class PageMonitor {
 		console.log(`[FTLog] View tracking initialized (version: ${FT_JS_PLUGIN_VERSION})`);
 
 		try {
-			// #ifdef APP-PLUS
+			// #ifdef APP-PLUS || APP-HARMONY
 			this.pageHookInstalled = this.installPageHooks(app);
 			this.watchAppLifecycle();
 			this.startWatchRouter();
@@ -141,6 +141,16 @@ class PageMonitor {
 			this.sessionReplayInjectedWebViews = new WeakSet();
 		}
 		this.sessionReplayJS = js;
+	}
+
+	isJSViewTrackingEnabled() {
+		// #ifdef APP-HARMONY
+		// Older native bridges do not expose this switch; preserve the existing
+		// JS View collector in that case.
+		return typeof this.rum.isUniAppJSViewTrackingEnabled !== 'function' ||
+			this.rum.isUniAppJSViewTrackingEnabled();
+		// #endif
+		return true;
 	}
 
 	watchAppLifecycle() {
@@ -622,7 +632,9 @@ class PageMonitor {
 	}
 
 	activatePageState(state, injectSessionReplay = true, reason = 'activate-page-state') {
-		if (!state || !state.visible || !this.appInForeground) return;
+		if (!state || !state.visible || !this.appInForeground || !this.isJSViewTrackingEnabled()) {
+			return;
+		}
 		if (this.activePageState !== state) {
 			const loadTime = this.getNextLoadTime(state);
 			if (loadTime === null) return;
@@ -686,6 +698,7 @@ class PageMonitor {
 	}
 
 	reportCreateView(pagePath, duration) {
+		if (!this.isJSViewTrackingEnabled()) return;
 		const viewName = this.getViewKey(pagePath);
 		if (!viewName) return;
 		const params = {

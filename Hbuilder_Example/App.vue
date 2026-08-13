@@ -2,10 +2,18 @@
 	import {
 		initializeGuanceSDK
 	} from './sdk-bootstrap.js'
-
+	import {
+		gcViewTracking
+	} from '@/uni_modules/GC-UniPlugin/js_sdk'
 	export default {
 		onLaunch: function() {
 			initializeGuanceSDK()
+		},
+		onShow: function() {
+			gcViewTracking.handleAppShow()
+		},
+		onHide: function() {
+			gcViewTracking.handleAppHide()
 		}
 	}
 </script>

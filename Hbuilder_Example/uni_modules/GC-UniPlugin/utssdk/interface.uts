@@ -21,6 +21,7 @@ export type GCMobileConfig = {
 export type GCRUMConfig = {
 	androidAppId?: string | null
 	iOSAppId?: string | null
+	harmonyAppId?: string | null
 	sampleRate?: number | null
 	sessionOnErrorSampleRate?: number | null
 	enableNativeUserAction?: boolean | null

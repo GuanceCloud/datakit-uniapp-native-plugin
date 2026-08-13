@@ -1,6 +1,7 @@
 import * as SDKConst from '@/utils.js'
 import {
-	gcErrorTracking
+	gcErrorTracking,
+	gcHarmonyNetworkTracking
 } from '@/uni_modules/GC-UniPlugin/js_sdk'
 import {
 	logger,
@@ -43,6 +44,7 @@ export function initializeGuanceSDK() {
 	rum.setConfig({
 		androidAppId: SDKConst.ANDROID_APP_ID,
 		iOSAppId: SDKConst.IOS_APP_ID,
+		harmonyAppId: SDKConst.HARMONY_APP_ID,
 		errorMonitorType: ['cpu', 'memory'],
 		deviceMonitorType: 'all',
 		enableNativeUserResource: true,
@@ -53,7 +55,7 @@ export function initializeGuanceSDK() {
 		rumDiscardStrategy: 'discardOldest',
 		rumCacheLimitCount: 10000,
 		enableTraceWebView: true,
-		enableNativeUserAction: true,
+		allowWebViewHost: ['10.100.64.166'],
 		globalContext: {
 			track_id: SDKConst.TRACK_ID,
 			rum_globalContext: 'custom_rum_globalContext'
@@ -75,7 +77,7 @@ export function initializeGuanceSDK() {
 		enableLinkRumData: true,
 		enableCustomLog: true,
 		discardStrategy: 'discardOldest',
-		logLevelFilters: ['warning', 'error'],
+		logLevelFilters: ['info', 'warn', 'error'],
 		logCacheLimitCount: 6000,
 		globalContext: {
 			logger_globalContext: 'custom_logger_globalContext'
@@ -85,4 +87,9 @@ export function initializeGuanceSDK() {
 		traceType: 'ddTrace',
 		enableLinkRUMData: true
 	})
+	// #ifdef APP-HARMONY
+	// DCloud uni.request is now bridged to the Harmony SDK's native network
+	// tracking lifecycle. Direct uni.request and gcRequest share this path.
+	gcHarmonyNetworkTracking.startTracking()
+	// #endif
 }

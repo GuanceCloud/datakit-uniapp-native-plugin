@@ -1,11 +1,11 @@
 # Guance UniApp Plugin
 
 ## Introduction
-Guance application plugin for UniApp, supporting Android and iOS through a UTS plugin.
+Guance application plugin for UniApp, supporting Android, iOS, and HarmonyOS through a UTS plugin.
 
 Requires HBuilderX 4.25.0 or later because the plugin uses UTS native hybrid files and Android custom Maven repositories.
 
-The current integration uses `GC-UniPlugin` as the Android/iOS UTS implementation. Existing customers should keep their method calls and parameter objects unchanged, and replace native module acquisition such as `uni.requireNativePlugin("GCUniPlugin-RUM")` with named imports such as `rum`, `logger`, `tracer`, and `mobileAgent` from `GC-UniPlugin`. The root entry also exports the existing `GC*` constant groups, for example `GCEnv.PROD`.
+The current integration uses `GC-UniPlugin` as the Android/iOS/HarmonyOS UTS implementation. Existing customers should keep their method calls and parameter objects unchanged, and replace native module acquisition such as `uni.requireNativePlugin("GCUniPlugin-RUM")` with named imports such as `rum`, `logger`, `tracer`, and `mobileAgent` from `GC-UniPlugin`. The root entry also exports the existing `GC*` constant groups, for example `GCEnv.PROD`.
 
 JS helpers such as request, route, page, view tracking, and JS error tracking live under `GC-UniPlugin/js_sdk` as optional enhancements. It also provides the native SDK facade objects.
 

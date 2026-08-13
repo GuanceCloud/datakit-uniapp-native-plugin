@@ -1,6 +1,14 @@
+# 0.2.8
+* HarmonyOS plugin
+  * Fix missing `sdk_name` tag in error data by merging RUM global context in `addResourceError`
+  * Remove redundant `rumConfig.getGlobalContext().set()` calls for `session_type` and `service`
+---
 # 0.2.7-alpha.1
 * `GC-JSPlugin`
-    * `GCRequest.js`：supplement the missing  parameter return in the request method's `complete` callback
+    * `GCRequest.js`: supplement the missing parameter return in the request method's `complete` callback
+---
+# 0.2.7
+* HarmonyOS plugin added 
 ---
 # 0.2.6
 * `GCUniPlugin-RUM`
