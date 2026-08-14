@@ -38,7 +38,7 @@
     "widescreen": "-"
   },
   "uni_modules": {
-	"dependencies": ["GC-UniPlugin"],
+	"dependencies": [],
     "encrypt": [],
     "platforms": {
       "cloud": {
