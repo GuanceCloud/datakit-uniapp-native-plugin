@@ -47,19 +47,7 @@ jobs:
           esac
 
           git rev-parse --verify --quiet "refs/tags/${tag_name}^{commit}" >/dev/null
-          node - "$tag_name" <<'NODE'
-          const fs = require('fs');
-          const tag = process.argv[2];
-          const versionLine = fs.readFileSync('.version', 'utf8').trim();
-          const version = /^SDK_VERSION=(.+)$/.exec(versionLine)?.[1];
-          const packageVersions = [
-            require('./Hbuilder_Example/uni_modules/GC-UniPlugin/package.json').version,
-            require('./Hbuilder_Example/uni_modules/GC-UniSessionReplay/package.json').version
-          ];
-          if (!version || [version, ...packageVersions].some((value) => value !== tag)) {
-            throw new Error(`Tag ${tag} must equal .version and both UTS package versions.`);
-          }
-          NODE
+          node scripts/check-version-consistency.js "$tag_name"
 
           echo "TAG_NAME=$tag_name" >> "$GITHUB_ENV"
 
@@ -80,10 +68,12 @@ jobs:
           set -euo pipefail
 
           node scripts/test-uts-proxy-exports.js
+          node scripts/test-view-tracking.js
           node scripts/test-session-replay-feature.js
           node scripts/test-hybrid-ios-uts-integration.js
           node scripts/test-hybrid-android-uts-integration.js
           node scripts/test-tagged-release-automation.js
+          node scripts/test-version-management.js
           git diff --check
 
       - name: Build Android Host and UTS libraries

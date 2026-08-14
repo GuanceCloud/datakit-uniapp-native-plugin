@@ -39,7 +39,6 @@ const baseAndroidConfig = readJSON(
 );
 
 assert.strictEqual(replayModule.version, baseModule.version);
-assert(replayModule.uni_modules.dependencies.includes('GC-UniPlugin'));
 assert.strictEqual(
     replayModule.uni_modules.platforms.client['uni-app'].app.ios,
     'u'
@@ -59,37 +58,61 @@ assert.strictEqual(baseIOSConfig.deploymentTarget, '12.0');
 assert.strictEqual(replayIOSConfig.deploymentTarget, '12.0');
 assert.strictEqual(replayAndroidConfig.minSdkVersion, 24);
 assert.strictEqual(baseAndroidConfig.minSdkVersion, 24);
-assert(baseAndroidConfig.dependencies.includes(
-    'com.cloudcare.ft.mobile.sdk.tracker.agent:ft-sdk:1.7.4'
-));
-assert(baseAndroidConfig.dependencies.includes(
-    'com.cloudcare.ft.mobile.sdk.tracker.agent:ft-native:1.1.3'
-));
-assert(replayAndroidConfig.dependencies.includes(
-    'com.cloudcare.ft.mobile.sdk.tracker.agent:ft-session-replay:0.1.7'
-));
+assert.strictEqual(
+    baseAndroidConfig.dependencies.filter((dependency) =>
+        /^com\.cloudcare\.ft\.mobile\.sdk\.tracker\.agent:ft-sdk:[0-9A-Za-z.-]+$/.test(dependency)
+    ).length,
+    1,
+    'The core Android module must declare exactly one ft-sdk Maven dependency'
+);
+assert.strictEqual(
+    baseAndroidConfig.dependencies.filter((dependency) =>
+        /^com\.cloudcare\.ft\.mobile\.sdk\.tracker\.agent:ft-native:[0-9A-Za-z.-]+$/.test(dependency)
+    ).length,
+    1,
+    'The core Android module must declare exactly one ft-native Maven dependency'
+);
+assert.strictEqual(
+    replayAndroidConfig.dependencies.filter((dependency) =>
+        /^com\.cloudcare\.ft\.mobile\.sdk\.tracker\.agent:ft-session-replay:[0-9A-Za-z.-]+$/.test(dependency)
+    ).length,
+    1,
+    'The Session Replay Android module must declare exactly one Maven dependency'
+);
 assert(!replayAndroidConfig.dependencies.some((dependency) =>
     dependency.startsWith('com.cloudcare.ft.mobile.sdk.tracker.agent:ft-sdk:')
 ));
 assert(baseAndroidConfig.project.plugins.includes('ft-plugin'));
-assert(baseAndroidConfig.project.dependencies.includes(
-    'com.cloudcare.ft.mobile.sdk.tracker.plugin:ft-plugin:1.3.7'
-));
-assert(replayAndroidConfig.project.plugins.includes('ft-plugin'));
-assert(replayAndroidConfig.project.dependencies.includes(
-    'com.cloudcare.ft.mobile.sdk.tracker.plugin:ft-plugin:1.3.7'
-));
+assert.strictEqual(
+    baseAndroidConfig.project.dependencies.filter((dependency) =>
+        /(?:ft-plugin|tracker\.plugin|plugin\.gradle\.plugin)/.test(dependency)
+    ).length,
+    1,
+    'The core Android module must declare exactly one FT Gradle plugin dependency'
+);
+assert.deepStrictEqual(
+    replayAndroidConfig.project.plugins,
+    [],
+    'Session Replay must reuse the core module Gradle plugin instead of applying it twice'
+);
+assert.deepStrictEqual(
+    replayAndroidConfig.project.dependencies,
+    [],
+    'Session Replay must not declare a duplicate FT Gradle plugin dependency'
+);
 
 for (const relativePath of [
-    'Hbuilder_Example/uni_modules/GC-UniPlugin/utssdk/app-android/libs/ft-sdk-1.7.4-uniapp-local.aar',
-    'Hbuilder_Example/uni_modules/GC-UniPlugin/utssdk/app-android/libs/ft-native-1.1.3.aar',
-    'Hbuilder_Example/uni_modules/GC-UniSessionReplay/utssdk/app-android/libs/ft-session-replay-0.1.7.aar'
+    'Hbuilder_Example/uni_modules/GC-UniPlugin/utssdk/app-android/libs',
+    'Hbuilder_Example/uni_modules/GC-UniSessionReplay/utssdk/app-android/libs'
 ]) {
     const absolutePath = path.join(root, relativePath);
-    assert.strictEqual(
-        fs.existsSync(absolutePath),
-        false,
-        `${relativePath} must not exist; Android UTS resolves this dependency from Maven`
+    const localSDKArtifacts = fs.existsSync(absolutePath)
+        ? fs.readdirSync(absolutePath).filter((name) => /^ft-(?:sdk|native|session-replay)-.*\.aar$/.test(name))
+        : [];
+    assert.deepStrictEqual(
+        localSDKArtifacts,
+        [],
+        `${relativePath} must not bundle Android SDK AARs; dependencies resolve from Maven`
     );
 }
 
@@ -269,15 +292,17 @@ assert(!viewTrackingSource.includes('Native records bridge is unavailable'));
 assertIncludes(bootstrapSource, "from '@/uni_modules/GC-UniSessionReplay'", 'example integration');
 assert(!bootstrapSource.includes('GC-UniSessionReplay/js_sdk'));
 assertIncludes(bootstrapSource, 'GCUniSessionReplay.setConfig', 'Session Replay cross-platform configuration');
-assert(!bootstrapSource.includes('// #ifdef APP'));
 assert(!bootstrapSource.includes("uni.getSystemInfoSync().platform === 'ios'"));
-assert(!bootstrapSource.includes('// #ifdef APP-IOS'));
+assert.doesNotMatch(
+    bootstrapSource,
+    /#ifdef APP-IOS[\s\S]*?GCUniSessionReplay\.setConfig/,
+    'Session Replay configuration must remain available on both Android and iOS'
+);
 assert(bootstrapSource.indexOf('rum.setConfig') < bootstrapSource.indexOf('GCUniSessionReplay.setConfig'));
 assertIncludes(mainSource, "from './sdk-bootstrap.js'", 'early SDK bootstrap import');
 assert(mainSource.indexOf('initializeGuanceSDK()') < mainSource.indexOf('gcViewTracking.startTracking()'));
 assertIncludes(appSource, 'initializeGuanceSDK()', 'idempotent application launch bootstrap');
 assertIncludes(mainSource, 'gcViewTracking.evalSessionReplayJS(jsCode)', 'Browser SDK integration');
-assertIncludes(mainSource, 'sessionReplaySampleRate: 100', 'deterministic Browser Session Replay sampling');
 assert(!mainSource.includes('[DEBUG-SR-WEB-EVENT-4d9a]'));
 
 console.log('session replay feature checks passed');

@@ -1562,7 +1562,6 @@ ${err.stack}`;
       GCUniPlugin_utsProxy.rum.stopView(null);
     }
   };
-  const FT_JS_PLUGIN_VERSION = "0.2.7-alpha.1";
   class PageMonitor {
     constructor() {
       this.initialized = false;
@@ -1581,7 +1580,7 @@ ${err.stack}`;
       if (this.initialized)
         return;
       this.initialized = true;
-      formatAppLog("log", "at uni_modules/GC-UniPlugin/js_sdk/View/GCViewTracking.js:37", `[FTLog] View tracking initialized (version: ${FT_JS_PLUGIN_VERSION})`);
+      formatAppLog("log", "at uni_modules/GC-UniPlugin/js_sdk/View/GCViewTracking.js:37", "[FTLog] View tracking initialized");
       try {
         this.pageHookInstalled = this.installPageHooks(app);
         this.watchAppLifecycle();

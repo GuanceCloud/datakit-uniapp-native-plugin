@@ -1,12 +1,27 @@
 # Scripts
 ## update-version.js
 
-Modify the version in `GC-UniPlugin/package.json`,
-`GC-UniSessionReplay/package.json`, JS helper version markers, and the UTS
-bridge version markers.
+Use `.version` as the canonical release version and synchronize package
+metadata, the UTS bridge marker, checked-in Android/iOS UTS generated sources,
+and native-host release metadata. Pass a version to update `.version` and
+every target, or omit it to resynchronize from `.version`.
 
 ```bash
-node update-version.js
+node scripts/update-version.js <version>
+```
+
+The matching changelog section must already be the first section in
+`CHANGELOG.md`; otherwise the command fails before writing files.
+
+## check-version-consistency.js
+
+Verify that `.version`, package metadata, runtime bridge markers, and checked-in
+generated release sources use the same version. Passing the expected Git tag
+also requires the first changelog section to use that release version.
+
+```bash
+node scripts/check-version-consistency.js
+node scripts/check-version-consistency.js <tag>
 ```
 
 ## test-session-replay-feature.js
@@ -108,9 +123,9 @@ asset. Its contents are grouped under `iOS/` and `Android/`, so future
 platforms can be added without changing the download entry point.
 
 ```bash
-bash scripts/package_guance_uniapp_release.sh 0.2.7-alpha.1 \
-  HybridHostExample-iOS/HBuilder-uniPluginDemo/build/GuanceUniApp-iOS/GuanceUniApp-iOS-0.2.7-alpha.1.zip \
-  HybridHostExample-Android/build/GuanceUniApp-Android/GuanceUniApp-Android-0.2.7-alpha.1.zip
+bash scripts/package_guance_uniapp_release.sh 0.3.0-alpha.1 \
+  HybridHostExample-iOS/HBuilder-uniPluginDemo/build/GuanceUniApp-iOS/GuanceUniApp-iOS-0.3.0-alpha.1.zip \
+  HybridHostExample-Android/build/GuanceUniApp-Android/GuanceUniApp-Android-0.3.0-alpha.1.zip
 ```
 
 ## publish_github_release.sh
@@ -123,7 +138,7 @@ Tags containing `-` are published as GitHub prereleases.
 ```bash
 GH_TOKEN=... \
 GITHUB_RELEASE_REPOSITORY=GuanceCloud/datakit-uniapp-native-plugin \
-bash scripts/publish_github_release.sh 0.2.7-alpha.1 release-a.zip release-b.zip
+bash scripts/publish_github_release.sh 0.3.0-alpha.1 release-a.zip release-b.zip
 ```
 
 ## test-tagged-release-automation.js

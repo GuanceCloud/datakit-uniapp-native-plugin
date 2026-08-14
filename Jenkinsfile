@@ -42,21 +42,7 @@ case "$tag" in
 esac
 
 git rev-parse --verify "refs/tags/$tag" >/dev/null
-node - "$tag" <<'NODE'
-const fs = require('fs');
-const tag = process.argv[2];
-const versionFile = fs.readFileSync('.version', 'utf8').trim();
-const versionMatch = /^SDK_VERSION=(.+)$/.exec(versionFile);
-if (!versionMatch) throw new Error('.version must contain SDK_VERSION=<tag>');
-const versions = [
-  versionMatch[1],
-  require('./Hbuilder_Example/uni_modules/GC-UniPlugin/package.json').version,
-  require('./Hbuilder_Example/uni_modules/GC-UniSessionReplay/package.json').version
-];
-if (versions.some((version) => version !== tag)) {
-  throw new Error(`Tag ${tag} must equal every release version: ${versions.join(', ')}`);
-}
-NODE
+node scripts/check-version-consistency.js "$tag"
 
 test -n "${DCLOUD_SDK_LIBS_DIR:-}"
 test -d "$DCLOUD_SDK_LIBS_DIR/DCUniBase.framework"
@@ -70,10 +56,12 @@ test -d "$DCLOUD_SDK_LIBS_DIR/DCloudUTSFoundation.framework"
                 sh '''#!/usr/bin/env bash
 set -euo pipefail
 node scripts/test-uts-proxy-exports.js
+node scripts/test-view-tracking.js
 node scripts/test-session-replay-feature.js
 node scripts/test-hybrid-ios-uts-integration.js
 node scripts/test-hybrid-android-uts-integration.js
 node scripts/test-tagged-release-automation.js
+node scripts/test-version-management.js
 git diff --check
 '''
             }

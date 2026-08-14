@@ -2,7 +2,6 @@ import {
 	rum as gcRum
 } from '@/uni_modules/GC-UniPlugin';
 
-const FT_JS_PLUGIN_VERSION = '0.2.7-alpha.1';
 const LOAD_TIME_UNAVAILABLE = -1;
 const RELOAD_LOAD_TIME = 0;
 const LIFECYCLE_FALLBACK_TIMEOUT_MS = 5000;
@@ -63,7 +62,7 @@ class PageMonitor {
 		if (this.initialized) return;
 		this.initialized = true;
 
-		console.log(`[FTLog] View tracking initialized (version: ${FT_JS_PLUGIN_VERSION})`);
+		console.log('[FTLog] View tracking initialized');
 
 		try {
 			// #ifdef APP-PLUS || APP-HARMONY

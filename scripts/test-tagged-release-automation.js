@@ -24,10 +24,13 @@ const iOSPackage = read('HybridHostExample-iOS/HBuilder-uniPluginDemo/scripts/pa
 const iOSGenerator = read('HybridHostExample-iOS/HBuilder-uniPluginDemo/scripts/generate_guance_uts_frameworks.rb');
 const androidPackage = read('HybridHostExample-Android/scripts/package_guance_uniapp_android.sh');
 const githubWorkflow = read('.github/workflows/publish-uniapp-native-hybrid-release.yml');
+const versionUpdater = read('scripts/update-version.js');
+const versionChecker = read('scripts/check-version-consistency.js');
 
 assertIncludes(feature, 'GitHub Release', 'feature note');
 assertIncludes(pipeline, "label 'macos'", 'Jenkins pipeline');
 assertIncludes(pipeline, 'env.TAG_NAME', 'Jenkins pipeline');
+assertIncludes(pipeline, 'check-version-consistency.js "$tag"', 'Jenkins pipeline');
 assertIncludes(pipeline, 'DCLOUD_UTS_RUNTIME_VERSION', 'Jenkins pipeline');
 assertIncludes(pipeline, 'GC_UNIAPP_USE_CHECKED_IN_UTS_SOURCES=1', 'Jenkins pipeline');
 assertIncludes(pipeline, 'package_guance_uniapp_android.sh', 'Jenkins pipeline');
@@ -64,6 +67,10 @@ assertIncludes(githubWorkflow, 'DCLOUD_SDK_LIBS_DIR: ${{ vars.DCLOUD_SDK_LIBS_DI
 assertIncludes(githubWorkflow, 'GC_UNIAPP_USE_CHECKED_IN_UTS_SOURCES=1', 'GitHub release workflow');
 assertIncludes(githubWorkflow, 'actions/upload-artifact@v4', 'GitHub release workflow');
 assertIncludes(githubWorkflow, 'publish_github_release.sh', 'GitHub release workflow');
+assertIncludes(githubWorkflow, 'check-version-consistency.js "$tag_name"', 'GitHub release workflow');
 assertNotIncludes(githubWorkflow, 'ghp_', 'GitHub release workflow');
+assertIncludes(versionUpdater, "path.join(root, '.version')", 'version updater');
+assertIncludes(versionUpdater, 'checked-in generated source', 'version updater');
+assertIncludes(versionChecker, 'checkVersionConsistency', 'version checker');
 
 console.log('tagged release automation checks passed');
