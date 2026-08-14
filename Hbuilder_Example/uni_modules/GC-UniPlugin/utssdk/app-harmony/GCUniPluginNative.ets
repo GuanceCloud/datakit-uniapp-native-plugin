@@ -172,6 +172,7 @@ interface HarmonyTraceConfig {
   sampleRate?: number | null;
   traceType?: string | null;
   enableLinkRUMData?: boolean | null;
+  enableAutoTrace?: boolean | null;
 }
 
 interface HarmonyTraceHeaderParams {
@@ -185,6 +186,7 @@ let currentViewName = '';
 let uniAppJSViewTrackingEnabled = true;
 let uniAppJSActionTrackingEnabled = true;
 let harmonyUniRequestAutoTrackingEnabled = false;
+let harmonyUniRequestAutoTraceEnabled = false;
 let activeRumConfig: FTRUMConfig | null = null;
 const attachedWebViewHandlers: Map<webview.WebviewController, FTWebViewHandler> = new Map();
 
@@ -455,6 +457,10 @@ export class GCUniPluginNative {
     return harmonyUniRequestAutoTrackingEnabled;
   }
 
+  static isHarmonyUniRequestAutoTraceEnabled(): boolean {
+    return harmonyUniRequestAutoTraceEnabled;
+  }
+
   static addAction(params: object) {
     const actionParams = params as HarmonyRUMActionParams;
     FTRUMGlobalManager.getInstance().addAction(
@@ -636,7 +642,11 @@ export class GCUniPluginNative {
       if (traceParams.enableLinkRUMData !== undefined && traceParams.enableLinkRUMData !== null) {
         config.setEnableLinkRUMData(traceParams.enableLinkRUMData);
       }
+      if (traceParams.enableAutoTrace !== undefined && traceParams.enableAutoTrace !== null) {
+        config.setEnableAutoTrace(traceParams.enableAutoTrace);
+      }
       FTSDK.installTraceConfig(config);
+      harmonyUniRequestAutoTraceEnabled = traceParams.enableAutoTrace === true;
     } catch (error) {
       console.error('[GC-UniPlugin] tracerSetConfig failed:', error);
     }

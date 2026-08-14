@@ -1,5 +1,6 @@
 import {
-	rum
+	rum,
+	tracer
 } from '@/uni_modules/GC-UniPlugin';
 
 let interceptorInstalled = false;
@@ -82,9 +83,9 @@ function completeResourceError(request, error) {
 /**
  * Tracks DCloud uni.request with the Harmony native RUM SDK APIs.
  *
- * The interceptor only observes DCloud's request lifecycle. It does not
- * inject Trace headers: enableNativeUserResource controls Resource collection
- * only. Explicit gcRequest manual collection retains its own Trace behavior.
+ * enableNativeUserResource controls Resource collection. When
+ * tracer.enableAutoTrace is on, the interceptor also adds Trace headers to
+ * each uni.request; when it is off, requests are observed without injection.
  */
 export const gcHarmonyNetworkTracking = {
 	startTracking() {
@@ -112,6 +113,18 @@ export const gcHarmonyNetworkTracking = {
 					// This key is JavaScript-only correlation metadata. Remove it before
 					// DCloud dispatches the request to its native NetworkKit implementation.
 					delete options.__gcResourceKey;
+					const autoTraceEnabled = typeof tracer.isHarmonyUniRequestAutoTraceEnabled === 'function' &&
+						tracer.isHarmonyUniRequestAutoTraceEnabled();
+					if (autoTraceEnabled) {
+						const traceHeaders = tracer.getTraceHeader({
+							key: key,
+							url: options.url
+						});
+						if (traceHeaders) {
+							// Keep caller-provided values authoritative, consistent with gcRequest.
+							options.header = Object.assign({}, traceHeaders, options.header || {});
+						}
+					}
 					console.log('[GC-UniPlugin] Harmony uni.request start:', options.method || 'GET', options.url, key);
 					rum.startResource({ key: key });
 					const request = {

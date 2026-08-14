@@ -31,6 +31,19 @@ const harmonyBridge = read(
   'Hbuilder_Example/uni_modules/GC-UniPlugin/utssdk/app-harmony/index.uts'
 );
 assert.match(harmonyBridge, /static isHarmonyUniRequestAutoTrackingEnabled\b/);
+assert.match(harmonyBridge, /static isHarmonyUniRequestAutoTraceEnabled\b/);
+
+const publicInterface = read('Hbuilder_Example/uni_modules/GC-UniPlugin/utssdk/interface.uts');
+assert.match(publicInterface, /enableAutoTrace\?: boolean \| null/);
+
+const harmonyNative = read(
+  'Hbuilder_Example/uni_modules/GC-UniPlugin/utssdk/app-harmony/GCUniPluginNative.ets'
+);
+assert.match(harmonyNative, /config\.setEnableAutoTrace\(traceParams\.enableAutoTrace\)/);
+assert.match(
+  harmonyNative,
+  /harmonyUniRequestAutoTraceEnabled = traceParams\.enableAutoTrace === true/
+);
 
 const interceptors = {};
 const resourceStarts = [];
@@ -51,8 +64,11 @@ const rum = {
   }
 };
 const tracer = {
+  isHarmonyUniRequestAutoTraceEnabled() {
+    return false;
+  },
   getTraceHeader() {
-    throw new Error('automatic Harmony Resource tracking must not inject trace headers');
+    throw new Error('disabled Harmony auto trace must not inject trace headers');
   }
 };
 const uni = {
@@ -131,6 +147,69 @@ assert.match(
 );
 assert.match(gcRequestSource, /if \(shouldCollectResource\) \{\s*rum\.startResource/s);
 assert.match(gcRequestSource, /rum\.addResource\(\{\s*'key': key,\s*'property': \{\s*'resource_id': key,/s);
+
+const autoTraceInterceptors = {};
+const autoTraceCalls = [];
+const autoTraceResources = [];
+const autoTraceRum = {
+  isHarmonyUniRequestAutoTrackingEnabled() {
+    return true;
+  },
+  startResource() {},
+  stopResource() {},
+  addResource(params) {
+    autoTraceResources.push(params);
+  }
+};
+const autoTraceTracker = loadHarmonyTracker(
+  autoTraceRum,
+  {
+    isHarmonyUniRequestAutoTraceEnabled() {
+      return true;
+    },
+    getTraceHeader(params) {
+      autoTraceCalls.push(params);
+      return {
+        traceparent: 'sdk-traceparent',
+        tracestate: 'sdk-tracestate'
+      };
+    }
+  },
+  {
+    getSystemInfoSync() {
+      return { platform: 'harmonyos' };
+    },
+    addInterceptor(name, interceptor) {
+      autoTraceInterceptors[name] = interceptor;
+    }
+  }
+);
+assert.strictEqual(autoTraceTracker.startTracking(), true);
+const autoTraceOptions = {
+  url: 'https://example.com/auto-trace',
+  method: 'GET',
+  header: {
+    authorization: 'Bearer demo',
+    traceparent: 'caller-traceparent'
+  }
+};
+autoTraceInterceptors.request.invoke(autoTraceOptions);
+assert.strictEqual(autoTraceCalls.length, 1);
+assert.strictEqual(autoTraceCalls[0].url, 'https://example.com/auto-trace');
+assert.ok(autoTraceCalls[0].key);
+assert.deepStrictEqual(autoTraceOptions.header, {
+  authorization: 'Bearer demo',
+  traceparent: 'caller-traceparent',
+  tracestate: 'sdk-tracestate'
+});
+autoTraceOptions.success({ statusCode: 200, header: {}, data: {} });
+assert.deepStrictEqual(autoTraceResources[0].content.requestHeader, autoTraceOptions.header);
+
+const indexPageSource = read('Hbuilder_Example/pages/index/index.vue');
+assert.match(
+  indexPageSource,
+  /tracer\.setConfig\(\{[\s\S]*?enableLinkRUMData: true,[\s\S]*?enableAutoTrace: true[\s\S]*?\}\)/
+);
 
 let manualStartCount = 0;
 let capturedManualOptions = null;

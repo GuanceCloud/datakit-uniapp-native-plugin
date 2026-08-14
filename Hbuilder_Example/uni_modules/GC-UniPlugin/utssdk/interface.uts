@@ -56,6 +56,7 @@ export type GCTraceConfig = {
 	sampleRate?: number | null
 	traceType?: string | null
 	enableLinkRUMData?: boolean | null
+	enableAutoTrace?: boolean | null
 }
 
 export type GCRUMUserDataParams = {

@@ -153,6 +153,10 @@ export class tracer {
     GCUniPluginNative.setTraceConfig(params);
   }
 
+  static isHarmonyUniRequestAutoTraceEnabled(): boolean {
+    return GCUniPluginNative.isHarmonyUniRequestAutoTraceEnabled();
+  }
+
   static getTraceHeader(params: GCTraceHeaderParams): any | null {
     return GCUniPluginNative.getTraceHeader(params);
   }

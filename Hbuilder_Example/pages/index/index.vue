@@ -137,7 +137,8 @@
 			  tracer.setConfig({
 				  sampleRate: 1,
 				  traceType: 'traceparent',
-				  enableLinkRUMData: true
+				  enableLinkRUMData: true,
+				  enableAutoTrace: true
 			  })
 			  logger.logging({
 				  content: 'Interface Config Smoke Test',
