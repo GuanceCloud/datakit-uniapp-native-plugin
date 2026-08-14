@@ -11,30 +11,35 @@ function read(relativePath) {
 const harmonySource = read(
   'Hbuilder_Example/uni_modules/GC-UniPlugin/utssdk/app-harmony/index.uts'
 );
-assert.match(harmonySource, /FTWebViewHandler/);
+const harmonyNativeSource = read(
+  'Hbuilder_Example/uni_modules/GC-UniPlugin/utssdk/app-harmony/GCUniPluginNative.ets'
+);
+assert.match(harmonySource, /from '\.\/GCUniPluginNative\.ets';/);
 assert.match(
   harmonySource,
   /function getHarmonyContext\(\): Context \| undefined\s*\{[\s\S]*?return getContext\(\) as Context;\s*\}/,
-  'FTSDK must receive the Harmony application context for native static tags'
+  'the UTS facade must supply the Harmony application context to the ArkTS proxy'
 );
-assert.match(harmonySource, /static attachWebView\(controller: webview\.WebviewController/);
-assert.match(harmonySource, /handler\.setWebView\(controller, config\)/);
-assert.match(harmonySource, /static detachWebView\(controller: webview\.WebviewController/);
-assert.match(harmonySource, /handler\.clearWebController\(\)/);
-assert.match(harmonySource, /config\.setAllowWebViewHost\(params\.allowWebViewHost\)/);
+assert.match(harmonySource, /GCUniPluginNative\.sdkConfig\(params, getHarmonyContext\(\)\)/);
+assert.match(harmonyNativeSource, /FTWebViewHandler/);
+assert.match(harmonyNativeSource, /static attachWebView\(controller: webview\.WebviewController/);
+assert.match(harmonyNativeSource, /handler\.setWebView\(controller, config\)/);
+assert.match(harmonyNativeSource, /static detachWebView\(controller: webview\.WebviewController/);
+assert.match(harmonyNativeSource, /handler\.clearWebController\(\)/);
+assert.match(harmonyNativeSource, /config\.setAllowWebViewHost\(rumParams\.allowWebViewHost\)/);
 assert.match(
-  harmonySource,
+  harmonyNativeSource,
   /FTSDK\.installRUMConfig\(config\);[\s\S]*?syncBridgeContextToRUMGlobalContext\(\);/,
   'WebView RUM must receive bridge context through the SDK dynamic tags'
 );
 assert.match(
-  harmonySource,
+  harmonyNativeSource,
   /function syncBridgeContextToRUMGlobalContext\(\): void \{[\s\S]*?FTSDK\.appendRUMGlobalContext\(context\);/,
   'bridge context must be forwarded to Browser RUM data'
 );
 assert.match(
-  harmonySource,
-  /function stringifyBridgeContextValue\(value: any\): string \{[\s\S]*?JSON\.stringify\(value\)/,
+  harmonyNativeSource,
+  /function stringifyBridgeContextValue\(value: HarmonyOptionalValue\): string \{[\s\S]*?JSON\.stringify\(value\)/,
   'object bridge values such as sdk_bridge_info must be preserved as JSON'
 );
 

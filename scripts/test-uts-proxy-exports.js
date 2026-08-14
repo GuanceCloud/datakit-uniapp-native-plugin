@@ -96,27 +96,42 @@ for (const relativePath of [
 const harmonyEntry = read(
   'Hbuilder_Example/uni_modules/GC-UniPlugin/utssdk/app-harmony/index.uts'
 );
+const harmonyNativeEntry = read(
+  'Hbuilder_Example/uni_modules/GC-UniPlugin/utssdk/app-harmony/GCUniPluginNative.ets'
+);
 assert.doesNotMatch(
   harmonyEntry,
   /^export function\b/m,
   'HarmonyOS must expose the SDK only through the shared class-based API'
 );
-assert.match(harmonyEntry, /let uniAppJSActionTrackingEnabled = true;/);
-assert.match(harmonyEntry, /let uniAppJSViewTrackingEnabled = true;/);
+assert.match(harmonyEntry, /from '\.\/GCUniPluginNative\.ets';/);
+assert.match(harmonyNativeEntry, /export class GCUniPluginNative\b/);
+assert.doesNotMatch(
+  harmonyNativeEntry,
+  /from ['"]\.\.\/(?:interface|bridge)\.uts['"]/,
+  'ArkTS native code must not depend on UTS modules'
+);
+assert.match(harmonyEntry, /GCUniPluginNative\.setRumConfig\(params\)/);
+assert.match(harmonyEntry, /GCUniPluginNative\.setLoggerConfig\(params\)/);
+assert.match(harmonyEntry, /GCUniPluginNative\.setTraceConfig\(params\)/);
+assert.match(harmonyEntry, /import \{ prepareAddResourceParams \} from '\.\/utils\/FTUniPluginUtils\.uts';/);
+assert.match(harmonyEntry, /GCUniPluginNative\.addResource\(prepareAddResourceParams\(params\)\)/);
+assert.match(harmonyNativeEntry, /let uniAppJSActionTrackingEnabled = true;/);
+assert.match(harmonyNativeEntry, /let uniAppJSViewTrackingEnabled = true;/);
 assert.match(
-  harmonyEntry,
-  /config\.setEnableTraceUserAction\(params\.enableNativeUserAction\)/
+  harmonyNativeEntry,
+  /config\.setEnableTraceUserAction\(rumParams\.enableNativeUserAction\)/
 );
 assert.match(
-  harmonyEntry,
-  /if \(params\.enableNativeUserView !== undefined && params\.enableNativeUserView !== null\) \{\s*config\.setEnableTraceUserView\(params\.enableNativeUserView\);\s*\}/
+  harmonyNativeEntry,
+  /if \(rumParams\.enableNativeUserView !== undefined && rumParams\.enableNativeUserView !== null\) \{\s*config\.setEnableTraceUserView\(rumParams\.enableNativeUserView\);\s*\}/
 );
 assert.doesNotMatch(harmonyEntry, /uniAppJSActionTrackingEnabled = params\.enableNativeUserAction;/);
 assert.doesNotMatch(harmonyEntry, /uniAppJSViewTrackingEnabled = params\.enableNativeUserView/);
 assert.doesNotMatch(harmonyEntry, /uniAppActionTrackingHandler/);
 assert.match(harmonyEntry, /static isUniAppJSActionTrackingEnabled\(\): boolean/);
 assert.match(harmonyEntry, /static isUniAppJSViewTrackingEnabled\(\): boolean/);
-assert.match(harmonyEntry, /return null;/);
+assert.match(harmonyNativeEntry, /return null;/);
 
 const bridgeSource = read(
   'Hbuilder_Example/uni_modules/GC-UniPlugin/utssdk/bridge.uts'
@@ -126,11 +141,33 @@ assert.doesNotMatch(bridgeSource, /export function appendBridgeContext\b/);
 assert.match(harmonyEntry, /import \{ GC_UTS_BRIDGE_VERSION \} from '\.\.\/bridge\.uts';/);
 assert.match(
   harmonyEntry,
-  /const sdkBridgeInfo: Record<string, any> = \{\};\s+sdkBridgeInfo\.uniapp = GC_UTS_BRIDGE_VERSION;\s+bridgeContext\.set\('sdk_bridge_info', sdkBridgeInfo\);/,
-  'HarmonyOS must report sdk_bridge_info as a taskpool-serializable JSON object'
+  /GCUniPluginNative\.setBridgeVersion\(GC_UTS_BRIDGE_VERSION\);/,
+  'The UTS facade must supply its bridge version to the ArkTS proxy'
 );
-assert.doesNotMatch(harmonyEntry, /createSdkBridgeInfo\(\)/);
-assert.doesNotMatch(harmonyEntry, /sdk_bridge_info', 'uniapp:/);
+assert.match(
+  harmonyNativeEntry,
+  /static setBridgeVersion\(version: string\) \{\s+const sdkBridgeInfo: Record<string, string> = \{\};\s+sdkBridgeInfo\.uniapp = version;\s+bridgeContext\.set\('sdk_bridge_info', sdkBridgeInfo\);/,
+  'The ArkTS proxy must retain taskpool-serializable sdk_bridge_info'
+);
+assert.match(
+  harmonyNativeEntry,
+  /const datawayUrl = firstHarmonyString\(configParams\.datawayUrl\);\s+const clientToken = firstHarmonyString\(configParams\.clientToken\);\s+const datakitUrl = firstHarmonyString\(configParams\.datakitUrl, configParams\.serverUrl, configParams\.metricsUrl\);/
+);
+assert.match(
+  harmonyNativeEntry,
+  /if \(datawayUrl != null && clientToken != null\) \{\s+config = FTSDKConfig\.builder\(datawayUrl, clientToken\);\s+\} else if \(datakitUrl != null\) \{\s+config = FTSDKConfig\.builder\(datakitUrl\);/
+);
+assert.match(harmonyNativeEntry, /firstHarmonyBoolean\(configParams\.debug, configParams\.enableSDKDebugLog\)/);
+assert.match(harmonyNativeEntry, /firstHarmonyString\(configParams\.service, configParams\.serviceName\)/);
+assert.doesNotMatch(
+  harmonyNativeEntry,
+  /\b(any|unknown)\b/,
+  'ArkTS native code must not use banned any/unknown types'
+);
+assert.match(
+  harmonyNativeEntry,
+  /if \(context === undefined\) \{\s+console\.error\('\[GC-UniPlugin\] sdkConfig failed: Harmony application context is unavailable'\);\s+return;\s+\}\s+FTSDK\.install\(config, context\);/
+);
 
 for (const relativePath of [
   'Hbuilder_Example/uni_modules/GC-UniPlugin/utssdk/app-ios/index.uts',
@@ -212,7 +249,7 @@ assert.match(harmonyAnrTestHelper, /export const blockHarmonyMainThread\b/);
 assert.match(harmonyAnrTestHelper, /while \(Date\.now\(\) < endTime\)/);
 
 assert.match(
-  harmonyEntry,
+  harmonyNativeEntry,
   /await manager\.startView\(params\.viewName, mergeRumBridgeContext\(params\.property\)\);/
 );
 
