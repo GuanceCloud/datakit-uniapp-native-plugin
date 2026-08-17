@@ -23,7 +23,10 @@ export default {
       webviewUrl: 'http://10.100.64.166/test/rum/',
       harmonyWebviewOptions: {
         src: 'http://10.100.64.166/test/rum/',
-        viewName: 'webview'
+        viewName: 'webview',
+        // Demo-only: verifies that a pre-existing bridge remains available
+        // after FTWebViewHandler registers the RUM bridge.
+        enableBridgeCompatibilityCheck: true
       }
     };
   },

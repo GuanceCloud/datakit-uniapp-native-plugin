@@ -50,6 +50,19 @@ assert.match(nativeWebViewSource, /defineNativeEmbed\('gcwebview'/);
 assert.match(nativeWebViewSource, /controller: webview\.WebviewController/);
 assert.match(nativeWebViewSource, /FTSDK\.getRumConfig\(\)/);
 assert.match(nativeWebViewSource, /handler\.setWebView\(controller, config\)/);
+assert.match(nativeWebViewSource, /enableBridgeCompatibilityCheck/);
+assert.match(nativeWebViewSource, /__gc_base_bridge__/);
+assert.match(nativeWebViewSource, /controller\.registerJavaScriptProxy\(/);
+assert.match(nativeWebViewSource, /\.onConsole\(event => \{/);
+assert.match(nativeWebViewSource, /\.onPageEnd\(\(\) => \{[\s\S]*?this\.logBridgeCompatibility\(\);/);
+assert.match(nativeWebViewSource, /baseBridge\.ping\(\)/);
+assert.match(nativeWebViewSource, /baseResult/);
+assert.match(nativeWebViewSource, /FTWebViewJavascriptBridge && window\.FTWebViewJavascriptBridge\.sendEvent/);
+assert.match(
+  nativeWebViewSource,
+  /\.onControllerAttached\(\(\) => \{[\s\S]*?this\.registerBaseJavaScriptBridge\(\);[\s\S]*?this\.attachRUMBridge\(\);[\s\S]*?\}\)/,
+  'the base bridge must be registered before the RUM bridge on the same controller'
+);
 assert.match(
   nativeWebViewSource,
   /Harmony WebView RUM bridge failed:/,
@@ -69,6 +82,7 @@ const pageSource = read('Hbuilder_Example/pages/webview/webView.vue');
 assert.match(pageSource, /#ifdef APP-HARMONY[\s\S]*?<embed[\s\S]*?tag="gcwebview"/);
 assert.match(pageSource, /#ifndef APP-HARMONY[\s\S]*?<web-view/);
 assert.doesNotMatch(pageSource, /createWebviewContext/);
+assert.match(pageSource, /enableBridgeCompatibilityCheck:\s*true/);
 
 const mainSource = read('Hbuilder_Example/main.js');
 assert.match(

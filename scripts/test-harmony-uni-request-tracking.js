@@ -44,6 +44,11 @@ assert.match(
   harmonyNative,
   /harmonyUniRequestAutoTraceEnabled = traceParams\.enableAutoTrace === true/
 );
+assert.match(
+  harmonyNative,
+  /config\.setDeviceMetricsMonitorType\(\s*deviceMonitorType,\s*harmonyDetectFrequency\(rumParams\.detectFrequency \|\| 'normal'\)\s*\)/s
+);
+assert.doesNotMatch(harmonyNative, /setDeviceMetricsDetectFrequency/);
 
 const interceptors = {};
 const resourceStarts = [];
