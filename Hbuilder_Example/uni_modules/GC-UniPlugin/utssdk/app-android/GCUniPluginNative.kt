@@ -35,23 +35,25 @@ import java.util.Locale
 private object FTUniAppStartManager {
     private var alreadyColdLaunch = false
     private val lifecycleCallbacks = FTActivityLifecycleCallbacks()
-    private var startTime = 0L
-    private var installTime = 0L
+    private var coldStartTimeLineNs = 0L
+    private var coldStartDurationNs = 0L
 
     fun start() {
         if (!alreadyColdLaunch) {
             FTApplication.getApplication().registerActivityLifecycleCallbacks(lifecycleCallbacks)
-            startTime = FTUtils.getAppStartTimeNs()
-            installTime = FTUtils.getCurrentNanoTime()
+            val appStartTimeNs = FTUtils.getAppStartTimeNs()
+            val installTimeNs = System.nanoTime()
+            coldStartDurationNs = (installTimeNs - appStartTimeNs).coerceAtLeast(0L)
+            coldStartTimeLineNs = FTUtils.getCurrentNanoTime() - coldStartDurationNs
             alreadyColdLaunch = true
         }
     }
 
     fun uploadColdBootTimeWhenManualStart() {
-        if (startTime > 0) {
-            FTAutoTrack.putRUMLaunchPerformance(true, installTime - startTime, startTime)
-            startTime = 0L
-            installTime = 0L
+        if (coldStartTimeLineNs > 0) {
+            FTAutoTrack.putRUMLaunchPerformance(true, coldStartDurationNs, coldStartTimeLineNs)
+            coldStartTimeLineNs = 0L
+            coldStartDurationNs = 0L
         }
     }
 }

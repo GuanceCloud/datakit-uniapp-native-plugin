@@ -55,6 +55,24 @@ for (const [label, source] of [
   assertExcludes(source, 'fun appendBridgeContext(json: String?)', label);
   assertExcludes(source, 'fun mergeBridgeContext(', label);
   assertExcludes(source, 'sdk_bridge_info', label);
+  assertIncludes(source, 'val appStartTimeNs = FTUtils.getAppStartTimeNs()', `${label} cold-start timing`);
+  assertIncludes(source, 'val installTimeNs = System.nanoTime()', `${label} cold-start timing`);
+  assertIncludes(
+    source,
+    'coldStartDurationNs = (installTimeNs - appStartTimeNs).coerceAtLeast(0L)',
+    `${label} cold-start timing`
+  );
+  assertIncludes(
+    source,
+    'coldStartTimeLineNs = FTUtils.getCurrentNanoTime() - coldStartDurationNs',
+    `${label} cold-start timing`
+  );
+  assertIncludes(
+    source,
+    'FTAutoTrack.putRUMLaunchPerformance(true, coldStartDurationNs, coldStartTimeLineNs)',
+    `${label} cold-start timing`
+  );
+  assertExcludes(source, 'installTime - startTime', `${label} cold-start timing`);
 }
 assertIncludes(replayNative, 'fun setConfig(json: String?): Boolean', 'Session Replay Android initialization result');
 assertIncludes(syncSources, 'HBUILDER_ANDROID_UTS_EXPORT_DIR', 'source synchronization script');
