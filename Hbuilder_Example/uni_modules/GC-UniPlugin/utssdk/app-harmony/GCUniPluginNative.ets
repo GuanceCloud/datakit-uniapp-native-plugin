@@ -400,9 +400,9 @@ export class GCUniPluginNative {
       const deviceMonitorType = harmonyDeviceMonitorType(rumParams.deviceMonitorType);
       if (deviceMonitorType !== 0) {
         config.setDeviceMetricsMonitorType(deviceMonitorType);
-        if (rumParams.detectFrequency) {
-          config.setDeviceMetricsDetectFrequency(harmonyDetectFrequency(rumParams.detectFrequency));
-        }
+        config.setDeviceMetricsDetectFrequency(
+          harmonyDetectFrequency(rumParams.detectFrequency || 'normal')
+        );
       }
       if (rumParams.enableTraceWebView !== undefined && rumParams.enableTraceWebView !== null) {
         config.setEnableTraceWebView(rumParams.enableTraceWebView);
