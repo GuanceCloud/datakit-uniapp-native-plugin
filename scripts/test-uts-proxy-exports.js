@@ -116,8 +116,8 @@ assert.match(harmonyEntry, /GCUniPluginNative\.setLoggerConfig\(params\)/);
 assert.match(harmonyEntry, /GCUniPluginNative\.setTraceConfig\(params\)/);
 assert.match(harmonyEntry, /import \{ prepareAddResourceParams \} from '\.\/utils\/FTUniPluginUtils\.uts';/);
 assert.match(harmonyEntry, /GCUniPluginNative\.addResource\(prepareAddResourceParams\(params\)\)/);
-assert.match(harmonyNativeEntry, /let uniAppJSActionTrackingEnabled = true;/);
 assert.match(harmonyNativeEntry, /let uniAppJSViewTrackingEnabled = true;/);
+assert.doesNotMatch(harmonyNativeEntry, /uniAppJSActionTrackingEnabled/);
 assert.match(
   harmonyNativeEntry,
   /config\.setEnableTraceUserAction\(rumParams\.enableNativeUserAction\)/
@@ -126,10 +126,9 @@ assert.match(
   harmonyNativeEntry,
   /if \(rumParams\.enableNativeUserView !== undefined && rumParams\.enableNativeUserView !== null\) \{\s*config\.setEnableTraceUserView\(rumParams\.enableNativeUserView\);\s*\}/
 );
-assert.doesNotMatch(harmonyEntry, /uniAppJSActionTrackingEnabled = params\.enableNativeUserAction;/);
 assert.doesNotMatch(harmonyEntry, /uniAppJSViewTrackingEnabled = params\.enableNativeUserView/);
 assert.doesNotMatch(harmonyEntry, /uniAppActionTrackingHandler/);
-assert.match(harmonyEntry, /static isUniAppJSActionTrackingEnabled\(\): boolean/);
+assert.doesNotMatch(harmonyEntry, /isUniAppJSActionTrackingEnabled/);
 assert.match(harmonyEntry, /static isUniAppJSViewTrackingEnabled\(\): boolean/);
 assert.match(harmonyNativeEntry, /return null;/);
 
@@ -388,8 +387,7 @@ assert.match(actionTracking, /getDefaultActionName\(/);
 assert.match(actionTracking, /setActionTrackingHandler\(handler\)/);
 assert.match(actionTracking, /resolveHandlerAction\(wrapper\)/);
 assert.match(actionTracking, /#position:/);
-assert.match(actionTracking, /isJSActionTrackingEnabled\(\)/);
-assert.match(actionTracking, /isUniAppJSActionTrackingEnabled/);
+assert.doesNotMatch(actionTracking, /isJSActionTrackingEnabled|isUniAppJSActionTrackingEnabled/);
 assert.match(
   actionTracking,
   /this\.rum\.startAction\(\{\s*actionName,\s*actionType: eventType,/,
@@ -572,14 +570,6 @@ assert.strictEqual(
   5,
   'Harmony internal __Common__ listeners must not be reported as Actions'
 );
-gcActionTracking.rum.isUniAppJSActionTrackingEnabled = () => false;
-gcActionTracking.handleVdSync([[20, 7, { type: 'onClick' }]], 42);
-assert.strictEqual(
-  capturedActions.length,
-  5,
-  'enableNativeUserAction: false must disable the UniApp JS Action collector'
-);
-
 const replayInterface = read(
   'Hbuilder_Example/uni_modules/GC-UniSessionReplay/utssdk/interface.uts'
 );

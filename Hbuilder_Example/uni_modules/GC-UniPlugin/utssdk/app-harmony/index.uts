@@ -121,10 +121,6 @@ export class rum {
     return GCUniPluginNative.isUniAppJSViewTrackingEnabled();
   }
 
-  static isUniAppJSActionTrackingEnabled(): boolean {
-    return GCUniPluginNative.isUniAppJSActionTrackingEnabled();
-  }
-
   static isHarmonyUniRequestAutoTrackingEnabled(): boolean {
     return GCUniPluginNative.isHarmonyUniRequestAutoTrackingEnabled();
   }

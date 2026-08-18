@@ -184,7 +184,6 @@ const pendingViewLoadTimes: Map<string, number> = new Map();
 const bridgeContext: Map<string, HarmonyOptionalValue> = new Map();
 let currentViewName = '';
 let uniAppJSViewTrackingEnabled = true;
-let uniAppJSActionTrackingEnabled = true;
 let harmonyUniRequestAutoTrackingEnabled = false;
 let harmonyUniRequestAutoTraceEnabled = false;
 let activeRumConfig: FTRUMConfig | null = null;
@@ -447,10 +446,6 @@ export class GCUniPluginNative {
 
   static isUniAppJSViewTrackingEnabled(): boolean {
     return uniAppJSViewTrackingEnabled;
-  }
-
-  static isUniAppJSActionTrackingEnabled(): boolean {
-    return uniAppJSActionTrackingEnabled;
   }
 
   static isHarmonyUniRequestAutoTrackingEnabled(): boolean {
