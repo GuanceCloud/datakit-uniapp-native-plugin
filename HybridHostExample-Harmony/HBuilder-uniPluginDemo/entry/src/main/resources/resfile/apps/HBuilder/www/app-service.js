@@ -2008,7 +2008,6 @@ ${sessionReplayJS}
     }
   }
   const gcViewTracking = new PageMonitor();
-  gcActionTracking.startTracking();
   const SERVER_URL = "http://127.0.0.1:9529";
   const CLIENT_TOKEN = "";
   const ANDROID_APP_ID = "android_uniapp_app_id";
@@ -2689,6 +2688,7 @@ ${sessionReplayJS}
   };
   const App = /* @__PURE__ */ _export_sfc(_sfc_main, [["__file", "/Users/zhuyun/Desktop/guance/ft-sdk-uniapp-native-plugin/Hbuilder_Example/App.vue"]]);
   initializeGuanceSDK();
+  gcActionTracking.startTracking();
   function createApp() {
     const app = vue.createVueApp(App);
     gcViewTracking.startTracking(app);

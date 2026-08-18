@@ -244,7 +244,17 @@ const errorTracking = read(
 assert.doesNotMatch(errorTracking, /FT_JS_PLUGIN_VERSION/);
 const jsSdkEntry = read('Hbuilder_Example/uni_modules/GC-UniPlugin/js_sdk/index.js');
 assert.match(jsSdkEntry, /import\s*\{\s*gcActionTracking\s*\}/);
-assert.match(jsSdkEntry, /#ifdef APP-HARMONY\s+gcActionTracking\.startTracking\(\);/);
+assert.doesNotMatch(
+  jsSdkEntry,
+  /gcActionTracking\.startTracking\(/,
+  'Importing the JS SDK entry must not start Action Tracking automatically'
+);
+const mainEntry = read('Hbuilder_Example/main.js');
+assert.match(
+  mainEntry,
+  /#ifdef APP-HARMONY\s+gcActionTracking\.startTracking\(\);/,
+  'The example app must opt in to Harmony Action Tracking explicitly'
+);
 
 const viewTracking = read(
   'Hbuilder_Example/uni_modules/GC-UniPlugin/js_sdk/View/GCViewTracking.js'
