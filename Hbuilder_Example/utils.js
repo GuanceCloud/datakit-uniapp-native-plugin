@@ -5,7 +5,6 @@ export const ANDROID_APP_ID = 'guance_android_uniapp_id'
 export const IOS_APP_ID = 'guance_ios_uniapp_id'
 export const HARMONY_APP_ID  = 'com_uniapp_harmony'
 export const TRACK_ID = 'track_id'
-import {gcRequest} from '@/uni_modules/GC-UniPlugin/js_sdk';
 export default {
 
 	getUUID() {
@@ -16,7 +15,7 @@ export default {
 		});
 	},
 	request(requestUrl, header = {}) {
-		gcRequest.request({
+		uni.request({
 			url: requestUrl,
 			header: header,
 			success() {
@@ -28,11 +27,10 @@ export default {
 		});
 	},
 	rumRequest(requestUrl,method,header = {}){			
-			gcRequest.request({
+			uni.request({
 				url: requestUrl,
 				method: method,
 				header: header,
-				filterPlatform:["ios"],
 				timeout:30000,
 				success(res)  {
 					console.log('success:' + JSON.stringify(res))

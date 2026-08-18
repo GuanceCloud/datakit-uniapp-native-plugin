@@ -1304,11 +1304,26 @@ ${err.stack}`;
   }
   const gcActionTracking = new ActionMonitor();
   let interceptorInstalled = false;
-  function isHarmonyPlatform() {
+  let startTrackingInvoked = false;
+  let trackingConfig = {
+    enableIOS: true
+  };
+  function getCurrentPlatform() {
     if (typeof uni === "undefined" || typeof uni.getSystemInfoSync !== "function") {
-      return false;
+      return "unknown";
     }
-    return uni.getSystemInfoSync().platform === "harmonyos";
+    return uni.getSystemInfoSync().platform;
+  }
+  function isSupportedPlatform(platform2) {
+    return platform2 === "ios" || platform2 === "android" || platform2 === "harmonyos";
+  }
+  function isTrackingEnabledForPlatform(platform2) {
+    return platform2 !== "ios" || trackingConfig.enableIOS;
+  }
+  function applyTrackingConfig(config) {
+    trackingConfig = {
+      enableIOS: !config || config.enableIOS !== false
+    };
   }
   function createRequestKey() {
     return "xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx".replace(/[xy]/g, function(c) {
@@ -1344,9 +1359,9 @@ ${err.stack}`;
           resourceStatus: response.statusCode
         }
       });
-      formatAppLog("log", "at uni_modules/GC-UniPlugin/js_sdk/Request/GCHarmonyNetworkTracking.js:50", "[GC-UniPlugin] Harmony uni.request resource completed:", response.statusCode, request.url, request.key);
+      formatAppLog("log", "at uni_modules/GC-UniPlugin/js_sdk/Request/GCResourceTracking.js:75", "[GC-UniPlugin] uni.request resource completed:", response.statusCode, request.url, request.key);
     } catch (error) {
-      formatAppLog("error", "at uni_modules/GC-UniPlugin/js_sdk/Request/GCHarmonyNetworkTracking.js:52", "[GC-UniPlugin] Harmony uni.request tracking success failed:", error);
+      formatAppLog("error", "at uni_modules/GC-UniPlugin/js_sdk/Request/GCResourceTracking.js:77", "[GC-UniPlugin] uni.request tracking success failed:", error);
     }
   }
   function completeResourceError(request, error) {
@@ -1366,22 +1381,28 @@ ${err.stack}`;
           errorStack
         }
       });
-      formatAppLog("warn", "at uni_modules/GC-UniPlugin/js_sdk/Request/GCHarmonyNetworkTracking.js:76", "[GC-UniPlugin] Harmony uni.request resource failed:", errorMessage, request.url, request.key);
+      formatAppLog("warn", "at uni_modules/GC-UniPlugin/js_sdk/Request/GCResourceTracking.js:101", "[GC-UniPlugin] uni.request resource failed:", errorMessage, request.url, request.key);
     } catch (trackingError) {
-      formatAppLog("error", "at uni_modules/GC-UniPlugin/js_sdk/Request/GCHarmonyNetworkTracking.js:78", "[GC-UniPlugin] Harmony uni.request tracking fail failed:", trackingError);
+      formatAppLog("error", "at uni_modules/GC-UniPlugin/js_sdk/Request/GCResourceTracking.js:103", "[GC-UniPlugin] uni.request tracking fail failed:", trackingError);
     }
   }
-  const gcHarmonyNetworkTracking = {
-    startTracking() {
-      const platform2 = typeof uni !== "undefined" && typeof uni.getSystemInfoSync === "function" ? uni.getSystemInfoSync().platform : "unknown";
+  const gcResourceTracking = {
+    startTracking(config = {}) {
+      const platform2 = getCurrentPlatform();
       const hasAddInterceptor = typeof uni !== "undefined" && typeof uni.addInterceptor === "function";
-      const nativeResourceEnabled = typeof GCUniPlugin_utsProxy.rum.isHarmonyUniRequestAutoTrackingEnabled === "function" && GCUniPlugin_utsProxy.rum.isHarmonyUniRequestAutoTrackingEnabled();
-      if (interceptorInstalled || !isHarmonyPlatform() || !hasAddInterceptor || !nativeResourceEnabled) {
-        formatAppLog("warn", "at uni_modules/GC-UniPlugin/js_sdk/Request/GCHarmonyNetworkTracking.js:99", "[GC-UniPlugin] Harmony uni.request tracker not installed:", {
+      if (startTrackingInvoked) {
+        formatAppLog("warn", "at uni_modules/GC-UniPlugin/js_sdk/Request/GCResourceTracking.js:115", "[GC-UniPlugin] uni.request tracker start already invoked:", platform2);
+        return false;
+      }
+      startTrackingInvoked = true;
+      applyTrackingConfig(config);
+      const platformTrackingEnabled = isTrackingEnabledForPlatform(platform2);
+      if (!isSupportedPlatform(platform2) || !platformTrackingEnabled || !hasAddInterceptor) {
+        formatAppLog("warn", "at uni_modules/GC-UniPlugin/js_sdk/Request/GCResourceTracking.js:131", "[GC-UniPlugin] uni.request tracker not installed:", {
           interceptorInstalled,
           platform: platform2,
-          hasAddInterceptor,
-          nativeResourceEnabled
+          platformTrackingEnabled,
+          hasAddInterceptor
         });
         return false;
       }
@@ -1390,13 +1411,13 @@ ${err.stack}`;
           try {
             const key = options.__gcResourceKey || createRequestKey();
             delete options.__gcResourceKey;
-            formatAppLog("log", "at uni_modules/GC-UniPlugin/js_sdk/Request/GCHarmonyNetworkTracking.js:115", "[GC-UniPlugin] Harmony uni.request start:", options.method || "GET", options.url, key);
+            formatAppLog("log", "at uni_modules/GC-UniPlugin/js_sdk/Request/GCResourceTracking.js:148", "[GC-UniPlugin] uni.request start:", options.method || "GET", options.url, key);
             GCUniPlugin_utsProxy.rum.startResource({ key });
             const request = {
               key,
               url: options.url,
               method: options.method || "GET",
-              requestHeaders: options.header || {}
+              requestHeaders: Object.assign({}, options.header || {})
             };
             const originalSuccess = options.success;
             const originalFail = options.fail;
@@ -1409,17 +1430,24 @@ ${err.stack}`;
               return typeof originalFail === "function" ? originalFail(error) : error;
             };
           } catch (error) {
-            formatAppLog("error", "at uni_modules/GC-UniPlugin/js_sdk/Request/GCHarmonyNetworkTracking.js:137", "[GC-UniPlugin] Harmony uni.request tracking invoke failed:", error);
+            formatAppLog("error", "at uni_modules/GC-UniPlugin/js_sdk/Request/GCResourceTracking.js:170", "[GC-UniPlugin] uni.request tracking invoke failed:", error);
           }
           return options;
         }
       });
       interceptorInstalled = true;
-      formatAppLog("log", "at uni_modules/GC-UniPlugin/js_sdk/Request/GCHarmonyNetworkTracking.js:143", "[GC-UniPlugin] Harmony uni.request tracker installed:", platform2);
+      formatAppLog("log", "at uni_modules/GC-UniPlugin/js_sdk/Request/GCResourceTracking.js:176", "[GC-UniPlugin] uni.request tracker installed:", platform2);
       return true;
     },
     isTracking() {
-      return interceptorInstalled && typeof GCUniPlugin_utsProxy.rum.isHarmonyUniRequestAutoTrackingEnabled === "function" && GCUniPlugin_utsProxy.rum.isHarmonyUniRequestAutoTrackingEnabled();
+      return interceptorInstalled;
+    },
+    shouldUseManualTracking() {
+      const platform2 = getCurrentPlatform();
+      if (isSupportedPlatform(platform2) && !isTrackingEnabledForPlatform(platform2)) {
+        return false;
+      }
+      return !interceptorInstalled;
     }
   };
   const platform = uni.getSystemInfoSync().platform;
@@ -1445,7 +1473,7 @@ ${err.stack}`;
       } else {
         filter = options.filterPlatform.includes(platform);
       }
-      const shouldCollectResource = !filter && !gcHarmonyNetworkTracking.isTracking();
+      const shouldCollectResource = !filter && gcResourceTracking.shouldUseManualTracking();
       var traceHeader = {};
       if (shouldCollectResource) {
         traceHeader = GCUniPlugin_utsProxy.tracer.getTraceHeader({
@@ -2689,6 +2717,9 @@ ${sessionReplayJS}
   const App = /* @__PURE__ */ _export_sfc(_sfc_main, [["__file", "/Users/zhuyun/Desktop/guance/ft-sdk-uniapp-native-plugin/Hbuilder_Example/App.vue"]]);
   initializeGuanceSDK();
   gcActionTracking.startTracking();
+  gcResourceTracking.startTracking({
+    enableIOS: false
+  });
   function createApp() {
     const app = vue.createVueApp(App);
     gcViewTracking.startTracking(app);

@@ -3,12 +3,30 @@ import {
 } from '@/uni_modules/GC-UniPlugin';
 
 let interceptorInstalled = false;
+let startTrackingInvoked = false;
+let trackingConfig = {
+	enableIOS: true
+};
 
-function isHarmonyPlatform() {
+function getCurrentPlatform() {
 	if (typeof uni === 'undefined' || typeof uni.getSystemInfoSync !== 'function') {
-		return false;
+		return 'unknown';
 	}
-	return uni.getSystemInfoSync().platform === 'harmonyos';
+	return uni.getSystemInfoSync().platform;
+}
+
+function isSupportedPlatform(platform) {
+	return platform === 'ios' || platform === 'android' || platform === 'harmonyos';
+}
+
+function isTrackingEnabledForPlatform(platform) {
+	return platform !== 'ios' || trackingConfig.enableIOS;
+}
+
+function applyTrackingConfig(config) {
+	trackingConfig = {
+		enableIOS: !config || config.enableIOS !== false
+	};
 }
 
 function createRequestKey() {
@@ -47,16 +65,16 @@ function completeResource(request, response) {
 				resourceStatus: response.statusCode
 			}
 		});
-		console.log('[GC-UniPlugin] Harmony uni.request resource completed:', response.statusCode, request.url, request.key, " at uni_modules/GC-UniPlugin/js_sdk/Request/GCHarmonyNetworkTracking.js:50");
+		console.log('[GC-UniPlugin] uni.request resource completed:', response.statusCode, request.url, request.key);
 	} catch (error) {
-		console.error('[GC-UniPlugin] Harmony uni.request tracking success failed:', error, " at uni_modules/GC-UniPlugin/js_sdk/Request/GCHarmonyNetworkTracking.js:52");
+		console.error('[GC-UniPlugin] uni.request tracking success failed:', error);
 	}
 }
 
 function completeResourceError(request, error) {
 	try {
 		const errorMessage = error.errMsg || error.message || String(error);
-		// Harmony SDK generates the correlated network Error from a failed
+		// The native SDK generates the correlated network Error from a failed
 		// Resource when it has an error stack. uni.request timeout objects do
 		// not consistently contain one, so preserve the message as a fallback.
 		const errorStack = error.stack || errorMessage;
@@ -73,35 +91,42 @@ function completeResourceError(request, error) {
 				errorStack: errorStack
 			}
 		});
-		console.warn('[GC-UniPlugin] Harmony uni.request resource failed:', errorMessage, request.url, request.key, " at uni_modules/GC-UniPlugin/js_sdk/Request/GCHarmonyNetworkTracking.js:76");
+		console.warn('[GC-UniPlugin] uni.request resource failed:', errorMessage, request.url, request.key);
 	} catch (trackingError) {
-		console.error('[GC-UniPlugin] Harmony uni.request tracking fail failed:', trackingError, " at uni_modules/GC-UniPlugin/js_sdk/Request/GCHarmonyNetworkTracking.js:78");
+		console.error('[GC-UniPlugin] uni.request tracking fail failed:', trackingError);
 	}
 }
 
 /**
- * Tracks DCloud uni.request with the Harmony native RUM SDK APIs.
+ * Tracks DCloud uni.request with the Android, iOS, and HarmonyOS native RUM
+ * SDK APIs.
  *
  * The interceptor only observes DCloud's request lifecycle. It does not
- * inject Trace headers: enableNativeUserResource controls Resource collection
- * only. Explicit gcRequest manual collection retains its own Trace behavior.
+ * inject Trace headers. Disable iOS tracking when enableNativeUserResource is
+ * enabled because iOS dispatches uni.request through native URLSession and the
+ * native SDK already collects it.
  */
-export const gcHarmonyNetworkTracking = {
-	startTracking() {
-		// #ifdef APP-HARMONY
-		const platform = typeof uni !== 'undefined' && typeof uni.getSystemInfoSync === 'function' ?
-			uni.getSystemInfoSync().platform : 'unknown';
+export const gcResourceTracking = {
+	startTracking(config = {}) {
+		// #ifdef APP-IOS || APP-ANDROID || APP-HARMONY
+		const platform = getCurrentPlatform();
 		const hasAddInterceptor = typeof uni !== 'undefined' && typeof uni.addInterceptor === 'function';
-		const nativeResourceEnabled = typeof rum.isHarmonyUniRequestAutoTrackingEnabled === 'function' &&
-			rum.isHarmonyUniRequestAutoTrackingEnabled();
-		if (interceptorInstalled || !isHarmonyPlatform() ||
-			!hasAddInterceptor || !nativeResourceEnabled) {
-			console.warn('[GC-UniPlugin] Harmony uni.request tracker not installed:', {
+		if (startTrackingInvoked) {
+			console.warn('[GC-UniPlugin] uni.request tracker start already invoked:', platform);
+			return false;
+		}
+		startTrackingInvoked = true;
+
+		applyTrackingConfig(config);
+		const platformTrackingEnabled = isTrackingEnabledForPlatform(platform);
+		if (!isSupportedPlatform(platform) || !platformTrackingEnabled ||
+			!hasAddInterceptor) {
+			console.warn('[GC-UniPlugin] uni.request tracker not installed:', {
 				interceptorInstalled: interceptorInstalled,
 				platform: platform,
-				hasAddInterceptor: hasAddInterceptor,
-				nativeResourceEnabled: nativeResourceEnabled
-			}, " at uni_modules/GC-UniPlugin/js_sdk/Request/GCHarmonyNetworkTracking.js:99");
+				platformTrackingEnabled: platformTrackingEnabled,
+				hasAddInterceptor: hasAddInterceptor
+			});
 			return false;
 		}
 
@@ -112,13 +137,13 @@ export const gcHarmonyNetworkTracking = {
 					// This key is JavaScript-only correlation metadata. Remove it before
 					// DCloud dispatches the request to its native NetworkKit implementation.
 					delete options.__gcResourceKey;
-					console.log('[GC-UniPlugin] Harmony uni.request start:', options.method || 'GET', options.url, key, " at uni_modules/GC-UniPlugin/js_sdk/Request/GCHarmonyNetworkTracking.js:115");
+					console.log('[GC-UniPlugin] uni.request start:', options.method || 'GET', options.url, key);
 					rum.startResource({ key: key });
 					const request = {
 						key: key,
 						url: options.url,
 						method: options.method || 'GET',
-						requestHeaders: options.header || {}
+						requestHeaders: Object.assign({}, options.header || {})
 					};
 					// DCloud may recreate the request options object before invoking
 					// interceptor success/fail hooks. Wrap the callbacks here so the
@@ -134,24 +159,33 @@ export const gcHarmonyNetworkTracking = {
 						return typeof originalFail === 'function' ? originalFail(error) : error;
 					};
 				} catch (error) {
-					console.error('[GC-UniPlugin] Harmony uni.request tracking invoke failed:', error, " at uni_modules/GC-UniPlugin/js_sdk/Request/GCHarmonyNetworkTracking.js:137");
+					console.error('[GC-UniPlugin] uni.request tracking invoke failed:', error);
 				}
 				return options;
 			}
 		});
 		interceptorInstalled = true;
-		console.log('[GC-UniPlugin] Harmony uni.request tracker installed:', platform, " at uni_modules/GC-UniPlugin/js_sdk/Request/GCHarmonyNetworkTracking.js:143");
+		console.log('[GC-UniPlugin] uni.request tracker installed:', platform);
 		return true;
 		// #endif
 		return false;
 	},
 
 	isTracking() {
-		// #ifdef APP-HARMONY
-		return interceptorInstalled &&
-			typeof rum.isHarmonyUniRequestAutoTrackingEnabled === 'function' &&
-			rum.isHarmonyUniRequestAutoTrackingEnabled();
+		// #ifdef APP-IOS || APP-ANDROID || APP-HARMONY
+		return interceptorInstalled;
 		// #endif
 		return false;
+	},
+
+	shouldUseManualTracking() {
+		// #ifdef APP-IOS || APP-ANDROID || APP-HARMONY
+		const platform = getCurrentPlatform();
+		if (isSupportedPlatform(platform) && !isTrackingEnabledForPlatform(platform)) {
+			return false;
+		}
+		return !interceptorInstalled;
+		// #endif
+		return true;
 	}
 };

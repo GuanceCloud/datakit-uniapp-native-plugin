@@ -1,7 +1,6 @@
 import * as SDKConst from '@/utils.js'
 import {
-	gcErrorTracking,
-	gcHarmonyNetworkTracking
+	gcErrorTracking
 } from '@/uni_modules/GC-UniPlugin/js_sdk'
 import {
 	logger,
@@ -87,9 +86,4 @@ export function initializeGuanceSDK() {
 		traceType: 'ddTrace',
 		enableLinkRUMData: true
 	})
-	// #ifdef APP-HARMONY
-	// DCloud uni.request is now bridged to the Harmony SDK's native network
-	// tracking lifecycle. Direct uni.request and gcRequest share this path.
-	gcHarmonyNetworkTracking.startTracking()
-	// #endif
 }

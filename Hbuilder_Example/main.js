@@ -1,7 +1,8 @@
 import App from './App'
 import {
   gcViewTracking,
-  gcActionTracking
+  gcActionTracking,
+  gcResourceTracking
 } from '@/uni_modules/GC-UniPlugin/js_sdk'
 import {
   initializeGuanceSDK
@@ -12,6 +13,10 @@ initializeGuanceSDK();
 // #ifdef APP-HARMONY
 gcActionTracking.startTracking();
 // #endif
+
+gcResourceTracking.startTracking({
+  enableIOS: false
+});
 
 // Session Replay is iOS-only in this plugin. Keep the optional replay bootstrap
 // out of Harmony builds so normal WebView RUM does not wait for a `records`

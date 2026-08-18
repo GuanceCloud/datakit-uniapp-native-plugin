@@ -3,12 +3,16 @@ import {
 	tracer
 } from '@/uni_modules/GC-UniPlugin';
 import {
-	gcHarmonyNetworkTracking
-} from './GCHarmonyNetworkTracking.js';
+	gcResourceTracking
+} from './GCResourceTracking.js';
 
 // Get platform information
 const platform = uni.getSystemInfoSync().platform;
 
+/**
+ * @deprecated This helper is no longer maintained and will be removed in a
+ * future release. Use gcResourceTracking from GCResourceTracking.js instead.
+ */
 export const gcRequest = {
 	getUUID() {
 		return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
@@ -32,10 +36,10 @@ export const gcRequest = {
 		} else {
 			filter = options.filterPlatform.includes(platform);
 		}
-		// Harmony requests are collected by the native SDK bridge when the
-		// DCloud uni.request interceptor is enabled. gcRequest still provides
-		// the existing manual SDK fallback if automatic tracking is disabled.
-		const shouldCollectResource = !filter && !gcHarmonyNetworkTracking.isTracking();
+		// The global uni.request interceptor owns Resource collection while it
+		// is active. When iOS tracking is explicitly disabled, manual collection
+		// is disabled as well so native URLSession collection is not duplicated.
+		const shouldCollectResource = !filter && gcResourceTracking.shouldUseManualTracking();
 		var traceHeader = {}
 		if (shouldCollectResource) {
 			// trace association RUM

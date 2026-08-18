@@ -78,6 +78,16 @@ native component selection while Android/iOS retain the standard `<web-view>`.
 node test-harmony-webview-rum-bridge.js
 ```
 
+## test-uni-request-tracking.js
+
+Verify cross-platform `uni.request` Resource tracking, the iOS collection
+switch, HarmonyOS interceptor installation, `gcRequest` fallback behavior, and
+one-to-one correlation when concurrent requests complete out of order.
+
+```bash
+node test-uni-request-tracking.js
+```
+
 ## test-hybrid-ios-uts-integration.js
 
 Verify the checked-in DCloud hybrid iOS HostBridge wiring: dynamic UTS runtime

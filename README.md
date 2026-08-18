@@ -29,6 +29,24 @@ import {
 gcErrorTracking.startTracking()
 ```
 
+Use `gcResourceTracking` to collect `uni.request` Resources on Android, iOS,
+and HarmonyOS. When iOS native Resource collection is enabled, disable the JS
+interceptor so URLSession requests are not collected twice:
+
+```js
+import {
+  gcResourceTracking
+} from '@/uni_modules/GC-UniPlugin/js_sdk'
+
+gcResourceTracking.startTracking({
+  enableIOS: false
+})
+```
+
+The iOS option defaults to `true`. Disabling it also prevents `gcRequest` from
+falling back to manual JS Resource collection on iOS. Only the first
+`startTracking()` call takes effect, so configure it before any later calls.
+
 ```js
 // #ifdef APP
 import {
