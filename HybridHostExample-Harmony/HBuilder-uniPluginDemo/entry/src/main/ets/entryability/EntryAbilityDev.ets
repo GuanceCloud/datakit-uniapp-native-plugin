@@ -1,27 +1,21 @@
-import { UniEntryAbilityDev } from "@dcloudio/uni-app-runtime";
-import { initUniModules } from "../uni_modules/index.generated";
-import BuildProfile from "BuildProfile";
-import * as hmr from '@uni_modules/hmr-for-uni-app'
-import window from '@ohos.window';
+import { UIAbility } from '@kit.AbilityKit';
+import { window } from '@kit.ArkUI';
+import { init } from '@dcloudio/uni-app-runtime';
+import { initUniModules } from '../uni_modules/index.generated';
+import BuildProfile from 'BuildProfile';
 
 initUniModules();
 
-interface IHmr {
-  init: Function
-}
-
-// 此处的字面量在应用到鸿蒙工程目录时会被替换为真正的 APPID
-const UNI_APPID = "HBuilder";
-
-export default class EntryAbility extends UniEntryAbilityDev {
-  constructor() {
-    super(UNI_APPID, {
+export default class EntryAbility extends UIAbility {
+  onWindowStageCreate(windowStage: window.WindowStage): void {
+    init(this, windowStage, {
       debug: BuildProfile.DEBUG,
     });
-  }
 
-  onWindowStageCreate(windowStage: window.WindowStage) {
-    super.onWindowStageCreate(windowStage)
-    hmr.init(UNI_APPID);
+    windowStage.loadContent('pages/Index', (error) => {
+      if (error.code) {
+        console.error(`Failed to load WGT launcher: ${JSON.stringify(error)}`);
+      }
+    });
   }
 }
