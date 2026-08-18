@@ -8,12 +8,14 @@ import {
 	rum,
 	tracer
 } from '@/uni_modules/GC-UniPlugin'
+// #ifdef APP-IOS || APP-ANDROID
 import {
 	GCUniSessionReplay,
 	GCSessionReplayImagePrivacy,
 	GCSessionReplayTextAndInputPrivacy,
 	GCSessionReplayTouchPrivacy
 } from '@/uni_modules/GC-UniSessionReplay'
+// #endif
 
 
 let initialized = false
@@ -61,7 +63,7 @@ export function initializeGuanceSDK() {
 		}
 	})
 
-
+	// #ifdef APP-IOS || APP-ANDROID
 	GCUniSessionReplay.setConfig({
 		sampleRate: 100,
 		sessionReplayOnErrorSampleRate: 0,
@@ -70,6 +72,7 @@ export function initializeGuanceSDK() {
 		imagePrivacy: GCSessionReplayImagePrivacy.MASK_NONE,
 		enableLinkRUMKeys: ['wgt_id']
 	})
+	// #endif
 
 	gcErrorTracking.startTracking()
 	logger.setConfig({

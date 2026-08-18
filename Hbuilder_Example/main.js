@@ -18,9 +18,9 @@ gcResourceTracking.startTracking({
   enableIOS: false
 });
 
-// Session Replay is iOS-only in this plugin. Keep the optional replay bootstrap
-// out of Harmony builds so normal WebView RUM does not wait for a `records`
-// bridge that is intentionally not installed there.
+// The Browser SDK replay bridge is iOS-only. Keep it out of Android and
+// Harmony builds so normal WebView RUM does not wait for a `records` bridge
+// that is intentionally not installed there.
 // #ifdef APP-IOS
 const jsCode = `   
     // Dynamically create and load external script

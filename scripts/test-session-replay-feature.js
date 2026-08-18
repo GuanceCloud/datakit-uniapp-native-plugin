@@ -291,17 +291,21 @@ assert(!viewTrackingSource.includes('hasRecordsBridge'));
 assert(!viewTrackingSource.includes('Native records bridge is unavailable'));
 assertIncludes(bootstrapSource, "from '@/uni_modules/GC-UniSessionReplay'", 'example integration');
 assert(!bootstrapSource.includes('GC-UniSessionReplay/js_sdk'));
-assertIncludes(bootstrapSource, 'GCUniSessionReplay.setConfig', 'Session Replay cross-platform configuration');
-assert(!bootstrapSource.includes("uni.getSystemInfoSync().platform === 'ios'"));
-assert.doesNotMatch(
+assert.match(
     bootstrapSource,
-    /#ifdef APP-IOS[\s\S]*?GCUniSessionReplay\.setConfig/,
-    'Session Replay configuration must remain available on both Android and iOS'
+    /\/\/ #ifdef APP-IOS \|\| APP-ANDROID\s+import \{[\s\S]*?from '@\/uni_modules\/GC-UniSessionReplay'\s+\/\/ #endif/,
+    'Session Replay import must be limited to Android and iOS'
 );
+assert.match(
+    bootstrapSource,
+    /\/\/ #ifdef APP-IOS \|\| APP-ANDROID\s+GCUniSessionReplay\.setConfig\([\s\S]*?\/\/ #endif/,
+    'Session Replay configuration must be limited to Android and iOS'
+);
+assert(!bootstrapSource.includes("uni.getSystemInfoSync().platform === 'ios'"));
 assert(bootstrapSource.indexOf('rum.setConfig') < bootstrapSource.indexOf('GCUniSessionReplay.setConfig'));
 assertIncludes(mainSource, "from './sdk-bootstrap.js'", 'early SDK bootstrap import');
 assert(mainSource.indexOf('initializeGuanceSDK()') < mainSource.indexOf('gcViewTracking.startTracking()'));
-assertIncludes(appSource, 'initializeGuanceSDK()', 'idempotent application launch bootstrap');
+assert(!appSource.includes('initializeGuanceSDK()'), 'SDK bootstrap must run only from the app entry point');
 assertIncludes(mainSource, 'gcViewTracking.evalSessionReplayJS(jsCode)', 'Browser SDK integration');
 assert(!mainSource.includes('[DEBUG-SR-WEB-EVENT-4d9a]'));
 

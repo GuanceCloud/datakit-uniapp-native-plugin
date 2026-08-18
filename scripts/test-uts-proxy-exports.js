@@ -272,8 +272,8 @@ assert.doesNotMatch(viewTracking, /pendingViewLoadMap/);
 assert.doesNotMatch(viewTracking, /plus\.runtime\.launchTime/);
 
 const appSource = read('Hbuilder_Example/App.vue');
-assert.match(appSource, /gcViewTracking\.handleAppShow\(\)/);
-assert.match(appSource, /gcViewTracking\.handleAppHide\(\)/);
+assert.doesNotMatch(appSource, /gcViewTracking\.handleApp(?:Show|Hide)\(\)/);
+assert.match(viewTracking, /this\.watchAppLifecycle\(\)/);
 const indexPage = read('Hbuilder_Example/pages/index/index.vue');
 assert.doesNotMatch(indexPage, /gcPageMixin/);
 
