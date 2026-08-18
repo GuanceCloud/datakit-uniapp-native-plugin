@@ -95,16 +95,6 @@ class ActionMonitor {
 		return globalThis.UniServiceJSBridge || null;
 	}
 
-	isJSActionTrackingEnabled() {
-		// #ifdef APP-HARMONY
-		// Keep automatic Action collection enabled when an older native bridge
-		// does not expose the Harmony-specific switch.
-		return typeof this.rum.isUniAppJSActionTrackingEnabled !== 'function' ||
-			this.rum.isUniAppJSActionTrackingEnabled();
-		// #endif
-		return true;
-	}
-
 	// This has the same callback shape as the native FTActionTrackingHandler:
 	// `resolveHandlerAction(wrapper)` may return a HandlerAction-like object
 	// (`getActionName` / `getProperty`) or a plain `{ actionName, property }`.
@@ -240,10 +230,6 @@ class ActionMonitor {
 		operationName = null,
 		property = null
 	}) {
-		if (!this.isJSActionTrackingEnabled()) {
-			return;
-		}
-
 		try {
 			const pagePath = this.getPagePath(pageId);
 			const viewName = pagePath ? pagePath.split('?')[0] : 'unknown_view';

@@ -1,5 +1,6 @@
 import {
-	rum
+	rum,
+	tracer
 } from '@/uni_modules/GC-UniPlugin';
 
 let interceptorInstalled = false;
