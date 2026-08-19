@@ -1,4 +1,4 @@
-const FT_JS_PLUGIN_VERSION = '0.2.7-alpha.1';
+const FT_JS_PLUGIN_VERSION = '0.2.7';
 /**
  * Error information collection module
  * Responsible for capturing console.error and uni.onError errors
@@ -39,6 +39,21 @@ function getAppState() {
 	return appState;
 	// #endif
 }
+
+function debugLog(event, details = null, isError = false) {
+	if (process.env.NODE_ENV !== 'development') return;
+	const level = isError ? 'Error' : 'Debug';
+	console.log(`[FTLog][ErrorTracking][${level}]`, {
+		event: event,
+		details: details,
+		timestamp: Date.now()
+	});
+}
+
+function formatError(error) {
+	return error && (error.stack || error.message || String(error));
+}
+
 export const gcErrorTracking = {
 	isTracking: false,
 	/**
@@ -46,11 +61,15 @@ export const gcErrorTracking = {
 	 */
 	startTracking() {
 		if (this.isTracking) {
-			console.log('[FTLog] Error tracking is already active');
+			debugLog('start-ignored', {
+				reason: 'already active'
+			});
 			return;
 		}
 		try {
-			console.log(`[FTLog] Error tracking initialized (version: ${FT_JS_PLUGIN_VERSION})`);
+			debugLog('initialized', {
+				version: FT_JS_PLUGIN_VERSION
+			});
 
 			setupAppStateTracking();
 
@@ -68,7 +87,9 @@ export const gcErrorTracking = {
 			this.isTracking = true;
 
 		} catch (e) {
-			console.error('[FTLog] An exception occurred during uni error collection:', e);
+			debugLog('initialization-error', {
+				error: formatError(e)
+			}, true);
 		}
 	},
 
@@ -87,14 +108,12 @@ export const gcErrorTracking = {
 				// Filter 1: args[0] is a Vue2 warning string (starts with [Vue warn]: )
 				const firstArg = args[0];
 				if (typeof firstArg === 'string' && firstArg.startsWith('[Vue warn]: ')) {
-					console.log('[FTLog] Skip Vue2 warning string:', firstArg);
 					return;
 				}
 	
 				// Filter 2: Error instances marked by Vue.config.errorHandler
 				const err = args.find(item => item instanceof Error); // Find the actual Error instance
 				if (err && err.__ft_vue_component_error__) {
-					console.log('[FTLog] Skip marked Vue2 component error');
 					return;
 				}
 				// #endif
@@ -108,7 +127,9 @@ export const gcErrorTracking = {
 				// Report error information
 				this.reportError(errorInfo);
 			} catch (e) {
-				originalConsoleError('[FTLog] An exception occurred during error collection:', e);
+				debugLog('console-error-collection-error', {
+					error: formatError(e)
+				}, true);
 			}
 		}.bind(this);
 	},
@@ -120,7 +141,6 @@ export const gcErrorTracking = {
 		if (!isUniApiAvailable || typeof uni.onError !== 'function' || uniErrorListener) return;
 		uniErrorListener = (error) => {
 			try {
-				console.log(error);
 				const errorInfo = {
 					message: this.getErrorMessage(error),
 					stack: this.getErrorStackTrace(error),
@@ -128,7 +148,9 @@ export const gcErrorTracking = {
 				};
 				this.reportError(errorInfo);
 			} catch (e) {
-				console.error('[FTLog] An exception occurred during uni error collection:', e);
+				debugLog('uni-error-collection-error', {
+					error: formatError(e)
+				}, true);
 			}
 		};
 		uni.onError(uniErrorListener);
@@ -149,7 +171,9 @@ export const gcErrorTracking = {
 				};
 				this.reportError(errorInfo);
 			} catch (e) {
-				console.error('[FTLog] Vue component error collection failed:', e);
+				debugLog('vue-error-collection-error', {
+					error: formatError(e)
+				}, true);
 			}
 
 			// Preserve original error handling logic
@@ -163,7 +187,11 @@ export const gcErrorTracking = {
 	 * @param {Object} errorInfo - Error information object
 	 */
 	reportError(errorInfo) {
-		console.log('[FTLog] Error captured, ready to report:', errorInfo);
+		debugLog('error-reported', {
+			type: errorInfo.type,
+			message: errorInfo.message,
+			state: errorInfo.state
+		});
 		if (rum) {
 			rum.addError(errorInfo);
 		}
@@ -214,14 +242,12 @@ export const gcErrorTracking = {
 		if (originalConsoleError) {
 			console.error = originalConsoleError;
 			originalConsoleError = null;
-			console.log('[FTLog] Restored original console.error');
 		}
 		// 2. Restore original Vue.config.errorHandler (Vue2)
 		// #ifndef VUE3
 		if (originalVueErrorHandler !== null) { // Note: Avoid overwriting with undefined
 			Vue.config.errorHandler = originalVueErrorHandler;
 			originalVueErrorHandler = null;
-			console.log('[FTLog] Restored original Vue.config.errorHandler');
 		}
 		// #endif
 
@@ -230,12 +256,11 @@ export const gcErrorTracking = {
 		if (uniErrorListener && typeof uni.offError === 'function') {
 			uni.offError(uniErrorListener);
 			uniErrorListener = null;
-			console.log('[FTLog] Removed uni.onError listener');
 		}
 		// #endif
 		// 4. Reset flags
 		this.isTracking = false;
 		appStateTrackingBound = false; // Reset app state tracking flag
-		console.log('[FTLog] Error tracking stopped, resources released');
+		debugLog('stopped');
 	}
 };
