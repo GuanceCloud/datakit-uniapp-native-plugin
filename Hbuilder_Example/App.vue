@@ -20,6 +20,10 @@
 				// 'dbDiscardStrategy':'discard',
 				'debug': true,
 				'env': 'common',
+				'remoteConfiguration': true,
+				'remoteConfigMiniUpdateInterval': 600,
+				'enableDataFilter': true,
+				'dataFilters': {},
 				'globalContext': {
 					'sdk_globalContext': 'custom_sdk_globalContext'
 				}

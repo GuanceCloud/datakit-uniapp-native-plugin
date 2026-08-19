@@ -1,10 +1,16 @@
 import App from './App'
 import {
   gcErrorTracking,
-  gcViewTracking
+  gcViewTracking,
+  gcResourceTracking
 } from '@/uni_modules/GC-JSPlugin'
 
 gcErrorTracking.startTracking()
+gcResourceTracking.startTracking({
+  // iOS already collects uni.request through native URLSession when
+  // enableNativeUserResource is enabled in App.vue.
+  enableIOS: false
+})
 const jsCode = `   
     // Dynamically create and load external script
     var script = document.createElement('script');

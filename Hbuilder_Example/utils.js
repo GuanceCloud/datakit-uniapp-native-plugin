@@ -1,6 +1,9 @@
 export const SERVER_URL = 'http://127.0.0.1:9529'
-export const ANDROID_APP_ID = 'android_uniapp_app_id'
-export const IOS_APP_ID = 'ios_uniapp_app_id'
+export const DATAWAY_URL = 'https://open.dataway.url'
+export const CLIENT_TOKEN = 'client-token'
+export const ANDROID_APP_ID = 'guance_android_uniapp_id'
+export const IOS_APP_ID = 'guance_ios_uniapp_id'
+export const HARMONY_APP_ID  = 'com_uniapp_harmony'
 export const TRACK_ID = 'track_id'
 export default {
 

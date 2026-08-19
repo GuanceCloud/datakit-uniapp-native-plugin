@@ -7,6 +7,9 @@
 			<button type="primary" @click="appendLogGlobalContext()">appendLogGlobalContext</button>
 			<button type="primary" @click="appendBridgeContext()">appendBridgeContext</button>
 			<button type="primary" @click="flushSyncData()">Manual Data Sync</button>
+			<button type="primary" @click="setDatakitURL()">Update Datakit URL</button>
+			<button type="primary" @click="setDatawayURL()">Update Dataway URL</button>
+			<button type="primary" @click="updateRemoteConfigWithMiniUpdateInterval()">Update Remote Config</button>
 			<button type="primary" @click="clearAllData()">Clear Unsynchronized Local Data</button>
 			<button type="primary" @click="navigatorToLogPage()">Log Output</button>
 			<navigator url="../tracing/tracing">
@@ -23,14 +26,13 @@
 </template>
 
 <script>
-	import {gcPageMixin} from '@/uni_modules/GC-JSPlugin';
+	import * as SDKConst from '@/utils.js'
 	
 	var ftMobileSDK = uni.requireNativePlugin("GCUniPlugin-MobileAgent");
 	export default {
 		data() {
 			return {}
 		},
-		mixins:[gcPageMixin],
 		onReady(){
 			console.log('index onReady')
 		},
@@ -70,6 +72,24 @@
 		  },
 		  flushSyncData(){
 		  	  ftMobileSDK.flushSyncData()
+		  },
+		  setDatakitURL(){
+			  ftMobileSDK.setDatakitURL({
+				  'datakitUrl': SDKConst.SERVER_URL
+			  })
+		  },
+		  setDatawayURL(){
+			  ftMobileSDK.setDatawayURL({
+				  'datawayUrl': SDKConst.DATAWAY_URL,
+				  'clientToken': SDKConst.CLIENT_TOKEN
+			  })
+		  },
+		  updateRemoteConfigWithMiniUpdateInterval(){
+			  ftMobileSDK.updateRemoteConfigWithMiniUpdateInterval({
+				  'miniUpdateInterval': 0
+			  }, result => {
+				  console.log('remote config result: ' + JSON.stringify(result))
+			  })
 		  },
 		  clearAllData(){
 		  	  ftMobileSDK.clearAllData()
