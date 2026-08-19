@@ -1,3 +1,16 @@
+# 0.2.7
+* Compatible with iOS `GuanceSDK 1.6.7-beta.1`, Android `ft-sdk 1.7.5`, `ft-plugin 1.3.8`, and `ft-native 1.1.3`; raised the minimum supported iOS version to 12.0.
+* `GCUniPlugin-MobileAgent`
+    * Added `setDatakitURL` and `setDatawayURL`, allowing the SDK to be initialized without an upload endpoint and configured later with a Datakit or DataWay address.
+    * Added `remoteConfiguration`, `remoteConfigMiniUpdateInterval`, and `updateRemoteConfigWithMiniUpdateInterval` to enable Remote Configuration.
+    * Added `enableDataFilter` and `dataFilters` to enable SDK-side DataFilter and configure local blacklist rules.
+    * Fixed inaccurate cold-start duration and timestamp calculation on Android when `ft-plugin` is not used and `offlinePackage` is `false`.
+* `GCUniPlugin-RUM`
+    * Retained compatibility with the `enableTraceWebView` and `allowWebViewHost` WebView RUM configurations.
+* `GC-JSPlugin`
+    * Added `gcResourceTracking` to automatically inject Trace headers and collect RUM Resources for standard `uni.request` calls; retained `gcRequest` as a deprecated compatibility API.
+    * Improved `gcViewTracking` page lifecycle collection by maintaining state per page instance, accurately measuring load time from `onLoad` to `onReady`, cleaning up failed navigation transactions, and preventing duplicate collection during foreground and background transitions.
+---
 # 0.2.7-alpha.1
 * `GC-JSPlugin`
     * `GCRequest.js`：supplement the missing  parameter return in the request method's `complete` callback
