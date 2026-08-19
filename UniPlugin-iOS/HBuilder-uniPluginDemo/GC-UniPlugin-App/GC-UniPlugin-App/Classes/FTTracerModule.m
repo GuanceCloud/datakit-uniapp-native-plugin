@@ -6,14 +6,17 @@
 //
 
 #import "FTTracerModule.h"
-#import <FTMobileSDK/FTMobileAgent.h>
+#import <GuanceSDK/FTSDKAgent.h>
 @implementation FTTracerModule
 #pragma mark --------- INIT ----------
 UNI_EXPORT_METHOD_SYNC(@selector(setConfig:))
 - (void)setConfig:(NSDictionary *)params{
     FTTraceConfig *trace = [[FTTraceConfig alloc]init];
     if ([params.allKeys containsObject:@"samplerate"]) {
-        trace.samplerate =[params[@"samplerate"] doubleValue] * 100;
+        trace.sampleRate =[params[@"samplerate"] doubleValue] * 100;
+    }
+    if ([params.allKeys containsObject:@"sampleRate"]) {
+        trace.sampleRate =[params[@"sampleRate"] doubleValue] * 100;
     }
     if ([params.allKeys containsObject:@"traceType"]) {
         NSString *type =  params[@"traceType"];
@@ -38,7 +41,7 @@ UNI_EXPORT_METHOD_SYNC(@selector(setConfig:))
     if ([params.allKeys containsObject:@"enableNativeAutoTrace"]) {
         trace.enableAutoTrace = [params[@"enableNativeAutoTrace"] boolValue];
     }
-    [[FTMobileAgent sharedInstance] startTraceWithConfigOptions:trace];
+    [[FTSDKAgent sharedInstance] startTraceWithConfigOptions:trace];
 }
 #pragma mark --------- TRACE HEADER GET ----------
 UNI_EXPORT_METHOD_SYNC(@selector(getTraceHeader:))

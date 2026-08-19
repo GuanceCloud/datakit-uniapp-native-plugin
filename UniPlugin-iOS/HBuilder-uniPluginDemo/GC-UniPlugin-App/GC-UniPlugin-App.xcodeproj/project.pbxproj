@@ -16,7 +16,7 @@
 		172C86202AC44B89006DC13F /* FTLogModule.m in Sources */ = {isa = PBXBuildFile; fileRef = 172C86172AC44B89006DC13F /* FTLogModule.m */; };
 		172C86212AC44B89006DC13F /* FTRUMModule.h in Headers */ = {isa = PBXBuildFile; fileRef = 172C86182AC44B89006DC13F /* FTRUMModule.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		172C86222AC44B89006DC13F /* FTMobileUniModule.m in Sources */ = {isa = PBXBuildFile; fileRef = 172C86192AC44B89006DC13F /* FTMobileUniModule.m */; };
-		172C86272AC55D18006DC13F /* FTMobileSDK.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 172C86262AC55D18006DC13F /* FTMobileSDK.xcframework */; };
+		172C86272AC55D18006DC13F /* GuanceSDK.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 172C86262AC55D18006DC13F /* GuanceSDK.xcframework */; };
 		173ED24C2AD17F23007C95C0 /* GC-UniPlugin-App-Version.h in Headers */ = {isa = PBXBuildFile; fileRef = 173ED24B2AD17F23007C95C0 /* GC-UniPlugin-App-Version.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		179E1FEC2DF0141700F45BEB /* FTUniPluginUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = 179E1FEB2DF0141700F45BEB /* FTUniPluginUtils.m */; };
 		179E1FED2DF0141700F45BEB /* FTUniPluginUtils.h in Headers */ = {isa = PBXBuildFile; fileRef = 179E1FEA2DF0141700F45BEB /* FTUniPluginUtils.h */; };
@@ -33,7 +33,7 @@
 		172C86172AC44B89006DC13F /* FTLogModule.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FTLogModule.m; sourceTree = "<group>"; };
 		172C86182AC44B89006DC13F /* FTRUMModule.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FTRUMModule.h; sourceTree = "<group>"; };
 		172C86192AC44B89006DC13F /* FTMobileUniModule.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FTMobileUniModule.m; sourceTree = "<group>"; };
-		172C86262AC55D18006DC13F /* FTMobileSDK.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = FTMobileSDK.xcframework; path = ../../../Hbuilder_Example/nativeplugins/GCUniPlugin/ios/FTMobileSDK.xcframework; sourceTree = "<group>"; };
+		172C86262AC55D18006DC13F /* GuanceSDK.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = GuanceSDK.xcframework; path = ../../../Hbuilder_Example/nativeplugins/GCUniPlugin/ios/GuanceSDK.xcframework; sourceTree = "<group>"; };
 		173ED24B2AD17F23007C95C0 /* GC-UniPlugin-App-Version.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "GC-UniPlugin-App-Version.h"; sourceTree = "<group>"; };
 		179E1FEA2DF0141700F45BEB /* FTUniPluginUtils.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FTUniPluginUtils.h; sourceTree = "<group>"; };
 		179E1FEB2DF0141700F45BEB /* FTUniPluginUtils.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FTUniPluginUtils.m; sourceTree = "<group>"; };
@@ -44,7 +44,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				172C86272AC55D18006DC13F /* FTMobileSDK.xcframework in Frameworks */,
+				172C86272AC55D18006DC13F /* GuanceSDK.xcframework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -98,7 +98,7 @@
 		172C86232AC44BE3006DC13F /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				172C86262AC55D18006DC13F /* FTMobileSDK.xcframework */,
+				172C86262AC55D18006DC13F /* GuanceSDK.xcframework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -352,11 +352,11 @@
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
-				FRAMEWORK_SEARCH_PATHS = "\"$(SRCROOT)/../../../Hbuilder_Example/nativeplugins/GCUniPlugin/ios/FTMobileSDK.xcframework\"";
+				FRAMEWORK_SEARCH_PATHS = "\"$(SRCROOT)/../../../Hbuilder_Example/nativeplugins/GCUniPlugin/ios/GuanceSDK.xcframework\"";
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -388,11 +388,11 @@
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
-				FRAMEWORK_SEARCH_PATHS = "\"$(SRCROOT)/../../../Hbuilder_Example/nativeplugins/GCUniPlugin/ios/FTMobileSDK.xcframework\"";
+				FRAMEWORK_SEARCH_PATHS = "\"$(SRCROOT)/../../../Hbuilder_Example/nativeplugins/GCUniPlugin/ios/GuanceSDK.xcframework\"";
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",

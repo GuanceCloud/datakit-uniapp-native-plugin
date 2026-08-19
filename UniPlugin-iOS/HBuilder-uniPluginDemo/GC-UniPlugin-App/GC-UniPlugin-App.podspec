@@ -8,7 +8,7 @@
 
 Pod::Spec.new do |s|
   s.name             = 'GC-UniPlugin-App'
-  s.version          = '0.2.6'
+  s.version          = '0.2.7'
   s.summary          = 'A short description of GuanceCloudPlugin.'
   
   # This description is used to generate tags and improve search results.
@@ -27,7 +27,7 @@ Pod::Spec.new do |s|
   s.author           = { 'hulilei' => 'huuuu1016@gmail.com' }
   s.source           = { :git => 'https://github.com/hulilei/Guance-UniPlugin-App.git', :tag => s.version.to_s }
   # s.social_media_url = 'https://twitter.com/<TWITTER_USERNAME>'
-  s.ios.deployment_target = '10.0'
+  s.ios.deployment_target = '12.0'
   s.source_files = 'GC-UniPlugin-App/Classes/**/*'
   s.static_framework = true
   s.xcconfig = {
@@ -44,6 +44,6 @@ Pod::Spec.new do |s|
   # s.frameworks = 'UIKit', 'MapKit'
   # buildFramework.sh is used to automatically update the version number in the code during development and testing
   s.script_phase = {:name => 'changesdkVersion',:script => 'sh ../GC-UniPlugin-App/buildFramework.sh cocoapods',:execution_position => :before_compile }
-  s.dependency 'FTMobileSDK', '1.5.18'
+  s.dependency 'GuanceSDK', '1.6.7'
   
 end

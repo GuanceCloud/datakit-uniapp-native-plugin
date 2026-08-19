@@ -6,7 +6,7 @@
 //
 
 #import "FTLogModule.h"
-#import <FTMobileSDK/FTMobileAgent.h>
+#import <GuanceSDK/FTSDKAgent.h>
 #import "FTUniPluginUtils.h"
 @implementation FTLogModule
 #pragma mark --------- INIT ----------
@@ -43,7 +43,7 @@ UNI_EXPORT_METHOD_SYNC(@selector(setConfig:))
     if([params.allKeys containsObject:@"globalContext"]){
         config.globalContext = [params objectForKey:@"globalContext"];
     }
-    [[FTMobileAgent sharedInstance] startLoggerWithConfigOptions:config];
+    [[FTSDKAgent sharedInstance] startLoggerWithConfigOptions:config];
 }
 #pragma mark --------- logging ----------
 UNI_EXPORT_METHOD(@selector(logging:))

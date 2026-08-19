@@ -7,7 +7,17 @@
 
 #import "FTUniPluginUtils.h"
 #import "GC-UniPlugin-App-Version.h"
-#import <FTMobileSDK/FTLog+Private.h>
+
+#if __has_include(<GuanceSDK/FTInnerLog.h>)
+#import <GuanceSDK/FTInnerLog.h>
+#define FT_UNI_PLUGIN_HAS_INNER_LOG 1
+#elif __has_include("FTInnerLog.h")
+#import "FTInnerLog.h"
+#define FT_UNI_PLUGIN_HAS_INNER_LOG 1
+#else
+#define FT_UNI_PLUGIN_HAS_INNER_LOG 0
+#endif
+
 static NSMutableDictionary *bridgeContext;
 static dispatch_queue_t bridgeContextQueue;
 @implementation FTUniPluginUtils
@@ -21,7 +31,11 @@ static dispatch_queue_t bridgeContextQueue;
 + (void)appendBridgeContext:(NSDictionary *)context{
     dispatch_barrier_async(bridgeContextQueue, ^{
         [bridgeContext addEntriesFromDictionary:context];
+#if FT_UNI_PLUGIN_HAS_INNER_LOG
         FTInnerLogInfo(@"[GC-UniPlugin-App] current bridgeContext: %@",bridgeContext);
+#else
+        NSLog(@"[GC-UniPlugin-App] current bridgeContext: %@",bridgeContext);
+#endif
     });
 }
 + (NSDictionary *)mergeBridgeContext:(NSDictionary *)property{

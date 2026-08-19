@@ -7,8 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		174D14B52E73C80200C29B59 /* TencentOpenAPI.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 174D14A02E73C7D500C29B59 /* TencentOpenAPI.xcframework */; };
-		174D14B82E73C81800C29B59 /* AlipaySDK.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 174D13D42E73C7D500C29B59 /* AlipaySDK.xcframework */; };
 		174D14BA2E73C85400C29B59 /* UMAPM.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 174D14A42E73C7D500C29B59 /* UMAPM.framework */; };
 		174D14BC2E73C86E00C29B59 /* UMAPM.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 174D14A42E73C7D500C29B59 /* UMAPM.framework */; };
 		174F8B402A5D4D0B000CC5AA /* Pandora in Resources */ = {isa = PBXBuildFile; fileRef = 174F8B3F2A5D4D0B000CC5AA /* Pandora */; };
@@ -21,7 +19,6 @@
 		2447371B1D0830BB00D0F08F /* WebKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2447371A1D0830BB00D0F08F /* WebKit.framework */; };
 		24A7515F1D9CCCC600C8B0F9 /* QuickLook.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 24A7515E1D9CCCC600C8B0F9 /* QuickLook.framework */; };
 		24AFD8401CB50C4000C0F062 /* libalixpayment.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 24AFD8031CB50C3F00C0F062 /* libalixpayment.a */; };
-		24AFD8431CB50C4000C0F062 /* libBaiduMobStatForSDK.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 24AFD8061CB50C3F00C0F062 /* libBaiduMobStatForSDK.a */; };
 		24AFD8461CB50C4000C0F062 /* libcoreSupport.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 24AFD8091CB50C3F00C0F062 /* libcoreSupport.a */; };
 		24AFD8491CB50C4000C0F062 /* libIAPPay.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 24AFD80C1CB50C3F00C0F062 /* libIAPPay.a */; };
 		24AFD84C1CB50C4000C0F062 /* liblibAccelerometer.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 24AFD80F1CB50C3F00C0F062 /* liblibAccelerometer.a */; };
@@ -833,7 +830,6 @@
 				67229AD1230171AE0093F29A /* libDCUniAmap.a in Frameworks */,
 				67229AD2230171AE0093F29A /* libDCUniVideo.a in Frameworks */,
 				67229AD3230171AE0093F29A /* libDCUniBarcode.a in Frameworks */,
-				174D14B82E73C81800C29B59 /* AlipaySDK.xcframework in Frameworks */,
 				67229AD6230171AE0093F29A /* libDCUniGPUImage.a in Frameworks */,
 				67229AD8230171AE0093F29A /* libDCUniMap.a in Frameworks */,
 				672CE2B522DC916C005A0D88 /* libDCUniZXing.a in Frameworks */,
@@ -864,7 +860,6 @@
 				67AB0BA121EF111D0029B229 /* BaiduMapAPI_Search.framework in Frameworks */,
 				2447371B1D0830BB00D0F08F /* WebKit.framework in Frameworks */,
 				24AFD8401CB50C4000C0F062 /* libalixpayment.a in Frameworks */,
-				24AFD8431CB50C4000C0F062 /* libBaiduMobStatForSDK.a in Frameworks */,
 				7A1967C3212536EC00B330A9 /* libmp3lame.a in Frameworks */,
 				24AFD8461CB50C4000C0F062 /* libcoreSupport.a in Frameworks */,
 				24AFD8491CB50C4000C0F062 /* libIAPPay.a in Frameworks */,
@@ -942,7 +937,6 @@
 				8EED6592198A5737000A4449 /* AddressBook.framework in Frameworks */,
 				8EED6422198A2678000A4449 /* AudioToolbox.framework in Frameworks */,
 				8EED6420198A2668000A4449 /* MediaPlayer.framework in Frameworks */,
-				174D14B52E73C80200C29B59 /* TencentOpenAPI.xcframework in Frameworks */,
 				8EED641E198A265F000A4449 /* CoreTelephony.framework in Frameworks */,
 				8EED6416198A2635000A4449 /* CoreVideo.framework in Frameworks */,
 				8EED6414198A262C000A4449 /* CoreMedia.framework in Frameworks */,
@@ -1904,11 +1898,11 @@
 			);
 			inputPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-HBuilder/Pods-HBuilder-frameworks.sh",
-				"${BUILT_PRODUCTS_DIR}/FTMobileSDK/FTMobileSDK.framework",
+				"${BUILT_PRODUCTS_DIR}/GuanceSDK/GuanceSDK.framework",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/FTMobileSDK.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GuanceSDK.framework",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -2008,7 +2002,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -2042,7 +2036,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VALIDATE_PRODUCT = YES;
@@ -2060,12 +2054,11 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 101;
-				DEVELOPMENT_TEAM = RRLM22BB37;
+				DEVELOPMENT_TEAM = 6NYK4S8FZK;
 				ENABLE_BITCODE = NO;
-				"EXCLUDED_ARCHS[sdk=iphonesimulator*]" = arm64;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
-					"\"${PODS_CONFIGURATION_BUILD_DIR}/FTMobileSDK\"",
+					"\"${PODS_CONFIGURATION_BUILD_DIR}/GuanceSDK\"",
 					"\"${PODS_CONFIGURATION_BUILD_DIR}/GC-UniPlugin-App\"",
 					"$(DEVELOPER_FRAMEWORKS_DIR)",
 					"$(PROJECT_DIR)/../SDK/libs",
@@ -2082,7 +2075,7 @@
 				);
 				INFOPLIST_FILE = "HBuilder-Hello/HBuilder-uniPlugin-Info.plist";
 				INFOPLIST_KEY_CFBundleDisplayName = GCUniPluginExample;
-				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -2121,12 +2114,11 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 101;
-				DEVELOPMENT_TEAM = BW62V33GLH;
+				DEVELOPMENT_TEAM = 6NYK4S8FZK;
 				ENABLE_NS_ASSERTIONS = NO;
-				"EXCLUDED_ARCHS[sdk=iphonesimulator*]" = arm64;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
-					"\"${PODS_CONFIGURATION_BUILD_DIR}/FTMobileSDK\"",
+					"\"${PODS_CONFIGURATION_BUILD_DIR}/GuanceSDK\"",
 					"\"${PODS_CONFIGURATION_BUILD_DIR}/GC-UniPlugin-App\"",
 					"$(DEVELOPER_FRAMEWORKS_DIR)",
 					"$(PROJECT_DIR)/../SDK/libs",
@@ -2143,7 +2135,7 @@
 				);
 				INFOPLIST_FILE = "HBuilder-Hello/HBuilder-uniPlugin-Info.plist";
 				INFOPLIST_KEY_CFBundleDisplayName = GCUniPluginExample;
-				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",

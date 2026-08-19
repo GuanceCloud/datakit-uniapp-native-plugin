@@ -6,7 +6,7 @@
 //
 
 #import "FTRUMModule.h"
-#import <FTMobileSDK/FTMobileAgent.h>
+#import <GuanceSDK/GuanceSDK.h>
 #import "FTUniPluginUtils.h"
 
 @implementation FTRUMModule
@@ -16,7 +16,10 @@ UNI_EXPORT_METHOD_SYNC(@selector(setConfig:))
     NSString *rumAppId = [params objectForKey:@"iOSAppId"];
     FTRumConfig *rumConfig = [[FTRumConfig alloc]initWithAppid:rumAppId];
     if ([params.allKeys containsObject:@"samplerate"]) {
-        rumConfig.samplerate = [params[@"samplerate"] doubleValue] * 100;
+        rumConfig.sampleRate = [params[@"samplerate"] doubleValue] * 100;
+    }
+    if ([params.allKeys containsObject:@"sampleRate"]) {
+        rumConfig.sampleRate = [params[@"sampleRate"] doubleValue] * 100;
     }
     if ([params.allKeys containsObject:@"sessionOnErrorSampleRate"]) {
         rumConfig.sessionOnErrorSampleRate = [params[@"sessionOnErrorSampleRate"] doubleValue] * 100;
@@ -146,7 +149,7 @@ UNI_EXPORT_METHOD_SYNC(@selector(setConfig:))
             rumConfig.allowWebViewHost = (NSArray *)allowWebViewHost;
         }
     }
-    [[FTMobileAgent sharedInstance] startRumWithConfigOptions:rumConfig];
+    [[FTSDKAgent sharedInstance] startRumWithConfigOptions:rumConfig];
 }
 #pragma mark --------- RUM DATA ADD ----------
 UNI_EXPORT_METHOD(@selector(startAction:))
@@ -183,8 +186,11 @@ UNI_EXPORT_METHOD(@selector(addResource:))
     property = [FTUniPluginUtils mergeBridgeContext:property];
     [[FTExternalDataManager sharedManager] startViewWithName:viewName property:property];
 }
-- (void)stopView:(NSDictionary *)params{
-    NSDictionary *property = [params objectForKey:@"property"];
+- (void)stopView:(id)params{
+    NSDictionary *property = nil;
+    if ([params isKindOfClass:NSDictionary.class]) {
+        property = [(NSDictionary *)params objectForKey:@"property"];
+    }
     [[FTExternalDataManager sharedManager] stopViewWithProperty:property];
 }
 - (void)addError:(NSDictionary *)params{

@@ -3,22 +3,27 @@ package com.ft.sdk.uniapp;
 import com.alibaba.fastjson.JSONObject;
 import com.ft.sdk.DBCacheDiscard;
 import com.ft.sdk.DataModifier;
+import com.ft.sdk.FTRemoteConfigManager;
 import com.ft.sdk.FTSDKConfig;
 import com.ft.sdk.FTSdk;
 import com.ft.sdk.LineDataModifier;
+import com.ft.sdk.garble.bean.RemoteConfigBean;
 import com.ft.sdk.garble.bean.UserData;
 import com.ft.sdk.garble.utils.Constants;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
 import io.dcloud.feature.uniapp.annotation.UniJSMethod;
+import io.dcloud.feature.uniapp.bridge.UniJSCallback;
 import io.dcloud.feature.uniapp.common.UniModule;
 
 public class FTSDKUniModule extends UniModule {
 
     private static final Map<String, Object> bridgeContext = new ConcurrentHashMap<>();
+    private static volatile boolean remoteConfigurationEnabled = false;
 
     static {
         bridgeContext.put("sdk_bridge_info",
@@ -50,10 +55,20 @@ public class FTSDKUniModule extends UniModule {
         Object dbDiscardStrategy = map.get("dbDiscardStrategy");
         final Map<String, Object> dataModifier = (Map<String, Object>) map.get("dataModifier");
         final Map<String, Map<String, Object>> lineDataModifier = (Map<String, Map<String, Object>>) map.get("lineDataModifier");
+        Boolean remoteConfiguration = (Boolean) map.get("remoteConfiguration");
+        Number remoteConfigMiniUpdateInterval = (Number) map.get("remoteConfigMiniUpdateInterval");
+        Boolean enableDataFilter = (Boolean) map.get("enableDataFilter");
+        HashMap<String, String[]> dataFilters = convertDataFilters(map.get("dataFilters"));
 
-        FTSDKConfig sdkConfig = (datakitUrl != null)
-                ? FTSDKConfig.builder(datakitUrl)
-                : FTSDKConfig.builder(datawayUrl, cliToken);
+        FTSDKConfig sdkConfig;
+        if (datakitUrl != null && !datakitUrl.isEmpty()) {
+            sdkConfig = FTSDKConfig.builder(datakitUrl);
+        } else if (datawayUrl != null && !datawayUrl.isEmpty()
+                && cliToken != null && !cliToken.isEmpty()) {
+            sdkConfig = FTSDKConfig.builder(datawayUrl, cliToken);
+        } else {
+            sdkConfig = FTSDKConfig.builder();
+        }
 
         String envString = (String) map.get("env");
         if (envString != null) {
@@ -120,7 +135,21 @@ public class FTSDKUniModule extends UniModule {
                 }
             });
         }
+        if (remoteConfiguration != null) {
+            sdkConfig.setRemoteConfiguration(remoteConfiguration);
+        }
+        if (remoteConfigMiniUpdateInterval != null) {
+            sdkConfig.setRemoteConfigMiniUpdateInterval(
+                    Math.max(0, remoteConfigMiniUpdateInterval.intValue()));
+        }
+        if (enableDataFilter != null) {
+            sdkConfig.setEnableDataFilter(enableDataFilter);
+        }
+        if (dataFilters != null) {
+            sdkConfig.setDataFilters(dataFilters);
+        }
         FTSdk.install(sdkConfig);
+        remoteConfigurationEnabled = remoteConfiguration != null && remoteConfiguration;
 
 
         Boolean isOffline = data.getBoolean("offlinePackage");
@@ -189,11 +218,65 @@ public class FTSDKUniModule extends UniModule {
     @UniJSMethod(uiThread = false)
     public void shutDown() {
         FTSdk.shutDown();
+        remoteConfigurationEnabled = false;
     }
 
     @UniJSMethod(uiThread = false)
     public void clearAllData() {
         FTSdk.clearAllData();
+    }
+
+    @UniJSMethod(uiThread = false)
+    public void setDatakitURL(JSONObject data) {
+        if (data == null) {
+            return;
+        }
+        String datakitUrl = data.getString("datakitUrl");
+        if (datakitUrl != null && !datakitUrl.isEmpty()) {
+            FTSdk.setDatakitUrl(datakitUrl);
+        }
+    }
+
+    @UniJSMethod(uiThread = false)
+    public void setDatawayURL(JSONObject data) {
+        if (data == null) {
+            return;
+        }
+        String datawayUrl = data.getString("datawayUrl");
+        String clientToken = data.getString("clientToken");
+        if (datawayUrl != null && !datawayUrl.isEmpty()
+                && clientToken != null && !clientToken.isEmpty()) {
+            FTSdk.setDatawayUrl(datawayUrl, clientToken);
+        }
+    }
+
+    @UniJSMethod(uiThread = false)
+    public void updateRemoteConfigWithMiniUpdateInterval(JSONObject data,
+                                                          final UniJSCallback callback) {
+        if (!remoteConfigurationEnabled) {
+            invokeRemoteConfigCallback(callback, false, null,
+                    "REMOTE_CONFIG_DISABLED", "Remote configuration is not enabled.");
+            return;
+        }
+        Number interval = data == null ? null : data.getInteger("miniUpdateInterval");
+        int miniUpdateInterval = interval == null ? 0 : Math.max(0, interval.intValue());
+        FTSdk.updateRemoteConfig(miniUpdateInterval, new FTRemoteConfigManager.FetchResult() {
+            private String rawJson;
+
+            @Override
+            public RemoteConfigBean onConfigSuccessFetched(RemoteConfigBean configBean,
+                                                            String jsonConfig) {
+                rawJson = jsonConfig;
+                return null;
+            }
+
+            @Override
+            public void onResult(boolean success) {
+                invokeRemoteConfigCallback(callback, success, rawJson,
+                        success ? null : "REMOTE_CONFIG_UPDATE_FAILED",
+                        success ? null : "Remote configuration update failed.");
+            }
+        });
     }
 
     /**
@@ -218,5 +301,55 @@ public class FTSDKUniModule extends UniModule {
      */
     public static Map<String, Object> getBridgeContext() {
         return bridgeContext;
+    }
+
+    private static HashMap<String, String[]> convertDataFilters(Object value) {
+        if (!(value instanceof Map)) {
+            return null;
+        }
+        HashMap<String, String[]> result = new HashMap<>();
+        Map<?, ?> filters = (Map<?, ?>) value;
+        for (Map.Entry<?, ?> entry : filters.entrySet()) {
+            if (!(entry.getKey() instanceof String) || !(entry.getValue() instanceof List)) {
+                continue;
+            }
+            List<?> values = (List<?>) entry.getValue();
+            int ruleCount = 0;
+            for (Object rule : values) {
+                if (rule != null) {
+                    ruleCount++;
+                }
+            }
+            String[] rules = new String[ruleCount];
+            int index = 0;
+            for (Object rule : values) {
+                if (rule != null) {
+                    rules[index++] = String.valueOf(rule);
+                }
+            }
+            result.put((String) entry.getKey(), rules);
+        }
+        return result;
+    }
+
+    private static void invokeRemoteConfigCallback(UniJSCallback callback, boolean success,
+                                                    String rawJson, String errorCode,
+                                                    String errorMessage) {
+        if (callback == null) {
+            return;
+        }
+        JSONObject result = new JSONObject();
+        result.put("success", success);
+        result.put("platform", "android");
+        if (rawJson != null) {
+            result.put("rawJson", rawJson);
+        }
+        if (errorCode != null) {
+            result.put("errorCode", errorCode);
+        }
+        if (errorMessage != null) {
+            result.put("errorMessage", errorMessage);
+        }
+        callback.invoke(result);
     }
 }

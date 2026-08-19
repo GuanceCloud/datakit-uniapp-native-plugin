@@ -6,12 +6,19 @@
 //
 
 #import "FTMobileUniModule.h"
-#import <FTMobileSDK/FTMobileAgent.h>
-#import <FTMobileSDK/FTMobileConfig+Private.h>
-#import <FTMobileSDK/FTConstants.h>
-#import <FTMobileSDK/FTLog+Private.h>
-
+#import <GuanceSDK/FTSDKAgent.h>
+#import <GuanceSDK/FTSDKConfig.h>
+#import <GuanceSDK/FTConstants.h>
 #import "FTUniPluginUtils.h"
+#if __has_include(<GuanceSDK/FTInnerLog.h>)
+#import <GuanceSDK/FTInnerLog.h>
+#define FT_UNI_PLUGIN_HAS_INNER_LOG 1
+#elif __has_include("FTInnerLog.h")
+#import "FTInnerLog.h"
+#define FT_UNI_PLUGIN_HAS_INNER_LOG 1
+#else
+#define FT_UNI_PLUGIN_HAS_INNER_LOG 0
+#endif
 @implementation FTMobileUniModule
 #pragma mark --------- SDK INIT ----------
 UNI_EXPORT_METHOD_SYNC(@selector(sdkConfig:))
@@ -22,13 +29,13 @@ UNI_EXPORT_METHOD_SYNC(@selector(sdkConfig:))
         datakitUrl = datakitUrl ?:serverUrl;
         NSString *dataWayUrl = [params valueForKey:@"datawayUrl"];
         NSString *clientToken = [params valueForKey:@"clientToken"];
-        FTMobileConfig *config;
+        FTSDKConfig *config;
         if(dataWayUrl && dataWayUrl.length>0 && clientToken && clientToken.length>0){
-            config = [[FTMobileConfig alloc]initWithDatawayUrl:dataWayUrl clientToken:clientToken];
+            config = [[FTSDKConfig alloc]initWithDatawayUrl:dataWayUrl clientToken:clientToken];
         }else if(datakitUrl && datakitUrl.length>0){
-            config = [[FTMobileConfig alloc]initWithDatakitUrl:datakitUrl];
+            config = [[FTSDKConfig alloc]initWithDatakitUrl:datakitUrl];
         }else{
-            return;
+            config = [[FTSDKConfig alloc]init];
         }
         if([params.allKeys containsObject:@"debug"]){
             NSNumber *debug = params[@"debug"];
@@ -99,13 +106,72 @@ UNI_EXPORT_METHOD_SYNC(@selector(sdkConfig:))
                 return nil;
             };
         }
-        [FTMobileAgent startWithConfigOptions:config];
+        if ([params.allKeys containsObject:@"remoteConfiguration"]) {
+            config.remoteConfiguration = [params[@"remoteConfiguration"] boolValue];
+        }
+        if ([params.allKeys containsObject:@"remoteConfigMiniUpdateInterval"]) {
+            config.remoteConfigMiniUpdateInterval = MAX(0, [params[@"remoteConfigMiniUpdateInterval"] intValue]);
+        }
+        if ([params.allKeys containsObject:@"enableDataFilter"]) {
+            config.enableDataFilter = [params[@"enableDataFilter"] boolValue];
+        }
+        if ([params.allKeys containsObject:@"dataFilters"] && [[params valueForKey:@"dataFilters"] isKindOfClass:NSDictionary.class]) {
+            config.dataFilters = [params valueForKey:@"dataFilters"];
+        }
+        [FTSDKAgent startWithConfigOptions:config];
     };
     if (NSThread.isMainThread) {
         block();
     } else {
         dispatch_sync(dispatch_get_main_queue(), block);
     }
+}
+
+UNI_EXPORT_METHOD(@selector(setDatakitURL:))
+- (void)setDatakitURL:(NSDictionary *)params{
+    NSString *datakitUrl = [params objectForKey:@"datakitUrl"];
+    if (datakitUrl.length > 0) {
+        [FTSDKAgent setDatakitURL:datakitUrl];
+    }
+}
+
+UNI_EXPORT_METHOD(@selector(setDatawayURL:))
+- (void)setDatawayURL:(NSDictionary *)params{
+    NSString *datawayUrl = [params objectForKey:@"datawayUrl"];
+    NSString *clientToken = [params objectForKey:@"clientToken"];
+    if (datawayUrl.length > 0 && clientToken.length > 0) {
+        [FTSDKAgent setDatawayURL:datawayUrl clientToken:clientToken];
+    }
+}
+
+UNI_EXPORT_METHOD(@selector(updateRemoteConfigWithMiniUpdateInterval:callback:))
+- (void)updateRemoteConfigWithMiniUpdateInterval:(NSDictionary *)params callback:(UniModuleKeepAliveCallback)callback{
+    NSInteger miniUpdateInterval = MAX(0, [[params objectForKey:@"miniUpdateInterval"] integerValue]);
+    [FTSDKAgent updateRemoteConfigWithMiniUpdateInterval:miniUpdateInterval completion:^FTRemoteConfigModel * _Nullable(BOOL success, NSError * _Nullable error, FTRemoteConfigModel * _Nullable model, NSDictionary<NSString *,id> * _Nullable content) {
+        NSMutableDictionary *result = [@{
+            @"success": @(success),
+            @"platform": @"ios"
+        } mutableCopy];
+        if (content && [NSJSONSerialization isValidJSONObject:content]) {
+            NSData *jsonData = [NSJSONSerialization dataWithJSONObject:content options:0 error:nil];
+            if (jsonData) {
+                NSString *rawJson = [[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding];
+                if (rawJson) {
+                    result[@"rawJson"] = rawJson;
+                }
+            }
+        }
+        if (error) {
+            result[@"errorCode"] = @(error.code);
+            result[@"errorMessage"] = error.localizedDescription ?: @"Remote configuration update failed.";
+        }
+        if (callback) {
+            dispatch_async(dispatch_get_main_queue(), ^{
+                callback(result, NO);
+            });
+        }
+        return nil;
+    }];
 }
 #pragma mark --------- BIND USER DATA ----------
 UNI_EXPORT_METHOD(@selector(bindRUMUserData:))
@@ -115,40 +181,44 @@ UNI_EXPORT_METHOD(@selector(unbindRUMUserData))
     NSString *userName = [params objectForKey:@"userName"];
     NSString *userEmail = [params objectForKey:@"userEmail"];
     NSDictionary *extra = [params objectForKey:@"extra"];
-    [[FTMobileAgent sharedInstance] bindUserWithUserID:userId userName:userName userEmail:userEmail extra:extra];
+    [[FTSDKAgent sharedInstance] bindUserWithUserID:userId userName:userName userEmail:userEmail extra:extra];
 }
 - (void)unbindRUMUserData{
-    [[FTMobileAgent sharedInstance] unbindUser];
+    [[FTSDKAgent sharedInstance] unbindUser];
 }
 UNI_EXPORT_METHOD(@selector(appendGlobalContext:))
 UNI_EXPORT_METHOD(@selector(appendRUMGlobalContext:))
 UNI_EXPORT_METHOD(@selector(appendLogGlobalContext:))
 - (void)appendGlobalContext:(NSDictionary*)context{
-    [FTMobileAgent appendGlobalContext:context];
+    [FTSDKAgent appendGlobalContext:context];
 }
 - (void)appendRUMGlobalContext:(NSDictionary*)context{
-    [FTMobileAgent appendRUMGlobalContext:context];
+    [FTSDKAgent appendRUMGlobalContext:context];
 }
 - (void)appendLogGlobalContext:(NSDictionary*)context{
-    [FTMobileAgent appendLogGlobalContext:context];
+    [FTSDKAgent appendLogGlobalContext:context];
 }
 UNI_EXPORT_METHOD(@selector(flushSyncData))
 
 - (void)flushSyncData{
-    [[FTMobileAgent sharedInstance] flushSyncData];
+    [[FTSDKAgent sharedInstance] flushSyncData];
 }
 UNI_EXPORT_METHOD(@selector(shutDown))
 - (void)shutDown{
-    [FTMobileAgent shutDown];
+    [FTSDKAgent shutDown];
 }
 UNI_EXPORT_METHOD(@selector(clearAllData))
 - (void)clearAllData{
-    [FTMobileAgent clearAllData];
+    [FTSDKAgent clearAllData];
 }
 #pragma mark --------- Bridge Context ----------
 UNI_EXPORT_METHOD(@selector(appendBridgeContext:))
 - (void)appendBridgeContext:(NSDictionary *)context{
+#if FT_UNI_PLUGIN_HAS_INNER_LOG
     FTInnerLogInfo(@"[GC-UniPlugin-App] appendBridgeContext: %@",context);
+#else
+        NSLog(@"[GC-UniPlugin-App] appendBridgeContext: %@",context);
+#endif
     if (context && context.count > 0) {
         NSDictionary *immutableContext = [context copy];
         [FTUniPluginUtils appendBridgeContext:immutableContext];

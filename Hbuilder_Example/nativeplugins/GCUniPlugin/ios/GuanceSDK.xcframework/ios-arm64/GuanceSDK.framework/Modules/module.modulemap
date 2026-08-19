@@ -1,0 +1,6 @@
+framework module GuanceSDK {
+  umbrella header "GuanceSDK.h"
+  export *
+
+  module * { export * }
+}
