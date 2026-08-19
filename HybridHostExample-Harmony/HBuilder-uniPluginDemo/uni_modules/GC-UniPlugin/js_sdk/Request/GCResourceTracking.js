@@ -1,5 +1,6 @@
 import {
-	rum
+	rum,
+	tracer
 } from '@/uni_modules/GC-UniPlugin';
 
 let interceptorInstalled = false;
@@ -35,6 +36,18 @@ function createRequestKey() {
 		const value = c === 'x' ? random : (random & 0x3 | 0x8);
 		return value.toString(16);
 	});
+}
+
+function getTraceHeaders(key, url) {
+	try {
+		return tracer.getTraceHeader({
+			key: key,
+			url: url
+		}) || {};
+	} catch (error) {
+		console.error('[GC-UniPlugin] uni.request Trace Header generation failed:', error);
+		return {};
+	}
 }
 
 function stringifyResponseBody(value) {
@@ -101,14 +114,14 @@ function completeResourceError(request, error) {
  * Tracks DCloud uni.request with the Android, iOS, and HarmonyOS native RUM
  * SDK APIs.
  *
- * The interceptor only observes DCloud's request lifecycle. It does not
- * inject Trace headers. Disable iOS tracking when enableNativeUserResource is
- * enabled because iOS dispatches uni.request through native URLSession and the
- * native SDK already collects it.
+ * The interceptor injects Trace headers and observes DCloud's request
+ * lifecycle. Disable iOS tracking when enableNativeUserResource is enabled
+ * because iOS dispatches uni.request through native URLSession and the native
+ * SDK already collects it.
  */
 export const gcResourceTracking = {
 	startTracking(config = {}) {
-		// #ifdef APP-IOS || APP-ANDROID || APP-HARMONY
+		// #ifdef APP-PLUS || APP-HARMONY
 		const platform = getCurrentPlatform();
 		const hasAddInterceptor = typeof uni !== 'undefined' && typeof uni.addInterceptor === 'function';
 		if (startTrackingInvoked) {
@@ -135,8 +148,11 @@ export const gcResourceTracking = {
 				try {
 					const key = options.__gcResourceKey || createRequestKey();
 					// This key is JavaScript-only correlation metadata. Remove it before
-					// DCloud dispatches the request to its native NetworkKit implementation.
+					// DCloud dispatches the request to its native networking implementation.
 					delete options.__gcResourceKey;
+					const traceHeaders = getTraceHeaders(key, options.url);
+					// Explicit request headers take precedence over SDK-generated headers.
+					options.header = Object.assign({}, traceHeaders, options.header || {});
 					console.log('[GC-UniPlugin] uni.request start:', options.method || 'GET', options.url, key);
 					rum.startResource({ key: key });
 					const request = {
@@ -172,14 +188,14 @@ export const gcResourceTracking = {
 	},
 
 	isTracking() {
-		// #ifdef APP-IOS || APP-ANDROID || APP-HARMONY
+		// #ifdef APP-PLUS || APP-HARMONY
 		return interceptorInstalled;
 		// #endif
 		return false;
 	},
 
 	shouldUseManualTracking() {
-		// #ifdef APP-IOS || APP-ANDROID || APP-HARMONY
+		// #ifdef APP-PLUS || APP-HARMONY
 		const platform = getCurrentPlatform();
 		if (isSupportedPlatform(platform) && !isTrackingEnabledForPlatform(platform)) {
 			return false;
