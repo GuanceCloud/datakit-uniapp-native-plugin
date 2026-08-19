@@ -3,6 +3,10 @@ export {
 }
 from './js_sdk/Request/GCRequest.js';
 export {
+	gcResourceTracking
+}
+from './js_sdk/Request/GCResourceTracking.js';
+export {
 	gcPageMixin
 }
 from './js_sdk/View/GCPageMixin.js';

@@ -1,9 +1,17 @@
-const FT_JS_PLUGIN_VERSION = '0.2.7-alpha.1';
+import {
+	gcResourceTracking
+} from './GCResourceTracking.js';
+
+const FT_JS_PLUGIN_VERSION = '0.2.7';
 var rum = uni.requireNativePlugin("GCUniPlugin-RUM");
 var tracer = uni.requireNativePlugin("GCUniPlugin-Tracer");
 // Get platform information
 const platform = uni.getSystemInfoSync().platform;
 
+/**
+ * @deprecated This helper is no longer maintained and will be removed in a
+ * future release. Use gcResourceTracking from GCResourceTracking.js instead.
+ */
 export const gcRequest = {
 	getUUID() {
 		return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
@@ -27,18 +35,24 @@ export const gcRequest = {
 		} else {
 			filter = options.filterPlatform.includes(platform);
 		}
+		// The global uni.request interceptor owns Resource collection while it
+		// is active. When iOS tracking is explicitly disabled, manual collection
+		// is disabled as well so native URLSession collection is not duplicated.
+		const shouldCollectResource = !filter && gcResourceTracking.shouldUseManualTracking();
 		var traceHeader = {}
-		if (filter == false) {
+		if (shouldCollectResource) {
 			// trace association RUM
-			var traceHeader = tracer.getTraceHeader({
+			traceHeader = tracer.getTraceHeader({
 				'key': key,
 				'url': options.url,
 			})
 		}
 		traceHeader = Object.assign({}, traceHeader, options.header)
-		rum.startResource({
-			'key': key,
-		});
+		if (shouldCollectResource) {
+			rum.startResource({
+				'key': key,
+			});
+		}
 		var responseHeader;
 		var responseBody;
 		var resourceStatus;
@@ -46,7 +60,7 @@ export const gcRequest = {
 			...options,
 			header: traceHeader,
 			success: (res) => {
-				if (!filter) {
+				if (shouldCollectResource) {
 					responseHeader = res.header;
 					responseBody = res.data.toString();
 					resourceStatus = res.statusCode;
@@ -56,7 +70,7 @@ export const gcRequest = {
 				}
 			},
 			fail: (err) => {
-				if (!filter) {
+				if (shouldCollectResource) {
 					responseBody = err.errMsg;
 				}
 				if (!this.isEmpty(options.fail)) {
@@ -64,12 +78,15 @@ export const gcRequest = {
 				}
 			},
 			complete: (res) => {
-				if (!filter) {
+				if (shouldCollectResource) {
 					rum.stopResource({
 						'key': key,
 					})
 					rum.addResource({
 						'key': key,
+						'property': {
+							'resource_id': key,
+						},
 						'content': {
 							'url': options.url,
 							'httpMethod': options.method,
