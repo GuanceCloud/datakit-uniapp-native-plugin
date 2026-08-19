@@ -22,31 +22,34 @@ public class FTUniAppStartManager {
 
     private final FTActivityLifecycleCallbacks lifecycleCallbacks = new FTActivityLifecycleCallbacks();
 
-    long startTime = 0;
-    long installTime = 0;
+    long coldStartTimeLineNs = 0;
+    long coldStartDurationNs = 0;
 
     void start() {
         if (!alreadyColdLaunch) {
             getApplication().registerActivityLifecycleCallbacks(lifecycleCallbacks);
-            startTime = Utils.getAppStartTimeNs();
-            installTime = Utils.getCurrentNanoTime();
+            long appStartTimeNs = Utils.getAppStartTimeNs();
+            long installTimeNs = System.nanoTime();
+            coldStartDurationNs = Math.max(installTimeNs - appStartTimeNs, 0L);
+            coldStartTimeLineNs = Utils.getCurrentNanoTime() - coldStartDurationNs;
             alreadyColdLaunch = true;
         }
     }
 
     void uploadColdBootTimeWhenManualStart() {
-        if (startTime > 0) {
-            FTAutoTrack.putRUMLaunchPerformance(true, installTime - startTime, startTime);
-            startTime = 0;
-            installTime = 0;
+        if (coldStartTimeLineNs > 0) {
+            FTAutoTrack.putRUMLaunchPerformance(
+                    true, coldStartDurationNs, coldStartTimeLineNs);
+            coldStartTimeLineNs = 0;
+            coldStartDurationNs = 0;
         }
     }
 
     void reset() {
         getApplication().unregisterActivityLifecycleCallbacks(lifecycleCallbacks);
         alreadyColdLaunch = false;
-        startTime = 0;
-        installTime = 0;
+        coldStartTimeLineNs = 0;
+        coldStartDurationNs = 0;
     }
 
 
