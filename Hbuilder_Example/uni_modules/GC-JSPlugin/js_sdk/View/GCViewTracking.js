@@ -1,6 +1,6 @@
 import {
 	rum as gcRum
-} from '@/uni_modules/GC-UniPlugin';
+} from '../native.js';
 
 const LOAD_TIME_UNAVAILABLE = -1;
 const RELOAD_LOAD_TIME = 0;

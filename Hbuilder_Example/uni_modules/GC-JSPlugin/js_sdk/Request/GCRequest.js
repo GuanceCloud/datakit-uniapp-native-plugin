@@ -1,7 +1,7 @@
 import {
 	rum,
 	tracer
-} from '@/uni_modules/GC-UniPlugin';
+} from '../native.js';
 import {
 	gcResourceTracking
 } from './GCResourceTracking.js';

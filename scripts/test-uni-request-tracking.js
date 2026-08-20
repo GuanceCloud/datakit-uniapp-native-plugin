@@ -3,7 +3,7 @@ const fs = require('fs');
 const path = require('path');
 
 const root = path.resolve(__dirname, '..');
-const trackerPath = 'Hbuilder_Example/uni_modules/GC-UniPlugin/js_sdk/Request/GCResourceTracking.js';
+const trackerPath = 'Hbuilder_Example/uni_modules/GC-JSPlugin/js_sdk/Request/GCResourceTracking.js';
 
 function read(relativePath) {
   return fs.readFileSync(path.join(root, relativePath), 'utf8');
@@ -12,14 +12,19 @@ function read(relativePath) {
 function loadNetworkTracker(rum, uni) {
   const source = read(trackerPath)
     .replace(
-      /import\s*\{[\s\S]*?\}\s*from '@\/uni_modules\/GC-UniPlugin';/,
+      /import\s*\{[\s\S]*?\}\s*from '\.\.\/native\.js';/,
       ''
     )
     .replace(
       'export const gcResourceTracking',
       'const gcResourceTracking'
     );
-  return new Function('rum', 'uni', `${source}\nreturn gcResourceTracking;`)(rum, uni);
+  return new Function(
+    'rum',
+    'tracer',
+    'uni',
+    `${source}\nreturn gcResourceTracking;`
+  )(rum, { getTraceHeader() { return null; } }, uni);
 }
 
 function createRuntime(platform) {
@@ -57,9 +62,9 @@ function createRuntime(platform) {
 }
 
 function loadGCRequest(rum, tracer, uni, gcResourceTracking) {
-  const source = read('Hbuilder_Example/uni_modules/GC-UniPlugin/js_sdk/Request/GCRequest.js')
+  const source = read('Hbuilder_Example/uni_modules/GC-JSPlugin/js_sdk/Request/GCRequest.js')
     .replace(
-      /import\s*\{[\s\S]*?\}\s*from '@\/uni_modules\/GC-UniPlugin';/,
+      /import\s*\{[\s\S]*?\}\s*from '\.\.\/native\.js';/,
       ''
     )
     .replace(
@@ -79,7 +84,7 @@ function loadGCRequest(rum, tracer, uni, gcResourceTracking) {
 const harmonyBridge = read(
   'Hbuilder_Example/uni_modules/GC-UniPlugin/utssdk/app-harmony/index.uts'
 );
-assert.doesNotMatch(harmonyBridge, /isHarmonyUniRequestAutoTrackingEnabled/);
+assert.match(harmonyBridge, /isHarmonyUniRequestAutoTrackingEnabled/);
 
 const android = createRuntime('android');
 const androidTracker = loadNetworkTracker(android.rum, android.uni);
@@ -183,7 +188,7 @@ assert.deepStrictEqual(android.resources[10].content, {
 });
 
 const gcRequestSource = read(
-  'Hbuilder_Example/uni_modules/GC-UniPlugin/js_sdk/Request/GCRequest.js'
+  'Hbuilder_Example/uni_modules/GC-JSPlugin/js_sdk/Request/GCRequest.js'
 );
 assert.match(gcRequestSource, /@deprecated[\s\S]*gcResourceTracking/);
 assert.match(
@@ -235,16 +240,13 @@ assert.deepStrictEqual(capturedRequestOptions.header, { accept: 'application/jso
 assert.doesNotMatch(read(trackerPath), /gcHarmonyNetworkTracking|GCHarmonyNetworkTracking/);
 assert.match(read(trackerPath), /if \(startTrackingInvoked\)[\s\S]*startTrackingInvoked = true;/);
 assert.match(
-  read('Hbuilder_Example/uni_modules/GC-UniPlugin/js_sdk/index.js'),
+  read('Hbuilder_Example/uni_modules/GC-JSPlugin/js_sdk/index.js'),
   /gcResourceTracking[\s\S]*Request\/GCResourceTracking\.js/
 );
 assert.match(
   read('Hbuilder_Example/main.js'),
   /gcResourceTracking\.startTracking\(\{[\s\S]*enableIOS:\s*false/
 );
-assert.strictEqual(
-  read(trackerPath),
-  read('HybridHostExample-Harmony/HBuilder-uniPluginDemo/uni_modules/GC-UniPlugin/js_sdk/Request/GCResourceTracking.js')
-);
+assert.doesNotMatch(read(trackerPath), /@\/uni_modules\/GC-UniPlugin/);
 
 console.log('Cross-platform uni.request SDK tracking checks passed');

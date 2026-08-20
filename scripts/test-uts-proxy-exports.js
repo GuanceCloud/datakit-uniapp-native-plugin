@@ -225,20 +225,34 @@ assert.match(
 );
 
 const baseFacade = read(
-  'Hbuilder_Example/uni_modules/GC-UniPlugin/js_sdk/native.js'
+  'Hbuilder_Example/uni_modules/GC-JSPlugin/js_sdk/native.js'
 );
-assert.match(baseFacade, /mobileAgent,/);
+assert.match(baseFacade, /export const mobileAgent/);
 assert.match(baseFacade, /GCDeviceMonitorType/);
-assert.match(baseFacade, /from '@\/uni_modules\/GC-UniPlugin'/);
-assert.doesNotMatch(baseFacade, /export const GCEnv/);
+assert.match(baseFacade, /installNativeBridge/);
+assert.match(baseFacade, /GCUniPlugin-MobileAgent/);
+assert.doesNotMatch(baseFacade, /from '@\/uni_modules\/GC-UniPlugin'/);
+assert.match(baseFacade, /export const GCEnv/);
 
 const appEntry = read('Hbuilder_Example/sdk-bootstrap.js');
-assert.match(appEntry, /from '@\/uni_modules\/GC-UniPlugin'/);
+const uniappBuildEntry = read('Hbuilder_Example/gc-build-entry.uniapp.js');
+const wgtBuildEntry = read('Hbuilder_Example/gc-build-entry.wgt.js');
+assert.doesNotMatch(appEntry, /GC-UniPlugin\/bridge\/install\.js/);
+assert.match(
+  uniappBuildEntry,
+  /^import '@\/uni_modules\/GC-UniPlugin\/setup\.js'/
+);
+assert.match(wgtBuildEntry, /from '@\/uni_modules\/GC-JSPlugin'/);
+assert.doesNotMatch(wgtBuildEntry, /GC-UniPlugin|sdk-bootstrap/);
+assert.match(
+  appEntry,
+  /import\s*\{\s*logger,\s*mobileAgent,\s*rum,\s*tracer\s*\}\s*from '@\/uni_modules\/GC-UniPlugin'/
+);
 for (const name of ['mobileAgent', 'rum', 'logger', 'tracer']) {
   assert.match(
     appEntry,
     new RegExp(`\\b${name}\\b`),
-    `sdk-bootstrap.js must retain the root ${name} import pattern`
+    `sdk-bootstrap.js must retain the typed UTS ${name} import pattern`
   );
 }
 
@@ -263,9 +277,10 @@ assert.match(
 );
 
 const requestHelper = read(
-  'Hbuilder_Example/uni_modules/GC-UniPlugin/js_sdk/Request/GCRequest.js'
+  'Hbuilder_Example/uni_modules/GC-JSPlugin/js_sdk/Request/GCRequest.js'
 );
-assert.match(requestHelper, /from '@\/uni_modules\/GC-UniPlugin'/);
+assert.match(requestHelper, /from '\.\.\/native\.js'/);
+assert.doesNotMatch(requestHelper, /@\/uni_modules\/GC-UniPlugin/);
 for (const name of ['rum', 'tracer']) {
   assert.match(
     requestHelper,
@@ -275,11 +290,11 @@ for (const name of ['rum', 'tracer']) {
 }
 
 const errorTracking = read(
-  'Hbuilder_Example/uni_modules/GC-UniPlugin/js_sdk/Error/GCErrorTracking.js'
+  'Hbuilder_Example/uni_modules/GC-JSPlugin/js_sdk/Error/GCErrorTracking.js'
 );
 assert.doesNotMatch(errorTracking, /FT_JS_PLUGIN_VERSION/);
-const jsSdkEntry = read('Hbuilder_Example/uni_modules/GC-UniPlugin/js_sdk/index.js');
-assert.match(jsSdkEntry, /import\s*\{\s*gcActionTracking\s*\}/);
+const jsSdkEntry = read('Hbuilder_Example/uni_modules/GC-JSPlugin/js_sdk/index.js');
+assert.match(jsSdkEntry, /export\s*\{\s*gcActionTracking\s*\}/);
 assert.doesNotMatch(
   jsSdkEntry,
   /gcActionTracking\.startTracking\(/,
@@ -293,7 +308,7 @@ assert.match(
 );
 
 const viewTracking = read(
-  'Hbuilder_Example/uni_modules/GC-UniPlugin/js_sdk/View/GCViewTracking.js'
+  'Hbuilder_Example/uni_modules/GC-JSPlugin/js_sdk/View/GCViewTracking.js'
 );
 assert.doesNotMatch(viewTracking, /FT_JS_PLUGIN_VERSION/);
 assert.match(viewTracking, /#ifdef APP-PLUS \|\| APP-HARMONY/);
@@ -314,7 +329,7 @@ const indexPage = read('Hbuilder_Example/pages/index/index.vue');
 assert.doesNotMatch(indexPage, /gcPageMixin/);
 
 const actionTracking = read(
-  'Hbuilder_Example/uni_modules/GC-UniPlugin/js_sdk/Action/GCActionTracking.js'
+  'Hbuilder_Example/uni_modules/GC-JSPlugin/js_sdk/Action/GCActionTracking.js'
 );
 assert.match(actionTracking, /const VD_SYNC_EVENT = 'vdSync'/);
 assert.match(actionTracking, /const VDOM_EVENT_ACTION = 20/);
@@ -352,7 +367,7 @@ assert.doesNotMatch(
 );
 
 const actionTrackingRuntime = actionTracking
-  .replace(/import\s*\{[\s\S]*?\}\s*from\s*'@\/uni_modules\/GC-UniPlugin';/, '')
+  .replace(/import\s*\{[\s\S]*?\}\s*from\s*'\.\.\/native\.js';/, '')
   .replace('export function normalizeUniAppEventType', 'function normalizeUniAppEventType')
   .replace('export const gcActionTracking', 'const gcActionTracking');
 const capturedActions = [];

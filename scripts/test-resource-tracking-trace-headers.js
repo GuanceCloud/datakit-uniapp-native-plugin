@@ -4,14 +4,14 @@ const path = require('path');
 
 const root = path.resolve(__dirname, '..');
 const trackerPaths = [
-  'Hbuilder_Example/uni_modules/GC-UniPlugin/js_sdk/Request/GCResourceTracking.js',
+  'Hbuilder_Example/uni_modules/GC-JSPlugin/js_sdk/Request/GCResourceTracking.js',
   'HybridHostExample-Harmony/HBuilder-uniPluginDemo/uni_modules/GC-UniPlugin/js_sdk/Request/GCResourceTracking.js'
 ];
 
 function loadTracker(relativePath, rum, tracer, uni) {
   const source = fs.readFileSync(path.join(root, relativePath), 'utf8')
     .replace(
-      /import\s*\{[\s\S]*?\}\s*from '@\/uni_modules\/GC-UniPlugin';/,
+      /import\s*\{[\s\S]*?\}\s*from (?:'@\/uni_modules\/GC-UniPlugin'|'\.\.\/native\.js');/,
       ''
     )
     .replace('export const gcResourceTracking', 'const gcResourceTracking');

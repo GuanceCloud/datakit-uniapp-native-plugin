@@ -1,20 +1,19 @@
 {
-  "id": "GC-UniPlugin",
-  "displayName": "GC-UniPlugin",
+  "id": "GC-JSPlugin",
+  "displayName": "GC-JSPlugin",
   "version": "0.2.7-alpha.1",
-  "description": "Guance UniApp UTS implementation",
+  "description": "Guance UniApp shared JavaScript API and collectors",
   "keywords": [
-    "GC-UniPlugin",
-    "GCUniPlugin"
+    "GC-JSPlugin"
   ],
   "repository": "",
   "engines": {
-    "HBuilderX": "^4.25.0",
+    "HBuilderX": "^3.1.0",
     "uni-app": "^3.1.0",
     "uni-app-x": "^3.1.0"
   },
   "dcloudext": {
-    "type": "uts",
+    "type": "sdk-js",
     "sale": {
       "regular": {
         "price": "0.00"
@@ -37,9 +36,7 @@
     "widescreen": "-"
   },
   "uni_modules": {
-    "dependencies": [
-      "GC-JSPlugin"
-    ],
+    "dependencies": [],
     "encrypt": [],
     "platforms": {
       "cloud": {
@@ -87,9 +84,9 @@
             "chrome": "-"
           },
           "app": {
-            "android": "u",
-            "ios": "u",
-            "harmony": "u"
+            "android": "-",
+            "ios": "-",
+            "harmony": "-"
           },
           "mp": {
             "weixin": "-"

@@ -4,7 +4,7 @@ const path = require('path');
 
 const root = path.resolve(__dirname, '..');
 const trackerPaths = [
-  'Hbuilder_Example/uni_modules/GC-UniPlugin/js_sdk/Request/GCResourceTracking.js',
+  'Hbuilder_Example/uni_modules/GC-JSPlugin/js_sdk/Request/GCResourceTracking.js',
   'HybridHostExample-Harmony/HBuilder-uniPluginDemo/uni_modules/GC-UniPlugin/js_sdk/Request/GCResourceTracking.js'
 ];
 

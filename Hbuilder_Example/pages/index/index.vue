@@ -27,7 +27,7 @@
 <script>
 	import {
 		mobileAgent
-	} from '@/uni_modules/GC-UniPlugin'
+	} from '@/gc-build-entry.js'
 	export default {
 		data() {
 			return {}

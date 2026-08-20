@@ -19,6 +19,7 @@ for (const version of ['', 'v1.2.3', '1.2', '01.2.3', '1.2.3-']) {
 
 assert.strictEqual(normalizeVersion(`refs/tags/${releaseVersion}`), releaseVersion);
 assert(versionTargets.some(target => target.path.endsWith('/package.json')));
+assert(versionTargets.some(target => target.path.endsWith('/GC-JSPlugin/package.json')));
 assert(versionTargets.some(target => target.path.endsWith('/bridge.uts')));
 assert(versionTargets.some(target => target.path.endsWith('/index.kt')));
 assert(versionTargets.some(target => target.path.endsWith('/index.swift')));

@@ -10,6 +10,10 @@ const SEMVER_PATTERN = /^(0|[1-9]\d*)\.(0|[1-9]\d*)\.(0|[1-9]\d*)(?:-((?:0|[1-9]
 // release metadata or checked-in generated source that is shipped by CI.
 const versionTargets = [
     {
+        path: 'Hbuilder_Example/uni_modules/GC-JSPlugin/package.json',
+        pattern: /("version"\s*:\s*")([^"]+)(")/
+    },
+    {
         path: 'Hbuilder_Example/uni_modules/GC-UniPlugin/package.json',
         pattern: /("version"\s*:\s*")([^"]+)(")/
     },

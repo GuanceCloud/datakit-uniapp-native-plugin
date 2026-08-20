@@ -1,6 +1,6 @@
 import {
 	rum as gcRum
-} from '@/uni_modules/GC-UniPlugin';
+} from '../native.js';
 
 // `vdSync` is the App-Harmony renderer-to-service event channel. A template
 // event is represented by action type 20 before UniApp dispatches it to the

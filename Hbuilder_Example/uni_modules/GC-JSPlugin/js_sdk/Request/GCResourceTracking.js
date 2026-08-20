@@ -1,7 +1,7 @@
 import {
 	rum,
 	tracer
-} from '@/uni_modules/GC-UniPlugin';
+} from '../native.js';
 
 let interceptorInstalled = false;
 let startTrackingInvoked = false;
@@ -45,7 +45,7 @@ function getTraceHeaders(key, url) {
 			url: url
 		}) || {};
 	} catch (error) {
-		console.error('[GC-UniPlugin] uni.request Trace Header generation failed:', error);
+		console.error('[GC-JSPlugin] uni.request Trace Header generation failed:', error);
 		return {};
 	}
 }
@@ -78,9 +78,9 @@ function completeResource(request, response) {
 				resourceStatus: response.statusCode
 			}
 		});
-		console.log('[GC-UniPlugin] uni.request resource completed:', response.statusCode, request.url, request.key);
+		console.log('[GC-JSPlugin] uni.request resource completed:', response.statusCode, request.url, request.key);
 	} catch (error) {
-		console.error('[GC-UniPlugin] uni.request tracking success failed:', error);
+		console.error('[GC-JSPlugin] uni.request tracking success failed:', error);
 	}
 }
 
@@ -104,9 +104,9 @@ function completeResourceError(request, error) {
 				errorStack: errorStack
 			}
 		});
-		console.warn('[GC-UniPlugin] uni.request resource failed:', errorMessage, request.url, request.key);
+		console.warn('[GC-JSPlugin] uni.request resource failed:', errorMessage, request.url, request.key);
 	} catch (trackingError) {
-		console.error('[GC-UniPlugin] uni.request tracking fail failed:', trackingError);
+		console.error('[GC-JSPlugin] uni.request tracking fail failed:', trackingError);
 	}
 }
 
@@ -125,7 +125,7 @@ export const gcResourceTracking = {
 		const platform = getCurrentPlatform();
 		const hasAddInterceptor = typeof uni !== 'undefined' && typeof uni.addInterceptor === 'function';
 		if (startTrackingInvoked) {
-			console.warn('[GC-UniPlugin] uni.request tracker start already invoked:', platform);
+			console.warn('[GC-JSPlugin] uni.request tracker start already invoked:', platform);
 			return false;
 		}
 		startTrackingInvoked = true;
@@ -134,7 +134,7 @@ export const gcResourceTracking = {
 		const platformTrackingEnabled = isTrackingEnabledForPlatform(platform);
 		if (!isSupportedPlatform(platform) || !platformTrackingEnabled ||
 			!hasAddInterceptor) {
-			console.warn('[GC-UniPlugin] uni.request tracker not installed:', {
+			console.warn('[GC-JSPlugin] uni.request tracker not installed:', {
 				interceptorInstalled: interceptorInstalled,
 				platform: platform,
 				platformTrackingEnabled: platformTrackingEnabled,
@@ -153,7 +153,7 @@ export const gcResourceTracking = {
 					const traceHeaders = getTraceHeaders(key, options.url);
 					// Explicit request headers take precedence over SDK-generated headers.
 					options.header = Object.assign({}, traceHeaders, options.header || {});
-					console.log('[GC-UniPlugin] uni.request start:', options.method || 'GET', options.url, key);
+					console.log('[GC-JSPlugin] uni.request start:', options.method || 'GET', options.url, key);
 					rum.startResource({ key: key });
 					const request = {
 						key: key,
@@ -175,13 +175,13 @@ export const gcResourceTracking = {
 						return typeof originalFail === 'function' ? originalFail(error) : error;
 					};
 				} catch (error) {
-					console.error('[GC-UniPlugin] uni.request tracking invoke failed:', error);
+					console.error('[GC-JSPlugin] uni.request tracking invoke failed:', error);
 				}
 				return options;
 			}
 		});
 		interceptorInstalled = true;
-		console.log('[GC-UniPlugin] uni.request tracker installed:', platform);
+		console.log('[GC-JSPlugin] uni.request tracker installed:', platform);
 		return true;
 		// #endif
 		return false;

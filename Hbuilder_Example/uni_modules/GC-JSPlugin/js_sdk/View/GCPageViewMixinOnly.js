@@ -3,10 +3,10 @@
 	*/
 import {
 	rum
-} from '@/uni_modules/GC-UniPlugin';
+} from '../native.js';
 
 /**
-	* Get the current page route path 
+	* Get the current page route path
 	* @returns {string|null} The current page route (e.g. "pages/home/index"), returns null if failed
 	*/
 const getCurrentPagePath = () => {
@@ -20,7 +20,7 @@ const getCurrentPagePath = () => {
 export const gcPageViewMixinOnly = {
 	data() {
 		return {
-			loadStart: 0 
+			loadStart: 0
 		}
 	},
 	onLoad() {

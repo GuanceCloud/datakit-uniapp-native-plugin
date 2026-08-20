@@ -9,7 +9,7 @@
 </template>
 
 <script>
-	import { logger } from '@/uni_modules/GC-UniPlugin';
+	import { logger } from '@/gc-build-entry.js';
 	export default {
 		data() {
 			return {}

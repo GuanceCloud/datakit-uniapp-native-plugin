@@ -1,21 +1,21 @@
 # Guance UniApp Plugin
 
 ## Introduction
-Guance application plugin for UniApp, supporting Android, iOS, and HarmonyOS through a UTS plugin.
+Guance application plugin for UniApp, supporting Android, iOS, and HarmonyOS.
 
 Requires HBuilderX 4.25.0 or later because the plugin uses UTS native hybrid files and Android custom Maven repositories.
 
-The current integration uses `GC-UniPlugin` as the Android/iOS/HarmonyOS UTS implementation. Existing customers should keep their method calls and parameter objects unchanged, and replace native module acquisition such as `uni.requireNativePlugin("GCUniPlugin-RUM")` with named imports such as `rum`, `logger`, `tracer`, and `mobileAgent` from `GC-UniPlugin`. The root entry also exports the existing `GC*` constant groups, for example `GCEnv.PROD`.
+`GC-JSPlugin` is the stable JavaScript collector and compatibility package.
+It exports the view/error/resource/action collectors and retains
+`mobileAgent`, `rum`, `logger`, and `tracer` for UniMP/WGT and existing
+customers.
 
-JS helpers such as request, route, page, view tracking, and JS error tracking live under `GC-UniPlugin/js_sdk` as optional enhancements. It also provides the native SDK facade objects.
-
-iOS Session Replay is provided by the separate optional
-`GC-UniSessionReplay` module. Initialize `mobileAgent` and `rum` first, then
-import and configure `GCUniSessionReplay` from that module before
-`gcViewTracking.startTracking()` in `main.js`. Applications that do not
-install it keep the base plugin dependency set and startup behavior unchanged.
+`GC-UniPlugin` is the Android/iOS/HarmonyOS UTS implementation. A normal
+UniApp application imports its setup entry once, imports typed SDK APIs from
+the package root, and keeps JavaScript collectors owned by `GC-JSPlugin`:
 
 ```js
+import '@/uni_modules/GC-UniPlugin/setup.js'
 import {
   mobileAgent,
   rum,
@@ -24,10 +24,27 @@ import {
 } from '@/uni_modules/GC-UniPlugin'
 import {
   gcErrorTracking
-} from '@/uni_modules/GC-UniPlugin/js_sdk'
+} from '@/uni_modules/GC-JSPlugin'
 
 gcErrorTracking.startTracking()
 ```
+
+Direct SDK imports from `GC-UniPlugin` are recommended in a normal UniApp
+application because HBuilderX can expose the UTS interfaces and parameter
+types. `setup.js` connects JavaScript collectors to those same UTS objects;
+application code does not call the internal bridge installer directly.
+
+A UniMP WGT installs only `GC-JSPlugin`. It must not import the UTS setup
+entry; the same public objects lazily call the native host's existing
+`GCUniPlugin-MobileAgent`, `GCUniPlugin-RUM`, `GCUniPlugin-Logger`, and
+`GCUniPlugin-Tracer` modules. This preserves the 0.2.6 WGT integration while
+keeping the optional UTS package out of the WGT bundle.
+
+iOS Session Replay is provided by the separate optional
+`GC-UniSessionReplay` module. Initialize `mobileAgent` and `rum` first, then
+import and configure `GCUniSessionReplay` from that module before
+`gcViewTracking.startTracking()` in `main.js`. Applications that do not
+install it keep the base plugin dependency set and startup behavior unchanged.
 
 Use `gcResourceTracking` to collect `uni.request` Resources on Android, iOS,
 and HarmonyOS. When iOS native Resource collection is enabled, disable the JS
@@ -36,7 +53,7 @@ interceptor so URLSession requests are not collected twice:
 ```js
 import {
   gcResourceTracking
-} from '@/uni_modules/GC-UniPlugin/js_sdk'
+} from '@/uni_modules/GC-JSPlugin'
 
 gcResourceTracking.startTracking({
   enableIOS: false

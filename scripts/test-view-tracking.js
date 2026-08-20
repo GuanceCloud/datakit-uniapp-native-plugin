@@ -7,7 +7,7 @@ const root = path.resolve(__dirname, '..');
 const source = fs.readFileSync(
     path.join(
         root,
-        'Hbuilder_Example/uni_modules/GC-UniPlugin/js_sdk/View/GCViewTracking.js'
+        'Hbuilder_Example/uni_modules/GC-JSPlugin/js_sdk/View/GCViewTracking.js'
     ),
     'utf8'
 );

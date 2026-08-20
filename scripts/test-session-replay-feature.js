@@ -167,10 +167,12 @@ const baseAndroidIndexSource = read(
     'Hbuilder_Example/uni_modules/GC-UniPlugin/utssdk/app-android/index.uts'
 );
 const viewTrackingSource = read(
-    'Hbuilder_Example/uni_modules/GC-UniPlugin/js_sdk/View/GCViewTracking.js'
+    'Hbuilder_Example/uni_modules/GC-JSPlugin/js_sdk/View/GCViewTracking.js'
 );
 const appSource = read('Hbuilder_Example/App.vue');
 const bootstrapSource = read('Hbuilder_Example/sdk-bootstrap.js');
+const uniappBuildEntrySource = read('Hbuilder_Example/gc-build-entry.uniapp.js');
+const wgtBuildEntrySource = read('Hbuilder_Example/gc-build-entry.wgt.js');
 const mainSource = read('Hbuilder_Example/main.js');
 
 assertIncludes(interfaceSource, 'setConfig(params: GCSessionReplayConfig): void', 'UTS API contract');
@@ -303,8 +305,12 @@ assert.match(
 );
 assert(!bootstrapSource.includes("uni.getSystemInfoSync().platform === 'ios'"));
 assert(bootstrapSource.indexOf('rum.setConfig') < bootstrapSource.indexOf('GCUniSessionReplay.setConfig'));
-assertIncludes(mainSource, "from './sdk-bootstrap.js'", 'early SDK bootstrap import');
+assertIncludes(mainSource, "from './gc-build-entry.js'", 'selected SDK build entry import');
+assertIncludes(uniappBuildEntrySource, "from './sdk-bootstrap.js'", 'normal UniApp SDK bootstrap import');
+assert(!wgtBuildEntrySource.includes('sdk-bootstrap'), 'WGT must not import the SDK bootstrap');
+assert(!wgtBuildEntrySource.includes('GC-UniSessionReplay'), 'WGT must not import Session Replay UTS');
 assert(mainSource.indexOf('initializeGuanceSDK()') < mainSource.indexOf('gcViewTracking.startTracking()'));
+assertIncludes(mainSource, 'gcErrorTracking.startTracking()', 'shared JS Error tracking startup');
 assert(!appSource.includes('initializeGuanceSDK()'), 'SDK bootstrap must run only from the app entry point');
 assertIncludes(mainSource, 'gcViewTracking.evalSessionReplayJS(jsCode)', 'Browser SDK integration');
 assert(!mainSource.includes('[DEBUG-SR-WEB-EVENT-4d9a]'));

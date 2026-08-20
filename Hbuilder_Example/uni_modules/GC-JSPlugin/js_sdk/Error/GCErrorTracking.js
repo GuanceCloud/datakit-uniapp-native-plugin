@@ -1,6 +1,6 @@
 import {
 	rum
-} from '@/uni_modules/GC-UniPlugin';
+} from '../native.js';
 
 const EMPTY_MESSAGE = 'Unknown Error';
 const CONSOLE_ERROR = 'console_error';

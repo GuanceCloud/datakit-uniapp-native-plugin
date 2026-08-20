@@ -1,13 +1,11 @@
 import * as SDKConst from '@/utils.js'
 import {
-	gcErrorTracking
-} from '@/uni_modules/GC-UniPlugin/js_sdk'
-import {
 	logger,
 	mobileAgent,
 	rum,
 	tracer
 } from '@/uni_modules/GC-UniPlugin'
+
 // #ifdef APP-IOS || APP-ANDROID
 import {
 	GCUniSessionReplay,
@@ -74,7 +72,6 @@ export function initializeGuanceSDK() {
 	})
 	// #endif
 
-	gcErrorTracking.startTracking()
 	logger.setConfig({
 		enableLinkRumData: true,
 		enableCustomLog: true,

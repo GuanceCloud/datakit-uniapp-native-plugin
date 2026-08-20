@@ -15,6 +15,7 @@ Guard the import with `APP`. The same root API and privacy constants work on
 both native platforms.
 
 ```js
+import '@/uni_modules/GC-UniPlugin/setup.js'
 import {
   mobileAgent,
   rum
@@ -56,7 +57,7 @@ module:
 ```js
 import {
   gcViewTracking
-} from '@/uni_modules/GC-UniPlugin/js_sdk'
+} from '@/uni_modules/GC-JSPlugin'
 
 gcViewTracking.evalSessionReplayJS(browserSdkBootstrapCode)
 ```

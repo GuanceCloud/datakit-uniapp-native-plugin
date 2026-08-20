@@ -1,14 +1,16 @@
 import App from './App'
 import {
+  gcErrorTracking,
   gcViewTracking,
   gcActionTracking,
   gcResourceTracking
-} from '@/uni_modules/GC-UniPlugin/js_sdk'
+} from '@/uni_modules/GC-JSPlugin'
 import {
   initializeGuanceSDK
-} from './sdk-bootstrap.js'
+} from './gc-build-entry.js'
 
 initializeGuanceSDK();
+gcErrorTracking.startTracking();
 
 // #ifdef APP-HARMONY
 gcActionTracking.startTracking();
