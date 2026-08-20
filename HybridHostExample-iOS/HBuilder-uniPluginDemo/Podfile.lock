@@ -40,7 +40,7 @@ PODS:
     - GuanceSDK/Core/Protocol
   - GuanceSDK/SessionReplay (1.6.7-alpha.2):
     - GuanceSDK/Core
-  - GuanceUniAppHostBridge (0.2.7-alpha.1):
+  - GuanceUniAppHostBridge (0.2.7):
     - GuanceSDK/Agent (= 1.6.7-alpha.2)
     - GuanceSDK/SessionReplay (= 1.6.7-alpha.2)
   - uniapp/Accelerometer (5.11.0)

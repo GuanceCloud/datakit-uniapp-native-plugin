@@ -148,7 +148,7 @@ open class GCTraceHeaderParams (
     open var url: String,
     open var key: String? = null,
 ) : UTSObject()
-val GC_UTS_BRIDGE_VERSION: String = "0.2.7-alpha.1"
+val GC_UTS_BRIDGE_VERSION: String = "0.2.7"
 fun createDefaultBridgeContext(): UTSJSONObject {
     val context = JSON.parseObject("{\"sdk_bridge_info\":\"{\\\"uniapp\\\":\\\"" + GC_UTS_BRIDGE_VERSION + "\\\"}\"}")
     return context ?: _uO()

@@ -2,12 +2,20 @@ import {
 	rum,
 	tracer
 } from '../native.js';
-
 let interceptorInstalled = false;
 let startTrackingInvoked = false;
 let trackingConfig = {
 	enableIOS: true
 };
+
+function debugLog(event, details = null) {
+	if (process.env.NODE_ENV !== 'development') return;
+	console.log('[FTLog][ResourceTracking][Debug]', {
+		event: event,
+		details: details,
+		timestamp: Date.now()
+	});
+}
 
 function getCurrentPlatform() {
 	if (typeof uni === 'undefined' || typeof uni.getSystemInfoSync !== 'function') {
@@ -45,7 +53,10 @@ function getTraceHeaders(key, url) {
 			url: url
 		}) || {};
 	} catch (error) {
-		console.error('[GC-JSPlugin] uni.request Trace Header generation failed:', error);
+		debugLog('trace-header-error', {
+			url: url,
+			error: error && (error.stack || error.message || String(error))
+		});
 		return {};
 	}
 }
@@ -78,9 +89,17 @@ function completeResource(request, response) {
 				resourceStatus: response.statusCode
 			}
 		});
-		console.log('[GC-JSPlugin] uni.request resource completed:', response.statusCode, request.url, request.key);
+		debugLog('resource-completed', {
+			statusCode: response.statusCode,
+			url: request.url,
+			key: request.key
+		});
 	} catch (error) {
-		console.error('[GC-JSPlugin] uni.request tracking success failed:', error);
+		debugLog('resource-completion-error', {
+			url: request.url,
+			key: request.key,
+			error: error && (error.stack || error.message || String(error))
+		});
 	}
 }
 
@@ -104,9 +123,17 @@ function completeResourceError(request, error) {
 				errorStack: errorStack
 			}
 		});
-		console.warn('[GC-JSPlugin] uni.request resource failed:', errorMessage, request.url, request.key);
+		debugLog('resource-failed', {
+			error: errorMessage,
+			url: request.url,
+			key: request.key
+		});
 	} catch (trackingError) {
-		console.error('[GC-JSPlugin] uni.request tracking fail failed:', trackingError);
+		debugLog('resource-failure-error', {
+			url: request.url,
+			key: request.key,
+			error: trackingError && (trackingError.stack || trackingError.message || String(trackingError))
+		});
 	}
 }
 
@@ -125,7 +152,10 @@ export const gcResourceTracking = {
 		const platform = getCurrentPlatform();
 		const hasAddInterceptor = typeof uni !== 'undefined' && typeof uni.addInterceptor === 'function';
 		if (startTrackingInvoked) {
-			console.warn('[GC-JSPlugin] uni.request tracker start already invoked:', platform);
+			debugLog('start-ignored', {
+				platform: platform,
+				reason: 'already invoked'
+			});
 			return false;
 		}
 		startTrackingInvoked = true;
@@ -134,7 +164,7 @@ export const gcResourceTracking = {
 		const platformTrackingEnabled = isTrackingEnabledForPlatform(platform);
 		if (!isSupportedPlatform(platform) || !platformTrackingEnabled ||
 			!hasAddInterceptor) {
-			console.warn('[GC-JSPlugin] uni.request tracker not installed:', {
+			debugLog('not-installed', {
 				interceptorInstalled: interceptorInstalled,
 				platform: platform,
 				platformTrackingEnabled: platformTrackingEnabled,
@@ -153,7 +183,6 @@ export const gcResourceTracking = {
 					const traceHeaders = getTraceHeaders(key, options.url);
 					// Explicit request headers take precedence over SDK-generated headers.
 					options.header = Object.assign({}, traceHeaders, options.header || {});
-					console.log('[GC-JSPlugin] uni.request start:', options.method || 'GET', options.url, key);
 					rum.startResource({ key: key });
 					const request = {
 						key: key,
@@ -175,13 +204,18 @@ export const gcResourceTracking = {
 						return typeof originalFail === 'function' ? originalFail(error) : error;
 					};
 				} catch (error) {
-					console.error('[GC-JSPlugin] uni.request tracking invoke failed:', error);
+					debugLog('request-invocation-error', {
+						url: options && options.url,
+						error: error && (error.stack || error.message || String(error))
+					});
 				}
 				return options;
 			}
 		});
 		interceptorInstalled = true;
-		console.log('[GC-JSPlugin] uni.request tracker installed:', platform);
+		debugLog('installed', {
+			platform: platform
+		});
 		return true;
 		// #endif
 		return false;

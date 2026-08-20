@@ -1,7 +1,7 @@
 {
   "id": "GC-UniPlugin",
   "displayName": "GC-UniPlugin",
-  "version": "0.2.7-alpha.1",
+  "version": "0.2.7",
   "description": "Guance UniApp UTS implementation",
   "keywords": [
     "GC-UniPlugin",

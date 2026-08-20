@@ -1,6 +1,6 @@
 {
   "name": "@uni_modules/gc-uniplugin",
-  "version": "0.2.7-alpha.1",
+  "version": "0.2.7",
   "description": "",
   "main": "utssdk/app-harmony/index.ets",
   "author": "",

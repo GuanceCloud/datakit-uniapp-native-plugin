@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name = 'GuanceUniAppHostBridge'
-  s.version = '0.2.7-alpha.1'
+  s.version = '0.2.7'
   s.summary = 'Static Guance SDK bridge for hybrid UniApp UTS modules.'
   s.homepage = 'https://github.com/GuanceCloud/ft-sdk-uniapp-native-plugin'
   s.license = { :type => 'Apache-2.0' }

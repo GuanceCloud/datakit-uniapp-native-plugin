@@ -1,7 +1,6 @@
 import {
 	rum as gcRum
 } from '../native.js';
-
 const LOAD_TIME_UNAVAILABLE = -1;
 const RELOAD_LOAD_TIME = 0;
 const LIFECYCLE_FALLBACK_TIMEOUT_MS = 5000;
@@ -17,7 +16,6 @@ class PageMonitor {
 		this.pageHookInstalled = false;
 		this.appInForeground = true;
 		this.debugEnabled = false;
-
 		this.currentPage = null;
 		this.currentPageState = null;
 		this.activeViewPath = null;
@@ -61,8 +59,7 @@ class PageMonitor {
 	startTracking(app) {
 		if (this.initialized) return;
 		this.initialized = true;
-
-		console.log('[FTLog] View tracking initialized');
+		this.debugLog('initialized', null);
 
 		try {
 			// #ifdef APP-PLUS || APP-HARMONY
@@ -70,10 +67,11 @@ class PageMonitor {
 			this.watchAppLifecycle();
 			this.startWatchRouter();
 			this.checkInitialPage();
-			console.log('[FTLog] View tracking plugin initialized successfully');
 			// #endif
 		} catch (error) {
-			console.error('[FTLog] View tracking plugin initialization failed:', error);
+			this.debugLog('initialization-error', null, {
+				error: error && (error.stack || error.message || String(error))
+			});
 			this.initialized = false;
 		}
 	}
@@ -100,7 +98,9 @@ class PageMonitor {
 		// Vue 3: startTracking(app) is called after createSSRApp(App).
 		if (app && typeof app.mixin === 'function') {
 			app.mixin(mixin);
-			console.log('[FTLog] View tracking page hooks installed through app.mixin');
+			this.debugLog('hooks-installed', null, {
+				method: 'app.mixin'
+			});
 			return true;
 		}
 
@@ -108,12 +108,16 @@ class PageMonitor {
 		// #ifndef VUE3
 		if (typeof Vue !== 'undefined' && Vue && typeof Vue.mixin === 'function') {
 			Vue.mixin(mixin);
-			console.log('[FTLog] View tracking page hooks installed through Vue.mixin');
+			this.debugLog('hooks-installed', null, {
+				method: 'Vue.mixin'
+			});
 			return true;
 		}
 		// #endif
 
-		console.warn('[FTLog] View tracking page hooks were not installed; loadTime will use -1');
+		this.debugLog('hooks-unavailable', null, {
+			loadTime: LOAD_TIME_UNAVAILABLE
+		});
 		return false;
 	}
 
@@ -156,7 +160,9 @@ class PageMonitor {
 		const addAppListener = (event, callback) => {
 			try {
 				if (typeof plus === 'undefined') {
-					console.warn(`[FTLog] Unsupported event listener type: ${event}`);
+					this.debugLog('listener-unavailable', null, {
+						event
+					});
 					return;
 				}
 				plus.globalEvent.addEventListener(event, callback);
@@ -165,7 +171,10 @@ class PageMonitor {
 					callback
 				});
 			} catch (error) {
-				console.error(`[FTLog] Failed to add event listener ${event}:`, error);
+				this.debugLog('listener-error', null, {
+					event,
+					error: error && (error.stack || error.message || String(error))
+				});
 			}
 		};
 
@@ -190,7 +199,6 @@ class PageMonitor {
 			state.needDuration = false;
 			state.initialLoadTime = LOAD_TIME_UNAVAILABLE;
 		}
-		console.log('[FTLog] App resume detected:', state.pagePath);
 		this.showPageState(state, 'app:resume');
 	}
 
@@ -199,7 +207,6 @@ class PageMonitor {
 		this.debugLog('lifecycle', this.activeViewPath || this.currentPage, {
 			lifecycle: 'app:pause'
 		});
-		console.log('[FTLog] App pause detected');
 		this.cancelPageReadyFallback(this.currentPageState);
 		this.deactivateView(null, 'app:pause');
 	}
@@ -281,8 +288,10 @@ class PageMonitor {
 				this.removePendingRouteTransaction(transaction);
 				return;
 			}
-			console.warn('[FTLog] Page lifecycle was not observed; loadTime uses -1:',
-				transaction.pagePath);
+			this.debugLog('lifecycle-fallback', transaction.pagePath, {
+				reason: 'page lifecycle was not observed',
+				loadTime: LOAD_TIME_UNAVAILABLE
+			});
 			transaction.claimed = true;
 			this.startRouteWithoutLifecycle(transaction, 'route-lifecycle-timeout');
 		}, LIFECYCLE_FALLBACK_TIMEOUT_MS);
@@ -605,8 +614,10 @@ class PageMonitor {
 			if (state.ready || state.startCount > 0 || !state.visible) return;
 			state.needDuration = false;
 			state.initialLoadTime = LOAD_TIME_UNAVAILABLE;
-			console.warn('[FTLog] Page onReady was not observed; loadTime uses -1:',
-				state.pagePath);
+			this.debugLog('lifecycle-fallback', state.pagePath, {
+				reason: 'page onReady was not observed',
+				loadTime: LOAD_TIME_UNAVAILABLE
+			});
 			this.tryActivateVisiblePageState(state, true, 'page:onReady-timeout');
 		}, PAGE_READY_FALLBACK_TIMEOUT_MS);
 	}
@@ -653,7 +664,6 @@ class PageMonitor {
 				reason,
 				loadTime
 			});
-			console.log('[FTLog] startView:', params);
 			this.rum.startView(params);
 			state.startCount += 1;
 			this.activePageState = state;
@@ -704,7 +714,9 @@ class PageMonitor {
 			viewName,
 			loadTime: duration
 		};
-		console.log('[FTLog] onCreateView:', params);
+		this.debugLog('onCreateView', pagePath, {
+			loadTime: duration
+		});
 		this.rum.onCreateView(params);
 	}
 
@@ -733,7 +745,9 @@ class PageMonitor {
 			webView.evalJS(this.sessionReplayJS);
 			this.sessionReplayInjectedWebViews.add(webView);
 		} catch (error) {
-			console.error('[FTLog] Session Replay JS injection failed:', error);
+			this.debugLog('session-replay-injection-error', state.pagePath, {
+				error: error && (error.stack || error.message || String(error))
+			});
 		}
 	}
 

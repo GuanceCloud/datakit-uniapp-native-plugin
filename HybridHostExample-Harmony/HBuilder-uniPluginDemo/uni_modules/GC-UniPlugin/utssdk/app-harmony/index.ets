@@ -128,7 +128,7 @@ class GCTraceHeaderParams extends UTSObject {
     url!: string;
     key: string | null = null;
 }
-const GC_UTS_BRIDGE_VERSION: string = '0.2.7-alpha.1';
+const GC_UTS_BRIDGE_VERSION: string = '0.2.7';
 const pendingViewLoadTimes: Map<string, number> = new Map();
 const bridgeContext: Map<string, Object> = new Map();
 let currentViewName = '';
