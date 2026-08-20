@@ -16,12 +16,26 @@ export class GCUniPluginModuleName {
   static readonly TRACER: string = 'GCUniPlugin-Tracer';
 }
 
+/**
+ * Host-owned configuration for starting the native SDK before a WGT opens.
+ * The shapes intentionally match the parameters accepted by the four public
+ * native modules so bridge state and the underlying SDK stay in sync.
+ */
+interface GCUniPluginStartupConfig {
+  mobile: object;
+  rum: object;
+  logger: object;
+  tracer: object;
+}
+
 function currentContext(): Context | undefined {
   return hostContext === null ? undefined : hostContext;
 }
 
 const mobileAgentModule: ESObject = {
-  sdkConfig: (params: object): void => GCUniPluginNative.sdkConfig(params, currentContext()),
+  sdkConfig: (params: object): void => {
+    GCUniPluginNative.sdkConfig(params, currentContext());
+  },
   bindRUMUserData: (params: object): void => GCUniPluginNative.bindRUMUserData(params),
   unbindRUMUserData: (): void => GCUniPluginNative.unbindRUMUserData(),
   appendGlobalContext: (params: object | null): void => GCUniPluginNative.appendGlobalContext(params),
@@ -82,4 +96,28 @@ export function registerNativeModules(context?: Context): void {
   registerModule(GCUniPluginModuleName.TRACER, tracerModule);
   isRegistered = true;
   console.info('[Guance] All GCUniPlugin modules registered');
+}
+
+let isNativeSDKInitialized = false;
+
+/**
+ * Initialize the Guance SDK from the Harmony host. Call this from
+ * UIAbility.onCreate before the UniMP runtime loads a WGT.
+ */
+export function initializeNativeSDK(context: Context, config: object): boolean {
+  if (isNativeSDKInitialized) {
+    return true;
+  }
+  const startupConfig = config as GCUniPluginStartupConfig;
+  if (!GCUniPluginNative.sdkConfig(startupConfig.mobile, context)) {
+    console.error('[Guance] Native SDK initialization skipped: base configuration failed');
+    return false;
+  }
+
+  GCUniPluginNative.setRumConfig(startupConfig.rum);
+  GCUniPluginNative.setLoggerConfig(startupConfig.logger);
+  GCUniPluginNative.setTraceConfig(startupConfig.tracer);
+  isNativeSDKInitialized = true;
+  console.info('[Guance] Native SDK, RUM, Logger, and Trace initialized');
+  return true;
 }

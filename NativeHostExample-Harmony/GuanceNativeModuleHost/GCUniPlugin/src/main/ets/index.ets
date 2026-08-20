@@ -2,4 +2,4 @@
 import './bridge/GCNativeWebView';
 
 export { GCUniPluginNative } from './bridge/GCUniPluginNative';
-export { registerNativeModules } from './extension/NativeModules';
+export { initializeNativeSDK, registerNativeModules } from './extension/NativeModules';

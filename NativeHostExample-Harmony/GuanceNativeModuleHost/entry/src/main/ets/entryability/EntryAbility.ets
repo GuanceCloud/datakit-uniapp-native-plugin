@@ -1,9 +1,14 @@
 import { UIAbility } from '@kit.AbilityKit';
 import { window } from '@kit.ArkUI';
 import { init } from '@dcloudio/uni-app-runtime';
-import { registerNativeModules } from '@guancecloud/gc-uniplugin';
+import { initializeNativeSDK, registerNativeModules } from '@guancecloud/gc-uniplugin';
+import { GUANCE_STARTUP_CONFIG } from '../config/GuanceStartupConfig';
 
 export default class EntryAbility extends UIAbility {
+  onCreate(): void {
+    initializeNativeSDK(this.context, GUANCE_STARTUP_CONFIG);
+  }
+
   onWindowStageCreate(windowStage: window.WindowStage): void {
     init(this, windowStage, { debug: true });
     // registerModule writes to the Runtime's __NativeModule store.  The

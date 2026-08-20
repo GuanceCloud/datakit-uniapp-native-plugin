@@ -196,7 +196,7 @@ export class GCUniPluginNative {
     bridgeContext.set('sdk_bridge_info', sdkBridgeInfo);
   }
 
-  static sdkConfig(params: object, context: Context | undefined) {
+  static sdkConfig(params: object, context: Context | undefined): boolean {
     try {
       const configParams = params as HarmonyMobileConfig;
       const datawayUrl = firstHarmonyString(configParams.datawayUrl);
@@ -210,7 +210,7 @@ export class GCUniPluginNative {
         config = FTSDKConfig.builder(datakitUrl);
       } else {
         console.error('[GC-UniPlugin] sdkConfig failed: missing datawayUrl/clientToken or datakitUrl/serverUrl/metricsUrl');
-        return;
+        return false;
       }
 
       const debug = firstHarmonyBoolean(configParams.debug, configParams.enableSDKDebugLog);
@@ -265,12 +265,14 @@ export class GCUniPluginNative {
 
       if (context === undefined) {
         console.error('[GC-UniPlugin] sdkConfig failed: Harmony application context is unavailable');
-        return;
+        return false;
       }
       FTSDK.install(config, context);
       console.log('[GC-UniPlugin] sdkConfig completed successfully');
+      return true;
     } catch (error) {
       console.error('[GC-UniPlugin] sdkConfig failed:', error);
+      return false;
     }
   }
 
