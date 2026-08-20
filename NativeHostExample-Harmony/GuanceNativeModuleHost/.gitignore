@@ -4,3 +4,4 @@ oh_modules/
 build/
 entry/build/
 uniapp/unpackage/
+/build-profile.json5
