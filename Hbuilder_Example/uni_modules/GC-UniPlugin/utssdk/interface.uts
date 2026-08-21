@@ -16,7 +16,48 @@ export type GCMobileConfig = {
 	globalContext?: any | null
 	dataModifier?: any | null
 	lineDataModifier?: any | null
+	remoteConfiguration?: boolean | null
+	remoteConfigMiniUpdateInterval?: number | null
+	enableDataFilter?: boolean | null
+	dataFilters?: any | null
 }
+
+export type GCDatakitURLParams = {
+	datakitUrl: string
+}
+
+export type GCDatawayURLParams = {
+	datawayUrl: string
+	clientToken: string
+}
+
+export type GCRemoteConfigUpdateParams = {
+	miniUpdateInterval?: number | null
+}
+
+export class GCRemoteConfigUpdateResult {
+	success: boolean = false
+	platform: string = ''
+	rawJson: string | null = null
+	errorCode: any | null = null
+	errorMessage: string | null = null
+
+	constructor(
+		success: boolean,
+		platform: string,
+		rawJson?: string | null,
+		errorCode?: any | null,
+		errorMessage?: string | null
+	) {
+		this.success = success
+		this.platform = platform
+		this.rawJson = rawJson == null ? null : rawJson
+		this.errorCode = errorCode == null ? null : errorCode
+		this.errorMessage = errorMessage == null ? null : errorMessage
+	}
+}
+
+export type GCRemoteConfigUpdateCallback = (result: GCRemoteConfigUpdateResult) => void
 
 export type GCRUMConfig = {
 	androidAppId?: string | null
@@ -140,6 +181,9 @@ export type GCTraceHeaderParams = {
 
 export type GCMobileAgent = {
 	sdkConfig(params: GCMobileConfig): void
+	setDatakitURL(params: GCDatakitURLParams): void
+	setDatawayURL(params: GCDatawayURLParams): void
+	updateRemoteConfigWithMiniUpdateInterval(params: GCRemoteConfigUpdateParams, callback: GCRemoteConfigUpdateCallback): void
 	bindRUMUserData(params: GCRUMUserDataParams): void
 	unbindRUMUserData(): void
 	appendGlobalContext(params: any | null): void

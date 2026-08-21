@@ -1,3 +1,5 @@
+import { GCRemoteConfigUpdateResult } from './interface.uts'
+
 export const GC_UTS_BRIDGE_VERSION: string = '0.2.7'
 
 function createDefaultBridgeContext(): UTSJSONObject {
@@ -8,10 +10,11 @@ function createDefaultBridgeContext(): UTSJSONObject {
 let bridgeContext: UTSJSONObject = createDefaultBridgeContext()
 
 function parseObject(text: string | null): UTSJSONObject | null {
-	if (text == null || text.length == 0) {
+	const safeText: string = text ?? ''
+	if (safeText.length == 0) {
 		return null
 	}
-	return JSON.parseObject(text)
+	return JSON.parseObject(safeText)
 }
 
 function cloneJSONObject(source: UTSJSONObject | null): UTSJSONObject {
@@ -32,7 +35,8 @@ function mergeJSONObject(target: UTSJSONObject, source: UTSJSONObject | null): U
 	if (source == null) {
 		return target
 	}
-	source.toMap().forEach((entry) => {
+	const safeSource: UTSJSONObject = source ?? {}
+	safeSource.toMap().forEach((entry) => {
 		target[entry.key] = entry.value
 	})
 	return target
@@ -92,4 +96,41 @@ export function normalizeTraceConfigParams(params: any | null): UTSJSONObject {
 
 export function normalizeLoggingParams(params: any | null): UTSJSONObject {
 	return cloneParams(params)
+}
+
+export function createRemoteConfigUpdateResult(
+	success: boolean,
+	platform: string,
+	rawJson?: string | null,
+	errorCode?: any | null,
+	errorMessage?: string | null
+): GCRemoteConfigUpdateResult {
+	return new GCRemoteConfigUpdateResult(
+		success,
+		platform,
+		rawJson == null ? null : rawJson,
+		errorCode == null ? null : errorCode,
+		errorMessage == null ? null : errorMessage
+	)
+}
+
+export function parseRemoteConfigUpdateResult(result: string | null, platform: string): GCRemoteConfigUpdateResult {
+	const parsedValue = parseObject(result)
+	if (parsedValue == null) {
+		return createRemoteConfigUpdateResult(
+			false,
+			platform,
+			null,
+			'REMOTE_CONFIG_INVALID_RESULT',
+			'Remote configuration update returned an invalid result.'
+		)
+	}
+	const value: UTSJSONObject = parsedValue ?? {}
+	return createRemoteConfigUpdateResult(
+		value.getBoolean('success') ?? false,
+		value.getString('platform') ?? platform,
+		value.getString('rawJson'),
+		value['errorCode'],
+		value.getString('errorMessage')
+	)
 }

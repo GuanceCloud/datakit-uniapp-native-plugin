@@ -12,6 +12,10 @@ import type {
   GCLoggerConfig,
   GCLoggerLogParams,
   GCMobileConfig,
+  GCDatakitURLParams,
+  GCDatawayURLParams,
+  GCRemoteConfigUpdateCallback,
+  GCRemoteConfigUpdateParams,
   GCRUMActionParams,
   GCRUMAddResourceParams,
   GCRUMConfig,
@@ -24,7 +28,7 @@ import type {
   GCTraceConfig,
   GCTraceHeaderParams
 } from '../interface.uts';
-import { GC_UTS_BRIDGE_VERSION } from '../bridge.uts';
+import { createRemoteConfigUpdateResult, GC_UTS_BRIDGE_VERSION } from '../bridge.uts';
 import { Context } from '@kit.AbilityKit';
 import webview from '@ohos.web.webview';
 
@@ -33,6 +37,25 @@ GCUniPluginNative.setBridgeVersion(GC_UTS_BRIDGE_VERSION);
 export class mobileAgent {
   static sdkConfig(params: GCMobileConfig) {
     GCUniPluginNative.sdkConfig(params, getHarmonyContext());
+  }
+
+  static setDatakitURL(params: GCDatakitURLParams) {
+    GCUniPluginNative.setDatakitURL(params);
+  }
+
+  static setDatawayURL(params: GCDatawayURLParams) {
+    GCUniPluginNative.setDatawayURL(params);
+  }
+
+  static updateRemoteConfigWithMiniUpdateInterval(params: GCRemoteConfigUpdateParams, callback: GCRemoteConfigUpdateCallback) {
+    GCUniPluginNative.updateRemoteConfigWithMiniUpdateInterval(params);
+    callback(createRemoteConfigUpdateResult(
+      false,
+      'harmony',
+      null,
+      'UNSUPPORTED_PLATFORM',
+      'Remote configuration update is not supported on HarmonyOS.'
+    ));
   }
 
   static bindRUMUserData(params: GCRUMUserDataParams) {

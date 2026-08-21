@@ -15,6 +15,7 @@ import com.ft.sdk.FTLogger
 import com.ft.sdk.FTLoggerConfig
 import com.ft.sdk.FTRUMGlobalManager
 import com.ft.sdk.FTRUMConfig
+import com.ft.sdk.FTRemoteConfigManager
 import com.ft.sdk.FTSDKConfig
 import com.ft.sdk.FTSdk
 import com.ft.sdk.FTTraceConfig
@@ -26,6 +27,7 @@ import com.ft.sdk.TraceType
 import com.ft.sdk.garble.bean.AppState
 import com.ft.sdk.garble.bean.NetStatusBean
 import com.ft.sdk.garble.bean.ResourceParams
+import com.ft.sdk.garble.bean.RemoteConfigBean
 import com.ft.sdk.garble.bean.Status
 import com.ft.sdk.garble.bean.UserData
 import com.ft.sdk.garble.utils.Constants
@@ -60,6 +62,8 @@ private object FTUniAppStartManager {
 
 object GCUniPluginNative {
     private const val DEFAULT_ERROR_TYPE = "uniapp_crash"
+    @Volatile
+    private var remoteConfigurationEnabled = false
 
     private fun parseObject(json: String?): JSONObject {
         if (json.isNullOrBlank()) {
@@ -202,6 +206,17 @@ object GCUniPluginNative {
         }
     }
 
+    private fun dataFilters(value: Any?): HashMap<String, Array<String>>? {
+        val source = entries(value) ?: return null
+        val result = HashMap<String, Array<String>>()
+        for (entry in source) {
+            val key = stringValue(entry.key) ?: continue
+            val rules = stringList(entry.value) ?: continue
+            result[key] = rules.toTypedArray()
+        }
+        return result
+    }
+
     private fun discardOldest(value: Any?): Boolean {
         return when (value) {
             is Number -> value.toInt() == 1
@@ -330,7 +345,7 @@ object GCUniPluginNative {
         }
     }
 
-    private fun createMobileConfig(params: JSONObject): FTSDKConfig? {
+    private fun createMobileConfig(params: JSONObject): FTSDKConfig {
         val datawayUrl = stringValue(params["datawayUrl"])
         val clientToken = stringValue(params["clientToken"])
         val datakitUrl = stringValue(firstValue(params, "datakitUrl", "serverUrl", "metricsUrl"))
@@ -339,7 +354,7 @@ object GCUniPluginNative {
         } else if (!datakitUrl.isNullOrBlank()) {
             FTSDKConfig.builder(datakitUrl)
         } else {
-            return null
+            FTSDKConfig.builder()
         }
 
         stringValue(params["env"])?.let { config.setEnv(it) }
@@ -386,7 +401,32 @@ object GCUniPluginNative {
                 }
             })
         }
+        if (params.containsKey("remoteConfiguration")) {
+            config.setRemoteConfiguration(booleanValue(params["remoteConfiguration"]))
+        }
+        intValue(params["remoteConfigMiniUpdateInterval"])?.let {
+            config.setRemoteConfigMiniUpdateInterval(it.coerceAtLeast(0))
+        }
+        if (params.containsKey("enableDataFilter")) {
+            config.setEnableDataFilter(booleanValue(params["enableDataFilter"]))
+        }
+        dataFilters(params["dataFilters"])?.let { config.setDataFilters(it) }
         return config
+    }
+
+    private fun remoteConfigResultJson(
+        success: Boolean,
+        rawJson: String? = null,
+        errorCode: String? = null,
+        errorMessage: String? = null
+    ): String {
+        val result = JSONObject()
+        result["success"] = success
+        result["platform"] = "android"
+        rawJson?.let { result["rawJson"] = it }
+        errorCode?.let { result["errorCode"] = it }
+        errorMessage?.let { result["errorMessage"] = it }
+        return JSON.toJSONString(result)
     }
 
     private fun createRumConfig(params: JSONObject): FTRUMConfig? {
@@ -532,10 +572,8 @@ object GCUniPluginNative {
     fun sdkConfig(json: String?): Boolean {
         val params = parseObject(json)
         val config = createMobileConfig(params)
-        if (config == null) {
-            return false
-        }
         FTSdk.install(config)
+        remoteConfigurationEnabled = booleanValue(params["remoteConfiguration"])
         if (!booleanValue(firstValue(params, "offlinePackage", "offlinePakcage"))) {
             FTUniAppStartManager.start()
         }
@@ -557,6 +595,58 @@ object GCUniPluginNative {
     @JvmStatic
     fun unbindRUMUserData() {
         FTSdk.unbindRumUserData()
+    }
+
+    @JvmStatic
+    fun setDatakitURL(json: String?) {
+        val datakitUrl = stringValue(parseObject(json)["datakitUrl"])
+        if (!datakitUrl.isNullOrBlank()) {
+            FTSdk.setDatakitUrl(datakitUrl)
+        }
+    }
+
+    @JvmStatic
+    fun setDatawayURL(json: String?) {
+        val params = parseObject(json)
+        val datawayUrl = stringValue(params["datawayUrl"])
+        val clientToken = stringValue(params["clientToken"])
+        if (!datawayUrl.isNullOrBlank() && !clientToken.isNullOrBlank()) {
+            FTSdk.setDatawayUrl(datawayUrl, clientToken)
+        }
+    }
+
+    @JvmStatic
+    fun updateRemoteConfigWithMiniUpdateInterval(json: String?, callback: (String?) -> Unit) {
+        if (!remoteConfigurationEnabled) {
+            callback(
+                remoteConfigResultJson(
+                    success = false,
+                    errorCode = "REMOTE_CONFIG_DISABLED",
+                    errorMessage = "Remote configuration is not enabled."
+                )
+            )
+            return
+        }
+        val interval = intValue(parseObject(json)["miniUpdateInterval"])?.coerceAtLeast(0) ?: 0
+        FTSdk.updateRemoteConfig(interval, object : FTRemoteConfigManager.FetchResult() {
+            private var rawJson: String? = null
+
+            override fun onConfigSuccessFetched(configBean: RemoteConfigBean?, jsonConfig: String?): RemoteConfigBean? {
+                rawJson = jsonConfig
+                return null
+            }
+
+            override fun onResult(success: Boolean) {
+                callback(
+                    remoteConfigResultJson(
+                        success = success,
+                        rawJson = rawJson,
+                        errorCode = if (success) null else "REMOTE_CONFIG_UPDATE_FAILED",
+                        errorMessage = if (success) null else "Remote configuration update failed."
+                    )
+                )
+            }
+        })
     }
 
     @JvmStatic
@@ -587,6 +677,7 @@ object GCUniPluginNative {
     @JvmStatic
     fun shutDown() {
         FTSdk.shutDown()
+        remoteConfigurationEnabled = false
     }
 
     @JvmStatic

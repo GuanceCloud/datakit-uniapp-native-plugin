@@ -2,6 +2,10 @@ import {
 	GCLoggerConfig,
 	GCLoggerLogParams,
 	GCMobileConfig,
+	GCDatakitURLParams,
+	GCDatawayURLParams,
+	GCRemoteConfigUpdateCallback,
+	GCRemoteConfigUpdateParams,
 	GCRUMActionParams,
 	GCRUMAddResourceParams,
 	GCRUMCreateViewParams,
@@ -17,6 +21,7 @@ import {
 import {
 	appendBridgeContextState,
 	cloneParams,
+	parseRemoteConfigUpdateResult,
 	mergePropertyForParams,
 	normalizeLoggerConfigParams,
 	normalizeLoggingParams,
@@ -81,6 +86,20 @@ export class mobileAgent {
 		} else {
 			debugError('[FTLog] GC-UniPlugin Mobile SDK initialization failed')
 		}
+	}
+
+	static setDatakitURL(params: GCDatakitURLParams) {
+		GCUniPluginNative.setDatakitURL(stringifyParams(params))
+	}
+
+	static setDatawayURL(params: GCDatawayURLParams) {
+		GCUniPluginNative.setDatawayURL(stringifyParams(params))
+	}
+
+	static updateRemoteConfigWithMiniUpdateInterval(params: GCRemoteConfigUpdateParams, callback: GCRemoteConfigUpdateCallback) {
+		GCUniPluginNative.updateRemoteConfigWithMiniUpdateInterval(stringifyParams(params), (result: string | null) => {
+			callback(parseRemoteConfigUpdateResult(result, 'android'))
+		})
 	}
 
 	static bindRUMUserData(params: GCRUMUserDataParams) {

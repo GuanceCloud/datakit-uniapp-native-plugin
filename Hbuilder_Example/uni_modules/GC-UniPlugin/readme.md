@@ -25,6 +25,35 @@ gcErrorTracking.startTracking()
 
 Keep existing method names and parameter objects unchanged, such as `mobileAgent.sdkConfig(...)`, `rum.setConfig(...)`, `logger.logging(...)`, and `tracer.getTraceHeader(...)`.
 
+Remote configuration and runtime endpoint updates are available through the
+same typed UTS API on Android and iOS:
+
+```js
+mobileAgent.sdkConfig({
+  remoteConfiguration: true,
+  remoteConfigMiniUpdateInterval: 600,
+  enableDataFilter: true,
+  dataFilters: {
+    logging: ['message'],
+    rum: ['view_name']
+  }
+})
+
+mobileAgent.setDatakitURL({ datakitUrl: 'https://datakit.example.com' })
+mobileAgent.setDatawayURL({
+  datawayUrl: 'https://dataway.example.com',
+  clientToken: 'client-token'
+})
+mobileAgent.updateRemoteConfigWithMiniUpdateInterval(
+  { miniUpdateInterval: 60 },
+  result => console.log(result)
+)
+```
+
+HarmonyOS keeps these methods in the shared interface for cross-platform
+source compatibility, but currently reports `UNSUPPORTED_PLATFORM` from the
+remote-update callback and logs a warning for endpoint or configuration calls.
+
 Import SDK APIs directly from this package to retain UTS interfaces and
 parameter types in HBuilderX. Import `setup.js` once in the application entry
 before the first collector call; application code does not call

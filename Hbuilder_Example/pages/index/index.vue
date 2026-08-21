@@ -7,6 +7,9 @@
 			<button type="primary" @click="appendLogGlobalContext()">appendLogGlobalContext</button>
 			<button type="primary" @click="appendBridgeContext()">appendBridgeContext</button>
 			<button type="primary" @click="flushSyncData()">Manual Data Sync</button>
+			<button type="primary" @click="setDatakitURL()">Update Datakit URL</button>
+			<button type="primary" @click="setDatawayURL()">Update Dataway URL</button>
+			<button type="primary" @click="updateRemoteConfigWithMiniUpdateInterval()">Update Remote Config</button>
 			<button type="primary" @click="clearAllData()">Clear Unsynchronized Local Data</button>
 			<button type="primary" @click="manuallySetApplicationStart()">Manual Application Start</button>
 			<button type="warn" @click="shutDown()">SDK Shutdown</button>
@@ -28,6 +31,7 @@
 	import {
 		mobileAgent
 	} from '@/gc-build-entry.js'
+	import * as SDKConst from '@/utils.js'
 	export default {
 		data() {
 			return {}
@@ -71,6 +75,24 @@
 		  },
 		  flushSyncData(){
 			  mobileAgent.flushSyncData()
+		  },
+		  setDatakitURL(){
+			  mobileAgent.setDatakitURL({
+				  datakitUrl: SDKConst.SERVER_URL
+			  })
+		  },
+		  setDatawayURL(){
+			  mobileAgent.setDatawayURL({
+				  datawayUrl: SDKConst.DATAWAY_URL,
+				  clientToken: SDKConst.CLIENT_TOKEN
+			  })
+		  },
+		  updateRemoteConfigWithMiniUpdateInterval(){
+			  mobileAgent.updateRemoteConfigWithMiniUpdateInterval({
+				  miniUpdateInterval: 0
+			  }, result => {
+				  console.log('remote config result: ' + JSON.stringify(result))
+			  })
 		  },
 		  clearAllData(){
 			  mobileAgent.clearAllData()

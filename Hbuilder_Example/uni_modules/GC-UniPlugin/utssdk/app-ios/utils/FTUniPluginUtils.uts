@@ -5,17 +5,19 @@ import {
 const BLACK_RESOURCE_PATTERN = /^https?:\/\/([a-zA-Z0-9-]+\.)?dcloud\.net\.cn(:\d+)?\/.*/
 
 export function filterBlackResource(resourceUrl: string | null): boolean {
-	if (resourceUrl == null || resourceUrl.length === 0) {
+	const safeResourceUrl: string = resourceUrl ?? ''
+	if (safeResourceUrl.length === 0) {
 		return false
 	}
-	return BLACK_RESOURCE_PATTERN.test(resourceUrl)
+	return BLACK_RESOURCE_PATTERN.test(safeResourceUrl)
 }
 
 function getStringValue(source: UTSJSONObject | null, key: string): string | null {
 	if (source == null) {
 		return null
 	}
-	return source.getString(key)
+	const safeSource: UTSJSONObject = source ?? {}
+	return safeSource.getString(key)
 }
 
 export function prepareAddResourceParams(params: any | null): any {

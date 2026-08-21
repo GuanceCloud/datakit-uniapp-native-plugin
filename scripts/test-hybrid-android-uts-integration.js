@@ -79,6 +79,28 @@ for (const [label, source] of [
     `${label} cold-start timing`
   );
   assertExcludes(source, 'installTime - startTime', `${label} cold-start timing`);
+  for (const field of [
+    'setRemoteConfiguration',
+    'setRemoteConfigMiniUpdateInterval',
+    'setEnableDataFilter',
+    'setDataFilters'
+  ]) {
+    assertIncludes(source, field, `${label} dynamic configuration`);
+  }
+  for (const method of [
+    'fun setDatakitURL',
+    'fun setDatawayURL',
+    'fun updateRemoteConfigWithMiniUpdateInterval'
+  ]) {
+    assertIncludes(source, method, `${label} dynamic configuration`);
+  }
+}
+for (const method of [
+  'GCUniPluginNative.setDatakitURL',
+  'GCUniPluginNative.setDatawayURL',
+  'GCUniPluginNative.updateRemoteConfigWithMiniUpdateInterval'
+]) {
+  assertIncludes(coreUtsIndex, method, 'core Android UTS dynamic configuration');
 }
 assertIncludes(replayNative, 'fun setConfig(json: String?): Boolean', 'Session Replay Android initialization result');
 assertIncludes(syncSources, 'HBUILDER_ANDROID_UTS_EXPORT_DIR', 'source synchronization script');

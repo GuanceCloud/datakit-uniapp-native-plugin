@@ -39,6 +39,9 @@ function assertStaticConstantExports(relativePath, constants) {
 const baseBridgeClasses = {
   mobileAgent: [
     'sdkConfig',
+    'setDatakitURL',
+    'setDatawayURL',
+    'updateRemoteConfigWithMiniUpdateInterval',
     'bindRUMUserData',
     'unbindRUMUserData',
     'appendGlobalContext',
@@ -136,8 +139,13 @@ const bridgeSource = read(
   'Hbuilder_Example/uni_modules/GC-UniPlugin/utssdk/bridge.uts'
 );
 assert.match(bridgeSource, /export function appendBridgeContextState\b/);
+assert.match(bridgeSource, /export function createRemoteConfigUpdateResult\b/);
+assert.match(bridgeSource, /export function parseRemoteConfigUpdateResult\b/);
 assert.doesNotMatch(bridgeSource, /export function appendBridgeContext\b/);
-assert.match(harmonyEntry, /import \{ GC_UTS_BRIDGE_VERSION \} from '\.\.\/bridge\.uts';/);
+assert.match(
+  harmonyEntry,
+  /import \{[^}]*GC_UTS_BRIDGE_VERSION[^}]*\} from '\.\.\/bridge\.uts';/
+);
 assert.match(
   harmonyEntry,
   /GCUniPluginNative\.setBridgeVersion\(GC_UTS_BRIDGE_VERSION\);/,
@@ -217,12 +225,27 @@ const baseIOSNativeSource = read(
 );
 assert.match(
   baseIOSNativeSource,
-  /registerSDKInternalLogCache\(\)\s*\n\s*let config: FTMobileConfig\?/
+  /registerSDKInternalLogCache\(\)\s*\n\s*let config: FTSDKConfig/
 );
 assert.match(
   baseIOSNativeSource,
   /registerInnerLogCache\(toLogsDirectory: nil, fileNamePrefix: nil\)/
 );
+for (const field of [
+  'remoteConfiguration',
+  'remoteConfigMiniUpdateInterval',
+  'enableDataFilter',
+  'dataFilters'
+]) {
+  assert.match(baseIOSNativeSource, new RegExp(`config\\.${field}`));
+}
+for (const method of [
+  'setDatakitURL',
+  'setDatawayURL',
+  'updateRemoteConfigWithMiniUpdateInterval'
+]) {
+  assert.match(baseIOSNativeSource, new RegExp(`static func ${method}\\b`));
+}
 
 const baseFacade = read(
   'Hbuilder_Example/uni_modules/GC-JSPlugin/js_sdk/native.js'

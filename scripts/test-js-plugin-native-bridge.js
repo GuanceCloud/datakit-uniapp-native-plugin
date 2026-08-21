@@ -94,6 +94,15 @@ function testInstalledUTSBridgeKeepsFacadeIdentity(bridge) {
   assert.strictEqual(bridge.getNativeBridgeSource(), 'uts');
 
   mobileAgentFacade.appendGlobalContext({ region: 'cn' });
+  mobileAgentFacade.setDatakitURL({ datakitUrl: 'https://datakit.example.com' });
+  mobileAgentFacade.setDatawayURL({
+    datawayUrl: 'https://dataway.example.com',
+    clientToken: 'test-token'
+  });
+  mobileAgentFacade.updateRemoteConfigWithMiniUpdateInterval(
+    { miniUpdateInterval: 60 },
+    () => {}
+  );
   rumFacade.addAction({ actionName: 'tap' });
   loggerFacade.logging({ content: 'uts-log' });
   assert.deepStrictEqual(
@@ -104,6 +113,9 @@ function testInstalledUTSBridgeKeepsFacadeIdentity(bridge) {
     calls.map(call => `${call.moduleName}.${String(call.methodName)}`),
     [
       'uts-mobileAgent.appendGlobalContext',
+      'uts-mobileAgent.setDatakitURL',
+      'uts-mobileAgent.setDatawayURL',
+      'uts-mobileAgent.updateRemoteConfigWithMiniUpdateInterval',
       'uts-rum.addAction',
       'uts-logger.logging',
       'uts-tracer.getTraceHeader'
@@ -122,6 +134,9 @@ async function testMissingNativeRuntimeUsesSafeFallbacks() {
   delete global.uni;
   const bridge = await loadNativeBridgeModule('missing-native');
   assert.doesNotThrow(() => bridge.mobileAgent.sdkConfig({}));
+  assert.doesNotThrow(() => bridge.mobileAgent.setDatakitURL({ datakitUrl: '' }));
+  assert.doesNotThrow(() => bridge.mobileAgent.setDatawayURL({ datawayUrl: '', clientToken: '' }));
+  assert.doesNotThrow(() => bridge.mobileAgent.updateRemoteConfigWithMiniUpdateInterval({}, () => {}));
   assert.doesNotThrow(() => bridge.rum.startView({ viewName: 'debug' }));
   assert.doesNotThrow(() => bridge.logger.logging({ content: 'debug' }));
   assert.strictEqual(bridge.tracer.getTraceHeader({}), null);

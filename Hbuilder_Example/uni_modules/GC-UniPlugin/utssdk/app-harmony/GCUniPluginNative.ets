@@ -60,6 +60,19 @@ interface HarmonyMobileConfig {
   globalContext?: HarmonyProperties | null;
   dataModifier?: HarmonyDataModifierParams | null;
   lineDataModifier?: HarmonyLineDataModifierParams | null;
+  remoteConfiguration?: boolean | null;
+  remoteConfigMiniUpdateInterval?: number | null;
+  enableDataFilter?: boolean | null;
+  dataFilters?: Record<string, string[]> | null;
+}
+
+interface HarmonyDatakitURLParams {
+  datakitUrl: string;
+}
+
+interface HarmonyDatawayURLParams {
+  datawayUrl: string;
+  clientToken: string;
 }
 
 interface HarmonyRUMUserDataParams {
@@ -262,6 +275,12 @@ export class GCUniPluginNative {
       if (configParams.lineDataModifier) {
         config.setLineDataModifier(new HarmonyLineDataModifier(toHarmonyLinePatches(configParams.lineDataModifier)));
       }
+      if (configParams.remoteConfiguration !== undefined ||
+        configParams.remoteConfigMiniUpdateInterval !== undefined ||
+        configParams.enableDataFilter !== undefined ||
+        configParams.dataFilters !== undefined) {
+        console.warn('[GC-UniPlugin] remote configuration and data filters are not supported on HarmonyOS');
+      }
 
       if (context === undefined) {
         console.error('[GC-UniPlugin] sdkConfig failed: Harmony application context is unavailable');
@@ -301,6 +320,22 @@ export class GCUniPluginNative {
 
   static unbindRUMUserData() {
     FTSDK.unbindRumUserData();
+  }
+
+  static setDatakitURL(params: object) {
+    const datakitParams = params as HarmonyDatakitURLParams;
+    console.warn(`[GC-UniPlugin] setDatakitURL is not supported on HarmonyOS: ${datakitParams.datakitUrl}`);
+  }
+
+  static setDatawayURL(params: object) {
+    const datawayParams = params as HarmonyDatawayURLParams;
+    console.warn(`[GC-UniPlugin] setDatawayURL is not supported on HarmonyOS: ${datawayParams.datawayUrl}`);
+  }
+
+  static updateRemoteConfigWithMiniUpdateInterval(params: object) {
+    const updateParams = params as Record<string, number | null>;
+    const interval = updateParams.miniUpdateInterval;
+    console.warn(`[GC-UniPlugin] updateRemoteConfigWithMiniUpdateInterval is not supported on HarmonyOS: ${interval}`);
   }
 
   static appendGlobalContext(params: object | null) {

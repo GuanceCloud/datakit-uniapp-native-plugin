@@ -11,15 +11,39 @@ import {
 	GCRUMViewParams,
 	GCLoggerConfig,
 	GCLoggerLogParams,
+	GCDatakitURLParams,
+	GCDatawayURLParams,
+	GCRemoteConfigUpdateCallback,
+	GCRemoteConfigUpdateParams,
 	GCTraceHeaderParams,
 	GCTraceConfig,
 } from './interface.uts'
+import { createRemoteConfigUpdateResult } from './bridge.uts'
 
 function noopWithParams(_: any | null): void {}
 
 export class mobileAgent {
 	static sdkConfig(params: GCMobileConfig) {
 		noopWithParams(params)
+	}
+
+	static setDatakitURL(params: GCDatakitURLParams) {
+		noopWithParams(params)
+	}
+
+	static setDatawayURL(params: GCDatawayURLParams) {
+		noopWithParams(params)
+	}
+
+	static updateRemoteConfigWithMiniUpdateInterval(params: GCRemoteConfigUpdateParams, callback: GCRemoteConfigUpdateCallback) {
+		noopWithParams(params)
+		callback(createRemoteConfigUpdateResult(
+			false,
+			'unsupported',
+			null,
+			'UNSUPPORTED_PLATFORM',
+			'Remote configuration update is not supported on this platform.'
+		))
 	}
 
 	static bindRUMUserData(params: GCRUMUserDataParams) {

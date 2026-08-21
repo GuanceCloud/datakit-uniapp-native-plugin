@@ -30,10 +30,55 @@ open class GCMobileConfig (
     open var globalContext: Any? = null,
     open var dataModifier: Any? = null,
     open var lineDataModifier: Any? = null,
+    open var remoteConfiguration: Boolean? = null,
+    open var remoteConfigMiniUpdateInterval: Number? = null,
+    open var enableDataFilter: Boolean? = null,
+    open var dataFilters: Any? = null,
 ) : UTSObject()
+open class GCDatakitURLParams (
+    @JsonNotNull
+    open var datakitUrl: String,
+) : UTSObject()
+open class GCDatawayURLParams (
+    @JsonNotNull
+    open var datawayUrl: String,
+    @JsonNotNull
+    open var clientToken: String,
+) : UTSObject()
+open class GCRemoteConfigUpdateParams (
+    open var miniUpdateInterval: Number? = null,
+) : UTSObject()
+open class GCRemoteConfigUpdateResult {
+    open var success: Boolean = false
+    open var platform: String = ""
+    open var rawJson: String? = null
+    open var errorCode: Any? = null
+    open var errorMessage: String? = null
+    constructor(success: Boolean, platform: String, rawJson: String?, errorCode: Any?, errorMessage: String?){
+        this.success = success
+        this.platform = platform
+        this.rawJson = if (rawJson == null) {
+            null
+        } else {
+            rawJson
+        }
+        this.errorCode = if (errorCode == null) {
+            null
+        } else {
+            errorCode
+        }
+        this.errorMessage = if (errorMessage == null) {
+            null
+        } else {
+            errorMessage
+        }
+    }
+}
+typealias GCRemoteConfigUpdateCallback = (result: GCRemoteConfigUpdateResult) -> Unit
 open class GCRUMConfig (
     open var androidAppId: String? = null,
     open var iOSAppId: String? = null,
+    open var harmonyAppId: String? = null,
     open var sampleRate: Number? = null,
     open var sessionOnErrorSampleRate: Number? = null,
     open var enableNativeUserAction: Boolean? = null,
@@ -66,6 +111,7 @@ open class GCTraceConfig (
     open var sampleRate: Number? = null,
     open var traceType: String? = null,
     open var enableLinkRUMData: Boolean? = null,
+    open var enableAutoTrace: Boolean? = null,
 ) : UTSObject()
 open class GCRUMUserDataParams (
     @JsonNotNull
@@ -156,10 +202,11 @@ fun createDefaultBridgeContext(): UTSJSONObject {
 @JvmField
 var bridgeContext: UTSJSONObject = createDefaultBridgeContext()
 fun parseObject(text: String?): UTSJSONObject? {
-    if (text == null || text.length == 0) {
+    val safeText: String = text ?: ""
+    if (safeText.length == 0) {
         return null
     }
-    return JSON.parseObject(text)
+    return JSON.parseObject(safeText)
 }
 fun cloneJSONObject(source: UTSJSONObject?): UTSJSONObject {
     if (source == null) {
@@ -177,7 +224,8 @@ fun mergeJSONObject(target: UTSJSONObject, source: UTSJSONObject?): UTSJSONObjec
     if (source == null) {
         return target
     }
-    source.toMap().forEach(fun(entry){
+    val safeSource: UTSJSONObject = source ?: _uO()
+    safeSource.toMap().forEach(fun(entry){
         target[entry.key] = entry.value
     }
     )
@@ -228,6 +276,32 @@ fun normalizeTraceConfigParams(params: Any?): UTSJSONObject {
 fun normalizeLoggingParams(params: Any?): UTSJSONObject {
     return cloneParams(params)
 }
+fun createRemoteConfigUpdateResult(success: Boolean, platform: String, rawJson: String?, errorCode: Any?, errorMessage: String?): GCRemoteConfigUpdateResult {
+    return GCRemoteConfigUpdateResult(success, platform, if (rawJson == null) {
+        null
+    } else {
+        rawJson
+    }
+    , if (errorCode == null) {
+        null
+    } else {
+        errorCode
+    }
+    , if (errorMessage == null) {
+        null
+    } else {
+        errorMessage
+    }
+    )
+}
+fun parseRemoteConfigUpdateResult(result: String?, platform: String): GCRemoteConfigUpdateResult {
+    val parsedValue = parseObject(result)
+    if (parsedValue == null) {
+        return createRemoteConfigUpdateResult(false, platform, null, "REMOTE_CONFIG_INVALID_RESULT", "Remote configuration update returned an invalid result.")
+    }
+    val value: UTSJSONObject = parsedValue ?: _uO()
+    return createRemoteConfigUpdateResult(value.getBoolean("success") ?: false, value.getString("platform") ?: platform, value.getString("rawJson"), value["errorCode"], value.getString("errorMessage"))
+}
 val BLACK_RESOURCE_PATTERN = UTSRegExp("^https?:\\/\\/([a-zA-Z0-9-]+\\.)?dcloud\\.net\\.cn(:\\d+)?\\/.*", "")
 fun filterBlackResource(resourceUrl: String?): Boolean {
     if (resourceUrl == null || resourceUrl.length === 0) {
@@ -260,6 +334,8 @@ fun parseJSONResult(result: String?): Any? {
     }
     return JSON.parse(result)
 }
+fun debugLog(message: String) {}
+fun debugError(message: String) {}
 fun createBindRUMUserDataParams(userId: String, userName: String?, userEmail: String?, extra: Any?): GCRUMUserDataParams {
     return GCRUMUserDataParams(userId, if (userName == null) {
         null
@@ -285,8 +361,26 @@ fun bindRUMUserCompat(userId: String, userName: String?, userEmail: String?, ext
 open class mobileAgent {
     companion object {
         fun sdkConfig(params: GCMobileConfig) {
+            debugLog("[FTLog] GC-UniPlugin Mobile SDK initialization requested")
             val json = stringifyParams(normalizeSdkConfigParams(params))
-            GCUniPluginNative.sdkConfig(json)
+            val initialized = GCUniPluginNative.sdkConfig(json)
+            if (initialized) {
+                debugLog("[FTLog] GC-UniPlugin Mobile SDK initialized successfully")
+            } else {
+                debugError("[FTLog] GC-UniPlugin Mobile SDK initialization failed")
+            }
+        }
+        fun setDatakitURL(params: GCDatakitURLParams) {
+            GCUniPluginNative.setDatakitURL(stringifyParams(params))
+        }
+        fun setDatawayURL(params: GCDatawayURLParams) {
+            GCUniPluginNative.setDatawayURL(stringifyParams(params))
+        }
+        fun updateRemoteConfigWithMiniUpdateInterval(params: GCRemoteConfigUpdateParams, callback: GCRemoteConfigUpdateCallback) {
+            GCUniPluginNative.updateRemoteConfigWithMiniUpdateInterval(stringifyParams(params), fun(result: String?){
+                callback(parseRemoteConfigUpdateResult(result, "android"))
+            }
+            )
         }
         fun bindRUMUserData(params: GCRUMUserDataParams) {
             if (params == null || params.userId == null) {
@@ -329,8 +423,14 @@ open class mobileAgent {
 open class rum {
     companion object {
         fun setConfig(params: GCRUMConfig) {
+            debugLog("[FTLog] GC-UniPlugin RUM initialization requested")
             val json = stringifyParams(normalizeRumConfigParams(params))
-            GCUniPluginNative.setRumConfig(json)
+            val initialized = GCUniPluginNative.setRumConfig(json)
+            if (initialized) {
+                debugLog("[FTLog] GC-UniPlugin RUM initialized successfully")
+            } else {
+                debugError("[FTLog] GC-UniPlugin RUM initialization failed")
+            }
         }
         fun startAction(params: GCRUMActionParams) {
             GCUniPluginNative.startAction(stringifyParams(mergePropertyForParams(params)))
@@ -464,10 +564,25 @@ open class GCMobileConfigJSONObject : UTSJSONObject() {
     open var globalContext: Any? = null
     open var dataModifier: Any? = null
     open var lineDataModifier: Any? = null
+    open var remoteConfiguration: Boolean? = null
+    open var remoteConfigMiniUpdateInterval: Number? = null
+    open var enableDataFilter: Boolean? = null
+    open var dataFilters: Any? = null
+}
+open class GCDatakitURLParamsJSONObject : UTSJSONObject() {
+    open lateinit var datakitUrl: String
+}
+open class GCDatawayURLParamsJSONObject : UTSJSONObject() {
+    open lateinit var datawayUrl: String
+    open lateinit var clientToken: String
+}
+open class GCRemoteConfigUpdateParamsJSONObject : UTSJSONObject() {
+    open var miniUpdateInterval: Number? = null
 }
 open class GCRUMConfigJSONObject : UTSJSONObject() {
     open var androidAppId: String? = null
     open var iOSAppId: String? = null
+    open var harmonyAppId: String? = null
     open var sampleRate: Number? = null
     open var sessionOnErrorSampleRate: Number? = null
     open var enableNativeUserAction: Boolean? = null
@@ -500,6 +615,7 @@ open class GCTraceConfigJSONObject : UTSJSONObject() {
     open var sampleRate: Number? = null
     open var traceType: String? = null
     open var enableLinkRUMData: Boolean? = null
+    open var enableAutoTrace: Boolean? = null
 }
 open class GCRUMUserDataParamsJSONObject : UTSJSONObject() {
     open lateinit var userId: String
@@ -553,7 +669,24 @@ open class mobileAgentByJs : mobileAgent {
     constructor() : super() {}
     companion object {
         fun sdkConfigByJs(params: GCMobileConfigJSONObject) {
-            return mobileAgent.sdkConfig(GCMobileConfig(datakitUrl = params.datakitUrl, datawayUrl = params.datawayUrl, clientToken = params.clientToken, env = params.env, debug = params.debug, service = params.service, autoSync = params.autoSync, syncPageSize = params.syncPageSize, syncSleepTime = params.syncSleepTime, enableDataIntegerCompatible = params.enableDataIntegerCompatible, compressIntakeRequests = params.compressIntakeRequests, enableLimitWithDbSize = params.enableLimitWithDbSize, dbCacheLimit = params.dbCacheLimit, dbDiscardStrategy = params.dbDiscardStrategy, globalContext = params.globalContext, dataModifier = params.dataModifier, lineDataModifier = params.lineDataModifier))
+            return mobileAgent.sdkConfig(GCMobileConfig(datakitUrl = params.datakitUrl, datawayUrl = params.datawayUrl, clientToken = params.clientToken, env = params.env, debug = params.debug, service = params.service, autoSync = params.autoSync, syncPageSize = params.syncPageSize, syncSleepTime = params.syncSleepTime, enableDataIntegerCompatible = params.enableDataIntegerCompatible, compressIntakeRequests = params.compressIntakeRequests, enableLimitWithDbSize = params.enableLimitWithDbSize, dbCacheLimit = params.dbCacheLimit, dbDiscardStrategy = params.dbDiscardStrategy, globalContext = params.globalContext, dataModifier = params.dataModifier, lineDataModifier = params.lineDataModifier, remoteConfiguration = params.remoteConfiguration, remoteConfigMiniUpdateInterval = params.remoteConfigMiniUpdateInterval, enableDataFilter = params.enableDataFilter, dataFilters = params.dataFilters))
+        }
+        fun setDatakitURLByJs(params: GCDatakitURLParamsJSONObject) {
+            return mobileAgent.setDatakitURL(GCDatakitURLParams(datakitUrl = params.datakitUrl))
+        }
+        fun setDatawayURLByJs(params: GCDatawayURLParamsJSONObject) {
+            return mobileAgent.setDatawayURL(GCDatawayURLParams(datawayUrl = params.datawayUrl, clientToken = params.clientToken))
+        }
+        fun updateRemoteConfigWithMiniUpdateIntervalByJs(params: GCRemoteConfigUpdateParamsJSONObject, callback: UTSCallback) {
+            return mobileAgent.updateRemoteConfigWithMiniUpdateInterval(GCRemoteConfigUpdateParams(miniUpdateInterval = params.miniUpdateInterval), if (callback.fnJS != null) {
+                callback.fnJS
+            } else {
+                callback.fnJS = fun(result: GCRemoteConfigUpdateResult){
+                    callback(result)
+                }
+                callback.fnJS
+            }
+             as (result: GCRemoteConfigUpdateResult) -> Unit)
         }
         fun bindRUMUserDataByJs(params: GCRUMUserDataParamsJSONObject) {
             return mobileAgent.bindRUMUserData(GCRUMUserDataParams(userId = params.userId, userName = params.userName, userEmail = params.userEmail, extra = params.extra))
@@ -591,7 +724,7 @@ open class rumByJs : rum {
     constructor() : super() {}
     companion object {
         fun setConfigByJs(params: GCRUMConfigJSONObject) {
-            return rum.setConfig(GCRUMConfig(androidAppId = params.androidAppId, iOSAppId = params.iOSAppId, sampleRate = params.sampleRate, sessionOnErrorSampleRate = params.sessionOnErrorSampleRate, enableNativeUserAction = params.enableNativeUserAction, enableNativeUserView = params.enableNativeUserView, enableNativeUserResource = params.enableNativeUserResource, enableResourceHostIP = params.enableResourceHostIP, enableTrackNativeCrash = params.enableTrackNativeCrash, enableTrackNativeAppANR = params.enableTrackNativeAppANR, enableTrackNativeFreeze = params.enableTrackNativeFreeze, nativeFreezeDurationMs = params.nativeFreezeDurationMs, errorMonitorType = params.errorMonitorType, deviceMonitorType = params.deviceMonitorType, detectFrequency = params.detectFrequency, enableTraceWebView = params.enableTraceWebView, allowWebViewHost = params.allowWebViewHost, globalContext = params.globalContext, rumCacheLimitCount = params.rumCacheLimitCount, rumDiscardStrategy = params.rumDiscardStrategy))
+            return rum.setConfig(GCRUMConfig(androidAppId = params.androidAppId, iOSAppId = params.iOSAppId, harmonyAppId = params.harmonyAppId, sampleRate = params.sampleRate, sessionOnErrorSampleRate = params.sessionOnErrorSampleRate, enableNativeUserAction = params.enableNativeUserAction, enableNativeUserView = params.enableNativeUserView, enableNativeUserResource = params.enableNativeUserResource, enableResourceHostIP = params.enableResourceHostIP, enableTrackNativeCrash = params.enableTrackNativeCrash, enableTrackNativeAppANR = params.enableTrackNativeAppANR, enableTrackNativeFreeze = params.enableTrackNativeFreeze, nativeFreezeDurationMs = params.nativeFreezeDurationMs, errorMonitorType = params.errorMonitorType, deviceMonitorType = params.deviceMonitorType, detectFrequency = params.detectFrequency, enableTraceWebView = params.enableTraceWebView, allowWebViewHost = params.allowWebViewHost, globalContext = params.globalContext, rumCacheLimitCount = params.rumCacheLimitCount, rumDiscardStrategy = params.rumDiscardStrategy))
         }
         fun startActionByJs(params: GCRUMActionParamsJSONObject) {
             return rum.startAction(GCRUMActionParams(actionName = params.actionName, actionType = params.actionType, property = params.property))
@@ -642,7 +775,7 @@ open class tracerByJs : tracer {
     constructor() : super() {}
     companion object {
         fun setConfigByJs(params: GCTraceConfigJSONObject) {
-            return tracer.setConfig(GCTraceConfig(sampleRate = params.sampleRate, traceType = params.traceType, enableLinkRUMData = params.enableLinkRUMData))
+            return tracer.setConfig(GCTraceConfig(sampleRate = params.sampleRate, traceType = params.traceType, enableLinkRUMData = params.enableLinkRUMData, enableAutoTrace = params.enableAutoTrace))
         }
         fun getTraceHeaderByJs(params: GCTraceHeaderParamsJSONObject): Any? {
             return tracer.getTraceHeader(GCTraceHeaderParams(url = params.url, key = params.key))

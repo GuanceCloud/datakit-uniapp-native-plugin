@@ -86,6 +86,9 @@ export function getNativeBridgeSource() {
 
 export const mobileAgent = createFacade('mobileAgent', {
 	sdkConfig: undefined,
+	setDatakitURL: undefined,
+	setDatawayURL: undefined,
+	updateRemoteConfigWithMiniUpdateInterval: undefined,
 	bindRUMUserData: undefined,
 	unbindRUMUserData: undefined,
 	appendGlobalContext: undefined,
