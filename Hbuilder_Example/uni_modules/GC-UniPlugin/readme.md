@@ -69,6 +69,6 @@ continues to use `gcViewTracking.evalSessionReplayJS(...)` from
 `GC-JSPlugin`.
 
 On iOS, this module links the bundled dynamic
-`utssdk/app-ios/Frameworks/GuanceSDK-Dynamic.xcframework` artifact. It does
+`utssdk/app-ios/Frameworks/GuanceSDK.xcframework` artifact. It does
 not declare a CocoaPods dependency. The dynamic artifact is version 1.6.6 and
 must remain aligned with the optional Session Replay module.

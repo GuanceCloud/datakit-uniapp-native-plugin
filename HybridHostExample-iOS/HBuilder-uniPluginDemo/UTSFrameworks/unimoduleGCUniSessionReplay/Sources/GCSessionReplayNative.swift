@@ -2,12 +2,11 @@ import Foundation
 #if canImport(DCloudUTSFoundation)
 import DCloudUTSFoundation
 #endif
-#if GUANCE_UNI_COCOAPODS_SESSION_REPLAY
+#if canImport(GuanceSDK)
 import GuanceSDK
-#elseif canImport(GuanceSessionReplay)
+#endif
+#if canImport(GuanceSessionReplay)
 import GuanceSessionReplay
-#else
-#error("GC-UniSessionReplay requires GuanceSessionReplay, or GuanceSDK/SessionReplay with -DGUANCE_UNI_COCOAPODS_SESSION_REPLAY.")
 #endif
 import ObjectiveC.runtime
 import WebKit

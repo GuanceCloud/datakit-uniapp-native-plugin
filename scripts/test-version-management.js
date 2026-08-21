@@ -23,7 +23,7 @@ assert(versionTargets.some(target => target.path.endsWith('/GC-JSPlugin/package.
 assert(versionTargets.some(target => target.path.endsWith('/bridge.uts')));
 assert(versionTargets.some(target => target.path.endsWith('/index.kt')));
 assert(versionTargets.some(target => target.path.endsWith('/index.swift')));
-assert(versionTargets.some(target => target.path.endsWith('.podspec')));
+assert(!versionTargets.some(target => target.path.includes('GuanceUniAppHostBridge')));
 assert(!versionTargets.some(target => target.path.endsWith('.js')));
 assert.strictEqual(checkVersionConsistency(), releaseVersion);
 

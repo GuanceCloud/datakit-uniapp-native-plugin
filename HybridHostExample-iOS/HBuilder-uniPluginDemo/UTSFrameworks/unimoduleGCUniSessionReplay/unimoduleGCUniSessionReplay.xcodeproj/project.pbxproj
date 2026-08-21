@@ -3,117 +3,126 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 54;
+	objectVersion = 46;
 	objects = {
 
 /* Begin PBXBuildFile section */
-		0ADAEA810B54A6AFF3CFDA44 /* index.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B8039BB4A9E090EFA682384 /* index.swift */; };
-		306F9F1C8884E938A0EEF23E /* config.json in Resources */ = {isa = PBXBuildFile; fileRef = 74B22FE20A0D5F0901105F9C /* config.json */; };
-		78E2F1355B895EBA797A3A47 /* WebKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F173147F7E467FB032D67357 /* WebKit.framework */; };
-		934D6B8760FA4021B360C6F6 /* GCUniSessionReplayUTSConfig.m in Sources */ = {isa = PBXBuildFile; fileRef = F1AAAEA372C83A0B5E57508F /* GCUniSessionReplayUTSConfig.m */; };
-		D1D15A543E955C8E8D0D46A9 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AA2AA0496188B46709306B55 /* Foundation.framework */; };
-		DDE44570EECED5E1BA108701 /* GCSessionReplayHostNative.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB76FEF36D82E875DEC53D02 /* GCSessionReplayHostNative.swift */; };
-		E08C9D83D352EFF53D66E904 /* GCUniSessionReplayUTSCPP.mm in Sources */ = {isa = PBXBuildFile; fileRef = 79D9F5B951C39BB1BFAED0F3 /* GCUniSessionReplayUTSCPP.mm */; };
-		E7BF11E1D8AFFAB97ACFF9F8 /* DCloudUTSFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A3CC512F9CB1E488250D53E2 /* DCloudUTSFoundation.framework */; };
-		F53640AA8062D64F4F6956EF /* DCUniBase.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 65DCE530EFD812D51005A033 /* DCUniBase.framework */; };
+		2702A398D87A746E12DC6D40 /* index.swift in Sources */ = {isa = PBXBuildFile; fileRef = 646BE2F989E5D9FA80E6385F /* index.swift */; };
+		3E0F4E57C83F39B254BC1671 /* GuanceSessionReplay.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1252CBFD2B4A03DD1CEB6ADB /* GuanceSessionReplay.xcframework */; };
+		3E1C13914F4518E2EAA5B5D3 /* config.json in Resources */ = {isa = PBXBuildFile; fileRef = 738AA32E312EA23679B7CB58 /* config.json */; };
+		56356BACC9CDFCB3C5AFB848 /* GCSessionReplayNative.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88E25B32D137FBA9B52B4541 /* GCSessionReplayNative.swift */; };
+		59263F3A7C01579879A7E0EC /* GuanceSDK.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 821D8EA827F59DD24C0E098B /* GuanceSDK.xcframework */; };
+		B113CDEF8074970237507BC5 /* GCUniSessionReplayUTSCPP.mm in Sources */ = {isa = PBXBuildFile; fileRef = 1F6AB15235FD2CA4A5693372 /* GCUniSessionReplayUTSCPP.mm */; };
+		C2D4B708B041DA4CF72DF885 /* DCloudUTSFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C0BC0CA41AD217548EBF8EB7 /* DCloudUTSFoundation.framework */; };
+		C3CB55F6747910248E1C3438 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C388EDE5ACA77750B9944E08 /* Foundation.framework */; };
+		DE77CFB86A884DB104C4D035 /* DCUniBase.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 57426DAE100E827B9B4A9879 /* DCUniBase.framework */; };
+		EBE5B76542A77B114FDD023F /* GCUniSessionReplayUTSConfig.m in Sources */ = {isa = PBXBuildFile; fileRef = 81A2DB195A03C00BFF77B3F5 /* GCUniSessionReplayUTSConfig.m */; };
+		FC195EFDA66D71785612459F /* WebKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FBA329430B3299C5ADFCE4B0 /* WebKit.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		3B8039BB4A9E090EFA682384 /* index.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = index.swift; sourceTree = "<group>"; };
-		65DCE530EFD812D51005A033 /* DCUniBase.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = DCUniBase.framework; path = ../../../SDK/Libs/DCUniBase.framework; sourceTree = "<group>"; };
-		74B22FE20A0D5F0901105F9C /* config.json */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.json; path = config.json; sourceTree = "<group>"; };
-		79D9F5B951C39BB1BFAED0F3 /* GCUniSessionReplayUTSCPP.mm */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.cpp.objcpp; path = GCUniSessionReplayUTSCPP.mm; sourceTree = "<group>"; };
-		A3CC512F9CB1E488250D53E2 /* DCloudUTSFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = DCloudUTSFoundation.framework; path = ../../../SDK/Libs/DCloudUTSFoundation.framework; sourceTree = "<group>"; };
-		AA2AA0496188B46709306B55 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS18.0.sdk/System/Library/Frameworks/Foundation.framework; sourceTree = DEVELOPER_DIR; };
-		B1FA1FC6113033D3D0A1F9E6 /* unimoduleGCUniSessionReplay.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = unimoduleGCUniSessionReplay.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		CB76FEF36D82E875DEC53D02 /* GCSessionReplayHostNative.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = GCSessionReplayHostNative.swift; sourceTree = "<group>"; };
-		F173147F7E467FB032D67357 /* WebKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WebKit.framework; path = System/Library/Frameworks/WebKit.framework; sourceTree = SDKROOT; };
-		F1AAAEA372C83A0B5E57508F /* GCUniSessionReplayUTSConfig.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = GCUniSessionReplayUTSConfig.m; sourceTree = "<group>"; };
+		1252CBFD2B4A03DD1CEB6ADB /* GuanceSessionReplay.xcframework */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = wrapper.xcframework; name = GuanceSessionReplay.xcframework; path = "../../../../Hbuilder_Example/uni_modules/GC-UniSessionReplay/utssdk/app-ios/Frameworks/GuanceSessionReplay.xcframework"; sourceTree = "<group>"; };
+		1F6AB15235FD2CA4A5693372 /* GCUniSessionReplayUTSCPP.mm */ = {isa = PBXFileReference; includeInIndex = 1; path = GCUniSessionReplayUTSCPP.mm; sourceTree = "<group>"; };
+		57426DAE100E827B9B4A9879 /* DCUniBase.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = DCUniBase.framework; path = ../../../SDK/Libs/DCUniBase.framework; sourceTree = "<group>"; };
+		57CB0CE88D7B30A187EA54A4 /* unimoduleGCUniSessionReplay.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = unimoduleGCUniSessionReplay.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		646BE2F989E5D9FA80E6385F /* index.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = index.swift; sourceTree = "<group>"; };
+		738AA32E312EA23679B7CB58 /* config.json */ = {isa = PBXFileReference; includeInIndex = 1; path = config.json; sourceTree = "<group>"; };
+		81A2DB195A03C00BFF77B3F5 /* GCUniSessionReplayUTSConfig.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = GCUniSessionReplayUTSConfig.m; sourceTree = "<group>"; };
+		821D8EA827F59DD24C0E098B /* GuanceSDK.xcframework */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = wrapper.xcframework; name = GuanceSDK.xcframework; path = "../../../../Hbuilder_Example/uni_modules/GC-UniPlugin/utssdk/app-ios/Frameworks/GuanceSDK.xcframework"; sourceTree = "<group>"; };
+		88E25B32D137FBA9B52B4541 /* GCSessionReplayNative.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = GCSessionReplayNative.swift; sourceTree = "<group>"; };
+		C0BC0CA41AD217548EBF8EB7 /* DCloudUTSFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = DCloudUTSFoundation.framework; path = ../../../SDK/Libs/DCloudUTSFoundation.framework; sourceTree = "<group>"; };
+		C388EDE5ACA77750B9944E08 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS18.0.sdk/System/Library/Frameworks/Foundation.framework; sourceTree = DEVELOPER_DIR; };
+		FBA329430B3299C5ADFCE4B0 /* WebKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WebKit.framework; path = System/Library/Frameworks/WebKit.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
-		CBB7CFD69C5A42E3165EE743 /* Frameworks */ = {
+		5E26CE6BBB1A6B1D124C8442 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				D1D15A543E955C8E8D0D46A9 /* Foundation.framework in Frameworks */,
-				F53640AA8062D64F4F6956EF /* DCUniBase.framework in Frameworks */,
-				E7BF11E1D8AFFAB97ACFF9F8 /* DCloudUTSFoundation.framework in Frameworks */,
-				78E2F1355B895EBA797A3A47 /* WebKit.framework in Frameworks */,
+				C3CB55F6747910248E1C3438 /* Foundation.framework in Frameworks */,
+				DE77CFB86A884DB104C4D035 /* DCUniBase.framework in Frameworks */,
+				C2D4B708B041DA4CF72DF885 /* DCloudUTSFoundation.framework in Frameworks */,
+				59263F3A7C01579879A7E0EC /* GuanceSDK.xcframework in Frameworks */,
+				3E0F4E57C83F39B254BC1671 /* GuanceSessionReplay.xcframework in Frameworks */,
+				FC195EFDA66D71785612459F /* WebKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		275D5BD0E591452DFB087529 /* Frameworks */ = {
+		21131FBE5416EF7B45F09A57 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				A0A9005F058FDBAF4C637820 /* iOS */,
-			);
-			name = Frameworks;
-			sourceTree = "<group>";
-		};
-		360F422DAA776DF3E2EDB0FC /* Frameworks */ = {
-			isa = PBXGroup;
-			children = (
-				65DCE530EFD812D51005A033 /* DCUniBase.framework */,
-				A3CC512F9CB1E488250D53E2 /* DCloudUTSFoundation.framework */,
-				F173147F7E467FB032D67357 /* WebKit.framework */,
-			);
-			name = Frameworks;
-			sourceTree = "<group>";
-		};
-		66206CC55B823E14DB800912 /* Sources */ = {
-			isa = PBXGroup;
-			children = (
-				CB76FEF36D82E875DEC53D02 /* GCSessionReplayHostNative.swift */,
-				79D9F5B951C39BB1BFAED0F3 /* GCUniSessionReplayUTSCPP.mm */,
-				F1AAAEA372C83A0B5E57508F /* GCUniSessionReplayUTSConfig.m */,
-				3B8039BB4A9E090EFA682384 /* index.swift */,
-			);
-			path = Sources;
-			sourceTree = "<group>";
-		};
-		A0A9005F058FDBAF4C637820 /* iOS */ = {
-			isa = PBXGroup;
-			children = (
-				AA2AA0496188B46709306B55 /* Foundation.framework */,
-			);
-			name = iOS;
-			sourceTree = "<group>";
-		};
-		EE37A007A15D9BE4B87F8A3C /* Products */ = {
-			isa = PBXGroup;
-			children = (
-				B1FA1FC6113033D3D0A1F9E6 /* unimoduleGCUniSessionReplay.framework */,
+				57CB0CE88D7B30A187EA54A4 /* unimoduleGCUniSessionReplay.framework */,
 			);
 			name = Products;
 			sourceTree = "<group>";
 		};
-		FC08517755361002245C7975 /* Resources */ = {
+		22E60FF20C38021FD19EFAFF /* Sources */ = {
 			isa = PBXGroup;
 			children = (
-				74B22FE20A0D5F0901105F9C /* config.json */,
+				88E25B32D137FBA9B52B4541 /* GCSessionReplayNative.swift */,
+				1F6AB15235FD2CA4A5693372 /* GCUniSessionReplayUTSCPP.mm */,
+				81A2DB195A03C00BFF77B3F5 /* GCUniSessionReplayUTSConfig.m */,
+				646BE2F989E5D9FA80E6385F /* index.swift */,
+			);
+			name = Sources;
+			path = Sources;
+			sourceTree = "<group>";
+		};
+		5C42E5611E11CE0B4AF672D6 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				738AA32E312EA23679B7CB58 /* config.json */,
 			);
 			name = Resources;
 			sourceTree = "<group>";
 		};
-		FDE2AE83918FF58DBE4E191E = {
+		9845C81CFC327E408CFE5BA5 /* iOS */ = {
 			isa = PBXGroup;
 			children = (
-				EE37A007A15D9BE4B87F8A3C /* Products */,
-				275D5BD0E591452DFB087529 /* Frameworks */,
-				66206CC55B823E14DB800912 /* Sources */,
-				FC08517755361002245C7975 /* Resources */,
-				360F422DAA776DF3E2EDB0FC /* Frameworks */,
+				C388EDE5ACA77750B9944E08 /* Foundation.framework */,
+			);
+			name = iOS;
+			sourceTree = "<group>";
+		};
+		9C71CA71702059F77AE62E3C /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				9845C81CFC327E408CFE5BA5 /* iOS */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		E1C37F2E611A46A9F0998025 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				57426DAE100E827B9B4A9879 /* DCUniBase.framework */,
+				C0BC0CA41AD217548EBF8EB7 /* DCloudUTSFoundation.framework */,
+				821D8EA827F59DD24C0E098B /* GuanceSDK.xcframework */,
+				1252CBFD2B4A03DD1CEB6ADB /* GuanceSessionReplay.xcframework */,
+				FBA329430B3299C5ADFCE4B0 /* WebKit.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		E51C615ED85C6B1E1077FF26 = {
+			isa = PBXGroup;
+			children = (
+				21131FBE5416EF7B45F09A57 /* Products */,
+				9C71CA71702059F77AE62E3C /* Frameworks */,
+				22E60FF20C38021FD19EFAFF /* Sources */,
+				5C42E5611E11CE0B4AF672D6 /* Resources */,
+				E1C37F2E611A46A9F0998025 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
 
 /* Begin PBXHeadersBuildPhase section */
-		1A207D2FF02CE61A09742350 /* Headers */ = {
+		DCA009CACBB49819BAFC5B78 /* Headers */ = {
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -123,14 +132,14 @@
 /* End PBXHeadersBuildPhase section */
 
 /* Begin PBXNativeTarget section */
-		BE79EA3EDABD9D78C45CC668 /* unimoduleGCUniSessionReplay */ = {
+		2AD82753BF8249D484530848 /* unimoduleGCUniSessionReplay */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = B7302CC173B019E263174B04 /* Build configuration list for PBXNativeTarget "unimoduleGCUniSessionReplay" */;
+			buildConfigurationList = 473BC9F8FBB179E947014A10 /* Build configuration list for PBXNativeTarget "unimoduleGCUniSessionReplay" */;
 			buildPhases = (
-				1A207D2FF02CE61A09742350 /* Headers */,
-				206BFDC57ACDFA8633B15669 /* Sources */,
-				CBB7CFD69C5A42E3165EE743 /* Frameworks */,
-				DCDC0CC5548CB6A5B0183EA6 /* Resources */,
+				DCA009CACBB49819BAFC5B78 /* Headers */,
+				1E0A2447A6B3439D467EAE64 /* Sources */,
+				5E26CE6BBB1A6B1D124C8442 /* Frameworks */,
+				C351A638E408AA8E0DF0000D /* Resources */,
 			);
 			buildRules = (
 			);
@@ -138,20 +147,19 @@
 			);
 			name = unimoduleGCUniSessionReplay;
 			productName = unimoduleGCUniSessionReplay;
-			productReference = B1FA1FC6113033D3D0A1F9E6 /* unimoduleGCUniSessionReplay.framework */;
+			productReference = 57CB0CE88D7B30A187EA54A4 /* unimoduleGCUniSessionReplay.framework */;
 			productType = "com.apple.product-type.framework";
 		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
-		38FE370A61E1FB2EBC28F558 /* Project object */ = {
+		262E1CD6211526DFBEE44958 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				BuildIndependentTargetsInParallel = YES;
 				LastSwiftUpdateCheck = 1600;
-				LastUpgradeCheck = 2660;
+				LastUpgradeCheck = 1600;
 			};
-			buildConfigurationList = 7631114F7686E164DEEDB47E /* Build configuration list for PBXProject "unimoduleGCUniSessionReplay" */;
+			buildConfigurationList = 5F8512DB16CE100D91E6B98E /* Build configuration list for PBXProject "unimoduleGCUniSessionReplay" */;
 			compatibilityVersion = "Xcode 3.2";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
@@ -159,50 +167,51 @@
 				en,
 				Base,
 			);
-			mainGroup = FDE2AE83918FF58DBE4E191E;
-			productRefGroup = EE37A007A15D9BE4B87F8A3C /* Products */;
+			mainGroup = E51C615ED85C6B1E1077FF26;
+			minimizedProjectReferenceProxies = 0;
+			preferredProjectObjectVersion = 77;
+			productRefGroup = 21131FBE5416EF7B45F09A57 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				BE79EA3EDABD9D78C45CC668 /* unimoduleGCUniSessionReplay */,
+				2AD82753BF8249D484530848 /* unimoduleGCUniSessionReplay */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
-		DCDC0CC5548CB6A5B0183EA6 /* Resources */ = {
+		C351A638E408AA8E0DF0000D /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				306F9F1C8884E938A0EEF23E /* config.json in Resources */,
+				3E1C13914F4518E2EAA5B5D3 /* config.json in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
-		206BFDC57ACDFA8633B15669 /* Sources */ = {
+		1E0A2447A6B3439D467EAE64 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				DDE44570EECED5E1BA108701 /* GCSessionReplayHostNative.swift in Sources */,
-				E08C9D83D352EFF53D66E904 /* GCUniSessionReplayUTSCPP.mm in Sources */,
-				934D6B8760FA4021B360C6F6 /* GCUniSessionReplayUTSConfig.m in Sources */,
-				0ADAEA810B54A6AFF3CFDA44 /* index.swift in Sources */,
+				56356BACC9CDFCB3C5AFB848 /* GCSessionReplayNative.swift in Sources */,
+				B113CDEF8074970237507BC5 /* GCUniSessionReplayUTSCPP.mm in Sources */,
+				EBE5B76542A77B114FDD023F /* GCUniSessionReplayUTSConfig.m in Sources */,
+				2702A398D87A746E12DC6D40 /* index.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin XCBuildConfiguration section */
-		27B5B8D12A4158AF9A954B37 /* Release */ = {
+		0B1AF558C60B6E29DC10205B /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				BUILD_LIBRARY_FOR_DISTRIBUTION = YES;
 				CLANG_ENABLE_EXPLICIT_MODULES = NO;
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_WEAK = NO;
-				CODE_SIGN_IDENTITY = "";
 				CURRENT_PROJECT_VERSION = 1;
 				DEFINES_MODULE = YES;
 				DYLIB_COMPATIBILITY_VERSION = 1;
@@ -212,16 +221,13 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"../../../SDK/Libs\"",
+					"\"../../../../Hbuilder_Example/uni_modules/GC-UniPlugin/utssdk/app-ios/Frameworks\"",
+					"\"../../../../Hbuilder_Example/uni_modules/GC-UniSessionReplay/utssdk/app-ios/Frameworks\"",
 				);
 				INFOPLIST_FILE = Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-					"@loader_path/Frameworks",
-				);
-				MODULE_VERIFIER_SUPPORTED_LANGUAGE_STANDARDS = "gnu11 gnu++14";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-ObjC",
@@ -233,13 +239,12 @@
 				SWIFT_ENABLE_EXPLICIT_MODULES = NO;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
-				VALIDATE_PRODUCT = YES;
 				VERSIONING_SYSTEM = "apple-generic";
 				VERSION_INFO_PREFIX = "";
 			};
-			name = Release;
+			name = Debug;
 		};
-		4F01A7FFDB04985DEEA5F210 /* Release */ = {
+		26302737E11F964CC3E7FED0 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
@@ -273,11 +278,9 @@
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				COPY_PHASE_STRIP = NO;
-				DEAD_CODE_STRIPPING = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
-				ENABLE_USER_SCRIPT_SANDBOXING = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
@@ -289,14 +292,13 @@
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				STRING_CATALOG_GENERATE_SYMBOLS = YES;
 				SWIFT_COMPILATION_MODE = wholemodule;
 				SWIFT_OPTIMIZATION_LEVEL = "-O";
 				SWIFT_VERSION = 5.0;
 			};
 			name = Release;
 		};
-		F004254535192375A5CB024A /* Debug */ = {
+		7C473A88D0F0451F069A2674 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
@@ -330,11 +332,9 @@
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				COPY_PHASE_STRIP = NO;
-				DEAD_CODE_STRIPPING = YES;
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
-				ENABLE_USER_SCRIPT_SANDBOXING = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_NO_COMMON_BLOCKS = YES;
@@ -353,21 +353,19 @@
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				STRING_CATALOG_GENERATE_SYMBOLS = YES;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
 			};
 			name = Debug;
 		};
-		F06AD1743132D78D30A1A5C9 /* Debug */ = {
+		DC4B8CCB8B2C27638147D503 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				BUILD_LIBRARY_FOR_DISTRIBUTION = YES;
 				CLANG_ENABLE_EXPLICIT_MODULES = NO;
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_WEAK = NO;
-				CODE_SIGN_IDENTITY = "";
 				CURRENT_PROJECT_VERSION = 1;
 				DEFINES_MODULE = YES;
 				DYLIB_COMPATIBILITY_VERSION = 1;
@@ -377,16 +375,13 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"../../../SDK/Libs\"",
+					"\"../../../../Hbuilder_Example/uni_modules/GC-UniPlugin/utssdk/app-ios/Frameworks\"",
+					"\"../../../../Hbuilder_Example/uni_modules/GC-UniSessionReplay/utssdk/app-ios/Frameworks\"",
 				);
 				INFOPLIST_FILE = Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-					"@loader_path/Frameworks",
-				);
-				MODULE_VERIFIER_SUPPORTED_LANGUAGE_STANDARDS = "gnu11 gnu++14";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-ObjC",
@@ -398,33 +393,34 @@
 				SWIFT_ENABLE_EXPLICIT_MODULES = NO;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
 				VERSIONING_SYSTEM = "apple-generic";
 				VERSION_INFO_PREFIX = "";
 			};
-			name = Debug;
+			name = Release;
 		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		7631114F7686E164DEEDB47E /* Build configuration list for PBXProject "unimoduleGCUniSessionReplay" */ = {
+		473BC9F8FBB179E947014A10 /* Build configuration list for PBXNativeTarget "unimoduleGCUniSessionReplay" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				F004254535192375A5CB024A /* Debug */,
-				4F01A7FFDB04985DEEA5F210 /* Release */,
+				DC4B8CCB8B2C27638147D503 /* Release */,
+				0B1AF558C60B6E29DC10205B /* Debug */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		B7302CC173B019E263174B04 /* Build configuration list for PBXNativeTarget "unimoduleGCUniSessionReplay" */ = {
+		5F8512DB16CE100D91E6B98E /* Build configuration list for PBXProject "unimoduleGCUniSessionReplay" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				27B5B8D12A4158AF9A954B37 /* Release */,
-				F06AD1743132D78D30A1A5C9 /* Debug */,
+				7C473A88D0F0451F069A2674 /* Debug */,
+				26302737E11F964CC3E7FED0 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
-	rootObject = 38FE370A61E1FB2EBC28F558 /* Project object */;
+	rootObject = 262E1CD6211526DFBEE44958 /* Project object */;
 }

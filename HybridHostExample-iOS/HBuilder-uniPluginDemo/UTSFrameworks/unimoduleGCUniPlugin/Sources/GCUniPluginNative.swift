@@ -154,6 +154,20 @@ import GuanceSDK
         return nil
     }
 
+    private static func stringArrayDictionary(_ value: Any?) -> [String: [String]]? {
+        guard let dictionary = value as? [String: Any] else {
+            return nil
+        }
+        var result: [String: [String]] = [:]
+        for (key, item) in dictionary {
+            guard let values = stringArray(item) else {
+                continue
+            }
+            result[key] = values
+        }
+        return result
+    }
+
     private static func dbDiscardType(_ value: Any?) -> FTDBCacheDiscard {
         let rawValue = stringValue(value)?.lowercased() == "discardoldest" ? 1 : 0
         return FTDBCacheDiscard(rawValue: rawValue) ?? FTDBCacheDiscard(rawValue: 0)!
@@ -173,21 +187,18 @@ import GuanceSDK
         FTLog.sharedInstance().registerInnerLogCache(toLogsDirectory: nil, fileNamePrefix: nil)
     }
 
-    private static func createMobileConfig(_ params: [String: Any]) -> FTMobileConfig? {
+    private static func createMobileConfig(_ params: [String: Any]) -> FTSDKConfig {
         registerSDKInternalLogCache()
-        let config: FTMobileConfig?
+        let config: FTSDKConfig
         if let datawayUrl = stringValue(params["datawayUrl"]),
            let clientToken = stringValue(params["clientToken"]) {
-            config = FTMobileConfig(datawayUrl: datawayUrl, clientToken: clientToken)
+            config = FTSDKConfig(datawayUrl: datawayUrl, clientToken: clientToken)
         } else if let datakitUrl = stringValue(firstValue(params, "datakitUrl", "serverUrl")) {
-            config = FTMobileConfig(datakitUrl: datakitUrl)
+            config = FTSDKConfig(datakitUrl: datakitUrl)
         } else if let metricsUrl = stringValue(params["metricsUrl"]) {
-            config = FTMobileConfig(metricsUrl: metricsUrl)
+            config = FTSDKConfig(metricsUrl: metricsUrl)
         } else {
-            config = nil
-        }
-        guard let config else {
-            return nil
+            config = FTSDKConfig()
         }
         config.env = stringValue(params["env"]) ?? config.env
         config.enableSDKDebugLog = boolValue(params["debug"], default: boolValue(params["enableSDKDebugLog"]))
@@ -220,6 +231,18 @@ import GuanceSDK
         }
         if let globalContext = stringDictionary(params["globalContext"]) {
             config.globalContext = globalContext
+        }
+        if let remoteConfiguration = params["remoteConfiguration"] {
+            config.remoteConfiguration = boolValue(remoteConfiguration, default: config.remoteConfiguration)
+        }
+        if let interval = intValue(params["remoteConfigMiniUpdateInterval"]) {
+            config.remoteConfigMiniUpdateInterval = Int32(max(0, interval))
+        }
+        if let enableDataFilter = params["enableDataFilter"] {
+            config.enableDataFilter = boolValue(enableDataFilter, default: config.enableDataFilter)
+        }
+        if let dataFilters = stringArrayDictionary(params["dataFilters"]) {
+            config.dataFilters = dataFilters
         }
         return config
     }
@@ -469,46 +492,87 @@ import GuanceSDK
     @objc public static func sdkConfig(_ json: String?) -> Bool {
         logInfo("[FTLog] GC-UniPlugin Mobile SDK initialization requested")
         let params = parseObject(json)
-        guard let config = createMobileConfig(params) else {
-            logError("[FTLog] GC-UniPlugin Mobile SDK initialization failed: invalid configuration")
-            return false
-        }
+        let config = createMobileConfig(params)
         runOnMainSync {
-            FTMobileAgent.start(withConfigOptions: config)
+            FTSDKAgent.start(withConfigOptions: config)
         }
         logInfo("[FTLog] GC-UniPlugin Mobile SDK initialized successfully")
         return true
+    }
+
+    @objc public static func setDatakitURL(_ json: String?) {
+        let params = parseObject(json)
+        guard let datakitUrl = stringValue(params["datakitUrl"]), !datakitUrl.isEmpty else {
+            return
+        }
+        FTSDKAgent.setDatakitURL(datakitUrl)
+    }
+
+    @objc public static func setDatawayURL(_ json: String?) {
+        let params = parseObject(json)
+        guard let datawayUrl = stringValue(params["datawayUrl"]), !datawayUrl.isEmpty,
+              let clientToken = stringValue(params["clientToken"]), !clientToken.isEmpty else {
+            return
+        }
+        FTSDKAgent.setDatawayURL(datawayUrl, clientToken: clientToken)
+    }
+
+    @objc public static func updateRemoteConfigWithMiniUpdateInterval(
+        _ json: String?,
+        _ callback: @escaping (String?) -> Void
+    ) {
+        let params = parseObject(json)
+        let interval = max(0, intValue(params["miniUpdateInterval"]) ?? 0)
+        FTSDKAgent.updateRemoteConfig(withMiniUpdateInterval: interval) { success, error, _, content in
+            var result: [String: Any] = [
+                "success": success,
+                "platform": "ios"
+            ]
+            if let content, let rawJson = stringify(content) {
+                result["rawJson"] = rawJson
+            }
+            if let error {
+                let nsError = error as NSError
+                result["errorCode"] = nsError.code
+                result["errorMessage"] = nsError.localizedDescription
+            }
+            let resultJson = stringify(result)
+            DispatchQueue.main.async {
+                callback(resultJson)
+            }
+            return nil
+        }
     }
 
     @objc public static func bindRUMUser(_ userId: String,
                                          _ userName: String?,
                                          _ userEmail: String?,
                                          _ extraJson: String?) {
-        FTMobileAgent.sharedInstance().bindUser(withUserID: userId,
+        FTSDKAgent.sharedInstance().bindUser(withUserID: userId,
                                                 userName: userName,
                                                 userEmail: userEmail,
                                                 extra: parseNullableObject(extraJson))
     }
 
     @objc public static func unbindRUMUserData() {
-        FTMobileAgent.sharedInstance().unbindUser()
+        FTSDKAgent.sharedInstance().unbindUser()
     }
 
     @objc public static func appendGlobalContext(_ json: String?) {
         if let context = stringDictionary(parseObject(json)) {
-            FTMobileAgent.appendGlobalContext(context)
+            FTSDKAgent.appendGlobalContext(context)
         }
     }
 
     @objc public static func appendRUMGlobalContext(_ json: String?) {
         if let context = stringDictionary(parseObject(json)) {
-            FTMobileAgent.appendRUMGlobalContext(context)
+            FTSDKAgent.appendRUMGlobalContext(context)
         }
     }
 
     @objc public static func appendLogGlobalContext(_ json: String?) {
         if let context = stringDictionary(parseObject(json)) {
-            FTMobileAgent.appendLogGlobalContext(context)
+            FTSDKAgent.appendLogGlobalContext(context)
         }
     }
 
@@ -517,15 +581,15 @@ import GuanceSDK
     }
 
     @objc public static func flushSyncData() {
-        FTMobileAgent.sharedInstance().flushSyncData()
+        FTSDKAgent.sharedInstance().flushSyncData()
     }
 
     @objc public static func clearAllData() {
-        FTMobileAgent.clearAllData()
+        FTSDKAgent.clearAllData()
     }
 
     @objc public static func shutDown() {
-        FTMobileAgent.shutDown()
+        FTSDKAgent.shutDown()
     }
 
     @discardableResult
@@ -537,7 +601,7 @@ import GuanceSDK
             return false
         }
         runOnMainSync {
-            FTMobileAgent.sharedInstance().startRum(withConfigOptions: config)
+            FTSDKAgent.sharedInstance().startRum(withConfigOptions: config)
         }
         logInfo("[FTLog] GC-UniPlugin RUM initialized successfully")
         return true
@@ -654,7 +718,7 @@ import GuanceSDK
     @objc public static func setLoggerConfig(_ json: String?) {
         let config = createLoggerConfig(parseObject(json))
         runOnMainSync {
-            FTMobileAgent.sharedInstance().startLogger(withConfigOptions: config)
+            FTSDKAgent.sharedInstance().startLogger(withConfigOptions: config)
         }
     }
 
@@ -663,7 +727,7 @@ import GuanceSDK
         guard let content = stringValue(params["content"]) else {
             return
         }
-        FTMobileAgent.sharedInstance().logging(content,
+        FTSDKAgent.sharedInstance().logging(content,
                                                status: loggerStatus(params["status"]),
                                                property: dictionaryValue(params["property"]))
     }
@@ -671,7 +735,7 @@ import GuanceSDK
     @objc public static func setTraceConfig(_ json: String?) {
         let config = createTraceConfig(parseObject(json))
         runOnMainSync {
-            FTMobileAgent.sharedInstance().startTrace(withConfigOptions: config)
+            FTSDKAgent.sharedInstance().startTrace(withConfigOptions: config)
         }
     }
 

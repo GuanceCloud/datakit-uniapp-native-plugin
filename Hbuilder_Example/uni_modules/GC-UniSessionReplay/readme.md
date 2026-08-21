@@ -88,11 +88,10 @@ through the Objective-C runtime, so compiling the optional UTS module does not
 require a second local Core XCFramework. At runtime, `GuanceSessionReplay`
 loads the single Core framework supplied by `GC-UniPlugin` through `@rpath`.
 
-Hybrid CocoaPods hosts use a separate compatibility path. The HostBridge
-depends on `GuanceSDK/Agent` and `GuanceSDK/SessionReplay` and defines
-`GUANCE_UNI_COCOAPODS_SESSION_REPLAY`, so its Session Replay source imports the
-umbrella `GuanceSDK` module instead of the standalone `GuanceSessionReplay`
-module.
+The native-host sample follows this same local dynamic dependency model. Its
+generated UTS modules compile the native Swift sources directly, while the host
+embeds one shared `GuanceSDK.framework` and one optional
+`GuanceSessionReplay.framework` at runtime.
 
 For local custom-base verification, `GC-UniPlugin` bundles the single patched
 `ft-sdk` AAR and its `ft-native` AAR in `utssdk/app-android/libs`; the optional

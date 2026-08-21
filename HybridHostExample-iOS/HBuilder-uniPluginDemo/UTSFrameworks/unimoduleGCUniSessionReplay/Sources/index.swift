@@ -54,7 +54,7 @@ public func stringifyParams(_ params: GCSessionReplayConfig) -> String {
 @objcMembers
 public class GCUniSessionReplay : NSObject {
     public static func setConfig(_ params: GCSessionReplayConfig) {
-        GCSessionReplayHostNative.setConfig(stringifyParams(params))
+        GCSessionReplayNative.setConfig(stringifyParams(params))
     }
 }
 @objc(UTSSDKModulesGCUniSessionReplayGCSessionReplayTouchPrivacy)
@@ -81,7 +81,7 @@ public class GCSessionReplayImagePrivacy : NSObject {
 @objcMembers
 public class GCSessionReplayIOSHook : NSObject, UTSiOSHookProxy {
     public func onCreate() {
-        GCSessionReplayHostNative.installWebViewHook()
+        GCSessionReplayNative.installWebViewHook()
     }
 }
 @objc(UTSSDKModulesGCUniSessionReplayGCSessionReplayConfigJSONObject)

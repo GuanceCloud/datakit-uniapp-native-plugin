@@ -2,29 +2,50 @@
 
 This project demonstrates the iOS native-host workflow for the Guance UTS
 modules described in the DCloud [iOS UTS integration guide](https://doc.dcloud.net.cn/uni-app-x/native/use/iosuts.html).
-The generated UTS modules are dynamic frameworks, while the Guance SDK remains
-owned by a static HostBridge inside the application.
+It follows the same dependency model as the UTS plugins: generated UTS modules
+compile the native Swift implementation directly and link the local dynamic
+Guance XCFrameworks bundled with each plugin.
 
 ## Linkage Model
 
 ```text
 HBuilder app target
-  -> GuanceUniAppHostBridge static Pod
-       -> GuanceSDK/Agent + GuanceSDK/SessionReplay static CocoaPods integration
   -> unimoduleGCUniPlugin.framework (Embed & Sign)
   -> unimoduleGCUniSessionReplay.framework (Embed & Sign, optional)
+  -> GuanceSDK.framework (Embed & Sign once)
+  -> GuanceSessionReplay.framework (Embed & Sign once, optional)
+
+unimoduleGCUniPlugin
+  -> GCUniPluginNative.swift
+  -> GuanceSDK.xcframework (link only)
+
+unimoduleGCUniSessionReplay
+  -> GCSessionReplayNative.swift
+  -> GuanceSDK.xcframework + GuanceSessionReplay.xcframework (link only)
 
 Each unimodule target
-  -> DCUniBase.framework and DCloudUTSFoundation.framework (link only)
-  -> WebKit.framework for Session Replay (link only)
-  -> no Guance SDK framework
+  -> DCUniBase.framework + DCloudUTSFoundation.framework (link only)
 ```
 
-## DCloud UTS Runtime Frameworks
+There is no HostBridge or runtime selector forwarding layer. The host embeds
+one copy of each selected dynamic Guance framework so both UTS modules resolve
+the same SDK instance at runtime.
+
+## Local Dependencies
+
+The Guance frameworks are consumed directly from the UTS plugin directories:
+
+```text
+Hbuilder_Example/uni_modules/GC-UniPlugin/utssdk/app-ios/Frameworks/
+└─ GuanceSDK.xcframework
+
+Hbuilder_Example/uni_modules/GC-UniSessionReplay/utssdk/app-ios/Frameworks/
+└─ GuanceSessionReplay.xcframework
+```
 
 `SDK/UTS` contains DCloud's UTS configuration and bridge source; it is not the
-directory that contains the runtime frameworks. In the DCloud native iOS
-template, the required frameworks are supplied by the Host project at:
+directory containing the DCloud runtime frameworks. The matching DCloud iOS
+offline SDK must provide:
 
 ```text
 HybridHostExample-iOS/SDK/Libs/
@@ -32,85 +53,45 @@ HybridHostExample-iOS/SDK/Libs/
 └─ DCloudUTSFoundation.framework
 ```
 
-They are DCloud runtime dependencies, not Guance artifacts. The delivered
-`GuanceUniApp-iOS-<version>.zip` deliberately does not include them. A native
-Host must use the matching DCloud iOS SDK, keep the frameworks in its own
-`SDK/Libs` (or equivalent external SDK directory), and link them to each
-`unimodule` target without embedding another copy.
+Set `DCLOUD_SDK_LIBS_DIR` when those frameworks are located elsewhere.
 
-The dynamic UTS frameworks use Objective-C runtime lookup only to reach the
-static HostBridge. The HostBridge uses strongly typed Guance APIs and compiles
-the same `GCUniPluginNative.swift` and `GCSessionReplayNative.swift` command
-implementations used by a pure UniApp build.
-
-## Why the Dynamic UTS Framework Does Not Import Guance SDK
-
-The plugin source contains `GCUniPluginNative.swift` and
-`GCSessionReplayNative.swift` below `utssdk/app-ios` for the pure UniApp
-build. HBuilderX compiles those files directly into the dynamic `unimodule`,
-where they import the bundled Guance dynamic XCFrameworks.
-
-That is **not** the hybrid artifact produced by this sample's generator. In
-hybrid mode the generator removes those direct native files from the generated
-dynamic framework targets and rewrites the generated UTS calls to
-`GCUniPluginHostNative.swift` and `GCSessionReplayHostNative.swift` instead.
-Those lightweight adapters do not import `GuanceSDK` or
-`GuanceSessionReplay`; they forward calls to the static HostBridge through a
-runtime selector.
-
-```text
-Pure UniApp
-  dynamic unimodule
-    -> GCSessionReplayNative.swift
-       -> import GuanceSDK / GuanceSessionReplay
-
-Native-hybrid host
-  dynamic unimodule
-    -> GCSessionReplayHostNative.swift (no Guance SDK import)
-       -> static GuanceUniAppHostBridge
-          -> GCSessionReplayNative.swift
-             -> import host-owned GuanceSDK / GuanceSessionReplay
-```
-
-Therefore, seeing `GCSessionReplayNative.swift` in the UTS source package is
-expected; it is the shared direct implementation, not proof that a generated
-hybrid `unimoduleGCUniSessionReplay.framework` contains it. In hybrid mode the
-HostBridge is the sole owner of the native SDK linkage. This avoids a second
-SDK copy, duplicate Objective-C classes, and competing SDK singletons.
+Do not add another Guance SDK through CocoaPods or SPM to this sample. Mixing a
+second SDK binary with the local dynamic frameworks can duplicate Objective-C
+classes and SDK singletons.
 
 ## Refresh and Generate
 
 1. Export the current UniApp resource bundle with HBuilderX. This produces the
    generated iOS UTS `index.swift` files under
    `Hbuilder_Example/unpackage/resources/uni_modules`.
-2. Ensure the Ruby used to run the script has the `xcodeproj` gem available.
+2. Ensure the Ruby used by the script has the `xcodeproj` gem available.
 3. From the repository root, run:
 
    ```bash
    ruby HybridHostExample-iOS/HBuilder-uniPluginDemo/scripts/generate_guance_uts_frameworks.rb
-   bash HybridHostExample-iOS/HBuilder-uniPluginDemo/scripts/build_guance_host_bridge_xcframework.sh
    pod install --project-directory=HybridHostExample-iOS/HBuilder-uniPluginDemo
    ```
 
-   The generator synchronizes HostBridge sources, rewrites the generated UTS
-   Swift source to the runtime-only adapter classes, regenerates both dynamic
-   framework projects, and refreshes the static HostBridge project. The build
-   script creates
-   `GuanceUniAppHostBridge/StaticFramework/build/GuanceUniAppHostBridge.xcframework`.
-   Do not edit copied HostBridge sources directly.
-4. Open `GuanceHybrid.xcworkspace`, select the `HBuilder` scheme, and
-   configure normal signing on the app target before running on a device.
+   The generator copies the generated `index.swift` and the plugin's native
+   Swift source into each dynamic UTS module, links the local Guance
+   XCFrameworks, and refreshes the host project's Link/Embed phases.
+4. Open `GuanceHybrid.xcworkspace`, select the `HBuilder` scheme, configure app
+   signing, and run on a device or simulator.
 
-Session Replay is enabled by default. To generate a host without the optional
-Session Replay **UTS framework**, run:
+Session Replay is enabled by default. To omit its UTS module and local dynamic
+framework, run:
 
 ```bash
-GUANCE_SESSION_REPLAY=0 ruby HybridHostExample-iOS/HBuilder-uniPluginDemo/scripts/generate_guance_uts_frameworks.rb
-bash HybridHostExample-iOS/HBuilder-uniPluginDemo/scripts/build_guance_host_bridge_xcframework.sh
+GUANCE_SESSION_REPLAY=0 \
+ruby HybridHostExample-iOS/HBuilder-uniPluginDemo/scripts/generate_guance_uts_frameworks.rb
 pod install --project-directory=HybridHostExample-iOS/HBuilder-uniPluginDemo
 ```
 
-Run the default commands again to restore it.
+Run the default command again to restore Session Replay.
+
+For release CI only, `GC_UNIAPP_USE_CHECKED_IN_UTS_SOURCES=1` allows the
+generator to use the checked-in generated Swift sources when the HBuilderX
+export directory is unavailable.
 
 ## Create the Native-Host Release ZIP
 
@@ -122,65 +103,23 @@ bash HybridHostExample-iOS/HBuilder-uniPluginDemo/scripts/package_guance_uniapp_
 ```
 
 The version defaults to `GC-UniPlugin/package.json`; pass a version argument to
-override it. The script generates all source, builds device and simulator
-XCFramework slices, and writes:
+override it. The package contains:
 
 ```text
-HybridHostExample-iOS/HBuilder-uniPluginDemo/build/GuanceUniApp-iOS/
-└─ GuanceUniApp-iOS-<version>.zip
-   ├─ unimoduleGCUniPlugin.xcframework
-   ├─ unimoduleGCUniSessionReplay.xcframework # omitted with GUANCE_SESSION_REPLAY=0
-   ├─ GuanceUniAppHostBridge.xcframework
+GuanceUniApp-iOS-<version>.zip
+├─ unimoduleGCUniPlugin.xcframework
+├─ GuanceSDK.xcframework
+├─ unimoduleGCUniSessionReplay.xcframework # omitted when disabled
+└─ GuanceSessionReplay.xcframework          # omitted when disabled
 ```
 
-The ZIP contains no DCloud or Guance SDK binary. Refer to the official Guance
-documentation for dynamic UTS framework embedding, static HostBridge linkage,
-and native SDK integration through CocoaPods, SPM, or direct XCFrameworks.
-
-## SDK Dependency Choices
-
-The sample uses static CocoaPods because that is the easiest upgrade path for
-a native host which already uses GuanceSDK. `GuanceUniAppHostBridge` is one
-static Pod. It always compiles the Core and Session Replay HostBridge classes:
-
-```ruby
-pod 'GuanceUniAppHostBridge', :path => 'GuanceUniAppHostBridge'
-```
-
-The HostBridge depends on `GuanceSDK/Agent` and `GuanceSDK/SessionReplay`; the
-base `GuanceSDK` pod alone is not sufficient. It receives the
-`GUANCE_UNI_COCOAPODS_SESSION_REPLAY` compilation flag and checks for
-`FTRumSessionReplay` and `FTSessionReplayConfig` before handling a command.
-The Session Replay UTS framework remains optional, but the hybrid native
-binary always includes the replay-native dependency. The HostBridge folder can
-be distributed in a versioned ZIP and consumed by local CocoaPods path, so
-this integration does not require GitHub access.
-
-For a host using SPM or direct static XCFrameworks, do not use the local pod.
-Use the generated static
-`GuanceUniAppHostBridge/StaticFramework/build/GuanceUniAppHostBridge.xcframework`:
-link it without embedding it, add `-ObjC` (or `-force_load` for its selected
-slice), and
-link `GuanceSDK` and the separate `GuanceSessionReplay` product or XCFramework
-once. Full details are in
-[GuanceUniAppHostBridge/README.md](GuanceUniAppHostBridge/README.md).
-
-Do not link the Guance SDK directly from either `unimodule` framework in
-HostBridge mode. The host owns both SDK version selection and native SDK
-initialization.
-
-## Runtime Compatibility
-
-HostBridge calls reuse the existing Guance SDK singleton in the process. A
-host that configures the SDK before mounting UniApp retains ownership of that
-configuration. The optional Session Replay bridge still installs its early
-WebView hook and prepares captured UniApp WebViews, so first-document bridge
-repair remains available.
+The package does not contain DCloud runtime frameworks. The host must use the
+matching DCloud offline SDK and link its own `DCUniBase.framework` and
+`DCloudUTSFoundation.framework`.
 
 ## Validation
 
-Build both dynamic module schemes for an iOS device, then build the `HBuilder`
-app target. The app must contain the two `unimodule` frameworks when Session
-Replay is selected, but it must not embed `GuanceSDK.framework` or
-`GuanceSessionReplay.framework` through the UTS framework projects. CocoaPods
-links the static SDK implementation into the HostBridge/App binary.
+Build both dynamic UTS module schemes and then the `HBuilder` scheme. The app's
+`Frameworks` directory must contain exactly one `GuanceSDK.framework` and,
+when Session Replay is selected, exactly one `GuanceSessionReplay.framework`.
+No `GuanceUniAppHostBridge` product or CocoaPods dependency is required.

@@ -19,6 +19,10 @@ public class GCMobileConfig : NSObject, UTSObject {
     public var globalContext: Any?
     public var dataModifier: Any?
     public var lineDataModifier: Any?
+    public var remoteConfiguration: Bool = false
+    public var remoteConfigMiniUpdateInterval: NSNumber?
+    public var enableDataFilter: Bool = false
+    public var dataFilters: Any?
     public subscript(_ key: String) -> Any? {
         get {
             return utsSubscriptGetValue(key)
@@ -59,6 +63,14 @@ public class GCMobileConfig : NSObject, UTSObject {
                     self.dataModifier = try! utsSubscriptCheckValueIfPresent(newValue)
                 case "lineDataModifier":
                     self.lineDataModifier = try! utsSubscriptCheckValueIfPresent(newValue)
+                case "remoteConfiguration":
+                    self.remoteConfiguration = try! utsSubscriptCheckValue(newValue)
+                case "remoteConfigMiniUpdateInterval":
+                    self.remoteConfigMiniUpdateInterval = try! utsSubscriptCheckValueIfPresent(newValue)
+                case "enableDataFilter":
+                    self.enableDataFilter = try! utsSubscriptCheckValue(newValue)
+                case "dataFilters":
+                    self.dataFilters = try! utsSubscriptCheckValueIfPresent(newValue)
                 default:
                     break
             }
@@ -85,13 +97,111 @@ public class GCMobileConfig : NSObject, UTSObject {
         self.globalContext = obj["globalContext"] as! Any?
         self.dataModifier = obj["dataModifier"] as! Any?
         self.lineDataModifier = obj["lineDataModifier"] as! Any?
+        self.remoteConfiguration = (obj["remoteConfiguration"] as? Bool) ?? false
+        self.remoteConfigMiniUpdateInterval = obj["remoteConfigMiniUpdateInterval"] as! NSNumber?
+        self.enableDataFilter = (obj["enableDataFilter"] as? Bool) ?? false
+        self.dataFilters = obj["dataFilters"] as! Any?
     }
 }
+@objc(UTSSDKModulesGCUniPluginGCDatakitURLParams)
+@objcMembers
+public class GCDatakitURLParams : NSObject, UTSObject {
+    public var datakitUrl: String!
+    public subscript(_ key: String) -> Any? {
+        get {
+            return utsSubscriptGetValue(key)
+        }
+        set {
+            switch(key){
+                case "datakitUrl":
+                    self.datakitUrl = try! utsSubscriptCheckValue(newValue)
+                default:
+                    break
+            }
+        }
+    }
+    public override init() {
+        super.init()
+    }
+    public init(_ obj: UTSJSONObject) {
+        self.datakitUrl = obj["datakitUrl"] as! String
+    }
+}
+@objc(UTSSDKModulesGCUniPluginGCDatawayURLParams)
+@objcMembers
+public class GCDatawayURLParams : NSObject, UTSObject {
+    public var datawayUrl: String!
+    public var clientToken: String!
+    public subscript(_ key: String) -> Any? {
+        get {
+            return utsSubscriptGetValue(key)
+        }
+        set {
+            switch(key){
+                case "datawayUrl":
+                    self.datawayUrl = try! utsSubscriptCheckValue(newValue)
+                case "clientToken":
+                    self.clientToken = try! utsSubscriptCheckValue(newValue)
+                default:
+                    break
+            }
+        }
+    }
+    public override init() {
+        super.init()
+    }
+    public init(_ obj: UTSJSONObject) {
+        self.datawayUrl = obj["datawayUrl"] as! String
+        self.clientToken = obj["clientToken"] as! String
+    }
+}
+@objc(UTSSDKModulesGCUniPluginGCRemoteConfigUpdateParams)
+@objcMembers
+public class GCRemoteConfigUpdateParams : NSObject, UTSObject {
+    public var miniUpdateInterval: NSNumber?
+    public subscript(_ key: String) -> Any? {
+        get {
+            return utsSubscriptGetValue(key)
+        }
+        set {
+            switch(key){
+                case "miniUpdateInterval":
+                    self.miniUpdateInterval = try! utsSubscriptCheckValueIfPresent(newValue)
+                default:
+                    break
+            }
+        }
+    }
+    public override init() {
+        super.init()
+    }
+    public init(_ obj: UTSJSONObject) {
+        self.miniUpdateInterval = obj["miniUpdateInterval"] as! NSNumber?
+    }
+}
+@objc(UTSSDKModulesGCUniPluginGCRemoteConfigUpdateResult)
+@objcMembers
+public class GCRemoteConfigUpdateResult : NSObject {
+    public var success: Bool = false
+    public var platform: String = ""
+    public var rawJson: String? = nil
+    public var errorCode: Any? = nil
+    public var errorMessage: String? = nil
+    public init(_ success: Bool, _ platform: String, _ rawJson: String?, _ errorCode: Any?, _ errorMessage: String?){
+        self.success = success
+        self.platform = platform
+        self.rawJson = rawJson == nil ? nil : rawJson
+        self.errorCode = errorCode == nil ? nil : errorCode
+        self.errorMessage = errorMessage == nil ? nil : errorMessage
+    }
+}
+public typealias GCRemoteConfigUpdateCallback = (_ result: GCRemoteConfigUpdateResult) -> Void
 @objc(UTSSDKModulesGCUniPluginGCRUMConfig)
 @objcMembers
 public class GCRUMConfig : NSObject, UTSObject {
     public var androidAppId: String?
     public var iOSAppId: String?
+    public var harmonyAppId: String?
     public var sampleRate: NSNumber?
     public var sessionOnErrorSampleRate: NSNumber?
     public var enableNativeUserAction: Bool = false
@@ -120,6 +230,8 @@ public class GCRUMConfig : NSObject, UTSObject {
                     self.androidAppId = try! utsSubscriptCheckValueIfPresent(newValue)
                 case "iOSAppId":
                     self.iOSAppId = try! utsSubscriptCheckValueIfPresent(newValue)
+                case "harmonyAppId":
+                    self.harmonyAppId = try! utsSubscriptCheckValueIfPresent(newValue)
                 case "sampleRate":
                     self.sampleRate = try! utsSubscriptCheckValueIfPresent(newValue)
                 case "sessionOnErrorSampleRate":
@@ -167,6 +279,7 @@ public class GCRUMConfig : NSObject, UTSObject {
     public init(_ obj: UTSJSONObject) {
         self.androidAppId = obj["androidAppId"] as! String?
         self.iOSAppId = obj["iOSAppId"] as! String?
+        self.harmonyAppId = obj["harmonyAppId"] as! String?
         self.sampleRate = obj["sampleRate"] as! NSNumber?
         self.sessionOnErrorSampleRate = obj["sessionOnErrorSampleRate"] as! NSNumber?
         self.enableNativeUserAction = (obj["enableNativeUserAction"] as? Bool) ?? false
@@ -241,6 +354,7 @@ public class GCTraceConfig : NSObject, UTSObject {
     public var sampleRate: NSNumber?
     public var traceType: String?
     public var enableLinkRUMData: Bool = false
+    public var enableAutoTrace: Bool = false
     public subscript(_ key: String) -> Any? {
         get {
             return utsSubscriptGetValue(key)
@@ -253,6 +367,8 @@ public class GCTraceConfig : NSObject, UTSObject {
                     self.traceType = try! utsSubscriptCheckValueIfPresent(newValue)
                 case "enableLinkRUMData":
                     self.enableLinkRUMData = try! utsSubscriptCheckValue(newValue)
+                case "enableAutoTrace":
+                    self.enableAutoTrace = try! utsSubscriptCheckValue(newValue)
                 default:
                     break
             }
@@ -265,6 +381,7 @@ public class GCTraceConfig : NSObject, UTSObject {
         self.sampleRate = obj["sampleRate"] as! NSNumber?
         self.traceType = obj["traceType"] as! String?
         self.enableLinkRUMData = (obj["enableLinkRUMData"] as? Bool) ?? false
+        self.enableAutoTrace = (obj["enableAutoTrace"] as? Bool) ?? false
     }
 }
 @objc(UTSSDKModulesGCUniPluginGCRUMUserDataParams)
@@ -678,10 +795,11 @@ public func createDefaultBridgeContext() -> UTSJSONObject {
 }
 public var bridgeContext: UTSJSONObject = createDefaultBridgeContext()
 public func parseObject(_ text: String?) -> UTSJSONObject? {
-    if (text == nil || (text as! String).length == 0) {
+    var safeText: String = text ?? ""
+    if (safeText.length == 0) {
         return nil
     }
-    return JSON.parseObject(text as! String)
+    return JSON.parseObject(safeText)
 }
 public func cloneJSONObject(_ source: UTSJSONObject?) -> UTSJSONObject {
     if (source == nil) {
@@ -699,7 +817,8 @@ public func mergeJSONObject(_ target: UTSJSONObject, _ source: UTSJSONObject?) -
     if (source == nil) {
         return target
     }
-    (source as! UTSJSONObject).toMap().forEach({
+    var safeSource: UTSJSONObject = source ?? UTSJSONObject([:])
+    safeSource.toMap().forEach({
     (entry) -> Void in
     target[entry.key] = entry.value
     })
@@ -750,18 +869,31 @@ public func normalizeTraceConfigParams(_ params: Any?) -> UTSJSONObject {
 public func normalizeLoggingParams(_ params: Any?) -> UTSJSONObject {
     return cloneParams(params)
 }
+public func createRemoteConfigUpdateResult(_ success: Bool, _ platform: String, _ rawJson: String?, _ errorCode: Any?, _ errorMessage: String?) -> GCRemoteConfigUpdateResult {
+    return GCRemoteConfigUpdateResult(success, platform, rawJson == nil ? nil : rawJson, errorCode == nil ? nil : errorCode, errorMessage == nil ? nil : errorMessage)
+}
+public func parseRemoteConfigUpdateResult(_ result: String?, _ platform: String) -> GCRemoteConfigUpdateResult {
+    var parsedValue = parseObject(result)
+    if (parsedValue == nil) {
+        return createRemoteConfigUpdateResult(false, platform, nil, "REMOTE_CONFIG_INVALID_RESULT", "Remote configuration update returned an invalid result.")
+    }
+    var value: UTSJSONObject = parsedValue ?? UTSJSONObject([:])
+    return createRemoteConfigUpdateResult(value.getBoolean("success") ?? false, value.getString("platform") ?? platform, value.getString("rawJson"), value["errorCode"], value.getString("errorMessage"))
+}
 public var BLACK_RESOURCE_PATTERN = UTSRegExp("^https?:\\/\\/([a-zA-Z0-9-]+\\.)?dcloud\\.net\\.cn(:\\d+)?\\/.*", "")
 public func filterBlackResource(_ resourceUrl: String?) -> Bool {
-    if (resourceUrl == nil || (resourceUrl as! String).length === 0) {
+    var safeResourceUrl: String = resourceUrl ?? ""
+    if (safeResourceUrl.length === 0) {
         return false
     }
-    return BLACK_RESOURCE_PATTERN.test(resourceUrl as! String)
+    return BLACK_RESOURCE_PATTERN.test(safeResourceUrl)
 }
 public func getStringValue(_ source: UTSJSONObject?, _ key: String) -> String? {
     if (source == nil) {
         return nil
     }
-    return (source as! UTSJSONObject).getString(key)
+    var safeSource: UTSJSONObject = source ?? UTSJSONObject([:])
+    return safeSource.getString(key)
 }
 public func prepareAddResourceParams(_ params: Any?) -> Any {
     var result = normalizeAddResourceParams(params)
@@ -777,10 +909,11 @@ public func stringifyParams(_ params: Any?) -> String {
     return JSON.stringify(params) ?? "{}"
 }
 public func parseJSONResult(_ result: String?) -> Any? {
-    if (result == nil || (result as! String).length === 0) {
+    var safeResult: String = result ?? ""
+    if (safeResult.length === 0) {
         return nil
     }
-    return JSON.parse(result as! String)
+    return JSON.parse(safeResult)
 }
 public func stringifyNullableParams(_ params: Any?) -> String? {
     if (params == nil) {
@@ -789,14 +922,26 @@ public func stringifyNullableParams(_ params: Any?) -> String? {
     return JSON.stringify(params)
 }
 public func bindRUMUserCompat(_ userId: String, _ userName: String?, _ userEmail: String?, _ extra: Any?) {
-    GCUniPluginHostNative.bindRUMUser(userId, userName, userEmail, stringifyNullableParams(extra))
+    GCUniPluginNative.bindRUMUser(userId, userName, userEmail, stringifyNullableParams(extra))
 }
 @objc(UTSSDKModulesGCUniPluginMobileAgent)
 @objcMembers
 public class mobileAgent : NSObject {
     public static func sdkConfig(_ params: GCMobileConfig) {
         var json = stringifyParams(normalizeSdkConfigParams(params))
-        GCUniPluginHostNative.sdkConfig(json)
+        GCUniPluginNative.sdkConfig(json)
+    }
+    public static func setDatakitURL(_ params: GCDatakitURLParams) {
+        GCUniPluginNative.setDatakitURL(stringifyParams(params))
+    }
+    public static func setDatawayURL(_ params: GCDatawayURLParams) {
+        GCUniPluginNative.setDatawayURL(stringifyParams(params))
+    }
+    public static func updateRemoteConfigWithMiniUpdateInterval(_ params: GCRemoteConfigUpdateParams, _ callback: @escaping GCRemoteConfigUpdateCallback) {
+        GCUniPluginNative.updateRemoteConfigWithMiniUpdateInterval(stringifyParams(params), {
+        (result: String?) -> Void in
+        callback(parseRemoteConfigUpdateResult(result, "ios"))
+        })
     }
     public static func bindRUMUserData(_ params: GCRUMUserDataParams) {
         if (params == nil || params.userId == nil) {
@@ -805,66 +950,65 @@ public class mobileAgent : NSObject {
         bindRUMUserCompat(params.userId, params.userName, params.userEmail, params.extra)
     }
     public static func unbindRUMUserData() {
-        GCUniPluginHostNative.unbindRUMUserData()
+        GCUniPluginNative.unbindRUMUserData()
     }
     public static func appendGlobalContext(_ params: Any?) {
-        GCUniPluginHostNative.appendGlobalContext(stringifyParams(params))
+        GCUniPluginNative.appendGlobalContext(stringifyParams(params))
     }
     public static func appendRUMGlobalContext(_ params: Any?) {
-        GCUniPluginHostNative.appendRUMGlobalContext(stringifyParams(params))
+        GCUniPluginNative.appendRUMGlobalContext(stringifyParams(params))
     }
     public static func appendLogGlobalContext(_ params: Any?) {
-        GCUniPluginHostNative.appendLogGlobalContext(stringifyParams(params))
+        GCUniPluginNative.appendLogGlobalContext(stringifyParams(params))
     }
     public static func appendBridgeContext(_ params: Any?) {
         appendBridgeContextState(params)
     }
     public static func flushSyncData() {
-        GCUniPluginHostNative.flushSyncData()
+        GCUniPluginNative.flushSyncData()
     }
     public static func clearAllData() {
-        GCUniPluginHostNative.clearAllData()
+        GCUniPluginNative.clearAllData()
     }
     public static func shutDown() {
-        GCUniPluginHostNative.shutDown()
+        GCUniPluginNative.shutDown()
     }
-    public static func manuallySetApplicationStart() {
-    }
+    public static func manuallySetApplicationStart() {}
 }
 @objc(UTSSDKModulesGCUniPluginRum)
 @objcMembers
 public class rum : NSObject {
     public static func setConfig(_ params: GCRUMConfig) {
         var json = stringifyParams(normalizeRumConfigParams(params))
-        GCUniPluginHostNative.setRumConfig(json)
+        GCUniPluginNative.setRumConfig(json)
     }
     public static func startAction(_ params: GCRUMActionParams) {
-        GCUniPluginHostNative.startAction(stringifyParams(mergePropertyForParams(params)))
+        GCUniPluginNative.startAction(stringifyParams(mergePropertyForParams(params)))
     }
     public static func addAction(_ params: GCRUMActionParams) {
-        GCUniPluginHostNative.addAction(stringifyParams(mergePropertyForParams(params)))
+        GCUniPluginNative.addAction(stringifyParams(mergePropertyForParams(params)))
     }
     public static func onCreateView(_ params: GCRUMCreateViewParams) {
-        GCUniPluginHostNative.onCreateView(stringifyParams(cloneParams(params)))
+        GCUniPluginNative.onCreateView(stringifyParams(cloneParams(params)))
     }
     public static func startView(_ params: GCRUMViewParams) {
-        GCUniPluginHostNative.startView(stringifyParams(mergePropertyForParams(params)))
+        GCUniPluginNative.startView(stringifyParams(mergePropertyForParams(params)))
     }
     public static func stopView(_ params: GCRUMStopViewParams?) {
-        GCUniPluginHostNative.stopView(stringifyParams(cloneParams(params)))
+        GCUniPluginNative.stopView(stringifyParams(cloneParams(params)))
     }
     public static func addError(_ params: GCRUMErrorParams) {
-        GCUniPluginHostNative.addError(stringifyParams(mergePropertyForParams(params)))
+        GCUniPluginNative.addError(stringifyParams(mergePropertyForParams(params)))
     }
     public static func startResource(_ params: GCRUMResourceParams) {
-        GCUniPluginHostNative.startResource(stringifyParams(mergePropertyForParams(params)))
+        GCUniPluginNative.startResource(stringifyParams(mergePropertyForParams(params)))
     }
     public static func stopResource(_ params: GCRUMResourceParams) {
-        GCUniPluginHostNative.stopResource(stringifyParams(cloneParams(params)))
+        GCUniPluginNative.stopResource(stringifyParams(cloneParams(params)))
     }
     public static func addResource(_ params: GCRUMAddResourceParams) {
         var result = prepareAddResourceParams(params)
-        GCUniPluginHostNative.addResource(stringifyParams(result))
+        GCUniPluginNative.addResource(stringifyParams(result))
     }
 }
 @objc(UTSSDKModulesGCUniPluginLogger)
@@ -872,10 +1016,10 @@ public class rum : NSObject {
 public class logger : NSObject {
     public static func setConfig(_ params: GCLoggerConfig) {
         var json = stringifyParams(normalizeLoggerConfigParams(params))
-        GCUniPluginHostNative.setLoggerConfig(json)
+        GCUniPluginNative.setLoggerConfig(json)
     }
     public static func logging(_ params: GCLoggerLogParams) {
-        GCUniPluginHostNative.logging(stringifyParams(normalizeLoggingParams(params)))
+        GCUniPluginNative.logging(stringifyParams(normalizeLoggingParams(params)))
     }
 }
 @objc(UTSSDKModulesGCUniPluginTracer)
@@ -883,11 +1027,11 @@ public class logger : NSObject {
 public class tracer : NSObject {
     public static func setConfig(_ params: GCTraceConfig) {
         var json = stringifyParams(normalizeTraceConfigParams(params))
-        GCUniPluginHostNative.setTraceConfig(json)
+        GCUniPluginNative.setTraceConfig(json)
     }
     public static func getTraceHeader(_ params: GCTraceHeaderParams) -> Any? {
         var json = stringifyParams(params)
-        var result = GCUniPluginHostNative.getTraceHeader(json)
+        var result = GCUniPluginNative.getTraceHeader(json)
         return parseJSONResult(result)
     }
 }
@@ -970,12 +1114,33 @@ public class GCMobileConfigJSONObject : NSObject {
     public var globalContext: Any?
     public var dataModifier: Any?
     public var lineDataModifier: Any?
+    public var remoteConfiguration: Bool = false
+    public var remoteConfigMiniUpdateInterval: NSNumber?
+    public var enableDataFilter: Bool = false
+    public var dataFilters: Any?
+}
+@objc(UTSSDKModulesGCUniPluginGCDatakitURLParamsJSONObject)
+@objcMembers
+public class GCDatakitURLParamsJSONObject : NSObject {
+    public var datakitUrl: String!
+}
+@objc(UTSSDKModulesGCUniPluginGCDatawayURLParamsJSONObject)
+@objcMembers
+public class GCDatawayURLParamsJSONObject : NSObject {
+    public var datawayUrl: String!
+    public var clientToken: String!
+}
+@objc(UTSSDKModulesGCUniPluginGCRemoteConfigUpdateParamsJSONObject)
+@objcMembers
+public class GCRemoteConfigUpdateParamsJSONObject : NSObject {
+    public var miniUpdateInterval: NSNumber?
 }
 @objc(UTSSDKModulesGCUniPluginGCRUMConfigJSONObject)
 @objcMembers
 public class GCRUMConfigJSONObject : NSObject {
     public var androidAppId: String?
     public var iOSAppId: String?
+    public var harmonyAppId: String?
     public var sampleRate: NSNumber?
     public var sessionOnErrorSampleRate: NSNumber?
     public var enableNativeUserAction: Bool = false
@@ -1012,6 +1177,7 @@ public class GCTraceConfigJSONObject : NSObject {
     public var sampleRate: NSNumber?
     public var traceType: String?
     public var enableLinkRUMData: Bool = false
+    public var enableAutoTrace: Bool = false
 }
 @objc(UTSSDKModulesGCUniPluginGCRUMUserDataParamsJSONObject)
 @objcMembers
@@ -1102,8 +1268,31 @@ public class mobileAgentByJs : mobileAgent {
             "dbDiscardStrategy": params.dbDiscardStrategy,
             "globalContext": params.globalContext,
             "dataModifier": params.dataModifier,
-            "lineDataModifier": params.lineDataModifier
+            "lineDataModifier": params.lineDataModifier,
+            "remoteConfiguration": params.remoteConfiguration,
+            "remoteConfigMiniUpdateInterval": params.remoteConfigMiniUpdateInterval,
+            "enableDataFilter": params.enableDataFilter,
+            "dataFilters": params.dataFilters
         ])))
+    }
+    public static func setDatakitURLByJs(_ params: GCDatakitURLParamsJSONObject) {
+        return mobileAgent.setDatakitURL(GCDatakitURLParams(UTSJSONObject([
+            "datakitUrl": params.datakitUrl
+        ])))
+    }
+    public static func setDatawayURLByJs(_ params: GCDatawayURLParamsJSONObject) {
+        return mobileAgent.setDatawayURL(GCDatawayURLParams(UTSJSONObject([
+            "datawayUrl": params.datawayUrl,
+            "clientToken": params.clientToken
+        ])))
+    }
+    public static func updateRemoteConfigWithMiniUpdateIntervalByJs(_ params: GCRemoteConfigUpdateParamsJSONObject, _ callback: UTSCallback) {
+        return mobileAgent.updateRemoteConfigWithMiniUpdateInterval(GCRemoteConfigUpdateParams(UTSJSONObject([
+            "miniUpdateInterval": params.miniUpdateInterval
+        ])), {
+        (result: GCRemoteConfigUpdateResult) -> Void in
+        callback(result)
+        })
     }
     public static func bindRUMUserDataByJs(_ params: GCRUMUserDataParamsJSONObject) {
         return mobileAgent.bindRUMUserData(GCRUMUserDataParams(UTSJSONObject([
@@ -1148,6 +1337,7 @@ public class rumByJs : rum {
         return rum.setConfig(GCRUMConfig(UTSJSONObject([
             "androidAppId": params.androidAppId,
             "iOSAppId": params.iOSAppId,
+            "harmonyAppId": params.harmonyAppId,
             "sampleRate": params.sampleRate,
             "sessionOnErrorSampleRate": params.sessionOnErrorSampleRate,
             "enableNativeUserAction": params.enableNativeUserAction,
@@ -1258,7 +1448,8 @@ public class tracerByJs : tracer {
         return tracer.setConfig(GCTraceConfig(UTSJSONObject([
             "sampleRate": params.sampleRate,
             "traceType": params.traceType,
-            "enableLinkRUMData": params.enableLinkRUMData
+            "enableLinkRUMData": params.enableLinkRUMData,
+            "enableAutoTrace": params.enableAutoTrace
         ])))
     }
     public static func getTraceHeaderByJs(_ params: GCTraceHeaderParamsJSONObject) -> Any? {

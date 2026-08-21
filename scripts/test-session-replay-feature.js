@@ -154,9 +154,6 @@ const androidNativeSource = read(
 const nativeSource = read(
     'Hbuilder_Example/uni_modules/GC-UniSessionReplay/utssdk/app-ios/GCSessionReplayNative.swift'
 );
-const hostReplayNativeSource = read(
-    'HybridHostExample-iOS/HBuilder-uniPluginDemo/GuanceUniAppHostBridge/Sources/SessionReplay/GCSessionReplayNative.swift'
-);
 const baseNativeSource = read(
     'Hbuilder_Example/uni_modules/GC-UniPlugin/utssdk/app-ios/GCUniPluginNative.swift'
 );
@@ -274,17 +271,6 @@ assert(!nativeSource.includes('FTRumSessionReplay.startWithSessionReplayConfig e
 assert(!nativeSource.includes('FTWKWebViewHandler received session_replay'));
 assertIncludes(nativeSource, 'case "show":\n            config.touchPrivacy = FTTouchPrivacyLevel(rawValue: 0)!', 'touch privacy mapping');
 assertIncludes(nativeSource, 'case "hide":\n            config.touchPrivacy = FTTouchPrivacyLevel(rawValue: 1)!', 'touch privacy mapping');
-assertIncludes(hostReplayNativeSource, '#if GUANCE_UNI_COCOAPODS_SESSION_REPLAY\nimport GuanceSDK', 'HostBridge CocoaPods umbrella module import');
-assertIncludes(hostReplayNativeSource, 'GC-UniSessionReplay requires GuanceSessionReplay', 'HostBridge dependency guard');
-assertIncludes(hostReplayNativeSource, 'NSClassFromString("FTWKWebViewHandler")', 'HostBridge runtime Core WebView handler lookup');
-assertIncludes(hostReplayNativeSource, '@objc public static func setConfig(_ json: String?) -> Bool', 'HostBridge initialization result');
-assertIncludes(hostReplayNativeSource, 'WebView load captured:', 'HostBridge hook diagnostics');
-assertIncludes(
-    hostReplayNativeSource,
-    'private static func logInfo(_ message: String) {\n#if DEBUG',
-    'HostBridge info diagnostics debug guard'
-);
-
 assertIncludes(viewTrackingSource, 'evalSessionReplayJS(js)', 'View Tracking API');
 assertIncludes(viewTrackingSource, 'webView.evalJS(this.sessionReplayJS)', 'page WebView Browser SDK injection');
 assertIncludes(viewTrackingSource, 'sessionReplayInjectedWebViews', 'per-WebView Browser SDK injection guard');

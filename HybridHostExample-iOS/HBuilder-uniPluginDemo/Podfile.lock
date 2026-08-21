@@ -1,48 +1,4 @@
 PODS:
-  - GuanceSDK/Agent (1.6.7-alpha.2):
-    - GuanceSDK/Core
-  - GuanceSDK/Core (1.6.7-alpha.2):
-    - GuanceSDK/Core/BaseUtils (= 1.6.7-alpha.2)
-    - GuanceSDK/Core/DataManager (= 1.6.7-alpha.2)
-    - GuanceSDK/Core/FTRUM (= 1.6.7-alpha.2)
-    - GuanceSDK/Core/FTWKWebView (= 1.6.7-alpha.2)
-    - GuanceSDK/Core/Logger (= 1.6.7-alpha.2)
-    - GuanceSDK/Core/Protocol (= 1.6.7-alpha.2)
-    - GuanceSDK/Core/RemoteConfig (= 1.6.7-alpha.2)
-    - GuanceSDK/Core/URLSessionAutoInstrumentation (= 1.6.7-alpha.2)
-  - GuanceSDK/Core/BaseUtils (1.6.7-alpha.2):
-    - GuanceSDK/Core/BaseUtils/Base (= 1.6.7-alpha.2)
-    - GuanceSDK/Core/BaseUtils/Swizzle (= 1.6.7-alpha.2)
-    - GuanceSDK/Core/BaseUtils/Thread (= 1.6.7-alpha.2)
-  - GuanceSDK/Core/BaseUtils/Base (1.6.7-alpha.2):
-    - GuanceSDK/Core/BaseUtils/Thread
-  - GuanceSDK/Core/BaseUtils/Swizzle (1.6.7-alpha.2):
-    - GuanceSDK/Core/BaseUtils/Base
-  - GuanceSDK/Core/BaseUtils/Thread (1.6.7-alpha.2)
-  - GuanceSDK/Core/DataManager (1.6.7-alpha.2):
-    - GuanceSDK/Core/BaseUtils/Base
-    - GuanceSDK/Core/BaseUtils/Thread
-    - GuanceSDK/Core/Protocol
-  - GuanceSDK/Core/FTRUM (1.6.7-alpha.2):
-    - GuanceSDK/Core/BaseUtils/Base
-    - GuanceSDK/Core/Protocol
-  - GuanceSDK/Core/FTWKWebView (1.6.7-alpha.2):
-    - GuanceSDK/Core/BaseUtils/Swizzle
-    - GuanceSDK/Core/Protocol
-  - GuanceSDK/Core/Logger (1.6.7-alpha.2):
-    - GuanceSDK/Core/BaseUtils/Base
-    - GuanceSDK/Core/Protocol
-  - GuanceSDK/Core/Protocol (1.6.7-alpha.2)
-  - GuanceSDK/Core/RemoteConfig (1.6.7-alpha.2):
-    - GuanceSDK/Core/DataManager
-  - GuanceSDK/Core/URLSessionAutoInstrumentation (1.6.7-alpha.2):
-    - GuanceSDK/Core/BaseUtils/Swizzle
-    - GuanceSDK/Core/Protocol
-  - GuanceSDK/SessionReplay (1.6.7-alpha.2):
-    - GuanceSDK/Core
-  - GuanceUniAppHostBridge (0.2.7):
-    - GuanceSDK/Agent (= 1.6.7-alpha.2)
-    - GuanceSDK/SessionReplay (= 1.6.7-alpha.2)
   - uniapp/Accelerometer (5.11.0)
   - uniapp/Audio (5.11.0)
   - uniapp/CameraGallery (5.11.0)
@@ -63,9 +19,6 @@ PODS:
   - uniapp/Zip (5.11.0)
 
 DEPENDENCIES:
-  - GuanceSDK/Agent (= 1.6.7-alpha.2)
-  - GuanceSDK/SessionReplay (= 1.6.7-alpha.2)
-  - GuanceUniAppHostBridge (from `GuanceUniAppHostBridge`)
   - uniapp/Accelerometer (from `..`)
   - uniapp/Audio (from `..`)
   - uniapp/CameraGallery (from `..`)
@@ -84,21 +37,13 @@ DEPENDENCIES:
   - uniapp/XMLHttpRequest (from `..`)
   - uniapp/Zip (from `..`)
 
-SPEC REPOS:
-  trunk:
-    - GuanceSDK
-
 EXTERNAL SOURCES:
-  GuanceUniAppHostBridge:
-    :path: GuanceUniAppHostBridge
   uniapp:
     :path: ".."
 
 SPEC CHECKSUMS:
-  GuanceSDK: 9e44320d5d729c8d8e2b5ae5b6fc273b7d86de65
-  GuanceUniAppHostBridge: 022c168b28c852dde0e248ca30755a27843228c3
   uniapp: b9c41dcaecc01eb1c658c56c26bc80190ddf621b
 
-PODFILE CHECKSUM: be9756cc6f0c93c9bee9808d74424d33c282a352
+PODFILE CHECKSUM: 89e40510674340d9a2b9f3551c9ef92bd7aed2d4
 
 COCOAPODS: 1.16.2

@@ -7,8 +7,8 @@ Usage: package_guance_uniapp_ios.sh [version]
 
 Builds a native-hybrid iOS release ZIP. The version defaults to the
 GC-UniPlugin package version. Set GUANCE_SESSION_REPLAY=0 to omit the optional
-unimoduleGCUniSessionReplay XCFramework. The static HostBridge always remains
-in the archive and still requires the native Session Replay SDK.
+unimoduleGCUniSessionReplay and GuanceSessionReplay XCFrameworks. The UTS
+modules directly depend on the bundled local dynamic Guance XCFrameworks.
 
 Set DCLOUD_SDK_LIBS_DIR when the DCloud framework directory is not located at
 HybridHostExample-iOS/HBuilder-uniPluginDemo/SDK/Libs.
@@ -32,8 +32,8 @@ staging_root="$build_root/staging"
 package_name="GuanceUniApp-iOS-$version"
 package_root="$staging_root/$package_name"
 archive_path="$build_root/$package_name.zip"
-host_bridge_root="$host_root/GuanceUniAppHostBridge"
-host_bridge_artifact="$host_bridge_root/StaticFramework/build/GuanceUniAppHostBridge.xcframework"
+core_sdk_artifact="$repository_root/Hbuilder_Example/uni_modules/GC-UniPlugin/utssdk/app-ios/Frameworks/GuanceSDK.xcframework"
+session_replay_artifact="$repository_root/Hbuilder_Example/uni_modules/GC-UniSessionReplay/utssdk/app-ios/Frameworks/GuanceSessionReplay.xcframework"
 
 case "$version" in
   *[!A-Za-z0-9._+-]*|'')
@@ -49,6 +49,16 @@ for framework in DCUniBase.framework DCloudUTSFoundation.framework; do
   fi
 done
 
+if [[ ! -d "$core_sdk_artifact" ]]; then
+  echo "Missing local Guance SDK XCFramework: $core_sdk_artifact" >&2
+  exit 1
+fi
+
+if [[ "$include_session_replay" == "1" && ! -d "$session_replay_artifact" ]]; then
+  echo "Missing local Guance Session Replay XCFramework: $session_replay_artifact" >&2
+  exit 1
+fi
+
 if [[ "$include_session_replay" != "0" && "$include_session_replay" != "1" ]]; then
   echo "GUANCE_SESSION_REPLAY must be 0 or 1" >&2
   exit 1
@@ -61,7 +71,6 @@ DCLOUD_SDK_LIBS_DIR="$dcloud_sdk_libs" \
 GUANCE_SESSION_REPLAY="$include_session_replay" \
 GC_UNIAPP_USE_CHECKED_IN_UTS_SOURCES="${GC_UNIAPP_USE_CHECKED_IN_UTS_SOURCES:-0}" \
 ruby "$script_dir/generate_guance_uts_frameworks.rb"
-bash "$script_dir/build_guance_host_bridge_xcframework.sh"
 
 build_uts_framework() {
   local name="$1"
@@ -109,10 +118,11 @@ fi
 
 mkdir -p "$package_root"
 cp -R "$core_uts_artifact" "$package_root/unimoduleGCUniPlugin.xcframework"
+cp -R "$core_sdk_artifact" "$package_root/GuanceSDK.xcframework"
 if [[ -n "$session_uts_artifact" ]]; then
   cp -R "$session_uts_artifact" "$package_root/unimoduleGCUniSessionReplay.xcframework"
+  cp -R "$session_replay_artifact" "$package_root/GuanceSessionReplay.xcframework"
 fi
-cp -R "$host_bridge_artifact" "$package_root/GuanceUniAppHostBridge.xcframework"
 
 (cd "$staging_root" && /usr/bin/ditto -c -k --keepParent "$package_name" "$archive_path")
 

@@ -106,8 +106,6 @@ uniapp_subspecs << 'UTS' if uts_plugins.any? && !uniapp_subspecs.include?('UTS')
 
 target 'HBuilder' do
   pod 'uniapp', :path => '..', :subspecs => uniapp_subspecs
-  pod 'GuanceSDK', '= 1.6.7-alpha.2', :subspecs => ['Agent', 'SessionReplay']
-  pod 'GuanceUniAppHostBridge', :path => 'GuanceUniAppHostBridge'
   uts_plugins.each do |plugin|
     pod plugin[:pod_name], :path => plugin[:pod_path]
   end
