@@ -69,7 +69,7 @@ git diff --check
 
         stage('Build Android Host') {
             steps {
-                dir('HybridHostExample-Android') {
+                dir('native-projects/native-sdk-hybrid/android') {
                     sh '''#!/usr/bin/env bash
 set -euo pipefail
 ./gradlew :unimoduleGCUniPlugin:assembleRelease :unimoduleGCUniSessionReplay:assembleRelease :simpleDemo:assembleRelease
@@ -84,15 +84,15 @@ set -euo pipefail
 set -euo pipefail
 
 DCLOUD_UTS_RUNTIME_VERSION="$DCLOUD_UTS_RUNTIME_VERSION" \
-  bash HybridHostExample-Android/scripts/package_guance_uniapp_android.sh "$TAG_NAME"
+  bash native-projects/native-sdk-hybrid/android/scripts/package_guance_uniapp_android.sh "$TAG_NAME"
 
 DCLOUD_SDK_LIBS_DIR="$DCLOUD_SDK_LIBS_DIR" \
 GC_UNIAPP_USE_CHECKED_IN_UTS_SOURCES=1 \
-  bash HybridHostExample-iOS/HBuilder-uniPluginDemo/scripts/package_guance_uniapp_ios.sh "$TAG_NAME"
+  bash native-projects/native-sdk-hybrid/ios/HBuilder-uniPluginDemo/scripts/package_guance_uniapp_ios.sh "$TAG_NAME"
 
 bash scripts/package_guance_uniapp_release.sh "$TAG_NAME" \
-  "HybridHostExample-iOS/HBuilder-uniPluginDemo/build/GuanceUniApp-iOS/GuanceUniApp-iOS-$TAG_NAME.zip" \
-  "HybridHostExample-Android/build/GuanceUniApp-Android/GuanceUniApp-Android-$TAG_NAME.zip"
+  "native-projects/native-sdk-hybrid/ios/HBuilder-uniPluginDemo/build/GuanceUniApp-iOS/GuanceUniApp-iOS-$TAG_NAME.zip" \
+  "native-projects/native-sdk-hybrid/android/build/GuanceUniApp-Android/GuanceUniApp-Android-$TAG_NAME.zip"
 '''
             }
         }

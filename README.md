@@ -82,6 +82,12 @@ if (uni.getSystemInfoSync().platform === 'ios') {
 ## Example
  [Guance UniApp Plugin Demo](https://github.com/GuanceCloud/datakit-uniapp-native-plugin/tree/develop/Hbuilder_Example)
 
+Native build workspaces are grouped by delivery scenario under
+[`native-projects`](native-projects/README.md). The `native-sdk-hybrid`
+workspaces build and verify HBuilderX-exported UTS modules, while
+`unimp-host-extension` owns the Android, iOS, and HarmonyOS host-extension
+release and demo targets.
+
 ## Documentation
 
 For integration documentation, please refer to [Official Documentation](https://docs.guance.com/real-user-monitoring/uni-app/app-access/)

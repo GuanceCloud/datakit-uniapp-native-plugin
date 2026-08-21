@@ -24,7 +24,7 @@ function assertNotIncludes(source, value, label) {
   assert(!source.includes(value), `${label} must not include ${JSON.stringify(value)}`);
 }
 
-const host = 'HybridHostExample-iOS/HBuilder-uniPluginDemo';
+const host = 'native-projects/native-sdk-hybrid/ios/HBuilder-uniPluginDemo';
 const core = `${host}/UTSFrameworks/unimoduleGCUniPlugin`;
 const replay = `${host}/UTSFrameworks/unimoduleGCUniSessionReplay`;
 
@@ -53,6 +53,9 @@ for (const relativePath of [
 
 const generator = read(`${host}/scripts/generate_guance_uts_frameworks.rb`);
 const packageScript = read(`${host}/scripts/package_guance_uniapp_ios.sh`);
+assert(packageScript.includes('repository_root="$(cd "$host_root/../../../.." && pwd)"'));
+assert(packageScript.includes('dcloud_sdk_libs="${DCLOUD_SDK_LIBS_DIR:-$host_root/../SDK/Libs}"'));
+assert(generator.includes("repository_root = File.expand_path('../../../..', host_root)"));
 assert(generator.includes("ENV.fetch('GUANCE_SESSION_REPLAY', '1') != '0'"));
 assert(generator.includes("'BUILD_LIBRARY_FOR_DISTRIBUTION' => 'YES'"));
 assert(generator.includes("'OTHER_LDFLAGS' => ['$(inherited)', '-ObjC']"));

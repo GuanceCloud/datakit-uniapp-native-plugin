@@ -16,19 +16,32 @@ function assertExcludes(source, value, label) {
   assert(!source.includes(value), `${label} must not include ${JSON.stringify(value)}`);
 }
 
-const settings = read('HybridHostExample-Android/settings.gradle');
-const rootBuild = read('HybridHostExample-Android/build.gradle');
-const app = read('HybridHostExample-Android/simpleDemo/build.gradle');
-const coreLibrary = read('HybridHostExample-Android/unimoduleGCUniPlugin/build.gradle');
-const replayLibrary = read('HybridHostExample-Android/unimoduleGCUniSessionReplay/build.gradle');
-const coreNative = read('HybridHostExample-Android/unimoduleGCUniPlugin/src/main/kotlin/GCUniPluginNative.kt');
+const host = 'native-projects/native-sdk-hybrid/android';
+const settings = read(`${host}/settings.gradle`);
+const rootBuild = read(`${host}/build.gradle`);
+const app = read(`${host}/simpleDemo/build.gradle`);
+const coreLibrary = read(`${host}/unimoduleGCUniPlugin/build.gradle`);
+const replayLibrary = read(`${host}/unimoduleGCUniSessionReplay/build.gradle`);
+const coreNative = read(`${host}/unimoduleGCUniPlugin/src/main/kotlin/GCUniPluginNative.kt`);
+const coreGeneratedIndex = read(`${host}/unimoduleGCUniPlugin/src/main/kotlin/index.kt`);
 const hbuilderCoreNative = read('Hbuilder_Example/uni_modules/GC-UniPlugin/utssdk/app-android/GCUniPluginNative.kt');
+const coreInterface = read('Hbuilder_Example/uni_modules/GC-UniPlugin/utssdk/interface.uts');
 const coreUtsIndex = read('Hbuilder_Example/uni_modules/GC-UniPlugin/utssdk/app-android/index.uts');
-const replayNative = read('HybridHostExample-Android/unimoduleGCUniSessionReplay/src/main/kotlin/GCSessionReplayNative.kt');
+const replayNative = read(`${host}/unimoduleGCUniSessionReplay/src/main/kotlin/GCSessionReplayNative.kt`);
 const hbuilderReplayConfig = read('Hbuilder_Example/uni_modules/GC-UniSessionReplay/utssdk/app-android/config.json');
-const syncSources = read('HybridHostExample-Android/scripts/sync_hbuilder_android_uts_sources.sh');
-const packager = read('HybridHostExample-Android/scripts/package_guance_uniapp_android.sh');
+const syncSources = read(`${host}/scripts/sync_hbuilder_android_uts_sources.sh`);
+const packager = read(`${host}/scripts/package_guance_uniapp_android.sh`);
 
+assertIncludes(
+  syncSources,
+  'repository_root="$(cd "$host_root/../../.." && pwd)"',
+  'Android UTS source synchronizer repository root'
+);
+assertIncludes(
+  packager,
+  'repository_root="$(cd "$host_root/../../.." && pwd)"',
+  'Android packager repository root'
+);
 assertIncludes(settings, "include ':unimoduleGCUniPlugin'", 'Android settings');
 assertIncludes(settings, "include ':unimoduleGCUniSessionReplay'", 'Android settings');
 assertIncludes(app, "implementation project(':unimoduleGCUniPlugin')", 'Android Host app');
