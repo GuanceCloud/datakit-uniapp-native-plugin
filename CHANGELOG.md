@@ -1,13 +1,9 @@
 # 0.3.0
-* Unified Android, iOS, and HarmonyOS integration under the `GC-UniPlugin` UTS module, with named exports replacing legacy native-plugin acquisition.
-* Added HarmonyOS RUM support for page Views, user Actions, application lifecycle errors, `uni.request` Resources, and WebView bridge data.
-* Changed HarmonyOS JS Action Tracking to explicit opt-in through `gcActionTracking.startTracking()` instead of starting when the JS SDK entry is imported.
-* Replaced `gcHarmonyNetworkTracking` with `gcResourceTracking`, added Android and iOS `uni.request` Resource tracking, and added an iOS switch to prevent duplicate URLSession collection.
-* Deprecated `gcRequest`; it is no longer maintained, will be removed in a future release, and should be replaced with `gcResourceTracking`.
-* Added optional Session Replay support for iOS and Android, including Browser SDK bridge repair and native-host integration.
-* Added Android and iOS Hybrid Host examples, versioned release archives, and tag-triggered GitHub Release automation.
-* Improved View tracking lifecycle accuracy, loading duration calculation, foreground/background handling, and prior-View closure during navigation.
-* Fixed HarmonyOS bridge context propagation and Resource correlation, including missing SDK metadata in error data.
+* Refactored the plugin structure:
+    * `GC-JSPlugin` now provides the shared JS APIs and the View, Error, Resource, and Action collectors.
+    * `GC-UniPlugin` is now implemented in UTS for Android, iOS, and HarmonyOS. Standard uni-app applications access typed SDK APIs through named imports.
+    * UniMP WGT packages integrate only `GC-JSPlugin`; the native host initializes the SDK and provides the Host Extension.
+* Added HarmonyOS support.
 ---
 # 0.2.7
 * Compatible with iOS `GuanceSDK 1.6.7-beta.1`, Android `ft-sdk 1.7.5`, `ft-plugin 1.3.8`, and `ft-native 1.1.3`; raised the minimum supported iOS version to 12.0.
