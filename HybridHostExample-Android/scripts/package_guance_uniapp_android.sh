@@ -21,10 +21,10 @@ Optional environment variables:
   GUANCE_BUILD_UTS_MODULES=0  Do not build the Android Library modules first.
   GC_UNIAPP_CORE_AAR=PATH     Override the core UTS AAR source path.
   GC_UNIAPP_REPLAY_AAR=PATH   Override the Session Replay UTS AAR source path.
-  FT_SDK_VERSION=VERSION      Default: 1.7.4.
+  FT_SDK_VERSION=VERSION      Default: 1.7.5.
   FT_NATIVE_VERSION=VERSION   Default: 1.1.3.
-  FT_REPLAY_VERSION=VERSION   Default: 0.1.7.
-  FT_PLUGIN_VERSION=VERSION   Default: 1.3.7.
+  FT_REPLAY_VERSION=VERSION   Default: 0.1.8.
+  FT_PLUGIN_VERSION=VERSION   Default: 1.3.8.
 USAGE
   exit 0
 fi
@@ -38,10 +38,10 @@ include_session_replay="${GUANCE_SESSION_REPLAY:-1}"
 build_uts_modules="${GUANCE_BUILD_UTS_MODULES:-1}"
 core_aar="${GC_UNIAPP_CORE_AAR:-$host_root/unimoduleGCUniPlugin/build/outputs/aar/unimoduleGCUniPlugin-release.aar}"
 replay_aar="${GC_UNIAPP_REPLAY_AAR:-$host_root/unimoduleGCUniSessionReplay/build/outputs/aar/unimoduleGCUniSessionReplay-release.aar}"
-ft_sdk_version="${FT_SDK_VERSION:-1.7.4}"
+ft_sdk_version="${FT_SDK_VERSION:-1.7.5}"
 ft_native_version="${FT_NATIVE_VERSION:-1.1.3}"
-ft_replay_version="${FT_REPLAY_VERSION:-0.1.7}"
-ft_plugin_version="${FT_PLUGIN_VERSION:-1.3.7}"
+ft_replay_version="${FT_REPLAY_VERSION:-0.1.8}"
+ft_plugin_version="${FT_PLUGIN_VERSION:-1.3.8}"
 build_root="$host_root/build/GuanceUniApp-Android"
 staging_root="$build_root/staging"
 package_name="GuanceUniApp-Android-$version"

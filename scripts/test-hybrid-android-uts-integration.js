@@ -17,6 +17,7 @@ function assertExcludes(source, value, label) {
 }
 
 const settings = read('HybridHostExample-Android/settings.gradle');
+const rootBuild = read('HybridHostExample-Android/build.gradle');
 const app = read('HybridHostExample-Android/simpleDemo/build.gradle');
 const coreLibrary = read('HybridHostExample-Android/unimoduleGCUniPlugin/build.gradle');
 const replayLibrary = read('HybridHostExample-Android/unimoduleGCUniSessionReplay/build.gradle');
@@ -24,6 +25,7 @@ const coreNative = read('HybridHostExample-Android/unimoduleGCUniPlugin/src/main
 const hbuilderCoreNative = read('Hbuilder_Example/uni_modules/GC-UniPlugin/utssdk/app-android/GCUniPluginNative.kt');
 const coreUtsIndex = read('Hbuilder_Example/uni_modules/GC-UniPlugin/utssdk/app-android/index.uts');
 const replayNative = read('HybridHostExample-Android/unimoduleGCUniSessionReplay/src/main/kotlin/GCSessionReplayNative.kt');
+const hbuilderReplayConfig = read('Hbuilder_Example/uni_modules/GC-UniSessionReplay/utssdk/app-android/config.json');
 const syncSources = read('HybridHostExample-Android/scripts/sync_hbuilder_android_uts_sources.sh');
 const packager = read('HybridHostExample-Android/scripts/package_guance_uniapp_android.sh');
 
@@ -32,6 +34,7 @@ assertIncludes(settings, "include ':unimoduleGCUniSessionReplay'", 'Android sett
 assertIncludes(app, "implementation project(':unimoduleGCUniPlugin')", 'Android Host app');
 assertIncludes(app, "implementation project(':unimoduleGCUniSessionReplay')", 'Android Host app');
 assertIncludes(app, 'checkReleaseBuilds false', 'Android Host app');
+assertIncludes(rootBuild, 'ft-plugin:1.3.8', 'Android Host buildscript');
 
 for (const [label, source] of [
   ['core Android Library', coreLibrary],
@@ -42,8 +45,11 @@ for (const [label, source] of [
   assertIncludes(source, "compileOnly fileTree(dir: '../simpleDemo/libs'", label);
 }
 
-assertIncludes(coreLibrary, 'ft-sdk:1.7.4', 'core Android Library');
-assertIncludes(replayLibrary, 'ft-session-replay:0.1.7', 'Session Replay Android Library');
+assertIncludes(coreLibrary, 'ft-sdk:1.7.5', 'core Android Library');
+assertIncludes(replayLibrary, 'ft-session-replay:0.1.8', 'Session Replay Android Library');
+assertIncludes(app, 'ft-session-replay:0.1.8', 'Android Host app Session Replay dependency');
+assertIncludes(hbuilderReplayConfig, 'ft-session-replay:0.1.8', 'HBuilder Session Replay dependency');
+assertIncludes(packager, 'FT_REPLAY_VERSION:-0.1.8', 'Android release Session Replay default');
 assertIncludes(coreNative, 'fun sdkConfig(json: String?): Boolean', 'core Android initialization result');
 assertIncludes(coreNative, 'fun setRumConfig(json: String?): Boolean', 'core Android RUM result');
 assertIncludes(coreUtsIndex, 'appendBridgeContextState(params)', 'core Android UTS bridge context');

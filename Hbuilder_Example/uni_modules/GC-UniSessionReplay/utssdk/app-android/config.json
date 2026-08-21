@@ -1,7 +1,7 @@
 {
   "minSdkVersion": 24,
   "dependencies": [
-    "com.cloudcare.ft.mobile.sdk.tracker.agent:ft-session-replay:0.1.7"
+    "com.cloudcare.ft.mobile.sdk.tracker.agent:ft-session-replay:0.1.8"
   ],
   "project": {
     "plugins": [],
