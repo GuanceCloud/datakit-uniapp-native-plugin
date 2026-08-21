@@ -1,0 +1,1693 @@
+{
+  "name": "uniapp",
+  "version": "5.11.0",
+  "summary": "DCloud uni-app offline iOS SDK local pod.",
+  "homepage": "https://dcloud.io/",
+  "license": {
+    "type": "DCloud",
+    "file": "license.md"
+  },
+  "authors": {
+    "DCloud": "https://dcloud.io/"
+  },
+  "source": {
+    "path": "."
+  },
+  "platforms": {
+    "ios": "13.0"
+  },
+  "default_subspecs": "Core",
+  "subspecs": [
+    {
+      "name": "Core",
+      "public_header_files": "SDK/inc/**/*.{h,hpp}",
+      "source_files": "SDK/inc/**/*.{h,hpp}",
+      "vendored_frameworks": [
+        "SDK/Libs/DCUniBase.framework"
+      ],
+      "vendored_libraries": [
+        "SDK/Libs/liblibNavigator.a",
+        "SDK/Libs/liblibNativeUI.a",
+        "SDK/Libs/liblibNativeObj.a",
+        "SDK/Libs/liblibPGInvocation.a",
+        "SDK/Libs/liblibStorage.a",
+        "SDK/Libs/liblibUI.a"
+      ],
+      "resources": [
+        "SDK/Bundles/PandoraApi.bundle",
+        "SDK/Bundles/__uniappes6.js",
+        "SDK/Bundles/uni-jsframework-dev.js",
+        "SDK/Bundles/uni-jsframework.js",
+        "SDK/Bundles/uni-jsframework-vue3.js",
+        "SDK/Bundles/uni-jsframework-vue3-dev.js",
+        "SDK/Bundles/weexUniJs.js",
+        "SDK/Bundles/weex-polyfill.js",
+        "SDK/Bundles/unincomponents.ttf",
+        "SDK/PrivacyInfo.xcprivacy"
+      ],
+      "frameworks": [
+        "CoreText",
+        "JavaScriptCore",
+        "WebKit",
+        "CoreTelephony",
+        "MobileCoreServices",
+        "SystemConfiguration",
+        "MediaPlayer",
+        "AudioToolbox",
+        "QuartzCore",
+        "CFNetwork",
+        "Foundation",
+        "CoreFoundation",
+        "CoreGraphics",
+        "UIKit",
+        "AVFoundation",
+        "AssetsLibrary",
+        "AddressBook",
+        "CoreLocation",
+        "QuickLook",
+        "UserNotifications"
+      ],
+      "libraries": [
+        "c++",
+        "iconv"
+      ],
+      "pod_target_xcconfig": {
+        "HEADER_SEARCH_PATHS": "$(inherited) \"${PODS_TARGET_SRCROOT}/SDK/inc\" \"${PODS_TARGET_SRCROOT}/SDK/inc/**\""
+      },
+      "user_target_xcconfig": {
+        "HEADER_SEARCH_PATHS": "$(inherited) \"${PODS_ROOT}/Headers/Public/uniapp\" \"${PODS_ROOT}/Headers/Public/uniapp/**\""
+      }
+    },
+    {
+      "name": "Accelerometer",
+      "vendored_libraries": [
+        "SDK/Libs/liblibAccelerometer.a"
+      ],
+      "frameworks": "Accelerate"
+    },
+    {
+      "name": "Audio",
+      "vendored_libraries": [
+        "SDK/Libs/liblibMedia.a",
+        "SDK/Libs/libopencore-amrnb.a",
+        "SDK/Libs/libmp3lame.a"
+      ],
+      "vendored_frameworks": [
+        "SDK/Libs/DCUniRecord.framework"
+      ],
+      "frameworks": "AVFoundation"
+    },
+    {
+      "name": "CameraGallery",
+      "vendored_libraries": [
+        "SDK/Libs/liblibCamera.a"
+      ],
+      "resources": [
+        "SDK/Bundles/DCTZImagePickerController.bundle",
+        "SDK/Bundles/DCMediaEditingController.bundle"
+      ],
+      "frameworks": [
+        "AssetsLibrary",
+        "Accelerate",
+        "Photos",
+        "CoreMedia",
+        "MetalKit",
+        "GLKit"
+      ]
+    },
+    {
+      "name": "Contacts",
+      "vendored_libraries": [
+        "SDK/Libs/liblibContacts.a"
+      ],
+      "frameworks": [
+        "AddressBookUI",
+        "AddressBook",
+        "AVFoundation",
+        "CoreVideo",
+        "CoreMedia"
+      ]
+    },
+    {
+      "name": "File",
+      "vendored_libraries": [
+        "SDK/Libs/liblibIO.a"
+      ]
+    },
+    {
+      "name": "Messaging",
+      "vendored_libraries": [
+        "SDK/Libs/liblibMessage.a"
+      ],
+      "frameworks": "MessageUI"
+    },
+    {
+      "name": "Orientation",
+      "vendored_libraries": [
+        "SDK/Libs/liblibOrientation.a"
+      ],
+      "frameworks": [
+        "CoreLocation",
+        "CoreMotion"
+      ]
+    },
+    {
+      "name": "Proximity",
+      "vendored_libraries": [
+        "SDK/Libs/liblibPGProximity.a"
+      ]
+    },
+    {
+      "name": "XMLHttpRequest",
+      "vendored_libraries": [
+        "SDK/Libs/liblibXHR.a"
+      ]
+    },
+    {
+      "name": "Zip",
+      "vendored_libraries": [
+        "SDK/Libs/liblibZip.a"
+      ]
+    },
+    {
+      "name": "Barcode",
+      "vendored_libraries": [
+        "SDK/Libs/liblibBarcode.a",
+        "SDK/Libs/libDCUniBarcode.a",
+        "SDK/Libs/libDCUniZXing.a",
+        "SDK/Libs/libuchardet.a"
+      ],
+      "frameworks": [
+        "AVFoundation",
+        "ImageIO",
+        "CoreVideo",
+        "CoreMedia"
+      ],
+      "libraries": "iconv.2"
+    },
+    {
+      "name": "Canvas",
+      "vendored_libraries": [
+        "SDK/Libs/libDCUniCanvas.a"
+      ],
+      "frameworks": "OpenGLES"
+    },
+    {
+      "name": "Video",
+      "vendored_libraries": [
+        "SDK/Libs/libDCUniVideo.a",
+        "SDK/Libs/liblibVideo.a"
+      ],
+      "vendored_frameworks": [
+        "SDK/Libs/DCUniVideoPublic.framework",
+        "SDK/Libs/IJKMediaFrameworkWithSSL.framework",
+        "SDK/Libs/Masonry.framework"
+      ],
+      "resources": [
+        "SDK/Bundles/DCSVProgressHUD.bundle",
+        "SDK/Bundles/DCPGVideo.bundle"
+      ],
+      "frameworks": [
+        "AudioToolbox",
+        "AVFoundation",
+        "CoreGraphics",
+        "CoreMedia",
+        "CoreVideo",
+        "VideoToolbox",
+        "MediaPlayer",
+        "MobileCoreServices",
+        "OpenGLES",
+        "QuartzCore",
+        "UIKit"
+      ],
+      "libraries": [
+        "c++",
+        "bz2",
+        "z"
+      ]
+    },
+    {
+      "name": "Fingerprint",
+      "vendored_libraries": [
+        "SDK/Libs/liblibFingerprint.a"
+      ],
+      "frameworks": "LocalAuthentication"
+    },
+    {
+      "name": "FaceId",
+      "vendored_libraries": [
+        "SDK/Libs/libDCUniFaceID.a"
+      ],
+      "frameworks": "LocalAuthentication"
+    },
+    {
+      "name": "BlueTooth",
+      "vendored_libraries": [
+        "SDK/Libs/liblibBlueTooth.a"
+      ],
+      "frameworks": "CoreBluetooth"
+    },
+    {
+      "name": "Sqlite",
+      "vendored_libraries": [
+        "SDK/Libs/liblibSqlite.a"
+      ],
+      "libraries": "sqlite3.0"
+    },
+    {
+      "name": "IBeacon",
+      "vendored_libraries": [
+        "SDK/Libs/liblibBeacon.a"
+      ],
+      "frameworks": [
+        "CoreBluetooth",
+        "CoreLocation"
+      ]
+    },
+    {
+      "name": "Log",
+      "vendored_libraries": [
+        "SDK/Libs/liblibLog.a"
+      ]
+    },
+    {
+      "name": "Geolocation",
+      "vendored_libraries": [
+        "SDK/Libs/liblibGeolocation.a"
+      ],
+      "frameworks": [
+        "Foundation",
+        "CoreLocation"
+      ]
+    },
+    {
+      "name": "Geolocation-Baidu",
+      "vendored_libraries": [
+        "SDK/Libs/libBaiduLocationPlugin.a",
+        "SDK/Libs/libBaiduKeyVerify.a",
+        "SDK/Libs/libssl.a",
+        "SDK/Libs/libcrypto.a"
+      ],
+      "vendored_frameworks": [
+        "SDK/Libs/BaiduMapAPI_Utils.framework",
+        "SDK/Libs/BaiduMapAPI_Base.framework",
+        "SDK/Libs/BaiduMapAPI_Search.framework",
+        "SDK/Libs/BMKLocationKit.framework"
+      ],
+      "frameworks": [
+        "SystemConfiguration",
+        "Security",
+        "CoreLocation",
+        "CoreTelephony"
+      ],
+      "libraries": [
+        "c++",
+        "sqlite3.0"
+      ],
+      "dependencies": {
+        "uniapp/Geolocation": [
+
+        ]
+      }
+    },
+    {
+      "name": "Geolocation-Gaode",
+      "vendored_libraries": [
+        "SDK/Libs/libAMapLocationPlugin.a"
+      ],
+      "vendored_frameworks": [
+        "SDK/Libs/AMapFoundationKit.framework",
+        "SDK/Libs/AMapLocationKit.framework"
+      ],
+      "frameworks": [
+        "ExternalAccessory",
+        "GLKit",
+        "Security",
+        "CoreTelephony",
+        "SystemConfiguration"
+      ],
+      "libraries": [
+        "c++",
+        "z"
+      ],
+      "dependencies": {
+        "uniapp/Geolocation": [
+
+        ]
+      }
+    },
+    {
+      "name": "Map-Baidu",
+      "vendored_libraries": [
+        "SDK/Libs/liblibMap.a",
+        "SDK/Libs/libbmapimp.a",
+        "SDK/Libs/libBaiduKeyVerify.a",
+        "SDK/Libs/libssl.a",
+        "SDK/Libs/libcrypto.a"
+      ],
+      "vendored_frameworks": [
+        "SDK/Libs/BaiduMapAPI_Utils.framework",
+        "SDK/Libs/BaiduMapAPI_Base.framework",
+        "SDK/Libs/BaiduMapAPI_Search.framework",
+        "SDK/Libs/BaiduMapAPI_Map.framework",
+        "SDK/Libs/BMKLocationKit.framework"
+      ],
+      "resources": [
+        "SDK/Bundles/mapapi.bundle"
+      ],
+      "frameworks": [
+        "QuartzCore",
+        "CoreGraphics",
+        "CoreTelephony",
+        "Accelerate",
+        "SystemConfiguration",
+        "Security",
+        "MapKit",
+        "OpenGLES",
+        "CoreLocation"
+      ],
+      "libraries": [
+        "c++",
+        "sqlite3.0",
+        "z"
+      ]
+    },
+    {
+      "name": "Map-Gaode",
+      "vendored_libraries": [
+        "SDK/Libs/liblibMap.a",
+        "SDK/Libs/libAMapImp.a",
+        "SDK/Libs/libDCUniMap.a",
+        "SDK/Libs/libDCUniAmap.a"
+      ],
+      "vendored_frameworks": [
+        "SDK/Libs/AMapSearchKit.framework",
+        "SDK/Libs/MAMapKit.framework",
+        "SDK/Libs/AMapFoundationKit.framework",
+        "SDK/Libs/Masonry.framework"
+      ],
+      "resources": [
+        "SDK/Bundles/AMap.bundle",
+        "SDK/Bundles/userPosition@2x.png"
+      ],
+      "frameworks": [
+        "MapKit",
+        "CoreLocation",
+        "GLKit"
+      ],
+      "libraries": "c++"
+    },
+    {
+      "name": "Map-Google",
+      "vendored_libraries": [
+        "SDK/Libs/libDCUniMap.a",
+        "SDK/Libs/libDCUniGoogleMap.a",
+        "SDK/Libs/liblibMap.a"
+      ],
+      "vendored_frameworks": [
+        "SDK/Libs/GoogleMapsBase.framework",
+        "SDK/Libs/GoogleMaps.framework",
+        "SDK/Libs/GoogleMapsCore.framework"
+      ],
+      "resources": [
+        "SDK/Bundles/GoogleMaps.bundle"
+      ],
+      "frameworks": [
+        "Accelerate",
+        "CoreData",
+        "CoreGraphics",
+        "CoreImage",
+        "CoreLocation",
+        "CoreTelephony",
+        "CoreText",
+        "GLKit",
+        "ImageIO",
+        "Metal",
+        "OpenGLES",
+        "QuartzCore",
+        "SystemConfiguration"
+      ],
+      "libraries": [
+        "c++",
+        "z"
+      ]
+    },
+    {
+      "name": "Oauth",
+      "vendored_libraries": [
+        "SDK/Libs/liblibOauth.a"
+      ]
+    },
+    {
+      "name": "Oauth-Univerify",
+      "vendored_frameworks": [
+        "SDK/Libs/UniVerify.framework",
+        "SDK/Libs/GTCommonSDK.xcframework",
+        "SDK/Libs/GeYanSdk.xcframework"
+      ],
+      "resources": [
+        "SDK/Bundles/TYRZResource.bundle"
+      ],
+      "frameworks": "AdSupport",
+      "libraries": [
+        "z",
+        "c++",
+        "sqlite3.0"
+      ],
+      "dependencies": {
+        "uniapp/Oauth": [
+
+        ]
+      }
+    },
+    {
+      "name": "Oauth-Sina",
+      "vendored_libraries": [
+        "SDK/Libs/libSinaWBOauth.a",
+        "SDK/Libs/libWeiboSDK.a"
+      ],
+      "resources": [
+        "SDK/Bundles/WeiboSDK.bundle"
+      ],
+      "frameworks": "ImageIO",
+      "libraries": "sqlite3.0",
+      "dependencies": {
+        "uniapp/Oauth": [
+
+        ]
+      }
+    },
+    {
+      "name": "Oauth-QQ",
+      "vendored_libraries": [
+        "SDK/Libs/libQQOauth.a"
+      ],
+      "vendored_frameworks": [
+        "SDK/Libs/TencentOpenAPI.xcframework"
+      ],
+      "dependencies": {
+        "uniapp/Oauth": [
+
+        ]
+      }
+    },
+    {
+      "name": "Oauth-Wechat",
+      "vendored_libraries": [
+        "SDK/Libs/libWXOauth.a",
+        "SDK/Libs/libWeChatSDK.a"
+      ],
+      "frameworks": [
+        "CoreTelephony",
+        "SystemConfiguration"
+      ],
+      "libraries": [
+        "sqlite3.0",
+        "z"
+      ],
+      "dependencies": {
+        "uniapp/Oauth": [
+
+        ]
+      }
+    },
+    {
+      "name": "Oauth-Wechat-PaySDK",
+      "vendored_libraries": [
+        "SDK/Libs/libWXOauth.a",
+        "SDK/Libs/libWeChatSDK_pay.a"
+      ],
+      "frameworks": [
+        "CoreTelephony",
+        "SystemConfiguration"
+      ],
+      "libraries": [
+        "sqlite3.0",
+        "z"
+      ],
+      "dependencies": {
+        "uniapp/Oauth": [
+
+        ]
+      }
+    },
+    {
+      "name": "Oauth-Apple",
+      "vendored_libraries": [
+        "SDK/Libs/libAppleOauth.a"
+      ],
+      "weak_frameworks": "AuthenticationServices",
+      "dependencies": {
+        "uniapp/Oauth": [
+
+        ]
+      }
+    },
+    {
+      "name": "Oauth-Google",
+      "vendored_libraries": [
+        "SDK/Libs/libGoogleOauth.a"
+      ],
+      "vendored_frameworks": [
+        "SDK/Libs/GoogleSignIn.xcframework",
+        "SDK/Libs/AppAuth.xcframework",
+        "SDK/Libs/GTMAppAuth.xcframework",
+        "SDK/Libs/GTMSessionFetcher.xcframework"
+      ],
+      "resources": [
+        "SDK/Bundles/GoogleSignIn.bundle"
+      ],
+      "frameworks": [
+        "CoreText",
+        "CoreGraphics",
+        "LocalAuthentication",
+        "SafariServices",
+        "Security"
+      ],
+      "dependencies": {
+        "uniapp/Oauth": [
+
+        ]
+      }
+    },
+    {
+      "name": "Oauth-Facebook",
+      "vendored_libraries": [
+        "SDK/Libs/libFBOauth.a"
+      ],
+      "vendored_frameworks": [
+        "SDK/Libs/FBSDKCoreKit.xcframework",
+        "SDK/Libs/FBAEMKit.xcframework",
+        "SDK/Libs/FBSDKCoreKit_Basics.xcframework",
+        "SDK/Libs/FBSDKLoginKit.xcframework"
+      ],
+      "frameworks": [
+        "Accelerate",
+        "Accounts",
+        "AdSupport",
+        "AudioToolbox",
+        "CoreGraphics",
+        "QuartzCore",
+        "Security",
+        "Social",
+        "StoreKit"
+      ],
+      "libraries": "c++",
+      "dependencies": {
+        "uniapp/Oauth": [
+
+        ]
+      }
+    },
+    {
+      "name": "Payment",
+      "vendored_libraries": [
+        "SDK/Libs/liblibPayment.a"
+      ]
+    },
+    {
+      "name": "Payment-AliPay",
+      "vendored_libraries": [
+        "SDK/Libs/libalixpayment.a"
+      ],
+      "vendored_frameworks": [
+        "SDK/Libs/AlipaySDK.xcframework"
+      ],
+      "resources": [
+        "SDK/Bundles/AlipaySDK.bundle"
+      ],
+      "frameworks": [
+        "Security",
+        "CoreMotion",
+        "SystemConfiguration",
+        "CFNetwork"
+      ],
+      "libraries": "c++",
+      "dependencies": {
+        "uniapp/Payment": [
+
+        ]
+      }
+    },
+    {
+      "name": "Payment-Wechat",
+      "vendored_libraries": [
+        "SDK/Libs/libwxpay.a",
+        "SDK/Libs/libWeChatSDK_pay.a"
+      ],
+      "frameworks": [
+        "CoreTelephony",
+        "SystemConfiguration"
+      ],
+      "libraries": [
+        "sqlite3.0",
+        "z"
+      ],
+      "dependencies": {
+        "uniapp/Payment": [
+
+        ]
+      }
+    },
+    {
+      "name": "Payment-IAP",
+      "vendored_libraries": [
+        "SDK/Libs/libIAPPay.a"
+      ],
+      "frameworks": "StoreKit",
+      "dependencies": {
+        "uniapp/Payment": [
+
+        ]
+      }
+    },
+    {
+      "name": "Payment-Paypal",
+      "vendored_libraries": [
+        "SDK/Libs/libpaypalpay.a"
+      ],
+      "vendored_frameworks": [
+        "SDK/Libs/PayPalCheckout.xcframework"
+      ],
+      "dependencies": {
+        "uniapp/Payment": [
+
+        ]
+      }
+    },
+    {
+      "name": "Payment-Stripe",
+      "vendored_libraries": [
+        "SDK/Libs/libstripepay.a"
+      ],
+      "vendored_frameworks": [
+        "SDK/Libs/StripeApplePay.xcframework",
+        "SDK/Libs/StripeCore.xcframework",
+        "SDK/Libs/StripeUICore.xcframework",
+        "SDK/Libs/Stripe3DS2.xcframework",
+        "SDK/Libs/StripePayments.xcframework",
+        "SDK/Libs/StripePaymentsUI.xcframework",
+        "SDK/Libs/StripePaymentSheet.xcframework"
+      ],
+      "dependencies": {
+        "uniapp/Payment": [
+
+        ]
+      }
+    },
+    {
+      "name": "Push",
+      "vendored_libraries": [
+        "SDK/Libs/liblibPush.a"
+      ]
+    },
+    {
+      "name": "Push-UniPush",
+      "vendored_libraries": [
+        "SDK/Libs/libUniPush.a"
+      ],
+      "vendored_frameworks": [
+        "SDK/Libs/GTSDK.xcframework"
+      ],
+      "frameworks": [
+        "Security",
+        "MobileCoreServices",
+        "SystemConfiguration",
+        "CoreLocation",
+        "AVFoundation",
+        "CoreTelephony"
+      ],
+      "weak_frameworks": "UserNotifications",
+      "libraries": [
+        "c++",
+        "sqlite3",
+        "z",
+        "resolv"
+      ],
+      "dependencies": {
+        "uniapp/Push": [
+
+        ]
+      }
+    },
+    {
+      "name": "Push-Getui",
+      "vendored_libraries": [
+        "SDK/Libs/libGeTuiPush.a"
+      ],
+      "vendored_frameworks": [
+        "SDK/Libs/GTSDK.xcframework"
+      ],
+      "frameworks": [
+        "Security",
+        "MobileCoreServices",
+        "SystemConfiguration",
+        "CoreLocation",
+        "AVFoundation",
+        "CoreTelephony"
+      ],
+      "weak_frameworks": "UserNotifications",
+      "libraries": [
+        "c++",
+        "sqlite3",
+        "z",
+        "resolv"
+      ],
+      "dependencies": {
+        "uniapp/Push": [
+
+        ]
+      }
+    },
+    {
+      "name": "Push-FCM",
+      "vendored_libraries": [
+        "SDK/Libs/libFCMPush.a"
+      ],
+      "vendored_frameworks": [
+        "SDK/Libs/FirebaseCore.xcframework",
+        "SDK/Libs/FirebaseCoreInternal.xcframework",
+        "SDK/Libs/FirebaseInstallations.xcframework",
+        "SDK/Libs/GoogleDataTransport.xcframework",
+        "SDK/Libs/GoogleUtilities.xcframework",
+        "SDK/Libs/FBLPromises.xcframework",
+        "SDK/Libs/nanopb.xcframework",
+        "SDK/Libs/FirebaseMessaging.xcframework"
+      ],
+      "frameworks": "UserNotifications",
+      "dependencies": {
+        "uniapp/Push": [
+
+        ]
+      }
+    },
+    {
+      "name": "Share",
+      "vendored_libraries": [
+        "SDK/Libs/liblibShare.a"
+      ]
+    },
+    {
+      "name": "Share-Sina",
+      "vendored_libraries": [
+        "SDK/Libs/libSinaShare.a",
+        "SDK/Libs/libWeiboSDK.a"
+      ],
+      "resources": [
+        "SDK/Bundles/WeiboSDK.bundle"
+      ],
+      "frameworks": "ImageIO",
+      "libraries": "sqlite3.0",
+      "dependencies": {
+        "uniapp/Share": [
+
+        ]
+      }
+    },
+    {
+      "name": "Share-QQ",
+      "vendored_libraries": [
+        "SDK/Libs/libQQShare.a"
+      ],
+      "vendored_frameworks": [
+        "SDK/Libs/TencentOpenAPI.xcframework"
+      ],
+      "dependencies": {
+        "uniapp/Share": [
+
+        ]
+      }
+    },
+    {
+      "name": "Share-Wechat",
+      "vendored_libraries": [
+        "SDK/Libs/libweixinShare.a",
+        "SDK/Libs/libWeChatSDK.a"
+      ],
+      "frameworks": [
+        "CoreTelephony",
+        "SystemConfiguration"
+      ],
+      "libraries": [
+        "sqlite3.0",
+        "z"
+      ],
+      "dependencies": {
+        "uniapp/Share": [
+
+        ]
+      }
+    },
+    {
+      "name": "Share-Wechat-PaySDK",
+      "vendored_libraries": [
+        "SDK/Libs/libweixinShare.a",
+        "SDK/Libs/libWeChatSDK_pay.a"
+      ],
+      "frameworks": [
+        "CoreTelephony",
+        "SystemConfiguration"
+      ],
+      "libraries": [
+        "sqlite3.0",
+        "z"
+      ],
+      "dependencies": {
+        "uniapp/Share": [
+
+        ]
+      }
+    },
+    {
+      "name": "Speech",
+      "vendored_libraries": [
+        "SDK/Libs/liblibSpeech.a"
+      ]
+    },
+    {
+      "name": "Speech-Baidu",
+      "vendored_libraries": [
+        "SDK/Libs/libBaiduSpeechSDK.a",
+        "SDK/Libs/libbaiduSpeech.a"
+      ],
+      "resources": [
+        "SDK/Bundles/BDSClientEASRResources"
+      ],
+      "frameworks": [
+        "AudioToolbox",
+        "AVFoundation",
+        "CFNetwork",
+        "CoreLocation",
+        "CoreTelephony",
+        "SystemConfiguration",
+        "GLKit"
+      ],
+      "libraries": [
+        "c++",
+        "z",
+        "sqlite3"
+      ],
+      "dependencies": {
+        "uniapp/Speech": [
+
+        ]
+      }
+    },
+    {
+      "name": "Speech-Ifly",
+      "vendored_libraries": [
+        "SDK/Libs/libiflySpeech.a"
+      ],
+      "vendored_frameworks": [
+        "SDK/Libs/iflyMSC.framework"
+      ],
+      "frameworks": [
+        "AVFoundation",
+        "AddressBook",
+        "Contacts"
+      ],
+      "dependencies": {
+        "uniapp/Speech": [
+
+        ]
+      }
+    },
+    {
+      "name": "LivePusher",
+      "vendored_libraries": [
+        "SDK/Libs/liblibLivePush.a",
+        "SDK/Libs/libDCUniGPUImage.a",
+        "SDK/Libs/libDCUniLivePush.a"
+      ],
+      "vendored_frameworks": [
+        "SDK/Libs/UPLiveSDKDll.framework"
+      ],
+      "frameworks": [
+        "AVFoundation",
+        "QuartzCore",
+        "OpenGLES",
+        "AudioToolbox",
+        "VideoToolbox",
+        "Accelerate",
+        "CoreMedia",
+        "CoreTelephony",
+        "SystemConfiguration",
+        "CoreMotion"
+      ],
+      "libraries": [
+        "z",
+        "bz2",
+        "iconv"
+      ]
+    },
+    {
+      "name": "Statistic",
+      "vendored_libraries": [
+        "SDK/Libs/liblibStatistic.a"
+      ]
+    },
+    {
+      "name": "Statistic-Umeng",
+      "vendored_libraries": [
+        "SDK/Libs/libUmengStatistic.a"
+      ],
+      "vendored_frameworks": [
+        "SDK/Libs/UMDevice.xcframework",
+        "SDK/Libs/UMCommon.xcframework",
+        "SDK/Libs/UMAPM.framework"
+      ],
+      "frameworks": [
+        "SystemConfiguration",
+        "CoreTelephony"
+      ],
+      "libraries": [
+        "z",
+        "sqlite3"
+      ],
+      "dependencies": {
+        "uniapp/Statistic": [
+
+        ]
+      }
+    },
+    {
+      "name": "Statistic-Firebase",
+      "vendored_libraries": [
+        "SDK/Libs/libGoogleStatistic.a"
+      ],
+      "vendored_frameworks": [
+        "SDK/Libs/FirebaseAnalytics.xcframework",
+        "SDK/Libs/FirebaseCore.xcframework",
+        "SDK/Libs/FirebaseCoreInternal.xcframework",
+        "SDK/Libs/FirebaseInstallations.xcframework",
+        "SDK/Libs/GoogleAppMeasurement.xcframework",
+        "SDK/Libs/GoogleAppMeasurementIdentitySupport.xcframework",
+        "SDK/Libs/GoogleUtilities.xcframework",
+        "SDK/Libs/FBLPromises.xcframework",
+        "SDK/Libs/nanopb.xcframework"
+      ],
+      "dependencies": {
+        "uniapp/Statistic": [
+
+        ]
+      }
+    },
+    {
+      "name": "UIWebview",
+      "vendored_libraries": [
+        "SDK/Libs/libH5WEUIWebview.a"
+      ],
+      "frameworks": [
+        "JavaScriptCore",
+        "Foundation",
+        "UIKit"
+      ]
+    },
+    {
+      "name": "FacialRecognitionVerify",
+      "vendored_frameworks": [
+        "SDK/Libs/uniFacialRecognitionVerify.framework",
+        "SDK/Libs/AliyunFaceAuthFacade.framework",
+        "SDK/Libs/AliyunMobileRPC.framework",
+        "SDK/Libs/AliyunOSSiOS.framework",
+        "SDK/Libs/APBToygerFacade.framework",
+        "SDK/Libs/APPSecuritySDK.framework",
+        "SDK/Libs/BioAuthAPI.framework",
+        "SDK/Libs/BioAuthEngine.framework",
+        "SDK/Libs/deviceiOS.framework",
+        "SDK/Libs/DTFIdentityManager.framework",
+        "SDK/Libs/DTFSensorServices.framework",
+        "SDK/Libs/DTFUIModule.framework",
+        "SDK/Libs/DTFUtility.framework",
+        "SDK/Libs/MPRemoteLogging.framework",
+        "SDK/Libs/ToygerNative.framework",
+        "SDK/Libs/ToygerService.framework"
+      ],
+      "dependencies": {
+        "uniapp/UTS": [
+
+        ]
+      },
+      "resources": [
+        "SDK/Bundles/APBToygerFacade.bundle",
+        "SDK/Bundles/BioAuthEngine.bundle",
+        "SDK/Bundles/ToygerNative.bundle"
+      ],
+      "frameworks": [
+        "CoreGraphics",
+        "Accelerate",
+        "SystemConfiguration",
+        "AssetsLibrary",
+        "CoreTelephony",
+        "QuartzCore",
+        "CoreFoundation",
+        "CoreLocation",
+        "ImageIO",
+        "CoreMedia",
+        "CoreMotion",
+        "AVFoundation",
+        "WebKit",
+        "AudioToolbox",
+        "CFNetwork",
+        "MobileCoreServices",
+        "AdSupport"
+      ],
+      "libraries": [
+        "resolv",
+        "z",
+        "c++",
+        "c++.1",
+        "c++abi",
+        "z.1.2.8"
+      ]
+    },
+    {
+      "name": "UTS",
+      "vendored_frameworks": [
+        "SDK/Libs/DCloudUTSFoundation.framework"
+      ],
+      "dependencies": {
+        "uniapp/Core": [
+
+        ]
+      }
+    },
+    {
+      "name": "UniAd-Base",
+      "vendored_libraries": [
+        "SDK/Libs/libDCUniAdWeexModule.a"
+      ]
+    },
+    {
+      "name": "UniAd-CSJ",
+      "vendored_frameworks": [
+        "SDK/Libs/DCUniAdCsj.xcframework"
+      ],
+      "frameworks": [
+        "Accelerate",
+        "AdSupport",
+        "AudioToolbox",
+        "AVFoundation",
+        "CoreGraphics",
+        "CoreImage",
+        "CoreLocation",
+        "CoreMotion",
+        "CoreMedia",
+        "CoreTelephony",
+        "CoreText",
+        "ImageIO",
+        "JavaScriptCore",
+        "MapKit",
+        "MediaPlayer",
+        "MobileCoreServices",
+        "QuartzCore",
+        "Security",
+        "StoreKit",
+        "SystemConfiguration",
+        "UIKit",
+        "WebKit",
+        "DeviceCheck",
+        "CoreML",
+        "CoreHaptics"
+      ],
+      "libraries": [
+        "bz2",
+        "c++",
+        "iconv",
+        "resolv.9",
+        "sqlite3",
+        "xml2",
+        "z",
+        "c++abi"
+      ],
+      "dependencies": {
+        "Ads-CN-Beta/BUAdSDK": [
+          "7.6.0.4"
+        ],
+        "Ads-CN-Beta/CSJMediation-Only": [
+          "7.6.0.4"
+        ],
+        "uniapp/UniAd-Base": [
+
+        ]
+      }
+    },
+    {
+      "name": "UniAd-Gromore",
+      "vendored_frameworks": [
+        "SDK/Libs/DCUniAdGm.xcframework"
+      ],
+      "frameworks": [
+        "Accelerate",
+        "AdSupport",
+        "AudioToolbox",
+        "AVFoundation",
+        "CoreGraphics",
+        "CoreImage",
+        "CoreLocation",
+        "CoreMotion",
+        "CoreMedia",
+        "CoreTelephony",
+        "CoreText",
+        "ImageIO",
+        "JavaScriptCore",
+        "MapKit",
+        "MediaPlayer",
+        "MobileCoreServices",
+        "QuartzCore",
+        "Security",
+        "StoreKit",
+        "SystemConfiguration",
+        "UIKit",
+        "WebKit",
+        "DeviceCheck",
+        "CoreML",
+        "CoreHaptics"
+      ],
+      "libraries": [
+        "bz2",
+        "c++",
+        "iconv",
+        "resolv.9",
+        "sqlite3",
+        "xml2",
+        "z",
+        "c++abi"
+      ],
+      "dependencies": {
+        "Ads-CN-Beta/BUAdSDK": [
+          "7.6.0.4"
+        ],
+        "Ads-CN-Beta/CSJMediation-Only": [
+          "7.6.0.4"
+        ],
+        "uniapp/UniAd-Base": [
+
+        ]
+      }
+    },
+    {
+      "name": "UniAd-GDT",
+      "vendored_frameworks": [
+        "SDK/Libs/DCUniAdGdt.xcframework"
+      ],
+      "frameworks": [
+        "AdSupport",
+        "CoreLocation",
+        "QuartzCore",
+        "SystemConfiguration",
+        "CoreTelephony",
+        "Security",
+        "StoreKit",
+        "AVFoundation",
+        "WebKit",
+        "JavaScriptCore"
+      ],
+      "libraries": [
+        "z",
+        "c++",
+        "xml2",
+        "sqlite3"
+      ],
+      "dependencies": {
+        "GDTMobSDK": [
+          "4.15.90"
+        ],
+        "uniapp/UniAd-Base": [
+
+        ]
+      }
+    },
+    {
+      "name": "UniAd-KS",
+      "vendored_frameworks": [
+        "SDK/Libs/DCUniAdKs.xcframework"
+      ],
+      "frameworks": [
+        "Foundation",
+        "UIKit",
+        "MobileCoreServices",
+        "CoreGraphics",
+        "Security",
+        "SystemConfiguration",
+        "CoreTelephony",
+        "AdSupport",
+        "CoreData",
+        "StoreKit",
+        "AVFoundation",
+        "MediaPlayer",
+        "CoreMedia",
+        "WebKit",
+        "Accelerate",
+        "CoreLocation",
+        "AVKit",
+        "MessageUI",
+        "QuickLook",
+        "AddressBook",
+        "CoreMotion"
+      ],
+      "libraries": [
+        "z",
+        "resolv.9",
+        "sqlite3",
+        "c++",
+        "c++abi"
+      ],
+      "dependencies": {
+        "KSAdSDK": [
+          "5.4.10.1"
+        ],
+        "uniapp/UniAd-Base": [
+
+        ]
+      }
+    },
+    {
+      "name": "UniAd-Sigmob",
+      "vendored_frameworks": [
+        "SDK/Libs/DCUniAdSgm.xcframework"
+      ],
+      "frameworks": [
+        "StoreKit",
+        "CFNetwork",
+        "CoreMedia",
+        "AdSupport",
+        "CoreGraphics",
+        "AVFoundation",
+        "CoreLocation",
+        "CoreTelephony",
+        "SafariServices",
+        "MobileCoreServices",
+        "WebKit",
+        "SystemConfiguration",
+        "ImageIO"
+      ],
+      "libraries": [
+        "z",
+        "sqlite3"
+      ],
+      "dependencies": {
+        "SigmobAd-iOS": [
+          "4.20.22"
+        ],
+        "uniapp/UniAd-Base": [
+
+        ]
+      }
+    },
+    {
+      "name": "UniAd-Baidu",
+      "vendored_frameworks": [
+        "SDK/Libs/DCUniAdBd.xcframework"
+      ],
+      "resources": [
+        "SDK/Bundles/baidumobadsdk.bundle"
+      ],
+      "frameworks": [
+        "StoreKit",
+        "SafariServices",
+        "MessageUI",
+        "CoreMedia",
+        "CoreMotion",
+        "SystemConfiguration",
+        "CoreLocation",
+        "CoreTelephony",
+        "AVFoundation",
+        "AdSupport",
+        "WebKit"
+      ],
+      "libraries": "c++",
+      "dependencies": {
+        "BaiduMobAdSDK": [
+          "10.050"
+        ],
+        "uniapp/UniAd-Base": [
+
+        ]
+      }
+    },
+    {
+      "name": "UniAd-WM",
+      "vendored_frameworks": [
+        "SDK/Libs/DCUniAdWm.xcframework"
+      ],
+      "frameworks": [
+        "CoreGraphics",
+        "Security",
+        "WebKit"
+      ],
+      "dependencies": {
+        "WechatOpenSDK-XCFramework": [
+          "2.0.5"
+        ],
+        "uniapp/UniAd-Base": [
+
+        ]
+      }
+    },
+    {
+      "name": "UniAd-WA",
+      "vendored_frameworks": [
+        "SDK/Libs/wmuniad_adpater.xcframework"
+      ],
+      "resources": [
+        "SDK/Bundles/adwangmai_sdk.bundle"
+      ],
+      "frameworks": "StoreKit",
+      "dependencies": {
+        "AdWangMaiSDK": [
+          "7.9.4.35"
+        ],
+        "uniapp/UniAd-Base": [
+
+        ]
+      }
+    },
+    {
+      "name": "UniAd-AppLovin",
+      "dependencies": {
+        "AppLovinSDK": [
+          "13.3.1"
+        ],
+        "GoogleMobileAdsMediationAppLovin": [
+          "13.3.1.0"
+        ],
+        "uniapp/UniAd-Base": [
+
+        ]
+      }
+    },
+    {
+      "name": "UniAd-GG",
+      "vendored_frameworks": [
+        "SDK/Libs/DCUniAdGg.xcframework"
+      ],
+      "resources": [
+        "SDK/Bundles/GoogleMobileAds.bundle"
+      ],
+      "dependencies": {
+        "Google-Mobile-Ads-SDK": [
+          "12.9.0"
+        ],
+        "uniapp/UniAd-Base": [
+
+        ]
+      }
+    },
+    {
+      "name": "UniAd-GG-Pangle",
+      "dependencies": {
+        "Ads-Global": [
+          "7.5.0.7"
+        ],
+        "GoogleMobileAdsMediationPangle": [
+          "7.5.0.7.0"
+        ],
+        "uniapp/UniAd-Base": [
+
+        ]
+      }
+    },
+    {
+      "name": "UniAd-GM-Content",
+      "vendored_frameworks": [
+        "SDK/Libs/DCUniAdGm.xcframework",
+        "SDK/Libs/DCUniAdGmDrama.xcframework"
+      ],
+      "dependencies": {
+        "Ads-CN-Beta/BUAdSDK": [
+          "7.6.0.4"
+        ],
+        "Ads-CN-Beta/CSJMediation-Only": [
+          "7.6.0.4"
+        ],
+        "Ads-CN-Beta/BUAdLive": [
+          "7.6.0.4"
+        ],
+        "PangrowthX/shortplay-beta": [
+          "2.9.0.5"
+        ],
+        "TTSDKFramework/LivePull": [
+          "1.46.2.7-premium"
+        ],
+        "TTSDKFramework/Player-SR": [
+          "1.46.2.7-premium"
+        ],
+        "uniapp/UniAd-Base": [
+
+        ]
+      }
+    },
+    {
+      "name": "UniAd-InMobi",
+      "frameworks": "WebKit",
+      "libraries": [
+        "sqlite3.0",
+        "z"
+      ],
+      "dependencies": {
+        "InMobiSDK": [
+          "10.8.6"
+        ],
+        "GoogleMobileAdsMediationInMobi": [
+          "10.8.6.0"
+        ],
+        "uniapp/UniAd-Base": [
+
+        ]
+      }
+    },
+    {
+      "name": "UniAd-IronSource",
+      "dependencies": {
+        "IronSourceSDK": [
+          "8.10.0.0"
+        ],
+        "GoogleMobileAdsMediationIronSource": [
+          "8.10.0.0.0"
+        ],
+        "uniapp/UniAd-Base": [
+
+        ]
+      }
+    },
+    {
+      "name": "UniAd-KS-Content",
+      "vendored_frameworks": [
+        "SDK/Libs/DCUniAdKs.xcframework",
+        "SDK/Libs/DCUniAdKsContent.xcframework"
+      ],
+      "frameworks": [
+        "Foundation",
+        "UIKit",
+        "MobileCoreServices",
+        "CoreGraphics",
+        "Security",
+        "SystemConfiguration",
+        "CoreTelephony",
+        "AdSupport",
+        "CoreData",
+        "StoreKit",
+        "AVFoundation",
+        "MediaPlayer",
+        "CoreMedia",
+        "WebKit",
+        "Accelerate",
+        "CoreLocation",
+        "AVKit",
+        "MessageUI",
+        "QuickLook"
+      ],
+      "libraries": [
+        "z",
+        "resolv.9",
+        "sqlite3",
+        "c++",
+        "c++abi"
+      ],
+      "dependencies": {
+        "KSAdSDK": [
+          "5.4.10.1"
+        ],
+        "uniapp/UniAd-Base": [
+
+        ]
+      }
+    },
+    {
+      "name": "UniAd-Liftoff",
+      "frameworks": [
+        "AdSupport",
+        "AudioToolbox",
+        "AVFoundation",
+        "CFNetwork",
+        "CoreGraphics",
+        "CoreMedia",
+        "MediaPlayer",
+        "QuartzCore",
+        "StoreKit",
+        "SystemConfiguration"
+      ],
+      "libraries": "z",
+      "dependencies": {
+        "VungleAds": [
+          "7.5.2"
+        ],
+        "GoogleMobileAdsMediationVungle": [
+          "7.5.2.0"
+        ],
+        "uniapp/UniAd-Base": [
+
+        ]
+      }
+    },
+    {
+      "name": "UniAd-Meta",
+      "dependencies": {
+        "FBAudienceNetwork": [
+          "6.20.1"
+        ],
+        "GoogleMobileAdsMediationFacebook": [
+          "6.20.1.0"
+        ],
+        "uniapp/UniAd-Base": [
+
+        ]
+      }
+    },
+    {
+      "name": "UniAd-Mintegral",
+      "dependencies": {
+        "MintegralAdSDK": [
+          "7.7.9"
+        ],
+        "GoogleMobileAdsMediationMintegral": [
+          "7.7.9.0"
+        ],
+        "uniapp/UniAd-Base": [
+
+        ]
+      }
+    },
+    {
+      "name": "UniAd-Pangle",
+      "vendored_frameworks": [
+        "SDK/Libs/DCUniAdPg.xcframework"
+      ],
+      "resources": [
+        "SDK/Bundles/PAGAdSDK.bundle"
+      ],
+      "frameworks": [
+        "StoreKit",
+        "MobileCoreServices",
+        "WebKit",
+        "MediaPlayer",
+        "CoreMedia",
+        "AVFoundation",
+        "CoreTelephony",
+        "SystemConfiguration",
+        "CoreMotion",
+        "AdSupport",
+        "Accelerate",
+        "AudioToolbox",
+        "ImageIO",
+        "Security",
+        "JavaScriptCore"
+      ],
+      "libraries": [
+        "resolv.9",
+        "c++",
+        "c++abi",
+        "z",
+        "bz2",
+        "xml2",
+        "sqlite3",
+        "iconv"
+      ],
+      "dependencies": {
+        "Ads-Global": [
+          "7.5.0.7"
+        ],
+        "uniapp/UniAd-Base": [
+
+        ]
+      }
+    },
+    {
+      "name": "UniAd-Unity",
+      "dependencies": {
+        "UnityAds": [
+          "4.16.0"
+        ],
+        "GoogleMobileAdsMediationUnity": [
+          "4.16.0.0"
+        ],
+        "uniapp/UniAd-Base": [
+
+        ]
+      }
+    },
+    {
+      "name": "UniAd-Oct",
+      "vendored_frameworks": [
+        "SDK/Libs/OctUniAdSDK.xcframework"
+      ],
+      "resources": [
+        "SDK/Bundles/OctAdSDK.bundle",
+        "SDK/Bundles/OctCore.bundle"
+      ],
+      "frameworks": "AdSupport",
+      "libraries": "c++",
+      "dependencies": {
+        "OctopusSDK": [
+          "2.6.5.15"
+        ],
+        "uniapp/UniAd-Base": [
+
+        ]
+      }
+    },
+    {
+      "name": "UniAd-FL",
+      "vendored_frameworks": [
+        "SDK/Libs/FLAdUniAdapter.xcframework"
+      ],
+      "frameworks": "AdSupport",
+      "dependencies": {
+        "FLAD": [
+          "2.9.0.1.1"
+        ],
+        "FLAD/FLAdFunLinkAdapter": [
+
+        ],
+        "FunlinkSDK": [
+          "2.9.0.1.0"
+        ],
+        "uniapp/UniAd-Base": [
+
+        ]
+      }
+    },
+    {
+      "name": "UniAd-YT",
+      "vendored_frameworks": [
+        "SDK/Libs/DCUniAdYT.xcframework"
+      ],
+      "resources": [
+        "SDK/Bundles/YouTuiAdSDK.bundle"
+      ],
+      "frameworks": "AdSupport",
+      "dependencies": {
+        "YouTuiAdSDK": [
+          "2.20.3"
+        ],
+        "YTRelayFoundation": [
+          "1.2.4"
+        ],
+        "uniapp/UniAd-Base": [
+
+        ]
+      }
+    }
+  ]
+}

@@ -1,0 +1,56 @@
+// swift-interface-format-version: 1.0
+// swift-compiler-version: Apple Swift version 6.3.3 effective-5.10 (swiftlang-6.3.3.1.3 clang-2100.1.1.101)
+// swift-module-flags: -target x86_64-apple-ios12.0-simulator -enable-objc-interop -enable-library-evolution -swift-version 5 -O -enable-experimental-feature DebugDescriptionMacro -enable-bare-slash-regex -module-name GuanceSessionReplay
+// swift-module-flags-ignorable: -no-verify-emitted-module-interface -formal-cxx-interoperability-mode=off -interface-compiler-version 6.3.3
+import CommonCrypto
+import CoreGraphics
+import Foundation
+@_exported import GuanceSessionReplay
+import QuartzCore
+import Swift
+import SwiftShims
+import SwiftUI
+import UIKit
+import _Concurrency
+import _StringProcessing
+import _SwiftConcurrencyShims
+@_spi(Private) @_hasMissingDesignatedInitializers @available(iOS 13.0, *)
+@objc(FTSwiftUIRecordingResult) final public class FTSwiftUIRecordingResult : ObjectiveC.NSObject {
+  @_spi(Private) @objc deinit
+}
+@_spi(Private) @_hasMissingDesignatedInitializers @available(iOS 13.0, *)
+@objc(FTSwiftUIRenderer) final public class FTSwiftUIRenderer : ObjectiveC.NSObject {
+  @_spi(Private) @objc deinit
+}
+@_spi(Private) @_hasMissingDesignatedInitializers @available(iOS 13.0, *)
+@objc(FTSwiftUIRecordingBuilder) final public class FTSwiftUIRecordingBuilder : ObjectiveC.NSObject {
+  @_spi(Private) @objc(build) final public func build() -> GuanceSessionReplay.FTSwiftUIRecordingResult?
+  @_spi(Private) @objc deinit
+}
+@_spi(Private) @_hasMissingDesignatedInitializers @available(iOS 13.0, *)
+@objc(FTSwiftUIWireframePayload) final public class FTSwiftUIWireframePayload : ObjectiveC.NSObject {
+  @_spi(Private) @objc deinit
+}
+@_spi(Private) @_hasMissingDesignatedInitializers @available(iOS 13.0, *)
+@objc(FTSwiftUIResourcePayload) final public class FTSwiftUIResourcePayload : ObjectiveC.NSObject {
+  @_spi(Private) @objc deinit
+}
+@_spi(Private) @_inheritsConvenienceInitializers @available(iOS 13.0, *)
+@objc(FTSwiftUIRecordingAttributes) final public class FTSwiftUIRecordingAttributes : ObjectiveC.NSObject {
+  @_spi(Private) @objc override dynamic public init()
+  @_spi(Private) @objc deinit
+}
+@_spi(Private) @available(iOS 13.0, *)
+@objc(FTSwiftUIReflectionRecording) public protocol FTSwiftUIReflectionRecording : ObjectiveC.NSObjectProtocol {
+  @_spi(Private) @objc(makeRecordingAttributes) func makeRecordingAttributes() -> GuanceSessionReplay.FTSwiftUIRecordingAttributes
+  @_spi(Private) @objc(rendererForHostingView:) func renderer(hostingView: UIKit.UIView) -> GuanceSessionReplay.FTSwiftUIRenderer?
+  @_spi(Private) @objc(recordingBuilderForRenderer:attributes:) func recordingBuilder(renderer: GuanceSessionReplay.FTSwiftUIRenderer, attributes: GuanceSessionReplay.FTSwiftUIRecordingAttributes) -> GuanceSessionReplay.FTSwiftUIRecordingBuilder?
+}
+@_spi(Private) @_inheritsConvenienceInitializers @available(iOS 13.0, *)
+@objc(FTSwiftUIReflectionBridge) final public class FTSwiftUIReflectionBridge : ObjectiveC.NSObject, GuanceSessionReplay.FTSwiftUIReflectionRecording {
+  @_spi(Private) @objc(makeRecordingAttributes) final public func makeRecordingAttributes() -> GuanceSessionReplay.FTSwiftUIRecordingAttributes
+  @_spi(Private) @objc(rendererForHostingView:) final public func renderer(hostingView: UIKit.UIView) -> GuanceSessionReplay.FTSwiftUIRenderer?
+  @_spi(Private) @objc(recordingBuilderForRenderer:attributes:) final public func recordingBuilder(renderer: GuanceSessionReplay.FTSwiftUIRenderer, attributes: GuanceSessionReplay.FTSwiftUIRecordingAttributes) -> GuanceSessionReplay.FTSwiftUIRecordingBuilder?
+  @_spi(Private) @objc override dynamic public init()
+  @_spi(Private) @objc deinit
+}

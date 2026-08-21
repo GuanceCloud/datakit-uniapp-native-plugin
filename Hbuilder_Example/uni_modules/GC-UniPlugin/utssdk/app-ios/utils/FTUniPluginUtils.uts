@@ -1,0 +1,29 @@
+import {
+	normalizeAddResourceParams
+} from '../../bridge.uts'
+
+const BLACK_RESOURCE_PATTERN = /^https?:\/\/([a-zA-Z0-9-]+\.)?dcloud\.net\.cn(:\d+)?\/.*/
+
+export function filterBlackResource(resourceUrl: string | null): boolean {
+	const safeResourceUrl: string = resourceUrl ?? ''
+	if (safeResourceUrl.length === 0) {
+		return false
+	}
+	return BLACK_RESOURCE_PATTERN.test(safeResourceUrl)
+}
+
+function getStringValue(source: UTSJSONObject | null, key: string): string | null {
+	if (source == null) {
+		return null
+	}
+	const safeSource: UTSJSONObject = source ?? {}
+	return safeSource.getString(key)
+}
+
+export function prepareAddResourceParams(params: any | null): any {
+	const result = normalizeAddResourceParams(params)
+	const content = result.getJSON('content')
+	const resourceUrl = getStringValue(content, 'url')
+	result['isBlackResource'] = filterBlackResource(resourceUrl)
+	return result
+}

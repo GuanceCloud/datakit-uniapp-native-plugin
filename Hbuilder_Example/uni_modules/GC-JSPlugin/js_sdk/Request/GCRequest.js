@@ -1,10 +1,11 @@
 import {
+	rum,
+	tracer
+} from '../native.js';
+import {
 	gcResourceTracking
 } from './GCResourceTracking.js';
 
-const FT_JS_PLUGIN_VERSION = '0.2.7';
-var rum = uni.requireNativePlugin("GCUniPlugin-RUM");
-var tracer = uni.requireNativePlugin("GCUniPlugin-Tracer");
 // Get platform information
 const platform = uni.getSystemInfoSync().platform;
 

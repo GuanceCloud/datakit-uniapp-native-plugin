@@ -1,5 +1,6 @@
-const FT_JS_PLUGIN_VERSION = '0.2.7';
-
+import {
+	rum as gcRum
+} from '../native.js';
 const LOAD_TIME_UNAVAILABLE = -1;
 const RELOAD_LOAD_TIME = 0;
 const LIFECYCLE_FALLBACK_TIMEOUT_MS = 5000;
@@ -14,7 +15,7 @@ class PageMonitor {
 		this.initialized = false;
 		this.pageHookInstalled = false;
 		this.appInForeground = true;
-
+		this.debugEnabled = false;
 		this.currentPage = null;
 		this.currentPageState = null;
 		this.activeViewPath = null;
@@ -28,11 +29,20 @@ class PageMonitor {
 		this.sessionReplayJS = null;
 		this.sessionReplayInjectedWebViews = new WeakSet();
 		this.eventListeners = [];
-		this.rum = uni.requireNativePlugin("GCUniPlugin-RUM");
+		this.rum = gcRum;
+	}
+
+	setDebugEnabled(enabled) {
+		this.debugEnabled = enabled === true;
+		if (this.debugEnabled) {
+			this.debugLog('debug', this.currentPage, {
+				reason: 'enabled'
+			});
+		}
 	}
 
 	debugLog(event, pagePath, details = null) {
-		if (process.env.NODE_ENV !== 'development') return;
+		if (!this.debugEnabled) return;
 		const payload = {
 			event,
 			pagePath: this.normalizePagePath(pagePath),
@@ -49,13 +59,10 @@ class PageMonitor {
 	startTracking(app) {
 		if (this.initialized) return;
 		this.initialized = true;
-
-		this.debugLog('initialized', null, {
-			version: FT_JS_PLUGIN_VERSION
-		});
+		this.debugLog('initialized', null);
 
 		try {
-			// #ifdef APP-PLUS
+			// #ifdef APP-PLUS || APP-HARMONY
 			this.pageHookInstalled = this.installPageHooks(app);
 			this.watchAppLifecycle();
 			this.startWatchRouter();
@@ -140,6 +147,12 @@ class PageMonitor {
 	}
 
 	isJSViewTrackingEnabled() {
+		// #ifdef APP-HARMONY
+		// Older native bridges do not expose this switch; preserve the existing
+		// JS View collector in that case.
+		return typeof this.rum.isUniAppJSViewTrackingEnabled !== 'function' ||
+			this.rum.isUniAppJSViewTrackingEnabled();
+		// #endif
 		return true;
 	}
 
@@ -173,6 +186,9 @@ class PageMonitor {
 		this.appInForeground = true;
 		const page = this.getCurrentPage();
 		const pagePath = this.getPagePath(page);
+		this.debugLog('lifecycle', pagePath, {
+			lifecycle: 'app:resume'
+		});
 		if (!pagePath) return;
 
 		let state = this.getPageState(page && page.$vm, pagePath, true);
@@ -188,6 +204,9 @@ class PageMonitor {
 
 	handleAppPause() {
 		this.appInForeground = false;
+		this.debugLog('lifecycle', this.activeViewPath || this.currentPage, {
+			lifecycle: 'app:pause'
+		});
 		this.cancelPageReadyFallback(this.currentPageState);
 		this.deactivateView(null, 'app:pause');
 	}
@@ -354,6 +373,9 @@ class PageMonitor {
 	handlePageLoad(vm) {
 		if (this.isAppLifecycleVm(vm)) return;
 		const lifecyclePath = this.getLifecyclePagePath(vm);
+		this.debugLog('lifecycle', lifecyclePath, {
+			lifecycle: 'onLoad'
+		});
 		if (!lifecyclePath) return;
 
 		const transaction = this.takePendingRouteTransaction(lifecyclePath);
@@ -375,6 +397,9 @@ class PageMonitor {
 	handlePageReady(vm) {
 		if (this.isAppLifecycleVm(vm)) return;
 		const lifecyclePath = this.getLifecyclePagePath(vm);
+		this.debugLog('lifecycle', lifecyclePath, {
+			lifecycle: 'onReady'
+		});
 		if (!lifecyclePath) return;
 
 		let state = this.getPageState(vm, lifecyclePath, true);
@@ -400,6 +425,9 @@ class PageMonitor {
 	handlePageShow(vm) {
 		if (this.isAppLifecycleVm(vm)) return;
 		const lifecyclePath = this.getLifecyclePagePath(vm);
+		this.debugLog('lifecycle', lifecyclePath, {
+			lifecycle: 'onShow'
+		});
 		if (!lifecyclePath) return;
 
 		const transaction = this.takePendingRouteTransaction(lifecyclePath);
@@ -425,6 +453,9 @@ class PageMonitor {
 	handlePageHide(vm) {
 		if (this.isAppLifecycleVm(vm)) return;
 		const pagePath = this.getPagePathFromVm(vm);
+		this.debugLog('lifecycle', pagePath, {
+			lifecycle: 'onHide'
+		});
 		const state = this.getPageState(vm, pagePath, true);
 		if (state) {
 			state.visible = false;
@@ -441,6 +472,9 @@ class PageMonitor {
 	handlePageUnload(vm) {
 		if (this.isAppLifecycleVm(vm)) return;
 		const pagePath = this.getPagePathFromVm(vm);
+		this.debugLog('lifecycle', pagePath, {
+			lifecycle: 'onUnload'
+		});
 		const state = this.getPageState(vm, pagePath, true);
 		if (!state) {
 			this.deactivateView(pagePath, 'page:onUnload-without-state');
@@ -667,7 +701,7 @@ class PageMonitor {
 		this.debugLog('stopView', this.activeViewPath, {
 			reason
 		});
-		this.rum.stopView({});
+		this.rum.stopView(null);
 		this.activePageState = null;
 		this.activeViewPath = null;
 	}
@@ -680,6 +714,9 @@ class PageMonitor {
 			viewName,
 			loadTime: duration
 		};
+		this.debugLog('onCreateView', pagePath, {
+			loadTime: duration
+		});
 		this.rum.onCreateView(params);
 	}
 

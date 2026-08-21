@@ -1,0 +1,240 @@
+/**
+ * HarmonyOS UTS facade.
+ *
+ * Keep this file limited to the platform-neutral UTS surface, matching the
+ * Android and iOS entries. ArkTS/HAR interaction lives in
+ * GCUniPluginNative.ets.
+ */
+import './GCNativeWebView.ets';
+import { GCUniPluginNative } from './GCUniPluginNative.ets';
+import { prepareAddResourceParams } from './utils/FTUniPluginUtils.uts';
+import type {
+  GCLoggerConfig,
+  GCLoggerLogParams,
+  GCMobileConfig,
+  GCDatakitURLParams,
+  GCDatawayURLParams,
+  GCRemoteConfigUpdateCallback,
+  GCRemoteConfigUpdateParams,
+  GCRUMActionParams,
+  GCRUMAddResourceParams,
+  GCRUMConfig,
+  GCRUMCreateViewParams,
+  GCRUMErrorParams,
+  GCRUMResourceParams,
+  GCRUMStopViewParams,
+  GCRUMUserDataParams,
+  GCRUMViewParams,
+  GCTraceConfig,
+  GCTraceHeaderParams
+} from '../interface.uts';
+import { createRemoteConfigUpdateResult, GC_UTS_BRIDGE_VERSION } from '../bridge.uts';
+import { Context } from '@kit.AbilityKit';
+import webview from '@ohos.web.webview';
+
+GCUniPluginNative.setBridgeVersion(GC_UTS_BRIDGE_VERSION);
+
+export class mobileAgent {
+  static sdkConfig(params: GCMobileConfig) {
+    GCUniPluginNative.sdkConfig(params, getHarmonyContext());
+  }
+
+  static setDatakitURL(params: GCDatakitURLParams) {
+    GCUniPluginNative.setDatakitURL(params);
+  }
+
+  static setDatawayURL(params: GCDatawayURLParams) {
+    GCUniPluginNative.setDatawayURL(params);
+  }
+
+  static updateRemoteConfigWithMiniUpdateInterval(params: GCRemoteConfigUpdateParams, callback: GCRemoteConfigUpdateCallback) {
+    GCUniPluginNative.updateRemoteConfigWithMiniUpdateInterval(params);
+    callback(createRemoteConfigUpdateResult(
+      false,
+      'harmony',
+      null,
+      'UNSUPPORTED_PLATFORM',
+      'Remote configuration update is not supported on HarmonyOS.'
+    ));
+  }
+
+  static bindRUMUserData(params: GCRUMUserDataParams) {
+    GCUniPluginNative.bindRUMUserData(params);
+  }
+
+  static unbindRUMUserData() {
+    GCUniPluginNative.unbindRUMUserData();
+  }
+
+  static appendGlobalContext(params: any | null) {
+    GCUniPluginNative.appendGlobalContext(params);
+  }
+
+  static appendRUMGlobalContext(params: any | null) {
+    GCUniPluginNative.appendRUMGlobalContext(params);
+  }
+
+  static appendLogGlobalContext(params: any | null) {
+    GCUniPluginNative.appendLogGlobalContext(params);
+  }
+
+  static appendBridgeContext(params: any | null) {
+    GCUniPluginNative.appendBridgeContext(params);
+  }
+
+  static flushSyncData() {
+    GCUniPluginNative.flushSyncData();
+  }
+
+  static clearAllData() {
+    GCUniPluginNative.clearAllData();
+  }
+
+  static shutDown() {
+    GCUniPluginNative.shutDown();
+  }
+
+  static manuallySetApplicationStart() {
+    GCUniPluginNative.manuallySetApplicationStart();
+  }
+}
+
+export class rum {
+  static setConfig(params: GCRUMConfig) {
+    GCUniPluginNative.setRumConfig(params);
+  }
+
+  static startAction(params: GCRUMActionParams) {
+    GCUniPluginNative.startAction(params);
+  }
+
+  static addAction(params: GCRUMActionParams) {
+    GCUniPluginNative.addAction(params);
+  }
+
+  static onCreateView(params: GCRUMCreateViewParams) {
+    GCUniPluginNative.onCreateView(params);
+  }
+
+  static startView(params: GCRUMViewParams) {
+    GCUniPluginNative.startView(params);
+  }
+
+  static stopView(params: GCRUMStopViewParams | null) {
+    GCUniPluginNative.stopView(params);
+  }
+
+  static addError(params: GCRUMErrorParams) {
+    GCUniPluginNative.addError(params);
+  }
+
+  static startResource(params: GCRUMResourceParams) {
+    GCUniPluginNative.startResource(params);
+  }
+
+  static stopResource(params: GCRUMResourceParams) {
+    GCUniPluginNative.stopResource(params);
+  }
+
+  static addResource(params: GCRUMAddResourceParams) {
+    GCUniPluginNative.addResource(prepareAddResourceParams(params));
+  }
+
+  static isUniAppJSViewTrackingEnabled(): boolean {
+    return GCUniPluginNative.isUniAppJSViewTrackingEnabled();
+  }
+
+  static isHarmonyUniRequestAutoTrackingEnabled(): boolean {
+    return GCUniPluginNative.isHarmonyUniRequestAutoTrackingEnabled();
+  }
+
+  static attachWebView(controller: webview.WebviewController, viewName?: string | null) {
+    GCUniPluginNative.attachWebView(controller, viewName);
+  }
+
+  static detachWebView(controller: webview.WebviewController) {
+    GCUniPluginNative.detachWebView(controller);
+  }
+}
+
+export class logger {
+  static setConfig(params: GCLoggerConfig) {
+    GCUniPluginNative.setLoggerConfig(params);
+  }
+
+  static logging(params: GCLoggerLogParams) {
+    GCUniPluginNative.logging(params);
+  }
+}
+
+export class tracer {
+  static setConfig(params: GCTraceConfig) {
+    GCUniPluginNative.setTraceConfig(params);
+  }
+
+  static isHarmonyUniRequestAutoTraceEnabled(): boolean {
+    return GCUniPluginNative.isHarmonyUniRequestAutoTraceEnabled();
+  }
+
+  static getTraceHeader(params: GCTraceHeaderParams): any | null {
+    return GCUniPluginNative.getTraceHeader(params);
+  }
+}
+
+function getHarmonyContext(): Context | undefined {
+  // The ArkTS native proxy owns SDK registration; UTS only supplies the
+  // application context supplied by the current UniApp runtime.
+  return getContext() as Context;
+}
+
+export class GCEnv {
+  static readonly PROD: string = 'prod';
+  static readonly GRAY: string = 'gray';
+  static readonly PRE: string = 'pre';
+  static readonly COMMON: string = 'common';
+  static readonly LOCAL: string = 'local';
+}
+
+export class GCDiscardStrategy {
+  static readonly DISCARD: string = 'discard';
+  static readonly DISCARD_OLDEST: string = 'discardOldest';
+}
+
+export class GCTraceType {
+  static readonly DDTRACE: string = 'ddTrace';
+  static readonly ZIPKIN_MULTI_HEADER: string = 'zipkinMultiHeader';
+  static readonly ZIPKIN_SINGLE_HEADER: string = 'zipkinSingleHeader';
+  static readonly TRACEPARENT: string = 'traceparent';
+  static readonly SKYWALKING: string = 'skywalking';
+  static readonly JAEGER: string = 'jaeger';
+}
+
+export class GCMonitorFrequency {
+  static readonly NORMAL: string = 'normal';
+  static readonly FREQUENT: string = 'frequent';
+  static readonly RARE: string = 'rare';
+}
+
+export class GCLogStatus {
+  static readonly INFO: string = 'info';
+  static readonly DEBUG: string = 'debug';
+  static readonly WARNING: string = 'warning';
+  static readonly ERROR: string = 'error';
+  static readonly CRITICAL: string = 'critical';
+  static readonly OK: string = 'ok';
+}
+
+export class GCErrorMonitorType {
+  static readonly BATTERY: string = 'battery';
+  static readonly MEMORY: string = 'memory';
+  static readonly CPU: string = 'cpu';
+  static readonly ALL: string = 'all';
+}
+
+export class GCDeviceMonitorType {
+  static readonly BATTERY: string = 'battery';
+  static readonly MEMORY: string = 'memory';
+  static readonly CPU: string = 'cpu';
+  static readonly FPS: string = 'fps';
+  static readonly ALL: string = 'all';
+}

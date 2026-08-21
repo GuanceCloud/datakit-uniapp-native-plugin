@@ -1,0 +1,121 @@
+name: Publish UniApp Native Hybrid Release
+
+on:
+  push:
+    tags:
+      - "*"
+  workflow_dispatch:
+    inputs:
+      tag:
+        description: "Git tag to publish, for example 0.2.7 or 0.2.7-alpha.1"
+        required: true
+        type: string
+
+permissions:
+  contents: write
+
+jobs:
+  publish-release:
+    # DCloud's iOS runtime frameworks are not checked into this repository.
+    # Configure this label on a macOS runner that has them installed, then set
+    # the repository variable DCLOUD_SDK_LIBS_DIR to their absolute directory.
+    runs-on: [self-hosted, macos]
+    timeout-minutes: 120
+    env:
+      DCLOUD_SDK_LIBS_DIR: ${{ vars.DCLOUD_SDK_LIBS_DIR }}
+      DCLOUD_UTS_RUNTIME_VERSION: 5.15.82650_20260710
+
+    steps:
+      - name: Checkout tag
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          ref: ${{ github.event_name == 'workflow_dispatch' && inputs.tag || github.ref }}
+
+      - name: Resolve and validate release tag
+        shell: bash
+        run: |
+          set -euo pipefail
+
+          raw_tag="${{ github.event_name == 'workflow_dispatch' && inputs.tag || github.ref_name }}"
+          tag_name="${raw_tag#refs/tags/}"
+          case "$tag_name" in
+            *[!A-Za-z0-9._+-]*|'')
+              echo "Invalid release tag: $tag_name" >&2
+              exit 1
+              ;;
+          esac
+
+          git rev-parse --verify --quiet "refs/tags/${tag_name}^{commit}" >/dev/null
+          node scripts/check-version-consistency.js "$tag_name"
+
+          echo "TAG_NAME=$tag_name" >> "$GITHUB_ENV"
+
+      - name: Verify macOS build prerequisites
+        shell: bash
+        run: |
+          set -euo pipefail
+
+          test -n "$DCLOUD_SDK_LIBS_DIR"
+          test -d "$DCLOUD_SDK_LIBS_DIR/DCUniBase.framework"
+          test -d "$DCLOUD_SDK_LIBS_DIR/DCloudUTSFoundation.framework"
+          xcodebuild -version
+          ruby -e "require 'xcodeproj'"
+
+      - name: Verify source contracts
+        shell: bash
+        run: |
+          set -euo pipefail
+
+          node scripts/test-uts-proxy-exports.js
+          node scripts/test-view-tracking.js
+          node scripts/test-session-replay-feature.js
+          node scripts/test-hybrid-ios-uts-integration.js
+          node scripts/test-hybrid-android-uts-integration.js
+          node scripts/test-tagged-release-automation.js
+          node scripts/test-version-management.js
+          git diff --check
+
+      - name: Build Android Host and UTS libraries
+        working-directory: native-projects/native-sdk-hybrid/android
+        shell: bash
+        run: |
+          set -euo pipefail
+
+          ./gradlew :unimoduleGCUniPlugin:assembleRelease :unimoduleGCUniSessionReplay:assembleRelease :simpleDemo:assembleRelease
+
+      - name: Build release archive
+        shell: bash
+        run: |
+          set -euo pipefail
+
+          DCLOUD_UTS_RUNTIME_VERSION="$DCLOUD_UTS_RUNTIME_VERSION" \
+            bash native-projects/native-sdk-hybrid/android/scripts/package_guance_uniapp_android.sh "$TAG_NAME"
+
+          DCLOUD_SDK_LIBS_DIR="$DCLOUD_SDK_LIBS_DIR" \
+          GC_UNIAPP_USE_CHECKED_IN_UTS_SOURCES=1 \
+            bash native-projects/native-sdk-hybrid/ios/HBuilder-uniPluginDemo/scripts/package_guance_uniapp_ios.sh "$TAG_NAME"
+
+          bash scripts/package_guance_uniapp_release.sh "$TAG_NAME" \
+            "native-projects/native-sdk-hybrid/ios/HBuilder-uniPluginDemo/build/GuanceUniApp-iOS/GuanceUniApp-iOS-$TAG_NAME.zip" \
+            "native-projects/native-sdk-hybrid/android/build/GuanceUniApp-Android/GuanceUniApp-Android-$TAG_NAME.zip"
+
+      - name: Publish GitHub Release asset
+        shell: bash
+        env:
+          GH_TOKEN: ${{ github.token }}
+          GITHUB_RELEASE_REPOSITORY: ${{ github.repository }}
+        run: |
+          set -euo pipefail
+
+          bash scripts/publish_github_release.sh "$TAG_NAME" \
+            "build/GuanceUniApp/GuanceUniApp-$TAG_NAME.zip"
+
+      - name: Upload workflow artifact
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: GuanceUniApp-${{ env.TAG_NAME || github.run_id }}
+          path: build/GuanceUniApp/*.zip
+          if-no-files-found: ignore
+          retention-days: 7

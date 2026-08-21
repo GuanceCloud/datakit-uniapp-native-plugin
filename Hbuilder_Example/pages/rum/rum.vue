@@ -13,13 +13,13 @@
 		<button type="primary" @click="consoleError()">Generate a Console Error</button>
 		<button type="primary" @click="resource()">Resource Normal</button>
 		<button type="primary" @click="resourceError()">Resource Error</button>
+		<button type="primary" @click="nativeAutoResource()">Resource Native Auto</button>
 	</view>
 </template>
 
 <script>
 	import Utils from '../../utils.js';
-
-	var rum = uni.requireNativePlugin("GCUniPlugin-RUM");
+	import { rum } from '@/gc-build-entry.js';
 	export default {
 		data() {
 			return {}
@@ -98,6 +98,23 @@
 				Utils.rumRequest('https://httpbin.org/status/200', 'GET', {
 					'Accept': 'application/json',
 					'Content-Type': 'application/json'
+				})
+			},
+			nativeAutoResource() {
+				// Bypass gcRequest to verify native SDK auto resource collection.
+				uni.request({
+					url: 'https://httpbin.org/status/400',
+					method: 'GET',
+					timeout: 30000,
+					success(res) {
+						console.log('native auto resource success:' + JSON.stringify(res))
+					},
+					fail(err) {
+						console.log('native auto resource fail:' + JSON.stringify(err))
+					},
+					complete(res) {
+						console.log('native auto resource complete:' + JSON.stringify(res))
+					}
 				})
 			},
 		}

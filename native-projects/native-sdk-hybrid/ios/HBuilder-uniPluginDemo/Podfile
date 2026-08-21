@@ -1,0 +1,122 @@
+platform :ios, '13.0'
+source 'https://cdn.cocoapods.org/'
+source 'https://github.com/volcengine/volcengine-specs.git'
+
+project 'HBuilder-uniPlugin.xcodeproj'
+use_frameworks! :linkage => :static
+
+require_relative 'scripts/uniapp_module_config'
+require_relative 'scripts/uniapp_uts_plugins'
+require_relative 'uniapp_config' if File.exist?(File.join(__dir__, 'uniapp_config.rb'))
+
+uniapp_subspecs = [
+  'Core',
+   'UTS',
+   'Accelerometer',
+   'Audio',
+   'CameraGallery',
+   'Contacts',
+   'File',
+   'Messaging',
+   'Orientation',
+   'Proximity',
+   'XMLHttpRequest',
+   'Zip',
+#   'Barcode',
+   'Canvas',
+#   'Video',
+   'Fingerprint',
+#   'FaceId',
+#   'BlueTooth',
+   'Sqlite',
+   'IBeacon',
+   'Log',
+#   'Geolocation',
+#   'Geolocation-Baidu',
+#   'Geolocation-Gaode',
+  # 'Map-Baidu',
+#   'Map-Gaode',
+  # 'Map-Google',
+#   'Oauth',
+  # 'Oauth-Univerify',
+  # 'Oauth-Sina',
+#   'Oauth-QQ',
+#   'Oauth-Wechat',
+  # 'Oauth-Wechat-PaySDK',
+#   'Oauth-Apple',
+#   'Oauth-Google',
+#   'Oauth-Facebook',
+#   'Payment',
+  # 'Payment-AliPay',
+  # 'Payment-Wechat',
+  # 'Payment-IAP',
+  # 'Payment-Paypal',
+  # 'Payment-Stripe',
+  # 'Push',
+  # 'Push-UniPush',
+  # 'Push-Getui',
+  # 'Push-FCM',
+  # 'Share',
+  # 'Share-Sina',
+  # 'Share-QQ',
+  # 'Share-Wechat',
+  # 'Share-Wechat-PaySDK',
+  # 'Speech',
+  # 'Speech-Baidu',
+  # 'Speech-Ifly',
+  # 'LivePusher',
+  # 'Statistic',
+  # 'Statistic-Umeng',
+  # 'Statistic-Firebase',
+  # 'UIWebview',
+#   'FacialRecognitionVerify',
+  # 'UniAd-CSJ',
+#   'UniAd-Gromore',
+#   'UniAd-GDT',
+#   'UniAd-KS',
+  # 'UniAd-Sigmob',
+  # 'UniAd-Baidu',
+  # 'UniAd-WM',
+  # 'UniAd-WA',
+  # 'UniAd-AppLovin',
+  # 'UniAd-GG',
+  # 'UniAd-GG-Pangle',
+  # 'UniAd-GM-Content',
+  # 'UniAd-InMobi',
+  # 'UniAd-IronSource',
+  # 'UniAd-KS-Content',
+  # 'UniAd-Liftoff',
+  # 'UniAd-Meta',
+  # 'UniAd-Mintegral',
+  # 'UniAd-Pangle',
+  # 'UniAd-Unity',
+  # 'UniAd-Oct',
+  # 'UniAd-FL',
+  # 'UniAd-YT',
+]
+
+uniapp_plist_values = defined?(UNIAPP_PLIST_VALUES) ? UNIAPP_PLIST_VALUES : {}
+uts_plugin_values = defined?(UNIAPP_UTS_PLUGIN_VALUES) ? UNIAPP_UTS_PLUGIN_VALUES : {}
+uts_plugins = UniAppUTSPlugins.prepare!(
+  File.join(__dir__, 'UTSPlugins'),
+  sdk_path: File.expand_path('..', __dir__),
+  values: uts_plugin_values
+)
+uniapp_subspecs << 'UTS' if uts_plugins.any? && !uniapp_subspecs.include?('UTS')
+
+target 'HBuilder' do
+  pod 'uniapp', :path => '..', :subspecs => uniapp_subspecs
+  uts_plugins.each do |plugin|
+    pod plugin[:pod_name], :path => plugin[:pod_path]
+  end
+end
+
+post_install do |_installer|
+  UniAppModuleConfig.apply(
+    uniapp_subspecs,
+    plist_values: uniapp_plist_values,
+    uts_plugins: uts_plugins,
+    info_plist: File.join(__dir__, 'HBuilder-Hello', 'HBuilder-uniPlugin-Info.plist'),
+    entitlements: File.join(__dir__, 'HBuilder', 'HBuilder.entitlements')
+  )
+end

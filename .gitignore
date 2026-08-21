@@ -14,9 +14,22 @@ bin/
 gen/
 out/
 
+# Generated docs 
+*.md
+!native-projects/README.md
+!native-projects/native-sdk-hybrid/README.md
+!native-projects/native-sdk-hybrid/**/README.md
+!native-projects/unimp-host-extension/README.md
+!native-projects/unimp-host-extension/android/README.md
+!native-projects/unimp-host-extension/ios/README.md
+!native-projects/unimp-host-extension/harmony/README.md
+
 # Gradle files
 .gradle/
 build/
+
+#log
+logs/
 
 # Local configuration file (sdk path, etc)
 local.properties
@@ -44,6 +57,8 @@ captures/
 .idea/dictionaries
 .idea/libraries
 .idea/caches
+
+Hbuilder_Example/uni_modules/GC-UniPlugin-HarmonyOS/.idea
 
 # Keystore files
 # Uncomment the following lines if you do not want to check your keystore files in.
@@ -98,6 +113,10 @@ xcuserdata/
 *.dSYM.zip
 *.dSYM
 
+# Keep matching symbols for dynamic XCFrameworks distributed with UTS modules.
+!Hbuilder_Example/uni_modules/*/utssdk/app-ios/Frameworks/*.xcframework/*/dSYMs/*.dSYM/
+!Hbuilder_Example/uni_modules/*/utssdk/app-ios/Frameworks/*.xcframework/*/dSYMs/*.dSYM/**
+
 # CocoaPods
 #
 # We recommend against adding the Pods directory to your .gitignore. However
@@ -140,5 +159,49 @@ iOSInjectionProject/
 
 .hbuilderx/
 unpackage/
-
+*.wgt
 docs/
+
+# Locally generated DCloud SDK and Xcode dependency/build state for native projects.
+native-projects/native-sdk-hybrid/ios/SDK/
+native-projects/native-sdk-hybrid/ios/**/Pods/
+native-projects/native-sdk-hybrid/ios/**/SharedFrameworks/
+native-projects/native-sdk-hybrid/ios/**/xcuserdata/
+native-projects/native-sdk-hybrid/ios/**/DerivedData/
+native-projects/native-sdk-hybrid/ios/**/.derived-data-*
+native-projects/native-sdk-hybrid/ios/**/build/
+native-projects/native-sdk-hybrid/ios/**/.DS_Store
+native-projects/unimp-host-extension/ios/**/Pods/
+native-projects/unimp-host-extension/ios/**/xcuserdata/
+native-projects/unimp-host-extension/ios/**/DerivedData/
+native-projects/unimp-host-extension/ios/**/.derived-data-*
+native-projects/unimp-host-extension/ios/**/build/
+native-projects/unimp-host-extension/ios/**/*.xcarchive/
+native-projects/unimp-host-extension/ios/**/.swiftpm/
+native-projects/unimp-host-extension/ios/UniMPSDK/
+native-projects/unimp-host-extension/ios/Dependencies/*.xcframework/
+native-projects/unimp-host-extension/ios/Dependencies/DCloudHeaders/
+
+# Locally generated Gradle and IDE state for Android native projects.
+native-projects/native-sdk-hybrid/android/.gradle/
+native-projects/native-sdk-hybrid/android/**/.gradle/
+native-projects/native-sdk-hybrid/android/**/build/
+native-projects/native-sdk-hybrid/android/**/local.properties
+native-projects/native-sdk-hybrid/android/**/.idea/
+native-projects/native-sdk-hybrid/android/**/*.iml
+native-projects/native-sdk-hybrid/android/**/src/main/assets/apps/*/www/
+native-projects/native-sdk-hybrid/android/**/src/main/assets/uni_modules/
+native-projects/unimp-host-extension/android/**/.gradle/
+native-projects/unimp-host-extension/android/**/build/
+native-projects/unimp-host-extension/android/**/.cxx/
+native-projects/unimp-host-extension/android/**/.kotlin/
+native-projects/unimp-host-extension/android/**/local.properties
+native-projects/unimp-host-extension/android/**/.idea/
+native-projects/unimp-host-extension/android/**/*.iml
+native-projects/unimp-host-extension/android/UniMPSDK/
+
+# Locally generated HarmonyOS native-project state and release archives.
+native-projects/unimp-host-extension/harmony/**/.hvigor/
+native-projects/unimp-host-extension/harmony/**/oh_modules/
+native-projects/unimp-host-extension/harmony/**/build/
+native-projects/unimp-host-extension/harmony/**/.idea/

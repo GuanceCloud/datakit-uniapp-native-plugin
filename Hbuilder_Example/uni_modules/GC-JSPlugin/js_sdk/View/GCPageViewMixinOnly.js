@@ -1,10 +1,12 @@
 /**
 	* Used for single View data collection, not used together with GCWatchRouter.js
 	*/
-var rum = uni.requireNativePlugin("GCUniPlugin-RUM");
+import {
+	rum
+} from '../native.js';
 
 /**
-	* Get the current page route path 
+	* Get the current page route path
 	* @returns {string|null} The current page route (e.g. "pages/home/index"), returns null if failed
 	*/
 const getCurrentPagePath = () => {
@@ -18,7 +20,7 @@ const getCurrentPagePath = () => {
 export const gcPageViewMixinOnly = {
 	data() {
 		return {
-			loadStart: 0 
+			loadStart: 0
 		}
 	},
 	onLoad() {
@@ -59,7 +61,7 @@ export const gcPageViewMixinOnly = {
 		}
 	},
 	onUnload() {
-		rum.stopView()
+		rum.stopView(null)
 	}
 
 }

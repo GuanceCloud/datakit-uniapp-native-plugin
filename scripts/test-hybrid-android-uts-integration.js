@@ -1,0 +1,136 @@
+const assert = require('assert');
+const fs = require('fs');
+const path = require('path');
+
+const root = path.resolve(__dirname, '..');
+
+function read(relativePath) {
+  return fs.readFileSync(path.join(root, relativePath), 'utf8');
+}
+
+function assertIncludes(source, value, label) {
+  assert(source.includes(value), `${label} must include ${JSON.stringify(value)}`);
+}
+
+function assertExcludes(source, value, label) {
+  assert(!source.includes(value), `${label} must not include ${JSON.stringify(value)}`);
+}
+
+const host = 'native-projects/native-sdk-hybrid/android';
+const settings = read(`${host}/settings.gradle`);
+const rootBuild = read(`${host}/build.gradle`);
+const app = read(`${host}/simpleDemo/build.gradle`);
+const coreLibrary = read(`${host}/unimoduleGCUniPlugin/build.gradle`);
+const replayLibrary = read(`${host}/unimoduleGCUniSessionReplay/build.gradle`);
+const coreNative = read(`${host}/unimoduleGCUniPlugin/src/main/kotlin/GCUniPluginNative.kt`);
+const coreGeneratedIndex = read(`${host}/unimoduleGCUniPlugin/src/main/kotlin/index.kt`);
+const hbuilderCoreNative = read('Hbuilder_Example/uni_modules/GC-UniPlugin/utssdk/app-android/GCUniPluginNative.kt');
+const coreInterface = read('Hbuilder_Example/uni_modules/GC-UniPlugin/utssdk/interface.uts');
+const coreUtsIndex = read('Hbuilder_Example/uni_modules/GC-UniPlugin/utssdk/app-android/index.uts');
+const replayNative = read(`${host}/unimoduleGCUniSessionReplay/src/main/kotlin/GCSessionReplayNative.kt`);
+const hbuilderReplayConfig = read('Hbuilder_Example/uni_modules/GC-UniSessionReplay/utssdk/app-android/config.json');
+const syncSources = read(`${host}/scripts/sync_hbuilder_android_uts_sources.sh`);
+const packager = read(`${host}/scripts/package_guance_uniapp_android.sh`);
+
+assertIncludes(
+  syncSources,
+  'repository_root="$(cd "$host_root/../../.." && pwd)"',
+  'Android UTS source synchronizer repository root'
+);
+assertIncludes(
+  packager,
+  'repository_root="$(cd "$host_root/../../.." && pwd)"',
+  'Android packager repository root'
+);
+assertIncludes(settings, "include ':unimoduleGCUniPlugin'", 'Android settings');
+assertIncludes(settings, "include ':unimoduleGCUniSessionReplay'", 'Android settings');
+assertIncludes(app, "implementation project(':unimoduleGCUniPlugin')", 'Android Host app');
+assertIncludes(app, "implementation project(':unimoduleGCUniSessionReplay')", 'Android Host app');
+assertIncludes(app, 'checkReleaseBuilds false', 'Android Host app');
+assertIncludes(rootBuild, 'ft-plugin:1.3.8', 'Android Host buildscript');
+
+for (const [label, source] of [
+  ['core Android Library', coreLibrary],
+  ['Session Replay Android Library', replayLibrary]
+]) {
+  assertIncludes(source, "id 'com.android.library'", label);
+  assertIncludes(source, "id 'org.jetbrains.kotlin.android'", label);
+  assertIncludes(source, "compileOnly fileTree(dir: '../simpleDemo/libs'", label);
+}
+
+assertIncludes(coreLibrary, 'ft-sdk:1.7.5', 'core Android Library');
+assertIncludes(replayLibrary, 'ft-session-replay:0.1.8', 'Session Replay Android Library');
+assertIncludes(app, 'ft-session-replay:0.1.8', 'Android Host app Session Replay dependency');
+assertIncludes(hbuilderReplayConfig, 'ft-session-replay:0.1.8', 'HBuilder Session Replay dependency');
+assertIncludes(packager, 'FT_REPLAY_VERSION:-0.1.8', 'Android release Session Replay default');
+assertIncludes(coreNative, 'fun sdkConfig(json: String?): Boolean', 'core Android initialization result');
+assertIncludes(coreInterface, 'offlinePackage?: boolean | null', 'core UTS Android offline package config');
+assertIncludes(coreGeneratedIndex, 'open var offlinePackage: Boolean? = null', 'generated Android offline package config');
+assertIncludes(coreGeneratedIndex, 'offlinePackage = params.offlinePackage', 'generated Android JS config bridge');
+assertIncludes(coreNative, 'fun setRumConfig(json: String?): Boolean', 'core Android RUM result');
+assertIncludes(coreUtsIndex, 'appendBridgeContextState(params)', 'core Android UTS bridge context');
+assertExcludes(coreUtsIndex, 'GCUniPluginNative.appendBridgeContext(', 'core Android UTS bridge context');
+for (const [label, source] of [
+  ['HBuilder core Android native bridge', hbuilderCoreNative],
+  ['hybrid core Android native bridge', coreNative]
+]) {
+  assertExcludes(source, 'fun appendBridgeContext(json: String?)', label);
+  assertExcludes(source, 'fun mergeBridgeContext(', label);
+  assertExcludes(source, 'sdk_bridge_info', label);
+  assertIncludes(
+    source,
+    'firstValue(params, "offlinePackage", "offlinePakcage")',
+    `${label} offline package config`
+  );
+  assertIncludes(source, 'val appStartTimeNs = FTUtils.getAppStartTimeNs()', `${label} cold-start timing`);
+  assertIncludes(source, 'val installTimeNs = System.nanoTime()', `${label} cold-start timing`);
+  assertIncludes(
+    source,
+    'coldStartDurationNs = (installTimeNs - appStartTimeNs).coerceAtLeast(0L)',
+    `${label} cold-start timing`
+  );
+  assertIncludes(
+    source,
+    'coldStartTimeLineNs = FTUtils.getCurrentNanoTime() - coldStartDurationNs',
+    `${label} cold-start timing`
+  );
+  assertIncludes(
+    source,
+    'FTAutoTrack.putRUMLaunchPerformance(true, coldStartDurationNs, coldStartTimeLineNs)',
+    `${label} cold-start timing`
+  );
+  assertExcludes(source, 'installTime - startTime', `${label} cold-start timing`);
+  for (const field of [
+    'setRemoteConfiguration',
+    'setRemoteConfigMiniUpdateInterval',
+    'setEnableDataFilter',
+    'setDataFilters'
+  ]) {
+    assertIncludes(source, field, `${label} dynamic configuration`);
+  }
+  for (const method of [
+    'fun setDatakitURL',
+    'fun setDatawayURL',
+    'fun updateRemoteConfigWithMiniUpdateInterval'
+  ]) {
+    assertIncludes(source, method, `${label} dynamic configuration`);
+  }
+}
+for (const method of [
+  'GCUniPluginNative.setDatakitURL',
+  'GCUniPluginNative.setDatawayURL',
+  'GCUniPluginNative.updateRemoteConfigWithMiniUpdateInterval'
+]) {
+  assertIncludes(coreUtsIndex, method, 'core Android UTS dynamic configuration');
+}
+assertIncludes(replayNative, 'fun setConfig(json: String?): Boolean', 'Session Replay Android initialization result');
+assertIncludes(syncSources, 'HBUILDER_ANDROID_UTS_EXPORT_DIR', 'source synchronization script');
+assertIncludes(syncSources, "sync_module 'GC-UniPlugin' 'unimoduleGCUniPlugin'", 'source synchronization script');
+assertIncludes(syncSources, "sync_module 'GC-UniSessionReplay' 'unimoduleGCUniSessionReplay'", 'source synchronization script');
+assertIncludes(packager, 'unimoduleGCUniPlugin-release.aar', 'Android packager');
+assertIncludes(packager, 'GUANCE_BUILD_UTS_MODULES', 'Android packager');
+assertIncludes(packager, 'package_name="GuanceUniApp-Android-$version"', 'Android release ZIP name');
+assertIncludes(packager, 'dist/native-sdk-hybrid/android', 'Android release output');
+assertIncludes(packager, 'rm -f "$archive_path"', 'Android release ZIP replacement');
+
+console.log('hybrid Android UTS integration checks passed');

@@ -1,3 +1,10 @@
+# 0.3.0
+* Refactored the plugin structure:
+    * `GC-JSPlugin` now provides the shared JS APIs and the View, Error, Resource, and Action collectors.
+    * `GC-UniPlugin` is now implemented in UTS for Android, iOS, and HarmonyOS. Standard uni-app applications access typed SDK APIs through named imports.
+    * UniMP WGT packages integrate only `GC-JSPlugin`; the native host initializes the SDK and provides the Host Extension.
+* Added HarmonyOS support.
+---
 # 0.2.7
 * Compatible with iOS `GuanceSDK 1.6.7-beta.1`, Android `ft-sdk 1.7.5`, `ft-plugin 1.3.8`, and `ft-native 1.1.3`; raised the minimum supported iOS version to 12.0.
 * `GCUniPlugin-MobileAgent`
@@ -13,7 +20,7 @@
 ---
 # 0.2.7-alpha.1
 * `GC-JSPlugin`
-    * `GCRequest.js`：supplement the missing  parameter return in the request method's `complete` callback
+    * `GCRequest.js`: supplement the missing parameter return in the request method's `complete` callback
 ---
 # 0.2.6
 * `GCUniPlugin-RUM`

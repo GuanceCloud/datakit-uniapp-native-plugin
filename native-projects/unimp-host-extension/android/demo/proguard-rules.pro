@@ -1,0 +1,3 @@
+-keep class com.ft.sdk.uniapp.** { *; }
+-keep class io.dcloud.** { *; }
+-keep class com.taobao.weex.** { *; }

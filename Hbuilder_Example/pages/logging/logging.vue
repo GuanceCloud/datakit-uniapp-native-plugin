@@ -9,7 +9,7 @@
 </template>
 
 <script>
-	var logger = uni.requireNativePlugin("GCUniPlugin-Logger");
+	import { logger } from '@/gc-build-entry.js';
 	export default {
 		data() {
 			return {}
@@ -20,8 +20,8 @@
 					'content':`Log Status: ${status}`,
 					'status':status,
 					'property':{
-						'log_property':'uni_test'
-					}
+					'log_property':'uni_test'
+				}
 				})
 			}
 		}

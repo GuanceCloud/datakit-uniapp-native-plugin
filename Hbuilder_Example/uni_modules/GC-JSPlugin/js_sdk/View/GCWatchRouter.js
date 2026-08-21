@@ -3,7 +3,9 @@
  * Note: Since the App lifecycle onLaunch, onShow occurs before the first page lifecycle
  * So you need to use GCPageMixin in the first displayed page of the App to supplement page information, otherwise you cannot get the viewName of the first page
  */
-var rum = uni.requireNativePlugin("GCUniPlugin-RUM");
+import {
+	rum
+} from '../native.js';
 
 export const gcWatchRouter = {
 	globalData: {
@@ -33,7 +35,7 @@ export const gcWatchRouter = {
 	},
 	onHide: function() {
 		//console.log("onHide")
-		rum.stopView()
+		rum.stopView(null)
 	},
 	methods: {
 		startWatch() {
@@ -91,7 +93,7 @@ export const gcWatchRouter = {
 		rumStopOldStartNew(addListener = true) {
 			if (this.currentPage) {
 				console.log("stopView")
-				rum.stopView()
+				rum.stopView(null)
 				const loadEnd = new Date().getTime() * 1000000
 				let duration = (loadEnd - this.loadStart);
 				const {

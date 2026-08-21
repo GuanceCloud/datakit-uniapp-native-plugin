@@ -1,0 +1,7 @@
+.hvigor/
+.idea/
+oh_modules/
+build/
+entry/build/
+uniapp/unpackage/
+entry/src/main/resources/resfile/*.wgt

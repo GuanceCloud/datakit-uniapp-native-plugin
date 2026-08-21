@@ -1,0 +1,49 @@
+PODS:
+  - uniapp/Accelerometer (5.11.0)
+  - uniapp/Audio (5.11.0)
+  - uniapp/CameraGallery (5.11.0)
+  - uniapp/Canvas (5.11.0)
+  - uniapp/Contacts (5.11.0)
+  - uniapp/Core (5.11.0)
+  - uniapp/File (5.11.0)
+  - uniapp/Fingerprint (5.11.0)
+  - uniapp/IBeacon (5.11.0)
+  - uniapp/Log (5.11.0)
+  - uniapp/Messaging (5.11.0)
+  - uniapp/Orientation (5.11.0)
+  - uniapp/Proximity (5.11.0)
+  - uniapp/Sqlite (5.11.0)
+  - uniapp/UTS (5.11.0):
+    - uniapp/Core
+  - uniapp/XMLHttpRequest (5.11.0)
+  - uniapp/Zip (5.11.0)
+
+DEPENDENCIES:
+  - uniapp/Accelerometer (from `..`)
+  - uniapp/Audio (from `..`)
+  - uniapp/CameraGallery (from `..`)
+  - uniapp/Canvas (from `..`)
+  - uniapp/Contacts (from `..`)
+  - uniapp/Core (from `..`)
+  - uniapp/File (from `..`)
+  - uniapp/Fingerprint (from `..`)
+  - uniapp/IBeacon (from `..`)
+  - uniapp/Log (from `..`)
+  - uniapp/Messaging (from `..`)
+  - uniapp/Orientation (from `..`)
+  - uniapp/Proximity (from `..`)
+  - uniapp/Sqlite (from `..`)
+  - uniapp/UTS (from `..`)
+  - uniapp/XMLHttpRequest (from `..`)
+  - uniapp/Zip (from `..`)
+
+EXTERNAL SOURCES:
+  uniapp:
+    :path: ".."
+
+SPEC CHECKSUMS:
+  uniapp: b9c41dcaecc01eb1c658c56c26bc80190ddf621b
+
+PODFILE CHECKSUM: 89e40510674340d9a2b9f3551c9ef92bd7aed2d4
+
+COCOAPODS: 1.16.2

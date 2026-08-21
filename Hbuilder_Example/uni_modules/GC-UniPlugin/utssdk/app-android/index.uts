@@ -1,0 +1,277 @@
+import {
+	GCLoggerConfig,
+	GCLoggerLogParams,
+	GCMobileConfig,
+	GCDatakitURLParams,
+	GCDatawayURLParams,
+	GCRemoteConfigUpdateCallback,
+	GCRemoteConfigUpdateParams,
+	GCRUMActionParams,
+	GCRUMAddResourceParams,
+	GCRUMCreateViewParams,
+	GCRUMErrorParams,
+	GCRUMResourceParams,
+	GCRUMStopViewParams,
+	GCRUMConfig,
+	GCRUMUserDataParams,
+	GCRUMViewParams,
+	GCTraceHeaderParams,
+	GCTraceConfig,
+} from '../interface.uts'
+import {
+	appendBridgeContextState,
+	cloneParams,
+	parseRemoteConfigUpdateResult,
+	mergePropertyForParams,
+	normalizeLoggerConfigParams,
+	normalizeLoggingParams,
+	normalizeRumConfigParams,
+	normalizeSdkConfigParams,
+	normalizeTraceConfigParams
+} from '../bridge.uts'
+import {
+	prepareAddResourceParams
+} from './utils/FTUniPluginUtils.uts'
+import {
+	GCUniPluginNative
+} from 'gc.uniplugin.android'
+
+function stringifyParams(params: any | null): string {
+	if (params == null) {
+		return '{}'
+	}
+	return JSON.stringify(params) ?? '{}'
+}
+
+function parseJSONResult(result: string | null): any | null {
+	if (result == null || result.length === 0) {
+		return null
+	}
+	return JSON.parse(result)
+}
+
+function debugLog(message: string) {
+	if (process.env.NODE_ENV === 'development') {
+		console.log(message)
+	}
+}
+
+function debugError(message: string) {
+	if (process.env.NODE_ENV === 'development') {
+		console.error(message)
+	}
+}
+
+function createBindRUMUserDataParams(userId: string, userName?: string | null, userEmail?: string | null, extra?: any | null): GCRUMUserDataParams {
+	return new GCRUMUserDataParams(
+		userId,
+		userName == null ? null : userName,
+		userEmail == null ? null : userEmail,
+		extra == null ? null : extra
+	)
+}
+
+function bindRUMUserCompat(userId: string, userName?: string | null, userEmail?: string | null, extra?: any | null) {
+	const json = stringifyParams(createBindRUMUserDataParams(userId, userName, userEmail, extra))
+	GCUniPluginNative.bindRUMUserData(json)
+}
+
+export class mobileAgent {
+	static sdkConfig(params: GCMobileConfig) {
+		debugLog('[FTLog] GC-UniPlugin Mobile SDK initialization requested')
+		const json = stringifyParams(normalizeSdkConfigParams(params))
+		const initialized = GCUniPluginNative.sdkConfig(json)
+		if (initialized) {
+			debugLog('[FTLog] GC-UniPlugin Mobile SDK initialized successfully')
+		} else {
+			debugError('[FTLog] GC-UniPlugin Mobile SDK initialization failed')
+		}
+	}
+
+	static setDatakitURL(params: GCDatakitURLParams) {
+		GCUniPluginNative.setDatakitURL(stringifyParams(params))
+	}
+
+	static setDatawayURL(params: GCDatawayURLParams) {
+		GCUniPluginNative.setDatawayURL(stringifyParams(params))
+	}
+
+	static updateRemoteConfigWithMiniUpdateInterval(params: GCRemoteConfigUpdateParams, callback: GCRemoteConfigUpdateCallback) {
+		GCUniPluginNative.updateRemoteConfigWithMiniUpdateInterval(stringifyParams(params), (result: string | null) => {
+			callback(parseRemoteConfigUpdateResult(result, 'android'))
+		})
+	}
+
+	static bindRUMUserData(params: GCRUMUserDataParams) {
+		if (params == null || params.userId == null) {
+			return
+		}
+		bindRUMUserCompat(params.userId, params.userName, params.userEmail, params.extra)
+	}
+
+	static unbindRUMUserData() {
+		GCUniPluginNative.unbindRUMUserData()
+	}
+
+	static appendGlobalContext(params: any | null) {
+		const json = stringifyParams(params)
+		GCUniPluginNative.appendGlobalContext(json)
+	}
+
+	static appendRUMGlobalContext(params: any | null) {
+		const json = stringifyParams(params)
+		GCUniPluginNative.appendRUMGlobalContext(json)
+	}
+
+	static appendLogGlobalContext(params: any | null) {
+		const json = stringifyParams(params)
+		GCUniPluginNative.appendLogGlobalContext(json)
+	}
+
+	static appendBridgeContext(params: any | null) {
+		appendBridgeContextState(params)
+	}
+
+	static flushSyncData() {
+		GCUniPluginNative.flushSyncData()
+	}
+
+	static clearAllData() {
+		GCUniPluginNative.clearAllData()
+	}
+
+	static shutDown() {
+		GCUniPluginNative.shutDown()
+	}
+
+	static manuallySetApplicationStart() {
+		GCUniPluginNative.manuallySetApplicationStart()
+	}
+}
+
+export class rum {
+	static setConfig(params: GCRUMConfig) {
+		debugLog('[FTLog] GC-UniPlugin RUM initialization requested')
+		const json = stringifyParams(normalizeRumConfigParams(params))
+		const initialized = GCUniPluginNative.setRumConfig(json)
+		if (initialized) {
+			debugLog('[FTLog] GC-UniPlugin RUM initialized successfully')
+		} else {
+			debugError('[FTLog] GC-UniPlugin RUM initialization failed')
+		}
+	}
+
+	static startAction(params: GCRUMActionParams) {
+		GCUniPluginNative.startAction(stringifyParams(mergePropertyForParams(params)))
+	}
+
+	static addAction(params: GCRUMActionParams) {
+		GCUniPluginNative.addAction(stringifyParams(mergePropertyForParams(params)))
+	}
+
+	static onCreateView(params: GCRUMCreateViewParams) {
+		GCUniPluginNative.onCreateView(stringifyParams(cloneParams(params)))
+	}
+
+	static startView(params: GCRUMViewParams) {
+		GCUniPluginNative.startView(stringifyParams(mergePropertyForParams(params)))
+	}
+
+	static stopView(params: GCRUMStopViewParams | null) {
+		GCUniPluginNative.stopView(stringifyParams(cloneParams(params)))
+	}
+
+	static addError(params: GCRUMErrorParams) {
+		GCUniPluginNative.addError(stringifyParams(mergePropertyForParams(params)))
+	}
+
+	static startResource(params: GCRUMResourceParams) {
+		GCUniPluginNative.startResource(stringifyParams(mergePropertyForParams(params)))
+	}
+
+	static stopResource(params: GCRUMResourceParams) {
+		GCUniPluginNative.stopResource(stringifyParams(cloneParams(params)))
+	}
+
+	static addResource(params: GCRUMAddResourceParams) {
+		const result = prepareAddResourceParams(params)
+		GCUniPluginNative.addResource(stringifyParams(result))
+	}
+}
+
+export class logger {
+	static setConfig(params: GCLoggerConfig) {
+		const json = stringifyParams(normalizeLoggerConfigParams(params))
+		GCUniPluginNative.setLoggerConfig(json)
+	}
+
+	static logging(params: GCLoggerLogParams) {
+		const json = stringifyParams(normalizeLoggingParams(params))
+		GCUniPluginNative.logging(json)
+	}
+}
+
+export class tracer {
+	static setConfig(params: GCTraceConfig) {
+		const json = stringifyParams(normalizeTraceConfigParams(params))
+		GCUniPluginNative.setTraceConfig(json)
+	}
+
+	static getTraceHeader(params: GCTraceHeaderParams): any | null {
+		const json = stringifyParams(params)
+		const result = GCUniPluginNative.getTraceHeader(json)
+		return parseJSONResult(result)
+	}
+}
+
+export class GCEnv {
+	static readonly PROD: string = 'prod'
+	static readonly GRAY: string = 'gray'
+	static readonly PRE: string = 'pre'
+	static readonly COMMON: string = 'common'
+	static readonly LOCAL: string = 'local'
+}
+
+export class GCDiscardStrategy {
+	static readonly DISCARD: string = 'discard'
+	static readonly DISCARD_OLDEST: string = 'discardOldest'
+}
+
+export class GCTraceType {
+	static readonly DDTRACE: string = 'ddTrace'
+	static readonly ZIPKIN_MULTI_HEADER: string = 'zipkinMultiHeader'
+	static readonly ZIPKIN_SINGLE_HEADER: string = 'zipkinSingleHeader'
+	static readonly TRACEPARENT: string = 'traceparent'
+	static readonly SKYWALKING: string = 'skywalking'
+	static readonly JAEGER: string = 'jaeger'
+}
+
+export class GCMonitorFrequency {
+	static readonly NORMAL: string = 'normal'
+	static readonly FREQUENT: string = 'frequent'
+	static readonly RARE: string = 'rare'
+}
+
+export class GCLogStatus {
+	static readonly INFO: string = 'info'
+	static readonly DEBUG: string = 'debug'
+	static readonly WARNING: string = 'warning'
+	static readonly ERROR: string = 'error'
+	static readonly CRITICAL: string = 'critical'
+	static readonly OK: string = 'ok'
+}
+
+export class GCErrorMonitorType {
+	static readonly BATTERY: string = 'battery'
+	static readonly MEMORY: string = 'memory'
+	static readonly CPU: string = 'cpu'
+	static readonly ALL: string = 'all'
+}
+
+export class GCDeviceMonitorType {
+	static readonly BATTERY: string = 'battery'
+	static readonly MEMORY: string = 'memory'
+	static readonly CPU: string = 'cpu'
+	static readonly FPS: string = 'fps'
+	static readonly ALL: string = 'all'
+}

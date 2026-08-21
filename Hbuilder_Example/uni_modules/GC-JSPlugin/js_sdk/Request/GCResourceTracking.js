@@ -1,6 +1,7 @@
-var rum = uni.requireNativePlugin("GCUniPlugin-RUM");
-var tracer = uni.requireNativePlugin("GCUniPlugin-Tracer");
-
+import {
+	rum,
+	tracer
+} from '../native.js';
 let interceptorInstalled = false;
 let startTrackingInvoked = false;
 let trackingConfig = {
@@ -24,7 +25,7 @@ function getCurrentPlatform() {
 }
 
 function isSupportedPlatform(platform) {
-	return platform === 'ios' || platform === 'android';
+	return platform === 'ios' || platform === 'android' || platform === 'harmonyos';
 }
 
 function isTrackingEnabledForPlatform(platform) {
@@ -137,7 +138,8 @@ function completeResourceError(request, error) {
 }
 
 /**
- * Tracks DCloud uni.request with the Android and iOS native RUM SDK APIs.
+ * Tracks DCloud uni.request with the Android, iOS, and HarmonyOS native RUM
+ * SDK APIs.
  *
  * The interceptor injects Trace headers and observes DCloud's request
  * lifecycle. Disable iOS tracking when enableNativeUserResource is enabled
@@ -146,7 +148,7 @@ function completeResourceError(request, error) {
  */
 export const gcResourceTracking = {
 	startTracking(config = {}) {
-		// #ifdef APP-PLUS
+		// #ifdef APP-PLUS || APP-HARMONY
 		const platform = getCurrentPlatform();
 		const hasAddInterceptor = typeof uni !== 'undefined' && typeof uni.addInterceptor === 'function';
 		if (startTrackingInvoked) {
@@ -220,14 +222,14 @@ export const gcResourceTracking = {
 	},
 
 	isTracking() {
-		// #ifdef APP-PLUS
+		// #ifdef APP-PLUS || APP-HARMONY
 		return interceptorInstalled;
 		// #endif
 		return false;
 	},
 
 	shouldUseManualTracking() {
-		// #ifdef APP-PLUS
+		// #ifdef APP-PLUS || APP-HARMONY
 		const platform = getCurrentPlatform();
 		if (isSupportedPlatform(platform) && !isTrackingEnabledForPlatform(platform)) {
 			return false;

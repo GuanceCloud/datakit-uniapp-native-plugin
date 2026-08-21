@@ -11,6 +11,8 @@
 			<button type="primary" @click="setDatawayURL()">Update Dataway URL</button>
 			<button type="primary" @click="updateRemoteConfigWithMiniUpdateInterval()">Update Remote Config</button>
 			<button type="primary" @click="clearAllData()">Clear Unsynchronized Local Data</button>
+			<button type="primary" @click="manuallySetApplicationStart()">Manual Application Start</button>
+			<button type="warn" @click="shutDown()">SDK Shutdown</button>
 			<button type="primary" @click="navigatorToLogPage()">Log Output</button>
 			<navigator url="../tracing/tracing">
 				<button type="primary">Network Link Tracing</button>
@@ -26,9 +28,10 @@
 </template>
 
 <script>
+	import {
+		mobileAgent
+	} from '@/gc-build-entry.js'
 	import * as SDKConst from '@/utils.js'
-	
-	var ftMobileSDK = uni.requireNativePlugin("GCUniPlugin-MobileAgent");
 	export default {
 		data() {
 			return {}
@@ -38,7 +41,7 @@
 		},
 		methods: {
           bindUser(){
-          	ftMobileSDK.bindRUMUserData({
+			mobileAgent.bindRUMUserData({
 				'userId':'Test userId',
 				'userName':'Test name',
 				'userEmail':'test@123.com',
@@ -48,51 +51,54 @@
 			})
           },
 		  unbindUser(){
-			  ftMobileSDK.unbindRUMUserData()
+			  mobileAgent.unbindRUMUserData()
 		  },
 		  appendGlobalContext(){
-			  ftMobileSDK.appendGlobalContext({
+			  mobileAgent.appendGlobalContext({
 				  'ft_global_key':'ft_global_value'
 			  })
 		  },
 		  appendRUMGlobalContext(){
-		  	  ftMobileSDK.appendRUMGlobalContext({
+			  mobileAgent.appendRUMGlobalContext({
 				  'ft_global_rum_key':'ft_global_rum_value'
   			  })
 		  },
 		  appendLogGlobalContext(){
-		  	  ftMobileSDK.appendLogGlobalContext({
+			  mobileAgent.appendLogGlobalContext({
 				  'ft_global_log_key':'ft_global_log_value'
 		     })
 		  },
 		  appendBridgeContext(){
-			  ftMobileSDK.appendBridgeContext({
+			  mobileAgent.appendBridgeContext({
 				 'ft_bridge_context': 'ft_bridge_context_value'
 			 })
 		  },
 		  flushSyncData(){
-		  	  ftMobileSDK.flushSyncData()
+			  mobileAgent.flushSyncData()
 		  },
 		  setDatakitURL(){
-			  ftMobileSDK.setDatakitURL({
-				  'datakitUrl': SDKConst.SERVER_URL
+			  mobileAgent.setDatakitURL({
+				  datakitUrl: SDKConst.SERVER_URL
 			  })
 		  },
 		  setDatawayURL(){
-			  ftMobileSDK.setDatawayURL({
-				  'datawayUrl': SDKConst.DATAWAY_URL,
-				  'clientToken': SDKConst.CLIENT_TOKEN
+			  mobileAgent.setDatawayURL({
+				  datawayUrl: SDKConst.DATAWAY_URL,
+				  clientToken: SDKConst.CLIENT_TOKEN
 			  })
 		  },
 		  updateRemoteConfigWithMiniUpdateInterval(){
-			  ftMobileSDK.updateRemoteConfigWithMiniUpdateInterval({
-				  'miniUpdateInterval': 0
+			  mobileAgent.updateRemoteConfigWithMiniUpdateInterval({
+				  miniUpdateInterval: 0
 			  }, result => {
 				  console.log('remote config result: ' + JSON.stringify(result))
 			  })
 		  },
 		  clearAllData(){
-		  	  ftMobileSDK.clearAllData()
+			  mobileAgent.clearAllData()
+		  },
+		  shutDown(){
+			  mobileAgent.shutDown()
 		  },
 		  navigatorToLogPage(){
 			  uni.navigateTo({

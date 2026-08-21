@@ -1,10 +1,12 @@
 /**
  * Used to supplement WatchRouter data information on the first page
  */
-var rum = uni.requireNativePlugin("GCUniPlugin-RUM");
+import {
+	rum
+} from '../native.js';
 
 /**
- * Get the current page route path 
+ * Get the current page route path
  * @returns {string|null} The current page route (e.g. "pages/home/index"), returns null if failed
  */
 const getCurrentPagePath = () => {

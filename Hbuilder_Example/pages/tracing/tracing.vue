@@ -6,7 +6,7 @@
 
 <script>
 	import Utils from '../../utils.js';
-	var tracer = uni.requireNativePlugin("GCUniPlugin-Tracer");
+	import { tracer } from '@/gc-build-entry.js';
 	let requestUrl = "http://10.100.64.166:8000/api/user";
 	export default {
 		data() {
@@ -22,7 +22,16 @@
 					'url': requestUrl,
 				})
 				console.log('Calling getTraceHeader:' + header)
+				// #ifdef APP-HARMONY
+				uni.request({
+					url: requestUrl,
+					header: header,
+					__gcResourceKey: key
+				})
+				// #endif
+				// #ifndef APP-HARMONY
 				Utils.request(requestUrl, header)
+				// #endif
 			}
 		},
 	}
