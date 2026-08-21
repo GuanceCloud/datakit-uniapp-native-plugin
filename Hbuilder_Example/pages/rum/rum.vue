@@ -19,7 +19,7 @@
 
 <script>
 	import Utils from '../../utils.js';
-	import { rum } from '@/uni_modules/GC-UniPlugin';
+	import { rum } from '@/gc-build-entry.js';
 	export default {
 		data() {
 			return {}

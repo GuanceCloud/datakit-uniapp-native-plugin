@@ -1,0 +1,86 @@
+plugins {
+	id 'com.android.application'
+	id 'ft-plugin'
+}
+android {
+    compileSdkVersion 35
+    buildToolsVersion '35.0.0'
+    namespace 'com.ft.UniPlugin.demo'
+    buildFeatures {
+        buildConfig true
+    }
+    defaultConfig {
+        applicationId "com.ft.UniPlugin.demo"
+        minSdkVersion 24
+        targetSdkVersion 33
+        versionCode 1
+        versionName "1.0"
+        multiDexEnabled true
+        buildConfigField 'String[]', 'UTSHooksClassArray', '{"uts.sdk.modules.GCUniSessionReplay.GCSessionReplayAndroidHook"}'
+        compileOptions {
+            sourceCompatibility JavaVersion.VERSION_1_8
+            targetCompatibility JavaVersion.VERSION_1_8
+        }
+    }
+    signingConfigs {
+        config {
+            keyAlias 'key0'
+            keyPassword '123456'
+            storeFile file('test.jks')
+            storePassword '123456'
+            v1SigningEnabled true
+            v2SigningEnabled true
+        }
+    }
+
+    buildTypes {
+        debug {
+            signingConfig signingConfigs.config
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+        release {
+            signingConfig signingConfigs.config
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+
+    // Matches the DCloud native-host template. Its bundled UTS Runtime uses
+    // Kotlin metadata newer than the AGP 8.7 Lint analyzer understands.
+    lintOptions {
+        checkReleaseBuilds false
+        abortOnError false
+    }
+
+    aaptOptions {
+        additionalParameters '--auto-add-overlay'
+        ignoreAssetsPattern "!.svn:!.git:.*:!CVS:!thumbs.db:!picasa.ini:!*.scc:*~"
+    }
+}
+
+dependencies {
+    implementation project(':unimoduleGCUniPlugin')
+    implementation project(':unimoduleGCUniSessionReplay')
+    implementation fileTree(dir: 'libs', include: ['*.aar', '*.jar'])
+    implementation 'com.cloudcare.ft.mobile.sdk.tracker.agent:ft-sdk:1.7.4'
+    implementation 'com.cloudcare.ft.mobile.sdk.tracker.agent:ft-native:1.1.3'
+    implementation 'com.cloudcare.ft.mobile.sdk.tracker.agent:ft-session-replay:0.1.7'
+    implementation 'androidx.appcompat:appcompat:1.1.0'
+    implementation 'androidx.localbroadcastmanager:localbroadcastmanager:1.0.0'
+    implementation 'androidx.core:core:1.1.0'
+    implementation "androidx.fragment:fragment:1.1.0"
+    implementation 'androidx.recyclerview:recyclerview:1.1.0'
+    implementation 'com.facebook.fresco:fresco:2.5.0'
+    implementation "com.facebook.fresco:animated-gif:2.5.0"
+    implementation 'com.github.bumptech.glide:glide:4.9.0'
+    implementation 'com.alibaba:fastjson:1.2.83'
+    implementation 'androidx.webkit:webkit:1.5.0'
+    implementation 'androidx.core:core-ktx:1.6.0'
+    implementation 'org.jetbrains.kotlin:kotlin-stdlib:2.2.0'
+    implementation 'org.jetbrains.kotlin:kotlin-reflect:2.2.0'
+    implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-core:1.8.1'
+    implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-android:1.8.1'
+    implementation 'com.google.code.gson:gson:2.8.9'
+    implementation 'com.squareup.okhttp3:okhttp:4.5.0'
+}

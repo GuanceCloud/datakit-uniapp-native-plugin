@@ -20,9 +20,9 @@
 export default {
   data() {
     return {
-      webviewUrl: 'http://10.100.64.166/test/rum/',
+      webviewUrl: 'http://10.100.64.166:8000',
       harmonyWebviewOptions: {
-        src: 'http://10.100.64.166/test/rum/',
+        src: 'http://10.100.64.166:8000',
         viewName: 'webview',
         // Demo-only: verifies that a pre-existing bridge remains available
         // after FTWebViewHandler registers the RUM bridge.

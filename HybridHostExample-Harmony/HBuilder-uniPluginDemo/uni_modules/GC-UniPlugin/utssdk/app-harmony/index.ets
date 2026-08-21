@@ -134,7 +134,6 @@ const bridgeContext: Map<string, Object> = new Map();
 let currentViewName = '';
 let uniAppJSViewTrackingEnabled = true;
 let uniAppJSActionTrackingEnabled = true;
-let harmonyUniRequestAutoTrackingEnabled = false;
 let activeRumConfig: FTRUMConfig | null = null;
 const attachedWebViewHandlers: Map<webview.WebviewController, FTWebViewHandler> = new Map();
 const sdkBridgeInfo: Record<string, Object> = {};
@@ -300,7 +299,6 @@ class rum {
             if (params.enableNativeUserResource !== undefined && params.enableNativeUserResource !== null) {
                 config.setEnableTraceUserResource(params.enableNativeUserResource);
             }
-            harmonyUniRequestAutoTrackingEnabled = params.enableNativeUserResource === true;
             if (params.enableResourceHostIP !== undefined && params.enableResourceHostIP !== null) {
                 config.setEnableResourceHostIP(params.enableResourceHostIP);
             }
@@ -360,9 +358,6 @@ class rum {
     }
     static isUniAppJSActionTrackingEnabled(): boolean {
         return uniAppJSActionTrackingEnabled;
-    }
-    static isHarmonyUniRequestAutoTrackingEnabled(): boolean {
-        return harmonyUniRequestAutoTrackingEnabled;
     }
     static addAction(params: GCRUMActionParams) {
         FTRUMGlobalManager.getInstance().addAction(params.actionName, params.actionType || 'click', mergeRumBridgeContext(params.property));

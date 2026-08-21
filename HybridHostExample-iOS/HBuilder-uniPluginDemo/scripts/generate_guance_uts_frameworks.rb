@@ -6,9 +6,11 @@ require 'pathname'
 require 'xcodeproj'
 
 host_root = File.expand_path('..', __dir__)
-sdk_libs = File.expand_path('../SDK/Libs', host_root)
+sdk_libs = ENV.fetch('DCLOUD_SDK_LIBS_DIR', File.expand_path('../SDK/Libs', host_root))
 frameworks_root = File.join(host_root, 'UTSFrameworks')
-shared_frameworks_root = File.join(host_root, 'SharedFrameworks')
+host_bridge_root = File.join(host_root, 'GuanceUniAppHostBridge')
+host_bridge_sources_root = File.join(host_bridge_root, 'Sources')
+host_bridge_framework_root = File.join(host_bridge_root, 'StaticFramework')
 host_project_path = File.join(host_root, 'HBuilder-uniPlugin.xcodeproj')
 repository_root = File.expand_path('../..', host_root)
 
@@ -16,18 +18,24 @@ PLUGIN_SPECS = [
   {
     name: 'unimoduleGCUniPlugin',
     bundle_identifier: 'io.guance.unimodule.GCUniPlugin',
-    frameworks: %w[GuanceSDK-Dynamic.xcframework],
     system_frameworks: [],
     generated_index: File.join(repository_root, 'Hbuilder_Example/unpackage/resources/uni_modules/GC-UniPlugin/utssdk/app-ios/src/index.swift'),
-    native_source: File.join(repository_root, 'Hbuilder_Example/uni_modules/GC-UniPlugin/utssdk/app-ios/GCUniPluginNative.swift')
+    checked_in_generated_index: File.join(frameworks_root, 'unimoduleGCUniPlugin/Sources/index.swift'),
+    direct_native_source: File.join(repository_root, 'Hbuilder_Example/uni_modules/GC-UniPlugin/utssdk/app-ios/GCUniPluginNative.swift'),
+    host_native_source: File.join(repository_root, 'Hbuilder_Example/uni_modules/GC-UniPlugin/integration/ios-host-bridge/GCUniPluginHostNative.swift'),
+    direct_native_class: 'GCUniPluginNative',
+    host_native_class: 'GCUniPluginHostNative'
   },
   {
     name: 'unimoduleGCUniSessionReplay',
     bundle_identifier: 'io.guance.unimodule.GCUniSessionReplay',
-    frameworks: %w[GuanceSDK-Dynamic.xcframework GuanceSessionReplay-Dynamic.xcframework],
     system_frameworks: ['WebKit.framework'],
     generated_index: File.join(repository_root, 'Hbuilder_Example/unpackage/resources/uni_modules/GC-UniSessionReplay/utssdk/app-ios/src/index.swift'),
-    native_source: File.join(repository_root, 'Hbuilder_Example/uni_modules/GC-UniSessionReplay/utssdk/app-ios/GCSessionReplayNative.swift')
+    checked_in_generated_index: File.join(frameworks_root, 'unimoduleGCUniSessionReplay/Sources/index.swift'),
+    direct_native_source: File.join(repository_root, 'Hbuilder_Example/uni_modules/GC-UniSessionReplay/utssdk/app-ios/GCSessionReplayNative.swift'),
+    host_native_source: File.join(repository_root, 'Hbuilder_Example/uni_modules/GC-UniSessionReplay/integration/ios-host-bridge/GCSessionReplayHostNative.swift'),
+    direct_native_class: 'GCSessionReplayNative',
+    host_native_class: 'GCSessionReplayHostNative'
   }
 ].freeze
 
@@ -44,17 +52,17 @@ def add_file(group, path, type = nil, source_tree = '<group>')
   reference
 end
 
-def configure_target(target, project_dir, sdk_libs, shared_frameworks_root, bundle_identifier)
+def configure_target(target, project_dir, sdk_libs, bundle_identifier)
   target.build_configurations.each do |configuration|
     configuration.build_settings.merge!(
       'BUILD_LIBRARY_FOR_DISTRIBUTION' => 'YES',
+      'CLANG_ENABLE_EXPLICIT_MODULES' => 'NO',
       'CLANG_ENABLE_MODULES' => 'YES',
       'DEFINES_MODULE' => 'YES',
       'ENABLE_MODULE_VERIFIER' => 'NO',
       'FRAMEWORK_SEARCH_PATHS' => [
         '$(inherited)',
-        "\"#{relative_path(project_dir, sdk_libs)}\"",
-        "\"#{relative_path(project_dir, shared_frameworks_root)}\""
+        "\"#{relative_path(project_dir, sdk_libs)}\""
       ],
       'IPHONEOS_DEPLOYMENT_TARGET' => '13.0',
       'LD_RUNPATH_SEARCH_PATHS' => [
@@ -65,6 +73,7 @@ def configure_target(target, project_dir, sdk_libs, shared_frameworks_root, bund
       'OTHER_LDFLAGS' => ['$(inherited)', '-ObjC'],
       'PRODUCT_BUNDLE_IDENTIFIER' => bundle_identifier,
       'SKIP_INSTALL' => 'YES',
+      'SWIFT_ENABLE_EXPLICIT_MODULES' => 'NO',
       'SWIFT_VERSION' => '5.0'
     )
   end
@@ -76,7 +85,7 @@ def add_system_framework(project, target, framework_group, name)
   target.frameworks_build_phase.add_file_reference(reference, true)
 end
 
-def create_plugin_project(spec, frameworks_root, sdk_libs, shared_frameworks_root)
+def create_plugin_project(spec, frameworks_root, sdk_libs)
   plugin_root = File.join(frameworks_root, spec[:name])
   project_path = File.join(plugin_root, "#{spec[:name]}.xcodeproj")
   source_root = File.join(plugin_root, 'Sources')
@@ -86,7 +95,6 @@ def create_plugin_project(spec, frameworks_root, sdk_libs, shared_frameworks_roo
     File.join(plugin_root, 'config.json'),
     File.join(source_root, 'index.swift')
   ]
-  required_paths.concat(spec[:frameworks].map { |name| File.join(shared_frameworks_root, name) })
   missing = required_paths.reject { |path| File.exist?(path) }
   abort "Missing hybrid UTS plugin inputs:\n#{missing.join("\n")}" unless missing.empty?
 
@@ -95,7 +103,7 @@ def create_plugin_project(spec, frameworks_root, sdk_libs, shared_frameworks_roo
   target = project.new_target(:framework, spec[:name], :ios, '13.0')
   target.product_reference.path = "#{spec[:name]}.framework"
   target.product_reference.explicit_file_type = 'wrapper.framework'
-  configure_target(target, plugin_root, sdk_libs, shared_frameworks_root, spec[:bundle_identifier])
+  configure_target(target, plugin_root, sdk_libs, spec[:bundle_identifier])
 
   sources_group = project.main_group.new_group('Sources', 'Sources')
   Dir.glob(File.join(source_root, '*.{swift,m,mm}')).sort.each do |source|
@@ -118,11 +126,6 @@ def create_plugin_project(spec, frameworks_root, sdk_libs, shared_frameworks_roo
     target.frameworks_build_phase.add_file_reference(dcloud_reference, true)
   end
 
-  spec[:frameworks].each do |framework|
-    framework_path = relative_path(plugin_root, File.join(shared_frameworks_root, framework))
-    reference = add_file(frameworks_group, framework_path, 'wrapper.xcframework')
-    target.frameworks_build_phase.add_file_reference(reference, true)
-  end
   spec[:system_frameworks].each do |framework|
     add_system_framework(project, target, frameworks_group, framework)
   end
@@ -135,14 +138,117 @@ end
 def sync_uts_sources(spec, frameworks_root)
   plugin_root = File.join(frameworks_root, spec[:name])
   sources_root = File.join(plugin_root, 'Sources')
-  inputs = [spec[:generated_index], spec[:native_source]]
+  generated_index = spec[:generated_index]
+  if !File.file?(generated_index) && ENV.fetch('GC_UNIAPP_USE_CHECKED_IN_UTS_SOURCES', '0') == '1'
+    generated_index = spec[:checked_in_generated_index]
+    warn "Using checked-in generated UTS source for #{spec[:name]}"
+  end
+  inputs = [generated_index, spec[:host_native_source]]
   missing = inputs.reject { |path| File.file?(path) }
-  abort "Generate the iOS UTS source with HBuilderX before running this script:\n#{missing.join("\n")}" unless missing.empty?
+  abort "Generate the iOS UTS source with HBuilderX before running this script, or set GC_UNIAPP_USE_CHECKED_IN_UTS_SOURCES=1 in release CI:\n#{missing.join("\n")}" unless missing.empty?
 
   FileUtils.mkdir_p(sources_root)
-  FileUtils.cp(spec[:generated_index], File.join(sources_root, 'index.swift'))
-  FileUtils.cp(spec[:native_source], File.join(sources_root, File.basename(spec[:native_source])))
+  generated_index_source = File.read(generated_index)
+  generated_index_source.gsub!(spec[:direct_native_class], spec[:host_native_class])
+  File.write(File.join(sources_root, 'index.swift'), generated_index_source)
+  FileUtils.rm_f(File.join(sources_root, File.basename(spec[:direct_native_source])))
+  FileUtils.cp(spec[:host_native_source], File.join(sources_root, File.basename(spec[:host_native_source])))
 end
+
+def sync_host_bridge_sources(host_bridge_sources_root, repository_root)
+  core_sources = {
+    File.join(repository_root, 'Hbuilder_Example/uni_modules/GC-UniPlugin/utssdk/app-ios/GCUniPluginNative.swift') =>
+      File.join(host_bridge_sources_root, 'Core/GCUniPluginNative.swift'),
+    File.join(repository_root, 'Hbuilder_Example/uni_modules/GC-UniPlugin/integration/ios-host-bridge/GuanceUniAppCoreHostBridge.swift') =>
+      File.join(host_bridge_sources_root, 'Core/GuanceUniAppCoreHostBridge.swift')
+  }
+  session_replay_sources = {
+    File.join(repository_root, 'Hbuilder_Example/uni_modules/GC-UniSessionReplay/utssdk/app-ios/GCSessionReplayNative.swift') =>
+      File.join(host_bridge_sources_root, 'SessionReplay/GCSessionReplayNative.swift'),
+    File.join(repository_root, 'Hbuilder_Example/uni_modules/GC-UniSessionReplay/integration/ios-host-bridge/GuanceUniAppSessionReplayHostBridge.swift') =>
+      File.join(host_bridge_sources_root, 'SessionReplay/GuanceUniAppSessionReplayHostBridge.swift')
+  }
+
+  # HostBridge is one static framework. Session Replay API installation remains
+  # optional, but the bridge always carries its strongly typed native mapping.
+  selected_sources = core_sources.merge(session_replay_sources)
+  missing = selected_sources.keys.reject { |path| File.file?(path) }
+  abort "Missing GuanceUniAppHostBridge source:\n#{missing.join("\n")}" unless missing.empty?
+
+  FileUtils.rm_rf(File.join(host_bridge_sources_root, 'Core'))
+  FileUtils.rm_rf(File.join(host_bridge_sources_root, 'SessionReplay'))
+  selected_sources.each do |source, destination|
+    FileUtils.mkdir_p(File.dirname(destination))
+    FileUtils.cp(source, destination)
+  end
+end
+
+def configure_host_bridge_target(target, project_root, repository_root)
+  framework_roots = [
+    File.join(repository_root, 'Hbuilder_Example/uni_modules/GC-UniPlugin/utssdk/app-ios/Frameworks'),
+    File.join(repository_root, 'Hbuilder_Example/uni_modules/GC-UniSessionReplay/utssdk/app-ios/Frameworks')
+  ]
+
+  target.build_configurations.each do |configuration|
+    configuration.build_settings.merge!(
+      'BUILD_LIBRARY_FOR_DISTRIBUTION' => 'YES',
+      'CLANG_ENABLE_MODULES' => 'YES',
+      'DEFINES_MODULE' => 'YES',
+      'ENABLE_MODULE_VERIFIER' => 'NO',
+      'FRAMEWORK_SEARCH_PATHS' => ['$(inherited)'] + framework_roots.map { |root| "\"#{relative_path(project_root, root)}\"" },
+      'IPHONEOS_DEPLOYMENT_TARGET' => '13.0',
+      'MACH_O_TYPE' => 'staticlib',
+      'PRODUCT_BUNDLE_IDENTIFIER' => 'io.guance.GuanceUniAppHostBridge',
+      'PRODUCT_NAME' => 'GuanceUniAppHostBridge',
+      'SKIP_INSTALL' => 'NO',
+      'SWIFT_VERSION' => '5.0'
+    )
+  end
+end
+
+def create_host_bridge_static_framework_project(host_bridge_framework_root, host_bridge_sources_root, repository_root)
+  project_path = File.join(host_bridge_framework_root, 'GuanceUniAppHostBridge.xcodeproj')
+  required_sources = Dir.glob(File.join(host_bridge_sources_root, '**/*.swift')).sort
+  abort 'Missing generated GuanceUniAppHostBridge Swift sources' if required_sources.empty?
+
+  FileUtils.rm_rf(project_path)
+  FileUtils.mkdir_p(host_bridge_framework_root)
+  project = Xcodeproj::Project.new(project_path)
+  target = project.new_target(:framework, 'GuanceUniAppHostBridge', :ios, '13.0')
+  target.product_reference.path = 'GuanceUniAppHostBridge.framework'
+  target.product_reference.explicit_file_type = 'wrapper.framework'
+  configure_host_bridge_target(target, host_bridge_framework_root, repository_root)
+
+  sources_group = project.main_group.new_group('Sources')
+  required_sources.each do |source|
+    source_path = relative_path(host_bridge_framework_root, source)
+    reference = add_file(sources_group, source_path)
+    target.source_build_phase.add_file_reference(reference, true)
+  end
+
+  frameworks_group = project.main_group.new_group('Frameworks')
+  framework_roots = [
+    File.join(repository_root, 'Hbuilder_Example/uni_modules/GC-UniPlugin/utssdk/app-ios/Frameworks'),
+    File.join(repository_root, 'Hbuilder_Example/uni_modules/GC-UniSessionReplay/utssdk/app-ios/Frameworks')
+  ]
+  [
+    [framework_roots[0], 'GuanceSDK-Dynamic.xcframework'],
+    [framework_roots[1], 'GuanceSessionReplay-Dynamic.xcframework']
+  ].each do |root, name|
+    reference = add_file(
+      frameworks_group,
+      relative_path(host_bridge_framework_root, File.join(root, name)),
+      'wrapper.xcframework'
+    )
+    target.frameworks_build_phase.add_file_reference(reference, true)
+  end
+  add_system_framework(project, target, frameworks_group, 'WebKit.framework')
+
+  project.recreate_user_schemes
+  project.save
+  project_path
+end
+
 
 def find_or_create_group(project, name)
   project.main_group.groups.find { |group| group.display_name == name } || project.main_group.new_group(name)
@@ -236,7 +342,9 @@ def remove_generated_host_integration(project, host_target)
     .each(&:remove_from_project)
 end
 
-def update_host_project(host_project_path, plugin_projects, shared_frameworks_root, shared_framework_names)
+def update_host_project(host_project_path, plugin_projects)
+  project_file = File.join(host_project_path, 'project.pbxproj')
+  existing_object_version = File.read(project_file)[/objectVersion = (\d+);/, 1]
   project = Xcodeproj::Project.open(host_project_path)
   host_target = project.native_targets.find { |target| target.name == 'HBuilder' }
   abort "Unable to find the HBuilder target in #{host_project_path}" unless host_target
@@ -249,14 +357,7 @@ def update_host_project(host_project_path, plugin_projects, shared_frameworks_ro
   end
 
   modules_group = find_or_create_group(project, 'Guance UTS Modules')
-  framework_group = find_or_create_group(project, 'Guance Shared Frameworks')
   embed_phase = find_or_create_embed_phase(host_target)
-
-  shared_framework_names.each do |framework|
-    path = relative_path(File.dirname(host_project_path), File.join(shared_frameworks_root, framework))
-    reference = add_file(framework_group, path, 'wrapper.xcframework')
-    embed_file(host_target, embed_phase, reference)
-  end
 
   plugin_projects.each do |plugin_project_path|
     remote_project = Xcodeproj::Project.open(plugin_project_path)
@@ -264,6 +365,7 @@ def update_host_project(host_project_path, plugin_projects, shared_frameworks_ro
     embed_file(host_target, embed_phase, framework_reference)
   end
 
+  project.instance_variable_set(:@object_version, existing_object_version) if existing_object_version
   project.save
 end
 
@@ -271,11 +373,16 @@ include_session_replay = ENV.fetch('GUANCE_SESSION_REPLAY', '1') != '0'
 selected_specs = include_session_replay ? PLUGIN_SPECS : PLUGIN_SPECS.first(1)
 
 selected_specs.each { |spec| sync_uts_sources(spec, frameworks_root) }
+sync_host_bridge_sources(host_bridge_sources_root, repository_root)
+create_host_bridge_static_framework_project(
+  host_bridge_framework_root,
+  host_bridge_sources_root,
+  repository_root
+)
 
 plugin_projects = selected_specs.map do |spec|
-  create_plugin_project(spec, frameworks_root, sdk_libs, shared_frameworks_root)
+  create_plugin_project(spec, frameworks_root, sdk_libs)
 end
-shared_framework_names = selected_specs.flat_map { |spec| spec[:frameworks] }.uniq
-update_host_project(host_project_path, plugin_projects, shared_frameworks_root, shared_framework_names)
+update_host_project(host_project_path, plugin_projects)
 
-puts "Generated and linked #{plugin_projects.length} dynamic Guance UTS framework project(s)."
+puts "Generated #{plugin_projects.length} dynamic Guance UTS runtime framework project(s), synchronized the static HostBridge sources, and refreshed the static HostBridge Xcode project."

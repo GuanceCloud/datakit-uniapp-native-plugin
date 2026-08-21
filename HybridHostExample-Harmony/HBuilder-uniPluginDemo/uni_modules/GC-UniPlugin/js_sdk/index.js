@@ -2,10 +2,6 @@ import {
 	gcActionTracking
 } from './Action/GCActionTracking.js';
 
-// #ifdef APP-HARMONY
-gcActionTracking.startTracking();
-// #endif
-
 export {
 	mobileAgent,
 	rum,
@@ -23,8 +19,8 @@ export {
 	gcRequest
 } from './Request/GCRequest.js';
 export {
-	gcHarmonyNetworkTracking
-} from './Request/GCHarmonyNetworkTracking.js';
+	gcResourceTracking
+} from './Request/GCResourceTracking.js';
 export {
 	gcPageMixin
 } from './View/GCPageMixin.js';

@@ -3,7 +3,7 @@ import {
 } from './interface.uts'
 
 export class GCUniSessionReplay {
-	static setConfig(_: GCSessionReplayConfig) {}
+	static setConfig(config: GCSessionReplayConfig) {}
 }
 
 export class GCSessionReplayTouchPrivacy {

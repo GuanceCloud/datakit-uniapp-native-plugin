@@ -2,7 +2,7 @@
   "id": "GC-UniPlugin",
   "displayName": "GC-UniPlugin",
   "version": "0.2.7-alpha.1",
-  "description": "Guance UniApp UTS plugin with JS helpers",
+  "description": "Guance UniApp UTS implementation",
   "keywords": [
     "GC-UniPlugin",
     "GCUniPlugin"
@@ -37,7 +37,9 @@
     "widescreen": "-"
   },
   "uni_modules": {
-    "dependencies": [],
+    "dependencies": [
+      "GC-JSPlugin"
+    ],
     "encrypt": [],
     "platforms": {
       "cloud": {

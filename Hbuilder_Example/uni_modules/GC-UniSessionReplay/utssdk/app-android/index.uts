@@ -1,0 +1,57 @@
+import {
+	GCSessionReplayConfig
+} from '../interface.uts'
+import {
+	GCSessionReplayNative
+} from 'gc.unisessionreplay.android'
+
+function stringifyParams(params: GCSessionReplayConfig): string {
+	return JSON.stringify(params) ?? '{}'
+}
+
+function debugLog(message: string) {
+	if (process.env.NODE_ENV === 'development') {
+		console.log(message)
+	}
+}
+
+function debugError(message: string) {
+	if (process.env.NODE_ENV === 'development') {
+		console.error(message)
+	}
+}
+
+export class GCUniSessionReplay {
+	static setConfig(params: GCSessionReplayConfig) {
+		debugLog('[FTLog] GC-UniSessionReplay initialization requested')
+		const initialized = GCSessionReplayNative.setConfig(stringifyParams(params))
+		if (initialized) {
+			debugLog('[FTLog] GC-UniSessionReplay initialized successfully')
+		} else {
+			debugError('[FTLog] GC-UniSessionReplay initialization failed')
+		}
+	}
+}
+
+export class GCSessionReplayTouchPrivacy {
+	static readonly SHOW: string = 'show'
+	static readonly HIDE: string = 'hide'
+}
+
+export class GCSessionReplayTextAndInputPrivacy {
+	static readonly MASK_SENSITIVE_INPUTS: string = 'maskSensitiveInputs'
+	static readonly MASK_ALL_INPUTS: string = 'maskAllInputs'
+	static readonly MASK_ALL: string = 'maskAll'
+}
+
+export class GCSessionReplayImagePrivacy {
+	static readonly MASK_NON_BUNDLED_ONLY: string = 'maskNonBundledOnly'
+	static readonly MASK_ALL: string = 'maskAll'
+	static readonly MASK_NONE: string = 'maskNone'
+}
+
+export class GCSessionReplayAndroidHook implements UTSAndroidHookProxy {
+	override onCreate(application: android.app.Application) {
+		GCSessionReplayNative.enableFirstViewBridge()
+	}
+}

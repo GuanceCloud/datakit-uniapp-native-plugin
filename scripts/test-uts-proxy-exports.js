@@ -182,7 +182,8 @@ for (const relativePath of [
 
 for (const relativePath of [
   'Hbuilder_Example/uni_modules/GC-UniSessionReplay/utssdk/index.uts',
-  'Hbuilder_Example/uni_modules/GC-UniSessionReplay/utssdk/app-ios/index.uts'
+  'Hbuilder_Example/uni_modules/GC-UniSessionReplay/utssdk/app-ios/index.uts',
+  'Hbuilder_Example/uni_modules/GC-UniSessionReplay/utssdk/app-android/index.uts'
 ]) {
   assertStaticBridgeExports(relativePath, {
     GCUniSessionReplay: ['setConfig']
@@ -202,6 +203,15 @@ for (const relativePath of [
   });
 }
 
+const replayFallbackSource = read(
+  'Hbuilder_Example/uni_modules/GC-UniSessionReplay/utssdk/index.uts'
+);
+assert.doesNotMatch(
+  replayFallbackSource,
+  /\([^)]*\b_+\s*:/,
+  'Session Replay UTS parameters must not use Kotlin-reserved underscore-only names'
+);
+
 const baseIOSNativeSource = read(
   'Hbuilder_Example/uni_modules/GC-UniPlugin/utssdk/app-ios/GCUniPluginNative.swift'
 );
@@ -215,20 +225,34 @@ assert.match(
 );
 
 const baseFacade = read(
-  'Hbuilder_Example/uni_modules/GC-UniPlugin/js_sdk/native.js'
+  'Hbuilder_Example/uni_modules/GC-JSPlugin/js_sdk/native.js'
 );
-assert.match(baseFacade, /mobileAgent,/);
+assert.match(baseFacade, /export const mobileAgent/);
 assert.match(baseFacade, /GCDeviceMonitorType/);
-assert.match(baseFacade, /from '@\/uni_modules\/GC-UniPlugin'/);
-assert.doesNotMatch(baseFacade, /export const GCEnv/);
+assert.match(baseFacade, /installNativeBridge/);
+assert.match(baseFacade, /GCUniPlugin-MobileAgent/);
+assert.doesNotMatch(baseFacade, /from '@\/uni_modules\/GC-UniPlugin'/);
+assert.match(baseFacade, /export const GCEnv/);
 
 const appEntry = read('Hbuilder_Example/sdk-bootstrap.js');
-assert.match(appEntry, /from '@\/uni_modules\/GC-UniPlugin'/);
+const uniappBuildEntry = read('Hbuilder_Example/gc-build-entry.uniapp.js');
+const wgtBuildEntry = read('Hbuilder_Example/gc-build-entry.wgt.js');
+assert.doesNotMatch(appEntry, /GC-UniPlugin\/bridge\/install\.js/);
+assert.match(
+  uniappBuildEntry,
+  /^import '@\/uni_modules\/GC-UniPlugin\/setup\.js'/
+);
+assert.match(wgtBuildEntry, /from '@\/uni_modules\/GC-JSPlugin'/);
+assert.doesNotMatch(wgtBuildEntry, /GC-UniPlugin|sdk-bootstrap/);
+assert.match(
+  appEntry,
+  /import\s*\{\s*logger,\s*mobileAgent,\s*rum,\s*tracer\s*\}\s*from '@\/uni_modules\/GC-UniPlugin'/
+);
 for (const name of ['mobileAgent', 'rum', 'logger', 'tracer']) {
   assert.match(
     appEntry,
     new RegExp(`\\b${name}\\b`),
-    `sdk-bootstrap.js must retain the root ${name} import pattern`
+    `sdk-bootstrap.js must retain the typed UTS ${name} import pattern`
   );
 }
 
@@ -253,9 +277,10 @@ assert.match(
 );
 
 const requestHelper = read(
-  'Hbuilder_Example/uni_modules/GC-UniPlugin/js_sdk/Request/GCRequest.js'
+  'Hbuilder_Example/uni_modules/GC-JSPlugin/js_sdk/Request/GCRequest.js'
 );
-assert.match(requestHelper, /from '@\/uni_modules\/GC-UniPlugin'/);
+assert.match(requestHelper, /from '\.\.\/native\.js'/);
+assert.doesNotMatch(requestHelper, /@\/uni_modules\/GC-UniPlugin/);
 for (const name of ['rum', 'tracer']) {
   assert.match(
     requestHelper,
@@ -265,20 +290,30 @@ for (const name of ['rum', 'tracer']) {
 }
 
 const errorTracking = read(
-  'Hbuilder_Example/uni_modules/GC-UniPlugin/js_sdk/Error/GCErrorTracking.js'
+  'Hbuilder_Example/uni_modules/GC-JSPlugin/js_sdk/Error/GCErrorTracking.js'
 );
-assert.match(errorTracking, /const FT_JS_PLUGIN_VERSION = ['"]0\.2\.7-alpha\.1['"];/);
-const jsSdkEntry = read('Hbuilder_Example/uni_modules/GC-UniPlugin/js_sdk/index.js');
-assert.match(jsSdkEntry, /import\s*\{\s*gcActionTracking\s*\}/);
-assert.match(jsSdkEntry, /#ifdef APP-HARMONY\s+gcActionTracking\.startTracking\(\);/);
+assert.doesNotMatch(errorTracking, /FT_JS_PLUGIN_VERSION/);
+const jsSdkEntry = read('Hbuilder_Example/uni_modules/GC-JSPlugin/js_sdk/index.js');
+assert.match(jsSdkEntry, /export\s*\{\s*gcActionTracking\s*\}/);
+assert.doesNotMatch(
+  jsSdkEntry,
+  /gcActionTracking\.startTracking\(/,
+  'Importing the JS SDK entry must not start Action Tracking automatically'
+);
+const mainEntry = read('Hbuilder_Example/main.js');
+assert.match(
+  mainEntry,
+  /#ifdef APP-HARMONY\s+gcActionTracking\.startTracking\(\);/,
+  'The example app must opt in to Harmony Action Tracking explicitly'
+);
 
 const viewTracking = read(
-  'Hbuilder_Example/uni_modules/GC-UniPlugin/js_sdk/View/GCViewTracking.js'
+  'Hbuilder_Example/uni_modules/GC-JSPlugin/js_sdk/View/GCViewTracking.js'
 );
+assert.doesNotMatch(viewTracking, /FT_JS_PLUGIN_VERSION/);
 assert.match(viewTracking, /#ifdef APP-PLUS \|\| APP-HARMONY/);
 assert.match(viewTracking, /isJSViewTrackingEnabled\(\)/);
 assert.match(viewTracking, /isUniAppJSViewTrackingEnabled/);
-assert.match(viewTracking, /this\.pendingPageLoads = new Map\(\)/);
 assert.doesNotMatch(
   viewTracking,
   /(?:addLongTask|longTask|nativeFreezeDurationMs)/i,
@@ -287,82 +322,14 @@ assert.doesNotMatch(
 assert.doesNotMatch(viewTracking, /pendingViewLoadMap/);
 assert.doesNotMatch(viewTracking, /plus\.runtime\.launchTime/);
 
-const viewTrackingRuntime = viewTracking
-  .replace(/import\s*\{[\s\S]*?\}\s*from\s*'@\/uni_modules\/GC-UniPlugin';/, '')
-  .replace(/import Vue from 'vue';/, '')
-  .replace('export const gcViewTracking = new PageMonitor();', 'return { PageMonitor };');
-let currentPages = [];
-const reportedViews = [];
-const startedViews = [];
-const rumMock = {
-  isUniAppJSViewTrackingEnabled: () => true,
-  onCreateView: (params) => reportedViews.push(params),
-  startView: (params) => startedViews.push(params),
-  stopView: () => {}
-};
-const { PageMonitor } = new Function(
-  'gcRum',
-  'getCurrentPages',
-  'uni',
-  'plus',
-  `${viewTrackingRuntime}`
-)(rumMock, () => currentPages, { addInterceptor: () => {} }, undefined);
-const originalDateNow = Date.now;
-try {
-  const pageMonitor = new PageMonitor();
-  const firstVm = { route: 'pages/routertest/page' };
-  const secondVm = { route: 'pages/routertest/page' };
-  const firstPage = { $vm: firstVm, route: firstVm.route };
-  const secondPage = { $vm: secondVm, route: secondVm.route };
-
-  // Timers belong to page instances. An older page with the same route cannot
-  // consume the new page's start time.
-  currentPages = [firstPage];
-  Date.now = () => 1000;
-  pageMonitor.handlePageLoad(firstVm);
-  currentPages = [firstPage, secondPage];
-  Date.now = () => 2000;
-  pageMonitor.handlePageLoad(secondVm);
-  Date.now = () => 5000;
-  pageMonitor.handlePageReady(firstVm);
-  assert.strictEqual(reportedViews.length, 0);
-  pageMonitor.handlePageReady(secondVm);
-  assert.deepStrictEqual(reportedViews, [{
-    viewName: 'pages/routertest/page',
-    loadTime: 3000000000
-  }]);
-
-  // App background time is not page loading time. A page hidden before ready
-  // must never create a multi-minute or multi-hour loading duration.
-  const pausedVm = { route: 'pages/routertest/paused' };
-  currentPages = [{ $vm: pausedVm, route: pausedVm.route }];
-  Date.now = () => 6000;
-  pageMonitor.handlePageLoad(pausedVm);
-  pageMonitor.handleAppHide();
-  Date.now = () => 186000;
-  pageMonitor.handlePageReady(pausedVm);
-  assert.strictEqual(reportedViews.length, 1);
-
-  // A page discovered after its load lifecycle has begun gets a View but never
-  // manufactures load time from the process launch timestamp.
-  const restoredMonitor = new PageMonitor();
-  restoredMonitor.initialized = true;
-  currentPages = [{ $vm: { route: 'pages/routertest/tab2' }, route: 'pages/routertest/tab2' }];
-  restoredMonitor.checkInitialPage();
-  assert.strictEqual(reportedViews.length, 1);
-  assert.strictEqual(startedViews.at(-1).viewName, 'pages/routertest/tab2');
-} finally {
-  Date.now = originalDateNow;
-}
-
 const appSource = read('Hbuilder_Example/App.vue');
-assert.match(appSource, /gcViewTracking\.handleAppShow\(\)/);
-assert.match(appSource, /gcViewTracking\.handleAppHide\(\)/);
+assert.doesNotMatch(appSource, /gcViewTracking\.handleApp(?:Show|Hide)\(\)/);
+assert.match(viewTracking, /this\.watchAppLifecycle\(\)/);
 const indexPage = read('Hbuilder_Example/pages/index/index.vue');
 assert.doesNotMatch(indexPage, /gcPageMixin/);
 
 const actionTracking = read(
-  'Hbuilder_Example/uni_modules/GC-UniPlugin/js_sdk/Action/GCActionTracking.js'
+  'Hbuilder_Example/uni_modules/GC-JSPlugin/js_sdk/Action/GCActionTracking.js'
 );
 assert.match(actionTracking, /const VD_SYNC_EVENT = 'vdSync'/);
 assert.match(actionTracking, /const VDOM_EVENT_ACTION = 20/);
@@ -400,7 +367,7 @@ assert.doesNotMatch(
 );
 
 const actionTrackingRuntime = actionTracking
-  .replace(/import\s*\{[\s\S]*?\}\s*from\s*'@\/uni_modules\/GC-UniPlugin';/, '')
+  .replace(/import\s*\{[\s\S]*?\}\s*from\s*'\.\.\/native\.js';/, '')
   .replace('export function normalizeUniAppEventType', 'function normalizeUniAppEventType')
   .replace('export const gcActionTracking', 'const gcActionTracking');
 const capturedActions = [];

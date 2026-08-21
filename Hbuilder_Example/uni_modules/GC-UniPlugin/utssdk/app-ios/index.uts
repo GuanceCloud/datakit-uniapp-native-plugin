@@ -28,27 +28,11 @@ import {
 	prepareAddResourceParams
 } from './utils/FTUniPluginUtils.uts'
 
-let gcUTSDebugEnabled = false
-
-function updateUTSDebugEnabled(params: GCMobileConfig | null) {
-	gcUTSDebugEnabled = params != null && params.debug == true
-}
-
-function debugLog(message: string) {
-	if (gcUTSDebugEnabled) {
-		console.log('[GC-UniPlugin][iOS][UTS] ' + message)
-	}
-}
-
 function stringifyParams(params: any | null): string {
 	if (params == null) {
 		return '{}'
 	}
 	return JSON.stringify(params) ?? '{}'
-}
-
-function debugLogConfig(methodName: string, json: string) {
-	debugLog(methodName + ' params=' + json)
 }
 
 function parseJSONResult(result: string | null): any | null {
@@ -71,11 +55,8 @@ function bindRUMUserCompat(userId: string, userName?: string | null, userEmail?:
 
 export class mobileAgent {
 	static sdkConfig(params: GCMobileConfig) {
-		updateUTSDebugEnabled(params)
 		const json = stringifyParams(normalizeSdkConfigParams(params))
-		debugLogConfig('sdkConfig', json)
 		GCUniPluginNative.sdkConfig(json)
-		debugLog('sdkConfig returned')
 	}
 
 	static bindRUMUserData(params: GCRUMUserDataParams) {
@@ -118,16 +99,13 @@ export class mobileAgent {
 	}
 
 	static manuallySetApplicationStart() {
-		debugLog('manuallySetApplicationStart is Android only')
 	}
 }
 
 export class rum {
 	static setConfig(params: GCRUMConfig) {
 		const json = stringifyParams(normalizeRumConfigParams(params))
-		debugLogConfig('setRumConfig', json)
 		GCUniPluginNative.setRumConfig(json)
-		debugLog('setRumConfig returned')
 	}
 
 	static startAction(params: GCRUMActionParams) {
@@ -171,9 +149,7 @@ export class rum {
 export class logger {
 	static setConfig(params: GCLoggerConfig) {
 		const json = stringifyParams(normalizeLoggerConfigParams(params))
-		debugLogConfig('setLoggerConfig', json)
 		GCUniPluginNative.setLoggerConfig(json)
-		debugLog('setLoggerConfig returned')
 	}
 
 	static logging(params: GCLoggerLogParams) {
@@ -184,16 +160,12 @@ export class logger {
 export class tracer {
 	static setConfig(params: GCTraceConfig) {
 		const json = stringifyParams(normalizeTraceConfigParams(params))
-		debugLogConfig('setTraceConfig', json)
 		GCUniPluginNative.setTraceConfig(json)
-		debugLog('setTraceConfig returned')
 	}
 
 	static getTraceHeader(params: GCTraceHeaderParams): any | null {
 		const json = stringifyParams(params)
-		debugLog('getTraceHeader called, jsonLength=' + json.length.toString())
 		const result = GCUniPluginNative.getTraceHeader(json)
-		debugLog('getTraceHeader returned, hasResult=' + (result == null ? 'false' : 'true'))
 		return parseJSONResult(result)
 	}
 }

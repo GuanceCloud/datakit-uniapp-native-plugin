@@ -7,106 +7,102 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		626FA7BEE6C21FC065AEDC55 /* DCloudUTSFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 996A13452A671ED32904FD70 /* DCloudUTSFoundation.framework */; };
-		656D3E46127F38F04760165A /* GCUniPluginUTSCPP.mm in Sources */ = {isa = PBXBuildFile; fileRef = E590D40F71FACE697E458F1B /* GCUniPluginUTSCPP.mm */; };
-		6B353A00A5EF70DC7F6F42C1 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7C074F3F02D905385B916AB5 /* Foundation.framework */; };
-		81ADB8AE6BB9E443F52AFAED /* GCUniPluginNative.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A253F7045931BD108040CC1 /* GCUniPluginNative.swift */; };
-		8209711381F43E7BC54B035F /* GCUniPluginUTSConfig.m in Sources */ = {isa = PBXBuildFile; fileRef = E6B2038FAF369341A30F7130 /* GCUniPluginUTSConfig.m */; };
-		B425E919DDF0CB1BAA0371DF /* index.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4C0B0940DBA194B74C62CAD /* index.swift */; };
-		C023DF2EF918F5177191E4B2 /* GuanceSDK-Dynamic.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0976D8F514D97C27A0191C04 /* GuanceSDK-Dynamic.xcframework */; };
-		D3B266039211849A2CF08ABB /* config.json in Resources */ = {isa = PBXBuildFile; fileRef = B6ECCBB702154EF3644C421D /* config.json */; };
-		D4541EA172A40A4B3C80BCA7 /* DCUniBase.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B386EB7E0F942512E7B347C8 /* DCUniBase.framework */; };
+		0645FEE75A9E8C9FC3A2C095 /* DCloudUTSFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 98544CE041C11211190E9D0D /* DCloudUTSFoundation.framework */; };
+		46B7B5C8BF1602DCC6FA91C5 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DAFAA4FFA166511C4C6B8DF4 /* Foundation.framework */; };
+		8E0802F5226A2CFAA0B31A00 /* index.swift in Sources */ = {isa = PBXBuildFile; fileRef = 303366FC5F37CF859C24B3B5 /* index.swift */; };
+		BA8EB96299609EDEA0C29696 /* DCUniBase.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1E8C3D1C6AEF104AB536BE16 /* DCUniBase.framework */; };
+		BF998C83C1794E0A758DC40B /* config.json in Resources */ = {isa = PBXBuildFile; fileRef = 90FEAE690315C52E91313FCB /* config.json */; };
+		DACE6411CC38CE0DA672EA76 /* GCUniPluginUTSCPP.mm in Sources */ = {isa = PBXBuildFile; fileRef = 181D748D1C265C89CA830732 /* GCUniPluginUTSCPP.mm */; };
+		E9CC53241A6DF9A9E4F445AC /* GCUniPluginHostNative.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38FE09BDD6D9E2ED427732DD /* GCUniPluginHostNative.swift */; };
+		F90D2960C6E8B565D2B97AE1 /* GCUniPluginUTSConfig.m in Sources */ = {isa = PBXBuildFile; fileRef = D4B975A6B72BD0935BA050AF /* GCUniPluginUTSConfig.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		0976D8F514D97C27A0191C04 /* GuanceSDK-Dynamic.xcframework */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = wrapper.xcframework; name = "GuanceSDK-Dynamic.xcframework"; path = "../../SharedFrameworks/GuanceSDK-Dynamic.xcframework"; sourceTree = "<group>"; };
-		49EEFAC48077B83B58A3ED2A /* unimoduleGCUniPlugin.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = unimoduleGCUniPlugin.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		5A253F7045931BD108040CC1 /* GCUniPluginNative.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = GCUniPluginNative.swift; sourceTree = "<group>"; };
-		7C074F3F02D905385B916AB5 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS18.0.sdk/System/Library/Frameworks/Foundation.framework; sourceTree = DEVELOPER_DIR; };
-		996A13452A671ED32904FD70 /* DCloudUTSFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = DCloudUTSFoundation.framework; path = ../../../SDK/Libs/DCloudUTSFoundation.framework; sourceTree = "<group>"; };
-		A4C0B0940DBA194B74C62CAD /* index.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = index.swift; sourceTree = "<group>"; };
-		B386EB7E0F942512E7B347C8 /* DCUniBase.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = DCUniBase.framework; path = ../../../SDK/Libs/DCUniBase.framework; sourceTree = "<group>"; };
-		B6ECCBB702154EF3644C421D /* config.json */ = {isa = PBXFileReference; includeInIndex = 1; path = config.json; sourceTree = "<group>"; };
-		E590D40F71FACE697E458F1B /* GCUniPluginUTSCPP.mm */ = {isa = PBXFileReference; includeInIndex = 1; path = GCUniPluginUTSCPP.mm; sourceTree = "<group>"; };
-		E6B2038FAF369341A30F7130 /* GCUniPluginUTSConfig.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = GCUniPluginUTSConfig.m; sourceTree = "<group>"; };
+		181D748D1C265C89CA830732 /* GCUniPluginUTSCPP.mm */ = {isa = PBXFileReference; includeInIndex = 1; path = GCUniPluginUTSCPP.mm; sourceTree = "<group>"; };
+		1E8C3D1C6AEF104AB536BE16 /* DCUniBase.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = DCUniBase.framework; path = ../../../SDK/Libs/DCUniBase.framework; sourceTree = "<group>"; };
+		303366FC5F37CF859C24B3B5 /* index.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = index.swift; sourceTree = "<group>"; };
+		38FE09BDD6D9E2ED427732DD /* GCUniPluginHostNative.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = GCUniPluginHostNative.swift; sourceTree = "<group>"; };
+		533666DD791AD4CAED24D1BF /* unimoduleGCUniPlugin.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = unimoduleGCUniPlugin.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		90FEAE690315C52E91313FCB /* config.json */ = {isa = PBXFileReference; includeInIndex = 1; path = config.json; sourceTree = "<group>"; };
+		98544CE041C11211190E9D0D /* DCloudUTSFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = DCloudUTSFoundation.framework; path = ../../../SDK/Libs/DCloudUTSFoundation.framework; sourceTree = "<group>"; };
+		D4B975A6B72BD0935BA050AF /* GCUniPluginUTSConfig.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = GCUniPluginUTSConfig.m; sourceTree = "<group>"; };
+		DAFAA4FFA166511C4C6B8DF4 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS18.0.sdk/System/Library/Frameworks/Foundation.framework; sourceTree = DEVELOPER_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
-		45B4F63AD54993E1CC4A34EB /* Frameworks */ = {
+		35D25AF7E0F6DE2DF0A51F37 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				6B353A00A5EF70DC7F6F42C1 /* Foundation.framework in Frameworks */,
-				D4541EA172A40A4B3C80BCA7 /* DCUniBase.framework in Frameworks */,
-				626FA7BEE6C21FC065AEDC55 /* DCloudUTSFoundation.framework in Frameworks */,
-				C023DF2EF918F5177191E4B2 /* GuanceSDK-Dynamic.xcframework in Frameworks */,
+				46B7B5C8BF1602DCC6FA91C5 /* Foundation.framework in Frameworks */,
+				BA8EB96299609EDEA0C29696 /* DCUniBase.framework in Frameworks */,
+				0645FEE75A9E8C9FC3A2C095 /* DCloudUTSFoundation.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		036330A848C4647E63288914 /* Products */ = {
+		05311F0D72738C2586BA57A9 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				49EEFAC48077B83B58A3ED2A /* unimoduleGCUniPlugin.framework */,
-			);
-			name = Products;
-			sourceTree = "<group>";
-		};
-		36EFA974962A9F444A3E1949 /* Frameworks */ = {
-			isa = PBXGroup;
-			children = (
-				E95454B725876602C1E0516D /* iOS */,
+				1E8C3D1C6AEF104AB536BE16 /* DCUniBase.framework */,
+				98544CE041C11211190E9D0D /* DCloudUTSFoundation.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
-		79D3FBFB9C8FFC5842C3C30D /* Resources */ = {
+		30C0ED66259F89C07C083495 = {
 			isa = PBXGroup;
 			children = (
-				B6ECCBB702154EF3644C421D /* config.json */,
+				4E49B1F306FF30A873CE8EA5 /* Products */,
+				3217E07A4E0ECAE488A31826 /* Frameworks */,
+				CB27697389824A9FB7CCE141 /* Sources */,
+				5A8902A1290219AC497F0E78 /* Resources */,
+				05311F0D72738C2586BA57A9 /* Frameworks */,
+			);
+			sourceTree = "<group>";
+		};
+		3217E07A4E0ECAE488A31826 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				D4ABAD87800254496A73576C /* iOS */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		4E49B1F306FF30A873CE8EA5 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				533666DD791AD4CAED24D1BF /* unimoduleGCUniPlugin.framework */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		5A8902A1290219AC497F0E78 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				90FEAE690315C52E91313FCB /* config.json */,
 			);
 			name = Resources;
 			sourceTree = "<group>";
 		};
-		7F942D363EE815485367F068 /* Sources */ = {
+		CB27697389824A9FB7CCE141 /* Sources */ = {
 			isa = PBXGroup;
 			children = (
-				5A253F7045931BD108040CC1 /* GCUniPluginNative.swift */,
-				E590D40F71FACE697E458F1B /* GCUniPluginUTSCPP.mm */,
-				E6B2038FAF369341A30F7130 /* GCUniPluginUTSConfig.m */,
-				A4C0B0940DBA194B74C62CAD /* index.swift */,
+				38FE09BDD6D9E2ED427732DD /* GCUniPluginHostNative.swift */,
+				181D748D1C265C89CA830732 /* GCUniPluginUTSCPP.mm */,
+				D4B975A6B72BD0935BA050AF /* GCUniPluginUTSConfig.m */,
+				303366FC5F37CF859C24B3B5 /* index.swift */,
 			);
 			name = Sources;
 			path = Sources;
 			sourceTree = "<group>";
 		};
-		C9CD552CA2477EF6FE30FCB9 /* Frameworks */ = {
+		D4ABAD87800254496A73576C /* iOS */ = {
 			isa = PBXGroup;
 			children = (
-				B386EB7E0F942512E7B347C8 /* DCUniBase.framework */,
-				996A13452A671ED32904FD70 /* DCloudUTSFoundation.framework */,
-				0976D8F514D97C27A0191C04 /* GuanceSDK-Dynamic.xcframework */,
-			);
-			name = Frameworks;
-			sourceTree = "<group>";
-		};
-		D6D5ADB36FE50C60F01DCCB7 = {
-			isa = PBXGroup;
-			children = (
-				036330A848C4647E63288914 /* Products */,
-				36EFA974962A9F444A3E1949 /* Frameworks */,
-				7F942D363EE815485367F068 /* Sources */,
-				79D3FBFB9C8FFC5842C3C30D /* Resources */,
-				C9CD552CA2477EF6FE30FCB9 /* Frameworks */,
-			);
-			sourceTree = "<group>";
-		};
-		E95454B725876602C1E0516D /* iOS */ = {
-			isa = PBXGroup;
-			children = (
-				7C074F3F02D905385B916AB5 /* Foundation.framework */,
+				DAFAA4FFA166511C4C6B8DF4 /* Foundation.framework */,
 			);
 			name = iOS;
 			sourceTree = "<group>";
@@ -114,7 +110,7 @@
 /* End PBXGroup section */
 
 /* Begin PBXHeadersBuildPhase section */
-		35A98C6B4559617944206CB2 /* Headers */ = {
+		E978DDC6720D95C3D5C86F9A /* Headers */ = {
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -124,14 +120,14 @@
 /* End PBXHeadersBuildPhase section */
 
 /* Begin PBXNativeTarget section */
-		C4E01C7B3649AFD7BD439112 /* unimoduleGCUniPlugin */ = {
+		74B04449667AD447615548CD /* unimoduleGCUniPlugin */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = D72E6796AF39FE7CE643FB7B /* Build configuration list for PBXNativeTarget "unimoduleGCUniPlugin" */;
+			buildConfigurationList = 5465D8F934DA0073ADB935DF /* Build configuration list for PBXNativeTarget "unimoduleGCUniPlugin" */;
 			buildPhases = (
-				35A98C6B4559617944206CB2 /* Headers */,
-				04666C03DB538B3551787FEA /* Sources */,
-				45B4F63AD54993E1CC4A34EB /* Frameworks */,
-				1071C085E6C5770583936761 /* Resources */,
+				E978DDC6720D95C3D5C86F9A /* Headers */,
+				7898EFD6DF9144953267CAA6 /* Sources */,
+				35D25AF7E0F6DE2DF0A51F37 /* Frameworks */,
+				241803E57AB333F1260796FF /* Resources */,
 			);
 			buildRules = (
 			);
@@ -139,19 +135,19 @@
 			);
 			name = unimoduleGCUniPlugin;
 			productName = unimoduleGCUniPlugin;
-			productReference = 49EEFAC48077B83B58A3ED2A /* unimoduleGCUniPlugin.framework */;
+			productReference = 533666DD791AD4CAED24D1BF /* unimoduleGCUniPlugin.framework */;
 			productType = "com.apple.product-type.framework";
 		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
-		B7319F5F951FD87D746E4953 /* Project object */ = {
+		87AA2094CC1016B7686259F6 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
 				LastSwiftUpdateCheck = 1600;
 				LastUpgradeCheck = 1600;
 			};
-			buildConfigurationList = 78C094524C7BDDC750B2C368 /* Build configuration list for PBXProject "unimoduleGCUniPlugin" */;
+			buildConfigurationList = 49AFD66C9F78D0FDB8FAAA57 /* Build configuration list for PBXProject "unimoduleGCUniPlugin" */;
 			compatibilityVersion = "Xcode 3.2";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
@@ -159,102 +155,49 @@
 				en,
 				Base,
 			);
-			mainGroup = D6D5ADB36FE50C60F01DCCB7;
+			mainGroup = 30C0ED66259F89C07C083495;
 			minimizedProjectReferenceProxies = 0;
 			preferredProjectObjectVersion = 77;
-			productRefGroup = 036330A848C4647E63288914 /* Products */;
+			productRefGroup = 4E49B1F306FF30A873CE8EA5 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				C4E01C7B3649AFD7BD439112 /* unimoduleGCUniPlugin */,
+				74B04449667AD447615548CD /* unimoduleGCUniPlugin */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
-		1071C085E6C5770583936761 /* Resources */ = {
+		241803E57AB333F1260796FF /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				D3B266039211849A2CF08ABB /* config.json in Resources */,
+				BF998C83C1794E0A758DC40B /* config.json in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
-		04666C03DB538B3551787FEA /* Sources */ = {
+		7898EFD6DF9144953267CAA6 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				81ADB8AE6BB9E443F52AFAED /* GCUniPluginNative.swift in Sources */,
-				656D3E46127F38F04760165A /* GCUniPluginUTSCPP.mm in Sources */,
-				8209711381F43E7BC54B035F /* GCUniPluginUTSConfig.m in Sources */,
-				B425E919DDF0CB1BAA0371DF /* index.swift in Sources */,
+				E9CC53241A6DF9A9E4F445AC /* GCUniPluginHostNative.swift in Sources */,
+				DACE6411CC38CE0DA672EA76 /* GCUniPluginUTSCPP.mm in Sources */,
+				F90D2960C6E8B565D2B97AE1 /* GCUniPluginUTSConfig.m in Sources */,
+				8E0802F5226A2CFAA0B31A00 /* index.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin XCBuildConfiguration section */
-		10460D3BCA2B0DC82B671A6C /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ALWAYS_SEARCH_USER_PATHS = NO;
-				CLANG_ANALYZER_NONNULL = YES;
-				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
-				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
-				CLANG_CXX_LIBRARY = "libc++";
-				CLANG_ENABLE_MODULES = YES;
-				CLANG_ENABLE_OBJC_ARC = YES;
-				CLANG_ENABLE_OBJC_WEAK = YES;
-				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
-				CLANG_WARN_BOOL_CONVERSION = YES;
-				CLANG_WARN_COMMA = YES;
-				CLANG_WARN_CONSTANT_CONVERSION = YES;
-				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
-				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
-				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
-				CLANG_WARN_EMPTY_BODY = YES;
-				CLANG_WARN_ENUM_CONVERSION = YES;
-				CLANG_WARN_INFINITE_RECURSION = YES;
-				CLANG_WARN_INT_CONVERSION = YES;
-				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
-				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
-				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
-				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
-				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
-				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
-				CLANG_WARN_STRICT_PROTOTYPES = YES;
-				CLANG_WARN_SUSPICIOUS_MOVE = YES;
-				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
-				CLANG_WARN_UNREACHABLE_CODE = YES;
-				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				COPY_PHASE_STRIP = NO;
-				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				ENABLE_NS_ASSERTIONS = NO;
-				ENABLE_STRICT_OBJC_MSGSEND = YES;
-				GCC_C_LANGUAGE_STANDARD = gnu11;
-				GCC_NO_COMMON_BLOCKS = YES;
-				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
-				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
-				GCC_WARN_UNDECLARED_SELECTOR = YES;
-				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
-				GCC_WARN_UNUSED_FUNCTION = YES;
-				GCC_WARN_UNUSED_VARIABLE = YES;
-				MTL_ENABLE_DEBUG_INFO = NO;
-				MTL_FAST_MATH = YES;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_COMPILATION_MODE = wholemodule;
-				SWIFT_OPTIMIZATION_LEVEL = "-O";
-				SWIFT_VERSION = 5.0;
-			};
-			name = Release;
-		};
-		3D2E5B87A3A71DE3A70EAEB9 /* Debug */ = {
+		38B42B459E01B0161D74A984 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				BUILD_LIBRARY_FOR_DISTRIBUTION = YES;
+				CLANG_ENABLE_EXPLICIT_MODULES = NO;
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_WEAK = NO;
 				CURRENT_PROJECT_VERSION = 1;
@@ -266,7 +209,6 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"../../../SDK/Libs\"",
-					"\"../../SharedFrameworks\"",
 				);
 				INFOPLIST_FILE = Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
@@ -280,6 +222,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = YES;
+				SWIFT_ENABLE_EXPLICIT_MODULES = NO;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VERSIONING_SYSTEM = "apple-generic";
@@ -287,7 +230,7 @@
 			};
 			name = Debug;
 		};
-		7CC3A11E9DBF530767D57DD9 /* Debug */ = {
+		6DC204CA2B2D0B5013F67813 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
@@ -348,10 +291,65 @@
 			};
 			name = Debug;
 		};
-		A3674B1917A5B3774E10279F /* Release */ = {
+		83D6DC26126E2C2AFD99E00B /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				SWIFT_VERSION = 5.0;
+			};
+			name = Release;
+		};
+		DDA68ADACE777D37047D4573 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				BUILD_LIBRARY_FOR_DISTRIBUTION = YES;
+				CLANG_ENABLE_EXPLICIT_MODULES = NO;
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_WEAK = NO;
 				CURRENT_PROJECT_VERSION = 1;
@@ -363,7 +361,6 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"../../../SDK/Libs\"",
-					"\"../../SharedFrameworks\"",
 				);
 				INFOPLIST_FILE = Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
@@ -377,6 +374,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = YES;
+				SWIFT_ENABLE_EXPLICIT_MODULES = NO;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VALIDATE_PRODUCT = YES;
@@ -388,25 +386,25 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		78C094524C7BDDC750B2C368 /* Build configuration list for PBXProject "unimoduleGCUniPlugin" */ = {
+		49AFD66C9F78D0FDB8FAAA57 /* Build configuration list for PBXProject "unimoduleGCUniPlugin" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				7CC3A11E9DBF530767D57DD9 /* Debug */,
-				10460D3BCA2B0DC82B671A6C /* Release */,
+				6DC204CA2B2D0B5013F67813 /* Debug */,
+				83D6DC26126E2C2AFD99E00B /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		D72E6796AF39FE7CE643FB7B /* Build configuration list for PBXNativeTarget "unimoduleGCUniPlugin" */ = {
+		5465D8F934DA0073ADB935DF /* Build configuration list for PBXNativeTarget "unimoduleGCUniPlugin" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				A3674B1917A5B3774E10279F /* Release */,
-				3D2E5B87A3A71DE3A70EAEB9 /* Debug */,
+				DDA68ADACE777D37047D4573 /* Release */,
+				38B42B459E01B0161D74A984 /* Debug */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
-	rootObject = B7319F5F951FD87D746E4953 /* Project object */;
+	rootObject = 87AA2094CC1016B7686259F6 /* Project object */;
 }

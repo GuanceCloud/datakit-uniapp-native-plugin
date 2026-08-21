@@ -1,14 +1,17 @@
-# 0.2.8
-* HarmonyOS plugin
-  * Fix missing `sdk_name` tag in error data by merging RUM global context in `addResourceError`
-  * Remove redundant `rumConfig.getGlobalContext().set()` calls for `session_type` and `service`
+# Unrelease
+* Unified Android, iOS, and HarmonyOS integration under the `GC-UniPlugin` UTS module, with named exports replacing legacy native-plugin acquisition.
+* Added HarmonyOS RUM support for page Views, user Actions, application lifecycle errors, `uni.request` Resources, and WebView bridge data.
+* Changed HarmonyOS JS Action Tracking to explicit opt-in through `gcActionTracking.startTracking()` instead of starting when the JS SDK entry is imported.
+* Replaced `gcHarmonyNetworkTracking` with `gcResourceTracking`, added Android and iOS `uni.request` Resource tracking, and added an iOS switch to prevent duplicate URLSession collection.
+* Deprecated `gcRequest`; it is no longer maintained, will be removed in a future release, and should be replaced with `gcResourceTracking`.
+* Added optional Session Replay support for iOS and Android, including Browser SDK bridge repair and native-host integration.
+* Added Android and iOS Hybrid Host examples, versioned release archives, and tag-triggered GitHub Release automation.
+* Improved View tracking lifecycle accuracy, loading duration calculation, foreground/background handling, and prior-View closure during navigation.
+* Fixed HarmonyOS bridge context propagation and Resource correlation, including missing SDK metadata in error data.
 ---
 # 0.2.7-alpha.1
 * `GC-JSPlugin`
     * `GCRequest.js`: supplement the missing parameter return in the request method's `complete` callback
----
-# 0.2.7
-* HarmonyOS plugin added 
 ---
 # 0.2.6
 * `GCUniPlugin-RUM`

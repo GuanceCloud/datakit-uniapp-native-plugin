@@ -31,27 +31,11 @@ import {
 	GCUniPluginNative
 } from 'gc.uniplugin.android'
 
-let gcUTSDebugEnabled = false
-
-function updateUTSDebugEnabled(params: GCMobileConfig | null) {
-	gcUTSDebugEnabled = params != null && params.debug == true
-}
-
-function debugLog(message: string) {
-	if (gcUTSDebugEnabled) {
-		console.log('[GC-UniPlugin][Android][UTS] ' + message)
-	}
-}
-
 function stringifyParams(params: any | null): string {
 	if (params == null) {
 		return '{}'
 	}
 	return JSON.stringify(params) ?? '{}'
-}
-
-function debugLogConfig(methodName: string, json: string) {
-	debugLog(methodName + ' params=' + json)
 }
 
 function parseJSONResult(result: string | null): any | null {
@@ -61,29 +45,42 @@ function parseJSONResult(result: string | null): any | null {
 	return JSON.parse(result)
 }
 
-function createBindRUMUserDataParams(userId: string, userName?: string | null, userEmail?: string | null, extra?: any | null): GCRUMUserDataParams {
-	return {
-		userId,
-		userName: userName == null ? null : userName,
-		userEmail: userEmail == null ? null : userEmail,
-		extra: extra == null ? null : extra
+function debugLog(message: string) {
+	if (process.env.NODE_ENV === 'development') {
+		console.log(message)
 	}
+}
+
+function debugError(message: string) {
+	if (process.env.NODE_ENV === 'development') {
+		console.error(message)
+	}
+}
+
+function createBindRUMUserDataParams(userId: string, userName?: string | null, userEmail?: string | null, extra?: any | null): GCRUMUserDataParams {
+	return new GCRUMUserDataParams(
+		userId,
+		userName == null ? null : userName,
+		userEmail == null ? null : userEmail,
+		extra == null ? null : extra
+	)
 }
 
 function bindRUMUserCompat(userId: string, userName?: string | null, userEmail?: string | null, extra?: any | null) {
 	const json = stringifyParams(createBindRUMUserDataParams(userId, userName, userEmail, extra))
-	debugLog('bindRUMUserData called, jsonLength=' + json.length.toString())
 	GCUniPluginNative.bindRUMUserData(json)
-	debugLog('bindRUMUserData returned')
 }
 
 export class mobileAgent {
 	static sdkConfig(params: GCMobileConfig) {
-		updateUTSDebugEnabled(params)
+		debugLog('[FTLog] GC-UniPlugin Mobile SDK initialization requested')
 		const json = stringifyParams(normalizeSdkConfigParams(params))
-		debugLogConfig('sdkConfig', json)
-		GCUniPluginNative.sdkConfig(json)
-		debugLog('sdkConfig returned')
+		const initialized = GCUniPluginNative.sdkConfig(json)
+		if (initialized) {
+			debugLog('[FTLog] GC-UniPlugin Mobile SDK initialized successfully')
+		} else {
+			debugError('[FTLog] GC-UniPlugin Mobile SDK initialization failed')
+		}
 	}
 
 	static bindRUMUserData(params: GCRUMUserDataParams) {
@@ -94,71 +91,55 @@ export class mobileAgent {
 	}
 
 	static unbindRUMUserData() {
-		debugLog('unbindRUMUserData called')
 		GCUniPluginNative.unbindRUMUserData()
-		debugLog('unbindRUMUserData returned')
 	}
 
 	static appendGlobalContext(params: any | null) {
 		const json = stringifyParams(params)
-		debugLog('appendGlobalContext called, jsonLength=' + json.length.toString())
 		GCUniPluginNative.appendGlobalContext(json)
-		debugLog('appendGlobalContext returned')
 	}
 
 	static appendRUMGlobalContext(params: any | null) {
 		const json = stringifyParams(params)
-		debugLog('appendRUMGlobalContext called, jsonLength=' + json.length.toString())
 		GCUniPluginNative.appendRUMGlobalContext(json)
-		debugLog('appendRUMGlobalContext returned')
 	}
 
 	static appendLogGlobalContext(params: any | null) {
 		const json = stringifyParams(params)
-		debugLog('appendLogGlobalContext called, jsonLength=' + json.length.toString())
 		GCUniPluginNative.appendLogGlobalContext(json)
-		debugLog('appendLogGlobalContext returned')
 	}
 
 	static appendBridgeContext(params: any | null) {
 		appendBridgeContextState(params)
-		const json = stringifyParams(params)
-		debugLog('appendBridgeContext called, jsonLength=' + json.length.toString())
-		GCUniPluginNative.appendBridgeContext(json)
-		debugLog('appendBridgeContext returned')
 	}
 
 	static flushSyncData() {
-		debugLog('flushSyncData called')
 		GCUniPluginNative.flushSyncData()
-		debugLog('flushSyncData returned')
 	}
 
 	static clearAllData() {
-		debugLog('clearAllData called')
 		GCUniPluginNative.clearAllData()
-		debugLog('clearAllData returned')
 	}
 
 	static shutDown() {
-		debugLog('shutDown called')
 		GCUniPluginNative.shutDown()
-		debugLog('shutDown returned')
 	}
 
 	static manuallySetApplicationStart() {
-		debugLog('manuallySetApplicationStart called')
 		GCUniPluginNative.manuallySetApplicationStart()
-		debugLog('manuallySetApplicationStart returned')
 	}
 }
 
 export class rum {
 	static setConfig(params: GCRUMConfig) {
+		debugLog('[FTLog] GC-UniPlugin RUM initialization requested')
 		const json = stringifyParams(normalizeRumConfigParams(params))
-		debugLogConfig('setRumConfig', json)
-		GCUniPluginNative.setRumConfig(json)
-		debugLog('setRumConfig returned')
+		const initialized = GCUniPluginNative.setRumConfig(json)
+		if (initialized) {
+			debugLog('[FTLog] GC-UniPlugin RUM initialized successfully')
+		} else {
+			debugError('[FTLog] GC-UniPlugin RUM initialization failed')
+		}
 	}
 
 	static startAction(params: GCRUMActionParams) {
@@ -202,32 +183,24 @@ export class rum {
 export class logger {
 	static setConfig(params: GCLoggerConfig) {
 		const json = stringifyParams(normalizeLoggerConfigParams(params))
-		debugLogConfig('setLoggerConfig', json)
 		GCUniPluginNative.setLoggerConfig(json)
-		debugLog('setLoggerConfig returned')
 	}
 
 	static logging(params: GCLoggerLogParams) {
 		const json = stringifyParams(normalizeLoggingParams(params))
-		debugLog('logging called, jsonLength=' + json.length.toString())
 		GCUniPluginNative.logging(json)
-		debugLog('logging returned')
 	}
 }
 
 export class tracer {
 	static setConfig(params: GCTraceConfig) {
 		const json = stringifyParams(normalizeTraceConfigParams(params))
-		debugLogConfig('setTraceConfig', json)
 		GCUniPluginNative.setTraceConfig(json)
-		debugLog('setTraceConfig returned')
 	}
 
 	static getTraceHeader(params: GCTraceHeaderParams): any | null {
 		const json = stringifyParams(params)
-		debugLog('getTraceHeader called, jsonLength=' + json.length.toString())
 		const result = GCUniPluginNative.getTraceHeader(json)
-		debugLog('getTraceHeader returned, hasResult=' + (result == null ? 'false' : 'true'))
 		return parseJSONResult(result)
 	}
 }

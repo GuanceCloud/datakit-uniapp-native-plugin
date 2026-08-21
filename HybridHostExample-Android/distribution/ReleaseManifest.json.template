@@ -1,0 +1,16 @@
+{
+  "name": "GuanceUniApp-Android",
+  "version": "__VERSION__",
+  "dcloudUtsRuntimeVersion": "__DCLOUD_UTS_RUNTIME_VERSION__",
+  "sessionReplayIncluded": __SESSION_REPLAY_INCLUDED__,
+  "artifacts": {
+    "core": "__CORE_MODULE_ARTIFACT__",
+    "sessionReplay": __SESSION_REPLAY_MODULE_ARTIFACT__
+  },
+  "nativeDependencies": {
+    "ftSdk": "__FT_SDK_VERSION__",
+    "ftNative": "__FT_NATIVE_VERSION__",
+    "ftSessionReplay": "__FT_REPLAY_VERSION__",
+    "ftPlugin": "__FT_PLUGIN_VERSION__"
+  }
+}

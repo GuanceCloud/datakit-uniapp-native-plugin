@@ -1,0 +1,13 @@
+{
+  "minSdkVersion": 24,
+  "dependencies": [
+    "com.cloudcare.ft.mobile.sdk.tracker.agent:ft-session-replay:0.1.7"
+  ],
+  "project": {
+    "plugins": [],
+    "dependencies": [],
+    "repositories": [
+      "maven { url 'https://mvnrepo.jiagouyun.com/repository/maven-releases' }"
+    ]
+  }
+}

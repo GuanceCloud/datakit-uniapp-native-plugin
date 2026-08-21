@@ -1,59 +1,43 @@
 import App from './App'
 import {
-  gcViewTracking
-} from '@/uni_modules/GC-UniPlugin/js_sdk'
+  gcErrorTracking,
+  gcViewTracking,
+  gcActionTracking,
+  gcResourceTracking
+} from '@/uni_modules/GC-JSPlugin'
 import {
   initializeGuanceSDK
-} from './sdk-bootstrap.js'
+} from './gc-build-entry.js'
 
-initializeGuanceSDK()
+initializeGuanceSDK();
+gcErrorTracking.startTracking();
 
-// Session Replay is iOS-only in this plugin. Keep the optional replay bootstrap
-// out of Harmony builds so normal WebView RUM does not wait for a `records`
-// bridge that is intentionally not installed there.
+// #ifdef APP-HARMONY
+gcActionTracking.startTracking();
+// #endif
+
+gcResourceTracking.startTracking({
+  enableIOS: false
+});
+
+// The Browser SDK replay bridge is iOS-only. Keep it out of Android and
+// Harmony builds so normal WebView RUM does not wait for a `records` bridge
+// that is intentionally not installed there.
 // #ifdef APP-IOS
 const jsCode = `   
-    (function() {
-      var bridge = window.FTWebViewJavascriptBridge;
-      if (!bridge || bridge.__gcSessionReplayEventDebug || !bridge.sendEvent) {
-        return;
-      }
-      bridge.__gcSessionReplayEventDebug = true;
-      var originalSendEvent = bridge.sendEvent;
-      bridge.sendEvent = function(data) {
-        var event = data;
-        if (typeof data === 'string') {
-          try {
-            event = JSON.parse(data);
-          } catch (_) {}
-        }
-        if (event && event.name === 'session_replay') {
-          console.log('[DEBUG-SR-WEB-EVENT-4d9a] session_replay sent to native bridge');
-        }
-        return originalSendEvent.apply(this, arguments);
-      };
-    })();
-
     // Dynamically create and load external script
     var script = document.createElement('script');
     script.src = 'https://static.guance.com/browser-sdk/v3/dataflux-rum.js';
     script.onload = function() {
-			DATAFLUX_RUM.setGlobalContextProperty('wgt_id', 'wgt_id_1');
-			DATAFLUX_RUM.setGlobalContextProperty('wgt_name', 'wgt_name_1');
+	  DATAFLUX_RUM.setGlobalContextProperty('wgt_id', 'wgt_id_1');
+	  DATAFLUX_RUM.setGlobalContextProperty('wgt_name', 'wgt_name_1');
       // Initialize after script loads
-      DATAFLUX_RUM.init({
-        applicationId: 'xxxx',
-        site: 'xxxxx',
-        clientToken: 'xxxxx',
-        env: "production",
-        version: "1.0.0",
-        service: "browser",
-        sessionSampleRate: 100,
-        sessionReplaySampleRate: 100,
-        compressIntakeRequests: true,
-        trackInteractions: true,
-        traceType: "ddtrace"
-      });
+	  window.DATAFLUX_RUM &&
+	    window.DATAFLUX_RUM.init({
+	      // Bridge mode still validates an intake origin, but sends RUM data through
+	      // FTWebViewJavascriptBridge instead of making requests to this address.
+	      datakitOrigin: window.location.origin,
+	    })
       window.DATAFLUX_RUM.startSessionReplayRecording();
     };
     document.head.appendChild(script);

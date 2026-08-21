@@ -6,7 +6,7 @@
 </template>
 
 <script>
-import  {gcPageViewMixinOnly} from '@/uni_modules/GC-UniPlugin/js_sdk';
+import  {gcPageViewMixinOnly} from '@/uni_modules/GC-JSPlugin';
 	export default {
 		data() {
 			return {

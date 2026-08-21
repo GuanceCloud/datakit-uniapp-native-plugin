@@ -1,15 +1,12 @@
 import * as SDKConst from '@/utils.js'
 import {
-	gcErrorTracking,
-	gcHarmonyNetworkTracking
-} from '@/uni_modules/GC-UniPlugin/js_sdk'
-import {
 	logger,
 	mobileAgent,
 	rum,
 	tracer
 } from '@/uni_modules/GC-UniPlugin'
-// #ifdef APP
+
+// #ifdef APP-IOS || APP-ANDROID
 import {
 	GCUniSessionReplay,
 	GCSessionReplayImagePrivacy,
@@ -17,6 +14,7 @@ import {
 	GCSessionReplayTouchPrivacy
 } from '@/uni_modules/GC-UniSessionReplay'
 // #endif
+
 
 let initialized = false
 
@@ -35,6 +33,7 @@ export function initializeGuanceSDK() {
 		clientToken: SDKConst.CLIENT_TOKEN,
 		autoSync: true,
 		debug: true,
+		offlinePackage: true,
 		env: 'common',
 		globalContext: {
 			sdk_globalContext: 'custom_sdk_globalContext'
@@ -62,20 +61,17 @@ export function initializeGuanceSDK() {
 		}
 	})
 
-	// #ifdef APP
-	if (uni.getSystemInfoSync().platform === 'ios') {
-		GCUniSessionReplay.setConfig({
-			sampleRate: 100,
-			sessionReplayOnErrorSampleRate: 0,
-			touchPrivacy: GCSessionReplayTouchPrivacy.SHOW,
-			textAndInputPrivacy: GCSessionReplayTextAndInputPrivacy.MASK_SENSITIVE_INPUTS,
-			imagePrivacy: GCSessionReplayImagePrivacy.MASK_NONE,
-			enableLinkRUMKeys: ['wgt_id']
-		})
-	}
+	// #ifdef APP-IOS || APP-ANDROID
+	GCUniSessionReplay.setConfig({
+		sampleRate: 100,
+		sessionReplayOnErrorSampleRate: 0,
+		touchPrivacy: GCSessionReplayTouchPrivacy.SHOW,
+		textAndInputPrivacy: GCSessionReplayTextAndInputPrivacy.MASK_SENSITIVE_INPUTS,
+		imagePrivacy: GCSessionReplayImagePrivacy.MASK_NONE,
+		enableLinkRUMKeys: ['wgt_id']
+	})
 	// #endif
 
-	gcErrorTracking.startTracking()
 	logger.setConfig({
 		enableLinkRumData: true,
 		enableCustomLog: true,
@@ -90,9 +86,4 @@ export function initializeGuanceSDK() {
 		traceType: 'ddTrace',
 		enableLinkRUMData: true
 	})
-	// #ifdef APP-HARMONY
-	// DCloud uni.request is now bridged to the Harmony SDK's native network
-	// tracking lifecycle. Direct uni.request and gcRequest share this path.
-	gcHarmonyNetworkTracking.startTracking()
-	// #endif
 }

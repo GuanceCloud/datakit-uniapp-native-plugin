@@ -1,4 +1,4 @@
-export const GC_UTS_BRIDGE_VERSION: string = '0.2.7-alpha.1'
+export const GC_UTS_BRIDGE_VERSION: string = '0.3.0'
 
 function createDefaultBridgeContext(): UTSJSONObject {
 	const context = JSON.parseObject('{"sdk_bridge_info":"{\\"uniapp\\":\\"' + GC_UTS_BRIDGE_VERSION + '\\"}"}')
