@@ -87,6 +87,7 @@ interface HarmonyRUMConfig {
   iOSAppId?: string | null;
   harmonyAppId?: string | null;
   sampleRate?: number | null;
+  samplerate?: number | null;
   sessionOnErrorSampleRate?: number | null;
   enableNativeUserAction?: boolean | null;
   enableNativeUserView?: boolean | null;
@@ -167,6 +168,7 @@ interface HarmonyRUMAddResourceParams extends HarmonyRUMResourceParams {
 
 interface HarmonyLoggerConfig {
   sampleRate?: number | null;
+  samplerate?: number | null;
   enableLinkRumData?: boolean | null;
   enableCustomLog?: boolean | null;
   logCacheLimitCount?: number | null;
@@ -183,6 +185,7 @@ interface HarmonyLoggerLogParams {
 
 interface HarmonyTraceConfig {
   sampleRate?: number | null;
+  samplerate?: number | null;
   traceType?: string | null;
   enableLinkRUMData?: boolean | null;
   enableAutoTrace?: boolean | null;
@@ -397,8 +400,9 @@ export class GCUniPluginNative {
       }
 
       const config = new FTRUMConfig().setRumAppId(rumAppId);
-      if (rumParams.sampleRate !== undefined && rumParams.sampleRate !== null) {
-        config.setSamplingRate(rumParams.sampleRate);
+      const sampleRate = firstHarmonyNumber(rumParams.sampleRate, rumParams.samplerate);
+      if (sampleRate !== null) {
+        config.setSamplingRate(sampleRate);
       }
       if (rumParams.sessionOnErrorSampleRate !== undefined && rumParams.sessionOnErrorSampleRate !== null) {
         config.setSessionErrorSampleRate(rumParams.sessionOnErrorSampleRate);
@@ -612,8 +616,9 @@ export class GCUniPluginNative {
       if (loggerParams.enableCustomLog !== undefined && loggerParams.enableCustomLog !== null) {
         config.setEnableCustomLog(loggerParams.enableCustomLog);
       }
-      if (loggerParams.sampleRate !== undefined && loggerParams.sampleRate !== null) {
-        config.setSamplingRate(loggerParams.sampleRate);
+      const sampleRate = firstHarmonyNumber(loggerParams.sampleRate, loggerParams.samplerate);
+      if (sampleRate !== null) {
+        config.setSamplingRate(sampleRate);
       }
       if (loggerParams.discardStrategy === 'discardOldest') {
         config.setLogCacheDiscardStrategy(LogCacheDiscard.DISCARD_OLDEST);
@@ -663,8 +668,9 @@ export class GCUniPluginNative {
     try {
       const traceParams = params as HarmonyTraceConfig;
       const config = new FTTraceConfig();
-      if (traceParams.sampleRate !== undefined && traceParams.sampleRate !== null) {
-        config.setSamplingRate(traceParams.sampleRate);
+      const sampleRate = firstHarmonyNumber(traceParams.sampleRate, traceParams.samplerate);
+      if (sampleRate !== null) {
+        config.setSamplingRate(sampleRate);
       }
       if (traceParams.traceType) {
         config.setTraceType(harmonyTraceType(traceParams.traceType));
@@ -707,6 +713,19 @@ function firstHarmonyString(
     return secondValue;
   }
   return normalizeHarmonyString(third);
+}
+
+function firstHarmonyNumber(
+  first: number | null | undefined,
+  second?: number | null
+): number | null {
+  if (first !== undefined && first !== null) {
+    return first;
+  }
+  if (second !== undefined && second !== null) {
+    return second;
+  }
+  return null;
 }
 
 function normalizeHarmonyString(value: string | null | undefined): string | null {

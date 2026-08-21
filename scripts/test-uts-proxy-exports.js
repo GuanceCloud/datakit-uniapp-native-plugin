@@ -223,6 +223,17 @@ for (const relativePath of [
   );
 }
 
+assert.strictEqual(
+  countOccurrences(harmonyNativeEntry, 'samplerate?: number | null;'),
+  3,
+  'Harmony native config types must expose the legacy samplerate alias'
+);
+assert.strictEqual(
+  countOccurrences(harmonyNativeEntry, 'const sampleRate = firstHarmonyNumber('),
+  3,
+  'Harmony native configs must normalize both sample-rate spellings'
+);
+
 const generatedAndroidIndex = read(
   'native-projects/native-sdk-hybrid/android/unimoduleGCUniPlugin/src/main/kotlin/index.kt'
 );
@@ -234,6 +245,18 @@ const generatedIOSIndex = read(
 );
 assert.strictEqual(countOccurrences(generatedIOSIndex, 'public var samplerate: NSNumber?'), 6);
 assert.strictEqual(countOccurrences(generatedIOSIndex, '"samplerate": params.samplerate'), 3);
+
+const generatedHarmonyIndex = read(
+  'native-projects/native-sdk-hybrid/harmony/HBuilder-uniPluginDemo/uni_modules/GC-UniPlugin/utssdk/app-harmony/index.ets'
+);
+assert.strictEqual(countOccurrences(generatedHarmonyIndex, 'samplerate: number | null = null;'), 3);
+assert.strictEqual(
+  countOccurrences(
+    generatedHarmonyIndex,
+    'params.sampleRate !== undefined && params.sampleRate !== null ? params.sampleRate : params.samplerate'
+  ),
+  3
+);
 
 for (const moduleName of ['FTRUMModule', 'FTLogModule', 'FTTracerModule']) {
   const androidExtensionSource = read(

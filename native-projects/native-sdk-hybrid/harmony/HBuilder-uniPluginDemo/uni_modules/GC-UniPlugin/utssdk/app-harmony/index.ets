@@ -28,6 +28,7 @@ class GCRUMConfig extends UTSObject {
     iOSAppId: string | null = null;
     harmonyAppId: string | null = null;
     sampleRate: number | null = null;
+    samplerate: number | null = null;
     sessionOnErrorSampleRate: number | null = null;
     enableNativeUserAction: boolean | null = null;
     enableNativeUserView: boolean | null = null;
@@ -48,6 +49,7 @@ class GCRUMConfig extends UTSObject {
 }
 class GCLoggerConfig extends UTSObject {
     sampleRate: number | null = null;
+    samplerate: number | null = null;
     enableLinkRumData: boolean | null = null;
     enableCustomLog: boolean | null = null;
     logCacheLimitCount: number | null = null;
@@ -57,6 +59,7 @@ class GCLoggerConfig extends UTSObject {
 }
 class GCTraceConfig extends UTSObject {
     sampleRate: number | null = null;
+    samplerate: number | null = null;
     traceType: string | null = null;
     enableLinkRUMData: boolean | null = null;
 }
@@ -284,8 +287,9 @@ class rum {
                 return;
             }
             const config = new FTRUMConfig().setRumAppId(rumAppId);
-            if (params.sampleRate !== undefined && params.sampleRate !== null) {
-                config.setSamplingRate(params.sampleRate);
+            const sampleRate = params.sampleRate !== undefined && params.sampleRate !== null ? params.sampleRate : params.samplerate;
+            if (sampleRate !== undefined && sampleRate !== null) {
+                config.setSamplingRate(sampleRate);
             }
             if (params.sessionOnErrorSampleRate !== undefined && params.sessionOnErrorSampleRate !== null) {
                 config.setSessionErrorSampleRate(params.sessionOnErrorSampleRate);
@@ -446,8 +450,9 @@ class logger {
             if (params.enableCustomLog !== undefined && params.enableCustomLog !== null) {
                 config.setEnableCustomLog(params.enableCustomLog);
             }
-            if (params.sampleRate !== undefined && params.sampleRate !== null) {
-                config.setSamplingRate(params.sampleRate);
+            const sampleRate = params.sampleRate !== undefined && params.sampleRate !== null ? params.sampleRate : params.samplerate;
+            if (sampleRate !== undefined && sampleRate !== null) {
+                config.setSamplingRate(sampleRate);
             }
             if (params.discardStrategy === 'discardOldest') {
                 config.setLogCacheDiscardStrategy(LogCacheDiscard.DISCARD_OLDEST);
@@ -495,8 +500,9 @@ class tracer {
     static setConfig(params: GCTraceConfig) {
         try {
             const config = new FTTraceConfig();
-            if (params.sampleRate !== undefined && params.sampleRate !== null) {
-                config.setSamplingRate(params.sampleRate);
+            const sampleRate = params.sampleRate !== undefined && params.sampleRate !== null ? params.sampleRate : params.samplerate;
+            if (sampleRate !== undefined && sampleRate !== null) {
+                config.setSamplingRate(sampleRate);
             }
             if (params.traceType) {
                 config.setTraceType(harmonyTraceType(params.traceType));
