@@ -1,7 +1,7 @@
 {
   "id": "GC-UniSessionReplay",
   "displayName": "GC-UniSessionReplay",
-  "version": "0.2.7",
+  "version": "0.3.0",
   "description": "Optional Guance Session Replay support for UniApp",
   "keywords": [
     "GC-UniSessionReplay",

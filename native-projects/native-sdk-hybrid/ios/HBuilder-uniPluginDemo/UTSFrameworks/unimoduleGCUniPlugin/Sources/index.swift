@@ -800,7 +800,7 @@ public class GCTraceHeaderParams : NSObject, UTSObject {
         self.key = obj["key"] as! String?
     }
 }
-public var GC_UTS_BRIDGE_VERSION: String = "0.2.7"
+public var GC_UTS_BRIDGE_VERSION: String = "0.3.0"
 public func createDefaultBridgeContext() -> UTSJSONObject {
     var context = JSON.parseObject("{\"sdk_bridge_info\":\"{\\\"uniapp\\\":\\\"" + GC_UTS_BRIDGE_VERSION + "\\\"}\"}")
     return context ?? UTSJSONObject([:])

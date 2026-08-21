@@ -3,7 +3,7 @@ import webview from '@ohos.web.webview';
 import { Context } from '@kit.AbilityKit';
 import { GCUniPluginNative } from "./GCUniPluginNative";
 import { UTS, UTSJSONObject, UTSObject } from "@dcloudio/uni-app-runtime";
-const GC_UTS_BRIDGE_VERSION: string = '0.2.7';
+const GC_UTS_BRIDGE_VERSION: string = '0.3.0';
 function parseObject(text: string | null): UTSJSONObject | null {
     if (text == null || text.length == 0) {
         return null;

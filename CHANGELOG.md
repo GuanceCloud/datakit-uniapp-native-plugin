@@ -1,4 +1,4 @@
-# Unrelease
+# 0.3.0
 * Unified Android, iOS, and HarmonyOS integration under the `GC-UniPlugin` UTS module, with named exports replacing legacy native-plugin acquisition.
 * Added HarmonyOS RUM support for page Views, user Actions, application lifecycle errors, `uni.request` Resources, and WebView bridge data.
 * Changed HarmonyOS JS Action Tracking to explicit opt-in through `gcActionTracking.startTracking()` instead of starting when the JS SDK entry is imported.

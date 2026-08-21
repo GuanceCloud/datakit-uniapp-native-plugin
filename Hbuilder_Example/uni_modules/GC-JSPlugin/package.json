@@ -1,7 +1,7 @@
 {
   "id": "GC-JSPlugin",
   "displayName": "GC-JSPlugin",
-  "version": "0.2.7",
+  "version": "0.3.0",
   "description": "Guance UniApp shared JavaScript API and collectors",
   "keywords": [
     "GC-JSPlugin"
