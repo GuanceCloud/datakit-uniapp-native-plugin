@@ -281,15 +281,38 @@ assertIncludes(bootstrapSource, "from '@/uni_modules/GC-UniSessionReplay'", 'exa
 assert(!bootstrapSource.includes('GC-UniSessionReplay/js_sdk'));
 assert.match(
     bootstrapSource,
-    /\/\/ #ifdef APP-IOS \|\| APP-ANDROID\s+import \{[\s\S]*?from '@\/uni_modules\/GC-UniSessionReplay'\s+\/\/ #endif/,
-    'Session Replay import must be limited to Android and iOS'
+    /\/\/ #ifdef APP-PLUS\s+import \{[\s\S]*?from '@\/uni_modules\/GC-UniSessionReplay'\s+\/\/ #endif/,
+    'Session Replay import must use the traditional uni-app App condition'
 );
 assert.match(
     bootstrapSource,
-    /\/\/ #ifdef APP-IOS \|\| APP-ANDROID\s+GCUniSessionReplay\.setConfig\([\s\S]*?\/\/ #endif/,
-    'Session Replay configuration must be limited to Android and iOS'
+    /\/\/ #ifdef APP-PLUS\s+GCUniSessionReplay\.setConfig\([\s\S]*?\/\/ #endif/,
+    'Session Replay configuration must use the traditional uni-app App condition'
+);
+assertIncludes(
+    bootstrapSource,
+    'allowWebViewHost: null',
+    'UniApp file WebViews must not be excluded from the native RUM bridge'
 );
 assert(!bootstrapSource.includes("uni.getSystemInfoSync().platform === 'ios'"));
+assert.doesNotMatch(
+    bootstrapSource,
+    /\/\/ #ifn?def APP-(?:IOS|ANDROID)/,
+    'traditional uni-app JavaScript must not use UTS-only APP-IOS/APP-ANDROID conditions'
+);
+assert.match(
+    mainSource,
+    /\/\/ #ifdef APP-PLUS[\s\S]*?const jsCode = `[\s\S]*?gcViewTracking\.evalSessionReplayJS\(jsCode\);\s*\/\/ #endif/,
+    'Browser Session Replay must support Android and iOS while excluding Harmony'
+);
+assert(!mainSource.includes("import * as SDKConst from '@/utils.js'"));
+assert(!mainSource.includes('browserRumApplicationId'));
+assert(!mainSource.includes('applicationId:'));
+assert.doesNotMatch(
+    mainSource,
+    /\/\/ #ifn?def APP-(?:IOS|ANDROID)/,
+    'traditional uni-app JavaScript must not use UTS-only APP-IOS/APP-ANDROID conditions'
+);
 assert(bootstrapSource.indexOf('rum.setConfig') < bootstrapSource.indexOf('GCUniSessionReplay.setConfig'));
 assertIncludes(mainSource, "from './gc-build-entry.js'", 'selected SDK build entry import');
 assertIncludes(uniappBuildEntrySource, "from './sdk-bootstrap.js'", 'normal UniApp SDK bootstrap import');

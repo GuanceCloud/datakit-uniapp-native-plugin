@@ -20,11 +20,11 @@ gcResourceTracking.startTracking({
   enableIOS: false
 });
 
-// The Browser SDK replay bridge is iOS-only. Keep it out of Android and
-// Harmony builds so normal WebView RUM does not wait for a `records` bridge
-// that is intentionally not installed there.
-// #ifdef APP-IOS
-const jsCode = `   
+// Traditional uni-app JavaScript cannot use APP-IOS/APP-ANDROID conditions.
+// APP-PLUS includes Android and iOS while keeping this Browser Session Replay
+// bootstrap out of Harmony builds.
+// #ifdef APP-PLUS
+const jsCode = `
     // Dynamically create and load external script
     var script = document.createElement('script');
     script.src = 'https://static.guance.com/browser-sdk/v3/dataflux-rum.js';

@@ -87,8 +87,14 @@ assert.match(pageSource, /enableBridgeCompatibilityCheck:\s*true/);
 const mainSource = read('Hbuilder_Example/main.js');
 assert.match(
   mainSource,
-  /\/\/ #ifdef APP-IOS\s+const jsCode[\s\S]*?gcViewTracking\.evalSessionReplayJS\(jsCode\);\s+\/\/ #endif/,
-  'Harmony normal RUM builds must not inject the iOS Session Replay bootstrap'
+  /\/\/ #ifdef APP-PLUS[\s\S]*?const jsCode = `[\s\S]*?gcViewTracking\.evalSessionReplayJS\(jsCode\);\s*\/\/ #endif/,
+  'Harmony normal RUM builds must exclude the Android/iOS Session Replay bootstrap'
+);
+assert.doesNotMatch(mainSource, /applicationId\s*:/);
+assert.doesNotMatch(
+  mainSource,
+  /\/\/ #ifn?def APP-(?:IOS|ANDROID)/,
+  'traditional uni-app JavaScript must not use UTS-only platform conditions'
 );
 
 console.log('Harmony WebView normal RUM bridge checks passed');

@@ -6,7 +6,7 @@ import {
 	tracer
 } from '@/uni_modules/GC-UniPlugin'
 
-// #ifdef APP-IOS || APP-ANDROID
+// #ifdef APP-PLUS
 import {
 	GCUniSessionReplay,
 	GCSessionReplayImagePrivacy,
@@ -58,14 +58,16 @@ export function initializeGuanceSDK() {
 		rumDiscardStrategy: 'discardOldest',
 		rumCacheLimitCount: 10000,
 		enableTraceWebView: true,
-		allowWebViewHost: ['10.100.64.166'],
+		// UniApp renders application pages from file:// URLs whose hostname is
+		// empty. A host-only allowlist excludes those pages from the native bridge.
+		allowWebViewHost: null,
 		globalContext: {
 			track_id: SDKConst.TRACK_ID,
 			rum_globalContext: 'custom_rum_globalContext'
 		}
 	})
 
-	// #ifdef APP-IOS || APP-ANDROID
+	// #ifdef APP-PLUS
 	GCUniSessionReplay.setConfig({
 		sampleRate: 100,
 		sessionReplayOnErrorSampleRate: 0,
