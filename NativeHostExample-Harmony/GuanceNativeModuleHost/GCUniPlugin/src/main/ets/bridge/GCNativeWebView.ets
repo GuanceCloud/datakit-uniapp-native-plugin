@@ -61,9 +61,9 @@ struct GCNativeWebView {
         []
       );
       this.didRegisterBaseBridge = true;
-      console.info('[GC-UniPlugin] base JavaScript bridge registered', " at uni_modules/GC-UniPlugin/utssdk/app-harmony/GCNativeWebView.ets:64");
+      console.info('[GC-UniPlugin] base JavaScript bridge registered');
     } catch (error) {
-      console.error('[GC-UniPlugin] base JavaScript bridge registration failed:', error, " at uni_modules/GC-UniPlugin/utssdk/app-harmony/GCNativeWebView.ets:66");
+      console.error('[GC-UniPlugin] base JavaScript bridge registration failed:', error);
     }
   }
 
@@ -111,7 +111,7 @@ struct GCNativeWebView {
     }
     const controller = this.controller;
     if (controller === null || controller === undefined) {
-      console.error('[GC-UniPlugin] Harmony WebView controller is unavailable', " at uni_modules/GC-UniPlugin/utssdk/app-harmony/GCNativeWebView.ets:114");
+      console.error('[GC-UniPlugin] Harmony WebView controller is unavailable');
       return;
     }
     try {
@@ -127,7 +127,7 @@ struct GCNativeWebView {
     } catch (error) {
       // A telemetry integration failure must never prevent the application
       // page itself from loading.
-      console.error('[GC-UniPlugin] Harmony WebView RUM bridge failed:', error, " at uni_modules/GC-UniPlugin/utssdk/app-harmony/GCNativeWebView.ets:130");
+      console.error('[GC-UniPlugin] Harmony WebView RUM bridge failed:', error);
     }
   }
 
@@ -150,7 +150,7 @@ struct GCNativeWebView {
       .mediaPlayGestureAccess(false)
       .onConsole(event => {
         if (this.enableBridgeCompatibilityCheck && event) {
-          console.info('[GC-UniPlugin] WebView console:', event.message.getMessage(), " at uni_modules/GC-UniPlugin/utssdk/app-harmony/GCNativeWebView.ets:153");
+          console.info('[GC-UniPlugin] WebView console:', event.message.getMessage());
         }
         return false;
       })

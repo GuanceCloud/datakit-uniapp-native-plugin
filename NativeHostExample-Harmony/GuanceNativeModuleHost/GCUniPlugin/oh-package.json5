@@ -1,0 +1,14 @@
+{
+  "name": "@guancecloud/gc-uniplugin",
+  "version": "0.1.0",
+  "description": "Guance native Module bridge for UniMP on HarmonyOS.",
+  "main": "src/main/ets/index.ets",
+  "author": "Guance",
+  "license": "Apache-2.0",
+  "dependencies": {
+    "@dcloudio/uni-app-runtime": "5.2.32026080401",
+    "@guancecloud/ft_sdk": "0.1.15",
+    "@guancecloud/ft_sdk_ext": "0.1.15",
+    "@guancecloud/ft_native": "0.1.1"
+  }
+}

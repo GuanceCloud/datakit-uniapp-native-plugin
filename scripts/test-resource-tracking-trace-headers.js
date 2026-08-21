@@ -3,34 +3,46 @@ const fs = require('fs');
 const path = require('path');
 
 const root = path.resolve(__dirname, '..');
-const trackerPaths = [
-  'Hbuilder_Example/uni_modules/GC-JSPlugin/js_sdk/Request/GCResourceTracking.js',
-  'native-projects/native-sdk-hybrid/harmony/HBuilder-uniPluginDemo/uni_modules/GC-UniPlugin/js_sdk/Request/GCResourceTracking.js'
+const trackerSpecs = [
+  {
+    path: 'Hbuilder_Example/uni_modules/GC-JSPlugin/js_sdk/Request/GCResourceTracking.js',
+    exportName: 'gcResourceTracking',
+    platform: 'android'
+  },
+  {
+    path: 'native-projects/native-sdk-hybrid/harmony/HBuilder-uniPluginDemo/uni_modules/GC-UniPlugin/js_sdk/Request/GCResourceTracking.js',
+    exportName: 'gcHarmonyNetworkTracking',
+    platform: 'harmonyos'
+  }
 ];
 
-function loadTracker(relativePath, rum, tracer, uni) {
+function loadTracker(relativePath, exportName, rum, tracer, uni) {
   const source = fs.readFileSync(path.join(root, relativePath), 'utf8')
     .replace(
       /import\s*\{[\s\S]*?\}\s*from (?:'@\/uni_modules\/GC-UniPlugin'|'\.\.\/native\.js');/,
       ''
     )
-    .replace('export const gcResourceTracking', 'const gcResourceTracking');
+    .replace(`export const ${exportName}`, `const ${exportName}`);
 
   return new Function(
     'rum',
     'tracer',
     'uni',
-    `${source}\nreturn gcResourceTracking;`
+    `${source}\nreturn ${exportName};`
   )(rum, tracer, uni);
 }
 
-for (const trackerPath of trackerPaths) {
+for (const trackerSpec of trackerSpecs) {
+  const trackerPath = trackerSpec.path;
   const interceptors = {};
   const traceCalls = [];
   const resourceStarts = [];
   const resourceStops = [];
   const resources = [];
   const rum = {
+    isHarmonyUniRequestAutoTrackingEnabled() {
+      return true;
+    },
     startResource(params) {
       resourceStarts.push(params);
     },
@@ -42,6 +54,9 @@ for (const trackerPath of trackerPaths) {
     }
   };
   const tracer = {
+    isHarmonyUniRequestAutoTraceEnabled() {
+      return true;
+    },
     getTraceHeader(params) {
       traceCalls.push(params);
       return {
@@ -52,13 +67,13 @@ for (const trackerPath of trackerPaths) {
   };
   const uni = {
     getSystemInfoSync() {
-      return { platform: 'android' };
+      return { platform: trackerSpec.platform };
     },
     addInterceptor(name, interceptor) {
       interceptors[name] = interceptor;
     }
   };
-  const tracker = loadTracker(trackerPath, rum, tracer, uni);
+  const tracker = loadTracker(trackerPath, trackerSpec.exportName, rum, tracer, uni);
 
   assert.strictEqual(tracker.startTracking(), true, trackerPath);
 

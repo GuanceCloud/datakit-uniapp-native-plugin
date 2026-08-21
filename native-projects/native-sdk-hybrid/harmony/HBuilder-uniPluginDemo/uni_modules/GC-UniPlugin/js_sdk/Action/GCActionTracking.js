@@ -95,16 +95,6 @@ class ActionMonitor {
 		return globalThis.UniServiceJSBridge || null;
 	}
 
-	isJSActionTrackingEnabled() {
-		// #ifdef APP-HARMONY
-		// Keep automatic Action collection enabled when an older native bridge
-		// does not expose the Harmony-specific switch.
-		return typeof this.rum.isUniAppJSActionTrackingEnabled !== 'function' ||
-			this.rum.isUniAppJSActionTrackingEnabled();
-		// #endif
-		return true;
-	}
-
 	// This has the same callback shape as the native FTActionTrackingHandler:
 	// `resolveHandlerAction(wrapper)` may return a HandlerAction-like object
 	// (`getActionName` / `getProperty`) or a plain `{ actionName, property }`.
@@ -240,10 +230,6 @@ class ActionMonitor {
 		operationName = null,
 		property = null
 	}) {
-		if (!this.isJSActionTrackingEnabled()) {
-			return;
-		}
-
 		try {
 			const pagePath = this.getPagePath(pageId);
 			const viewName = pagePath ? pagePath.split('?')[0] : 'unknown_view';
@@ -294,7 +280,7 @@ class ActionMonitor {
 				property: actionProperty
 			});
 		} catch (error) {
-			console.warn('[FTLog] UniApp JS Action collection failed:', error, " at uni_modules/GC-UniPlugin/js_sdk/Action/GCActionTracking.js:297");
+			console.warn('[FTLog] UniApp JS Action collection failed:', error, " at uni_modules/GC-UniPlugin/js_sdk/Action/GCActionTracking.js:283");
 		}
 	}
 
@@ -344,7 +330,7 @@ class ActionMonitor {
 					action.getProperty() : action.property
 			};
 		} catch (error) {
-			console.warn('[FTLog] UniApp Action tracking handler failed:', error, " at uni_modules/GC-UniPlugin/js_sdk/Action/GCActionTracking.js:347");
+			console.warn('[FTLog] UniApp Action tracking handler failed:', error, " at uni_modules/GC-UniPlugin/js_sdk/Action/GCActionTracking.js:333");
 			return {
 				skip: true,
 				actionName: null,

@@ -1,0 +1,16 @@
+{
+  "string": [
+    {
+      "name": "module_desc",
+      "value": "UniMP native module host"
+    },
+    {
+      "name": "EntryAbility_desc",
+      "value": "UniMP native module host"
+    },
+    {
+      "name": "EntryAbility_label",
+      "value": "Guance UniMP Module"
+    }
+  ]
+}

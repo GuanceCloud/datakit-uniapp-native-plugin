@@ -250,12 +250,18 @@ const generatedHarmonyIndex = read(
   'native-projects/native-sdk-hybrid/harmony/HBuilder-uniPluginDemo/uni_modules/GC-UniPlugin/utssdk/app-harmony/index.ets'
 );
 assert.strictEqual(countOccurrences(generatedHarmonyIndex, 'samplerate: number | null = null;'), 3);
+const generatedHarmonyNativeEntry = read(
+  'native-projects/native-sdk-hybrid/harmony/HBuilder-uniPluginDemo/uni_modules/GC-UniPlugin/utssdk/app-harmony/GCUniPluginNative.ets'
+);
 assert.strictEqual(
-  countOccurrences(
-    generatedHarmonyIndex,
-    'params.sampleRate !== undefined && params.sampleRate !== null ? params.sampleRate : params.samplerate'
-  ),
-  3
+  countOccurrences(generatedHarmonyNativeEntry, 'samplerate?: number | null;'),
+  3,
+  'Generated Harmony native config types must expose the legacy samplerate alias'
+);
+assert.strictEqual(
+  countOccurrences(generatedHarmonyNativeEntry, 'const sampleRate = firstHarmonyNumber('),
+  3,
+  'Generated Harmony native configs must normalize both sample-rate spellings'
 );
 
 for (const moduleName of ['FTRUMModule', 'FTLogModule', 'FTTracerModule']) {
