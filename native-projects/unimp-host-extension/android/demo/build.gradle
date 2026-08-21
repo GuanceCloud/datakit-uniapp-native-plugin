@@ -1,0 +1,75 @@
+apply plugin: 'com.android.application'
+apply plugin: 'ft-plugin'
+
+def uniMPSdkLibs = file('../UniMPSDK/libs')
+def uniMPCoreLibraries = [
+    'android-gif-drawable-1.2.29.aar',
+    'base_oaid_sdk.aar',
+    'breakpad-build-release.aar',
+    'DCUniMPSDK-V2-release.aar',
+    'uniapp-v8-release.aar'
+]
+
+android {
+    namespace 'com.example.unimpdemo'
+    compileSdkVersion 35
+
+    defaultConfig {
+        applicationId 'com.example.unimpdemo'
+        minSdkVersion 21
+        targetSdkVersion 34
+        versionCode 1
+        versionName '1.0'
+        multiDexEnabled true
+        manifestPlaceholders = ['apk.applicationId': applicationId]
+
+        ndk {
+            abiFilters 'arm64-v8a', 'x86_64'
+        }
+    }
+
+    buildTypes {
+        debug {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard.cfg'
+        }
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard.cfg'
+        }
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+
+    aaptOptions {
+        additionalParameters '--auto-add-overlay'
+        ignoreAssetsPattern "!.svn:!.git:.*:!CVS:!thumbs.db:!picasa.ini:!*.scc:*~"
+    }
+}
+
+dependencies {
+    implementation project(':uniplugin_module')
+    implementation fileTree(dir: uniMPSdkLibs, include: uniMPCoreLibraries)
+
+    implementation 'androidx.appcompat:appcompat:1.1.0'
+    implementation 'androidx.legacy:legacy-support-v4:1.0.0'
+    implementation 'androidx.multidex:multidex:2.0.1'
+    implementation 'androidx.recyclerview:recyclerview:1.1.0'
+    implementation 'androidx.webkit:webkit:1.5.0'
+    implementation 'com.alibaba:fastjson:1.2.83'
+    implementation 'com.facebook.fresco:fresco:3.4.0'
+    implementation 'com.facebook.fresco:animated-gif:3.4.0'
+    implementation 'com.facebook.fresco:webpsupport:3.4.0'
+    implementation 'com.facebook.fresco:animated-webp:3.4.0'
+    implementation 'com.github.bumptech.glide:glide:4.9.0'
+    annotationProcessor 'com.github.bumptech.glide:compiler:4.9.0'
+    implementation 'com.squareup.okhttp3:okhttp:3.7.0'
+    implementation 'com.squareup.okio:okio:1.8.0'
+
+    implementation 'com.cloudcare.ft.mobile.sdk.tracker.agent:ft-sdk:1.7.5'
+    implementation 'com.cloudcare.ft.mobile.sdk.tracker.agent:ft-native:1.1.3'
+    implementation 'com.google.code.gson:gson:2.8.5'
+}

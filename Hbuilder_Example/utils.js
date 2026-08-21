@@ -1,6 +1,6 @@
 export const SERVER_URL = 'http://127.0.0.1:9529'
-export const DATAWAY_URL = ''
-export const CLIENT_TOKEN = ''
+export const DATAWAY_URL = 'http://open-dataway.cn'
+export const CLIENT_TOKEN = 'clien-token'
 export const ANDROID_APP_ID = 'guance_android_uniapp_id'
 export const IOS_APP_ID = 'guance_ios_uniapp_id'
 export const HARMONY_APP_ID  = 'com_uniapp_harmony'

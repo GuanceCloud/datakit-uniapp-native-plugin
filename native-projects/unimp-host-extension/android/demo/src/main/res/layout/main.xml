@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:background="@color/ffffff"
+
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <Button
+                android:background="@color/colorBl"
+                android:id="@+id/button1"
+                android:layout_marginBottom="10dp"
+                android:layout_gravity="center_horizontal"
+                android:text="启动小程序 有splash"
+                android:textColor="@color/ffffff"
+                android:textSize="16sp"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"></Button>
+
+            <Button
+                android:background="@color/colorBl"
+                android:id="@+id/button2"
+                android:layout_marginBottom="10dp"
+                android:layout_gravity="center_horizontal"
+                android:text="启动小程序 无splash"
+                android:textColor="@color/ffffff"
+                android:textSize="16sp"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"></Button>
+
+            <Button
+                android:background="@color/colorBl"
+                android:id="@+id/button3"
+                android:layout_marginBottom="10dp"
+                android:layout_gravity="center_horizontal"
+                android:text="启动小程序直达 RUM 页面"
+                android:textColor="@color/ffffff"
+                android:textSize="16sp"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"></Button>
+
+            <Button
+                android:background="@color/colorBl"
+                android:id="@+id/button4"
+                android:layout_marginBottom="10dp"
+                android:layout_gravity="center_horizontal"
+                android:text="启动日志页面并延迟5秒关闭"
+                android:textColor="@color/ffffff"
+                android:textSize="16sp"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"></Button>
+
+            <Button
+                android:background="@color/colorBl"
+                android:id="@+id/button5"
+                android:layout_marginBottom="10dp"
+                android:layout_gravity="center_horizontal"
+                android:text="获取已运行过的应用版本信息"
+                android:textColor="@color/ffffff"
+                android:textSize="16sp"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"></Button>
+
+            <Button
+                android:background="@color/colorBl"
+                android:id="@+id/button6"
+                android:layout_marginBottom="10dp"
+                android:layout_gravity="center_horizontal"
+                android:text="UniApp 原生插件示例"
+                android:textColor="@color/ffffff"
+                android:textSize="16sp"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"></Button>
+
+            <Button
+                android:background="@color/colorBl"
+                android:id="@+id/button7"
+                android:layout_marginBottom="10dp"
+                android:layout_gravity="center_horizontal"
+                android:text="启动小程序直达链路追踪页面"
+                android:textColor="@color/ffffff"
+                android:textSize="16sp"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"></Button>
+
+            <Button
+                android:background="@color/colorBl"
+                android:id="@+id/button8"
+                android:layout_marginBottom="10dp"
+                android:layout_gravity="center_horizontal"
+                android:text="启动小程序直达日志页面"
+                android:textColor="@color/ffffff"
+                android:textSize="16sp"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"></Button>
+
+            <Button
+                android:background="@color/colorBl"
+                android:id="@+id/btn_encrypt_wgt_install"
+                android:layout_marginBottom="10dp"
+                android:layout_gravity="center_horizontal"
+                android:text="安装并启动内置 WGT"
+                android:textColor="@color/ffffff"
+                android:textSize="16sp"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"></Button>
+
+        </LinearLayout>
+
+    </ScrollView>
+
+
+</LinearLayout>
