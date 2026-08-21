@@ -4,6 +4,8 @@ import {
 
 const EMPTY_MESSAGE = 'Unknown Error';
 const CONSOLE_ERROR = 'console_error';
+const FT_JS_PLUGIN_VERSION = '0.2.7-alpha.1';
+
 let originalConsoleError = null;
 let originalVueErrorHandler = null;
 let appStateTrackingBound = false;
@@ -47,7 +49,7 @@ export const gcErrorTracking = {
 			return;
 		}
 		try {
-			console.log('[FTLog] Error tracking initialized', " at uni_modules/GC-UniPlugin/js_sdk/Error/GCErrorTracking.js:52");
+			console.log(`[FTLog] Error tracking initialized (version: ${FT_JS_PLUGIN_VERSION})`, " at uni_modules/GC-UniPlugin/js_sdk/Error/GCErrorTracking.js:52");
 			setupAppStateTracking();
 			this.captureConsoleError();
 			// #ifdef VUE3

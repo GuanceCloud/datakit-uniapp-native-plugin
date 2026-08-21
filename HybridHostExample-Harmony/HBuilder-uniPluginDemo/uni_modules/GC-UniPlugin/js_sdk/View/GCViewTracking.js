@@ -2,6 +2,8 @@ import {
 	rum as gcRum
 } from '@/uni_modules/GC-UniPlugin';
 
+const FT_JS_PLUGIN_VERSION = '0.2.7-alpha.1';
+
 // #ifndef VUE3
 import Vue from 'vue';
 // #endif
@@ -32,7 +34,7 @@ class PageMonitor {
 		if (this.initialized) return;
 		this.initialized = true;
 
-		console.log('[FTLog] View tracking initialized', " at uni_modules/GC-UniPlugin/js_sdk/View/GCViewTracking.js:37");
+		console.log(`[FTLog] View tracking initialized (version: ${FT_JS_PLUGIN_VERSION})`, " at uni_modules/GC-UniPlugin/js_sdk/View/GCViewTracking.js:37");
 
 		try {
 			// #ifdef APP-PLUS || APP-HARMONY

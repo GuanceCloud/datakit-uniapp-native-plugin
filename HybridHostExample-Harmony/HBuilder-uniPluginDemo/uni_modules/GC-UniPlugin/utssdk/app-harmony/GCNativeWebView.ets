@@ -10,6 +10,17 @@ interface GCNativeWebViewBuilderOptions extends NativeEmbedBuilderOptions {
   controller: webview.WebviewController;
   src: string;
   viewName?: string;
+  enableBridgeCompatibilityCheck?: boolean;
+}
+
+/**
+ * Test-only receiver used to prove that a pre-existing JavaScript bridge and
+ * FTWebViewHandler's bridge can coexist on one WebviewController.
+ */
+class GCNativeWebViewBaseBridge {
+  ping(): string {
+    return 'gc-native-webview-base-bridge';
+  }
 }
 
 /**
@@ -20,12 +31,78 @@ interface GCNativeWebViewBuilderOptions extends NativeEmbedBuilderOptions {
 struct GCNativeWebView {
   @Prop src: string;
   @Prop viewName: string;
+  @Prop enableBridgeCompatibilityCheck: boolean;
   controller?: webview.WebviewController;
   private handler: FTWebViewHandler = new FTWebViewHandler();
+  private baseBridge: GCNativeWebViewBaseBridge = new GCNativeWebViewBaseBridge();
+  private didRegisterBaseBridge = false;
   private didAttachBridge = false;
 
   aboutToDisappear() {
     this.handler.clearWebController();
+  }
+
+  private registerBaseJavaScriptBridge(): void {
+    if (!this.enableBridgeCompatibilityCheck || this.didRegisterBaseBridge) {
+      return;
+    }
+    const controller = this.controller;
+    if (controller === null || controller === undefined) {
+      return;
+    }
+    try {
+      // This deliberately uses a different name from FTWebViewHandler's
+      // FTWebViewJavascriptBridge. It represents a bridge already owned by
+      // the host application before RUM is attached.
+      controller.registerJavaScriptProxy(
+        this.baseBridge,
+        '__gc_base_bridge__',
+        ['ping'],
+        []
+      );
+      this.didRegisterBaseBridge = true;
+      console.info('[GC-UniPlugin] base JavaScript bridge registered', " at uni_modules/GC-UniPlugin/utssdk/app-harmony/GCNativeWebView.ets:64");
+    } catch (error) {
+      console.error('[GC-UniPlugin] base JavaScript bridge registration failed:', error, " at uni_modules/GC-UniPlugin/utssdk/app-harmony/GCNativeWebView.ets:66");
+    }
+  }
+
+  private logBridgeCompatibility(): void {
+    if (!this.enableBridgeCompatibilityCheck) {
+      return;
+    }
+    const controller = this.controller;
+    if (controller === null || controller === undefined) {
+      return;
+    }
+    // The result is emitted through Web.onConsole below, so it is visible in
+    // the Harmony IDE log without changing the page served by the customer.
+    controller.runJavaScript(`
+      (function () {
+        var baseBridge = window.__gc_base_bridge__;
+        var result = {
+          baseMethod: typeof (baseBridge && baseBridge.ping),
+          rumMethod: typeof (window.FTWebViewJavascriptBridge && window.FTWebViewJavascriptBridge.sendEvent)
+        };
+        try {
+          var pingResult = baseBridge && baseBridge.ping ? baseBridge.ping() : null;
+          if (pingResult && typeof pingResult.then === 'function') {
+            pingResult.then(function (value) {
+              result.baseResult = String(value);
+              console.log('[GC-UniPlugin] bridge-check ' + JSON.stringify(result));
+            }).catch(function (error) {
+              result.baseError = String(error);
+              console.log('[GC-UniPlugin] bridge-check ' + JSON.stringify(result));
+            });
+            return;
+          }
+          result.baseResult = String(pingResult);
+        } catch (error) {
+          result.baseError = String(error);
+        }
+        console.log('[GC-UniPlugin] bridge-check ' + JSON.stringify(result));
+      })();
+    `);
   }
 
   private attachRUMBridge(): void {
@@ -34,7 +111,7 @@ struct GCNativeWebView {
     }
     const controller = this.controller;
     if (controller === null || controller === undefined) {
-      console.error('[GC-UniPlugin] Harmony WebView controller is unavailable', " at uni_modules/GC-UniPlugin/utssdk/app-harmony/GCNativeWebView.ets:37");
+      console.error('[GC-UniPlugin] Harmony WebView controller is unavailable', " at uni_modules/GC-UniPlugin/utssdk/app-harmony/GCNativeWebView.ets:114");
       return;
     }
     try {
@@ -50,7 +127,7 @@ struct GCNativeWebView {
     } catch (error) {
       // A telemetry integration failure must never prevent the application
       // page itself from loading.
-      console.error('[GC-UniPlugin] Harmony WebView RUM bridge failed:', error, " at uni_modules/GC-UniPlugin/utssdk/app-harmony/GCNativeWebView.ets:53");
+      console.error('[GC-UniPlugin] Harmony WebView RUM bridge failed:', error, " at uni_modules/GC-UniPlugin/utssdk/app-harmony/GCNativeWebView.ets:130");
     }
   }
 
@@ -71,8 +148,21 @@ struct GCNativeWebView {
       .darkMode(WebDarkMode.Auto)
       .mixedMode(MixedMode.All)
       .mediaPlayGestureAccess(false)
+      .onConsole(event => {
+        if (this.enableBridgeCompatibilityCheck && event) {
+          console.info('[GC-UniPlugin] WebView console:', event.message.getMessage(), " at uni_modules/GC-UniPlugin/utssdk/app-harmony/GCNativeWebView.ets:153");
+        }
+        return false;
+      })
       .onControllerAttached(() => {
+        // Register a host-owned bridge first when the compatibility check is
+        // enabled. FTWebViewHandler then registers its separate RUM bridge on
+        // the very same controller.
+        this.registerBaseJavaScriptBridge();
         this.attachRUMBridge();
+      })
+      .onPageEnd(() => {
+        this.logBridgeCompatibility();
       });
   }
 }
@@ -82,7 +172,8 @@ function GCNativeWebViewBuilder(options: GCNativeWebViewBuilderOptions) {
   GCNativeWebView({
     controller: options.controller,
     src: options.src,
-    viewName: options.viewName ?? 'webview'
+    viewName: options.viewName ?? 'webview',
+    enableBridgeCompatibilityCheck: options.enableBridgeCompatibilityCheck === true
   })
     .width(options.width)
     .height(options.height)
