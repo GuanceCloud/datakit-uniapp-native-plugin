@@ -182,15 +182,12 @@ assertIncludes(androidIndexSource, "from 'gc.unisessionreplay.android'", 'Androi
 assertIncludes(androidIndexSource, '[FTLog] GC-UniSessionReplay initialization requested', 'Android UTS initialization log');
 assertIncludes(androidIndexSource, '[FTLog] GC-UniSessionReplay initialized successfully', 'Android UTS success log');
 assertIncludes(androidIndexSource, '[FTLog] GC-UniSessionReplay initialization failed', 'Android UTS failure log');
-assertIncludes(androidIndexSource, 'application: android.app.Application', 'Android Hook Application type');
 assertIncludes(androidIndexSource, 'GCSessionReplayNative.setConfig', 'Android Session Replay API');
-assertIncludes(androidIndexSource, 'implements UTSAndroidHookProxy', 'Android early hook');
-assertIncludes(androidIndexSource, 'GCSessionReplayNative.enableFirstViewBridge()', 'Android early hook');
-assertIncludes(androidNativeSource, '"com.ft.sdk.FTUniAppWebViewBridge"', 'Android Native SDK lazy bridge activation');
+assert(!androidIndexSource.includes('UTSAndroidHookProxy'));
+assert(!androidIndexSource.includes('enableFirstViewBridge'));
+assert(!androidNativeSource.includes('FTUniAppWebViewBridge'));
+assert(!androidNativeSource.includes('isRumWebViewBridgeReady'));
 assertIncludes(androidNativeSource, 'fun setConfig(json: String?): Boolean', 'Android native initialization result');
-assertIncludes(androidNativeSource, 'Class.forName(CORE_BRIDGE_CLASS)', 'Android bridge reflection');
-assertIncludes(androidNativeSource, 'getMethod(DISABLE_FIRST_VIEW_BRIDGE_METHOD)', 'Android lazy bridge shutdown API');
-assertIncludes(androidNativeSource, 'disableFirstViewBridge()', 'Android lazy bridge shutdown');
 assertIncludes(androidNativeSource, 'Class.forName(SDK_CLASS)', 'Android Native SDK invocation');
 assertIncludes(androidNativeSource, 'getMethod("initSessionReplayConfig", Any::class.java)', 'Android Native SDK invocation');
 assertIncludes(androidNativeSource, 'Class.forName(CONFIG_CLASS).getConstructor().newInstance()', 'Android Session Replay configuration');
@@ -202,8 +199,8 @@ assert(!androidNativeSource.includes('import com.ft.sdk.'));
 assert(!androidNativeSource.includes('enableSwiftUI'));
 assertIncludes(
     androidNativeSource,
-    'val initialized = invokeSafely("initialize Session Replay") {\n            Class.forName(SDK_CLASS)\n                .getMethod("initSessionReplayConfig", Any::class.java)\n                .invoke(null, config)\n        }\n        if (initialized) {\n            disableFirstViewBridge()\n        }\n        return initialized',
-    'Android lazy bridge shutdown ordering'
+    'return invokeSafely("initialize Session Replay") {\n            Class.forName(SDK_CLASS)\n                .getMethod("initSessionReplayConfig", Any::class.java)\n                .invoke(null, config)\n        }',
+    'Android direct Session Replay initialization'
 );
 assertIncludes(nativeSource, 'private static let installHookOnce', 'native hook');
 assertIncludes(baseNativeSource, 'import GuanceSDK', 'base dynamic framework import');

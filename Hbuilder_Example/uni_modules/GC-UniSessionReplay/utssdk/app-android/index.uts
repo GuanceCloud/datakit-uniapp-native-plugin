@@ -49,9 +49,3 @@ export class GCSessionReplayImagePrivacy {
 	static readonly MASK_ALL: string = 'maskAll'
 	static readonly MASK_NONE: string = 'maskNone'
 }
-
-export class GCSessionReplayAndroidHook implements UTSAndroidHookProxy {
-	override onCreate(application: android.app.Application) {
-		GCSessionReplayNative.enableFirstViewBridge()
-	}
-}

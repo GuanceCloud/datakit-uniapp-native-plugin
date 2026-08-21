@@ -7,37 +7,10 @@ import android.util.Log
 
 object GCSessionReplayNative {
     private const val LOG_TAG = "GC-UniSessionReplay"
-    private const val CORE_BRIDGE_CLASS = "com.ft.sdk.FTUniAppWebViewBridge"
-    private const val DISABLE_FIRST_VIEW_BRIDGE_METHOD = "disableFirstViewBridge"
     private const val SDK_CLASS = "com.ft.sdk.FTSdk"
     private const val CONFIG_CLASS = "com.ft.sdk.sessionreplay.FTSessionReplayConfig"
-    private const val WEB_BRIDGE_CLASS = "com.ft.sdk.WebAppInterface"
-
-    fun enableFirstViewBridge() {
-        invokeSafely("enable the first-view bridge") {
-            Class.forName(CORE_BRIDGE_CLASS)
-                .getMethod("enableFirstViewBridge")
-                .invoke(null)
-        }
-    }
-
-    private fun disableFirstViewBridge() {
-        invokeSafely("disable the first-view bridge") {
-            Class.forName(CORE_BRIDGE_CLASS)
-                .getMethod(DISABLE_FIRST_VIEW_BRIDGE_METHOD)
-                .invoke(null)
-        }
-    }
 
     fun setConfig(json: String?): Boolean {
-        if (!isRumWebViewBridgeReady()) {
-            Log.e(
-                LOG_TAG,
-                "Session Replay initialization requires the Mobile SDK and RUM WebView tracing to be configured first"
-            )
-            return false
-        }
-
         val params = parseObject(json)
         val config = invokeOrNull("create the Session Replay configuration") {
             Class.forName(CONFIG_CLASS).getConstructor().newInstance()
@@ -62,26 +35,10 @@ object GCSessionReplayNative {
             }
         }
 
-        val initialized = invokeSafely("initialize Session Replay") {
+        return invokeSafely("initialize Session Replay") {
             Class.forName(SDK_CLASS)
                 .getMethod("initSessionReplayConfig", Any::class.java)
                 .invoke(null, config)
-        }
-        if (initialized) {
-            disableFirstViewBridge()
-        }
-        return initialized
-    }
-
-    private fun isRumWebViewBridgeReady(): Boolean {
-        return try {
-            val method = Class.forName(WEB_BRIDGE_CLASS)
-                .getDeclaredMethod("isRumWebViewBridgeReady")
-            method.isAccessible = true
-            method.invoke(null) as? Boolean ?: false
-        } catch (error: Throwable) {
-            Log.e(LOG_TAG, "Unable to determine RUM WebView bridge readiness.", error)
-            false
         }
     }
 

@@ -51,11 +51,6 @@ open class GCSessionReplayImagePrivacy {
         val MASK_NONE: String = "maskNone"
     }
 }
-open class GCSessionReplayAndroidHook : UTSAndroidHookProxy {
-    override fun onCreate(application: android.app.Application) {
-        GCSessionReplayNative.enableFirstViewBridge()
-    }
-}
 open class GCSessionReplayConfigJSONObject : UTSJSONObject() {
     open var sampleRate: Number? = null
     open var sessionReplayOnErrorSampleRate: Number? = null
@@ -94,11 +89,5 @@ open class GCSessionReplayImagePrivacyByJs : GCSessionReplayImagePrivacy {
         val MASK_NON_BUNDLED_ONLY = GCSessionReplayImagePrivacy.MASK_NON_BUNDLED_ONLY
         val MASK_ALL = GCSessionReplayImagePrivacy.MASK_ALL
         val MASK_NONE = GCSessionReplayImagePrivacy.MASK_NONE
-    }
-}
-open class GCSessionReplayAndroidHookByJs : GCSessionReplayAndroidHook {
-    constructor() : super() {}
-    open fun onCreateByJs(application: android.app.Application) {
-        return this.onCreate(application)
     }
 }
