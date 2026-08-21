@@ -120,7 +120,7 @@ import GuanceSDK
 
     private static func firstValue(_ params: [String: Any], _ keys: String...) -> Any? {
         for key in keys {
-            if let value = params[key] {
+            if let value = params[key], !(value is NSNull) {
                 return value
             }
         }
@@ -321,8 +321,8 @@ import GuanceSDK
             return nil
         }
         let config = FTRumConfig(appid: appId)
-        if let samplerate = intValue(firstValue(params, "samplerate", "sampleRate")) {
-            config.samplerate = Int32(samplerate)
+        if let sampleRate = intValue(firstValue(params, "sampleRate", "samplerate")) {
+            config.sampleRate = Int32(sampleRate)
         }
         if let sessionOnErrorSampleRate = intValue(params["sessionOnErrorSampleRate"]) {
             config.sessionOnErrorSampleRate = Int32(sessionOnErrorSampleRate)
@@ -405,8 +405,8 @@ import GuanceSDK
 
     private static func createLoggerConfig(_ params: [String: Any]) -> FTLoggerConfig {
         let config = FTLoggerConfig()
-        if let samplerate = intValue(firstValue(params, "samplerate", "sampleRate")) {
-            config.samplerate = Int32(samplerate)
+        if let sampleRate = intValue(firstValue(params, "sampleRate", "samplerate")) {
+            config.sampleRate = Int32(sampleRate)
         }
         config.enableLinkRumData = boolValue(params["enableLinkRumData"], default: boolValue(params["enableLinkRUMData"], default: config.enableLinkRumData))
         if let enableCustomLog = params["enableCustomLog"] {
@@ -449,8 +449,8 @@ import GuanceSDK
 
     private static func createTraceConfig(_ params: [String: Any]) -> FTTraceConfig {
         let config = FTTraceConfig()
-        if let samplerate = intValue(firstValue(params, "samplerate", "sampleRate")) {
-            config.samplerate = Int32(samplerate)
+        if let sampleRate = intValue(firstValue(params, "sampleRate", "samplerate")) {
+            config.sampleRate = Int32(sampleRate)
         }
         config.networkTraceType = traceType(params["traceType"])
         config.enableLinkRumData = boolValue(params["enableLinkRUMData"], default: boolValue(params["enableLinkRumData"], default: config.enableLinkRumData))

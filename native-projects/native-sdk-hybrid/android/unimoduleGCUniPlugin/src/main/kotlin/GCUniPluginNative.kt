@@ -82,7 +82,10 @@ object GCUniPluginNative {
     private fun firstValue(params: JSONObject, vararg keys: String): Any? {
         for (key in keys) {
             if (params.containsKey(key)) {
-                return params[key]
+                val value = params[key]
+                if (value != null) {
+                    return value
+                }
             }
         }
         return null
@@ -433,7 +436,7 @@ object GCUniPluginNative {
         val appId = stringValue(firstValue(params, "androidAppId", "appId")) ?: return null
         val config = FTRUMConfig().setRumAppId(appId)
 
-        floatValue(firstValue(params, "samplerate", "sampleRate"))?.let { config.setSamplingRate(it) }
+        floatValue(firstValue(params, "sampleRate", "samplerate"))?.let { config.setSamplingRate(it) }
         floatValue(params["sessionOnErrorSampleRate"])?.let { config.setSessionErrorSampleRate(it) }
         if (params.containsKey("enableTraceUserAction") || params.containsKey("enableNativeUserAction")) {
             config.setEnableTraceUserAction(booleanValue(firstValue(params, "enableTraceUserAction", "enableNativeUserAction")))
@@ -490,7 +493,7 @@ object GCUniPluginNative {
     private fun createLoggerConfig(params: JSONObject): FTLoggerConfig {
         val config = FTLoggerConfig()
 
-        floatValue(firstValue(params, "samplerate", "sampleRate"))?.let { config.setSamplingRate(it) }
+        floatValue(firstValue(params, "sampleRate", "samplerate"))?.let { config.setSamplingRate(it) }
         if (params.containsKey("enableLinkRumData") || params.containsKey("enableLinkRUMData")) {
             config.setEnableLinkRumData(booleanValue(firstValue(params, "enableLinkRumData", "enableLinkRUMData")))
         }
@@ -514,7 +517,7 @@ object GCUniPluginNative {
     private fun createTraceConfig(params: JSONObject): FTTraceConfig {
         val config = FTTraceConfig()
 
-        floatValue(firstValue(params, "samplerate", "sampleRate"))?.let { config.setSamplingRate(it) }
+        floatValue(firstValue(params, "sampleRate", "samplerate"))?.let { config.setSamplingRate(it) }
         traceType(params["traceType"])?.let { config.setTraceType(it) }
         if (params.containsKey("enableLinkRUMData") || params.containsKey("enableLinkRumData")) {
             config.setEnableLinkRUMData(booleanValue(firstValue(params, "enableLinkRUMData", "enableLinkRumData")))

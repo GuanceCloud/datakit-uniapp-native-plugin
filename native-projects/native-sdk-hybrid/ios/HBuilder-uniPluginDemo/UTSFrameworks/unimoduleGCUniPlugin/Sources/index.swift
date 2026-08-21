@@ -203,6 +203,7 @@ public class GCRUMConfig : NSObject, UTSObject {
     public var iOSAppId: String?
     public var harmonyAppId: String?
     public var sampleRate: NSNumber?
+    public var samplerate: NSNumber?
     public var sessionOnErrorSampleRate: NSNumber?
     public var enableNativeUserAction: Bool = false
     public var enableNativeUserView: Bool = false
@@ -234,6 +235,8 @@ public class GCRUMConfig : NSObject, UTSObject {
                     self.harmonyAppId = try! utsSubscriptCheckValueIfPresent(newValue)
                 case "sampleRate":
                     self.sampleRate = try! utsSubscriptCheckValueIfPresent(newValue)
+                case "samplerate":
+                    self.samplerate = try! utsSubscriptCheckValueIfPresent(newValue)
                 case "sessionOnErrorSampleRate":
                     self.sessionOnErrorSampleRate = try! utsSubscriptCheckValueIfPresent(newValue)
                 case "enableNativeUserAction":
@@ -281,6 +284,7 @@ public class GCRUMConfig : NSObject, UTSObject {
         self.iOSAppId = obj["iOSAppId"] as! String?
         self.harmonyAppId = obj["harmonyAppId"] as! String?
         self.sampleRate = obj["sampleRate"] as! NSNumber?
+        self.samplerate = obj["samplerate"] as! NSNumber?
         self.sessionOnErrorSampleRate = obj["sessionOnErrorSampleRate"] as! NSNumber?
         self.enableNativeUserAction = (obj["enableNativeUserAction"] as? Bool) ?? false
         self.enableNativeUserView = (obj["enableNativeUserView"] as? Bool) ?? false
@@ -304,6 +308,7 @@ public class GCRUMConfig : NSObject, UTSObject {
 @objcMembers
 public class GCLoggerConfig : NSObject, UTSObject {
     public var sampleRate: NSNumber?
+    public var samplerate: NSNumber?
     public var enableLinkRumData: Bool = false
     public var enableCustomLog: Bool = false
     public var logCacheLimitCount: NSNumber?
@@ -318,6 +323,8 @@ public class GCLoggerConfig : NSObject, UTSObject {
             switch(key){
                 case "sampleRate":
                     self.sampleRate = try! utsSubscriptCheckValueIfPresent(newValue)
+                case "samplerate":
+                    self.samplerate = try! utsSubscriptCheckValueIfPresent(newValue)
                 case "enableLinkRumData":
                     self.enableLinkRumData = try! utsSubscriptCheckValue(newValue)
                 case "enableCustomLog":
@@ -340,6 +347,7 @@ public class GCLoggerConfig : NSObject, UTSObject {
     }
     public init(_ obj: UTSJSONObject) {
         self.sampleRate = obj["sampleRate"] as! NSNumber?
+        self.samplerate = obj["samplerate"] as! NSNumber?
         self.enableLinkRumData = (obj["enableLinkRumData"] as? Bool) ?? false
         self.enableCustomLog = (obj["enableCustomLog"] as? Bool) ?? false
         self.logCacheLimitCount = obj["logCacheLimitCount"] as! NSNumber?
@@ -352,6 +360,7 @@ public class GCLoggerConfig : NSObject, UTSObject {
 @objcMembers
 public class GCTraceConfig : NSObject, UTSObject {
     public var sampleRate: NSNumber?
+    public var samplerate: NSNumber?
     public var traceType: String?
     public var enableLinkRUMData: Bool = false
     public var enableAutoTrace: Bool = false
@@ -363,6 +372,8 @@ public class GCTraceConfig : NSObject, UTSObject {
             switch(key){
                 case "sampleRate":
                     self.sampleRate = try! utsSubscriptCheckValueIfPresent(newValue)
+                case "samplerate":
+                    self.samplerate = try! utsSubscriptCheckValueIfPresent(newValue)
                 case "traceType":
                     self.traceType = try! utsSubscriptCheckValueIfPresent(newValue)
                 case "enableLinkRUMData":
@@ -379,6 +390,7 @@ public class GCTraceConfig : NSObject, UTSObject {
     }
     public init(_ obj: UTSJSONObject) {
         self.sampleRate = obj["sampleRate"] as! NSNumber?
+        self.samplerate = obj["samplerate"] as! NSNumber?
         self.traceType = obj["traceType"] as! String?
         self.enableLinkRUMData = (obj["enableLinkRUMData"] as? Bool) ?? false
         self.enableAutoTrace = (obj["enableAutoTrace"] as? Bool) ?? false
@@ -1142,6 +1154,7 @@ public class GCRUMConfigJSONObject : NSObject {
     public var iOSAppId: String?
     public var harmonyAppId: String?
     public var sampleRate: NSNumber?
+    public var samplerate: NSNumber?
     public var sessionOnErrorSampleRate: NSNumber?
     public var enableNativeUserAction: Bool = false
     public var enableNativeUserView: Bool = false
@@ -1164,6 +1177,7 @@ public class GCRUMConfigJSONObject : NSObject {
 @objcMembers
 public class GCLoggerConfigJSONObject : NSObject {
     public var sampleRate: NSNumber?
+    public var samplerate: NSNumber?
     public var enableLinkRumData: Bool = false
     public var enableCustomLog: Bool = false
     public var logCacheLimitCount: NSNumber?
@@ -1175,6 +1189,7 @@ public class GCLoggerConfigJSONObject : NSObject {
 @objcMembers
 public class GCTraceConfigJSONObject : NSObject {
     public var sampleRate: NSNumber?
+    public var samplerate: NSNumber?
     public var traceType: String?
     public var enableLinkRUMData: Bool = false
     public var enableAutoTrace: Bool = false
@@ -1339,6 +1354,7 @@ public class rumByJs : rum {
             "iOSAppId": params.iOSAppId,
             "harmonyAppId": params.harmonyAppId,
             "sampleRate": params.sampleRate,
+            "samplerate": params.samplerate,
             "sessionOnErrorSampleRate": params.sessionOnErrorSampleRate,
             "enableNativeUserAction": params.enableNativeUserAction,
             "enableNativeUserView": params.enableNativeUserView,
@@ -1425,6 +1441,7 @@ public class loggerByJs : logger {
     public static func setConfigByJs(_ params: GCLoggerConfigJSONObject) {
         return logger.setConfig(GCLoggerConfig(UTSJSONObject([
             "sampleRate": params.sampleRate,
+            "samplerate": params.samplerate,
             "enableLinkRumData": params.enableLinkRumData,
             "enableCustomLog": params.enableCustomLog,
             "logCacheLimitCount": params.logCacheLimitCount,
@@ -1447,6 +1464,7 @@ public class tracerByJs : tracer {
     public static func setConfigByJs(_ params: GCTraceConfigJSONObject) {
         return tracer.setConfig(GCTraceConfig(UTSJSONObject([
             "sampleRate": params.sampleRate,
+            "samplerate": params.samplerate,
             "traceType": params.traceType,
             "enableLinkRUMData": params.enableLinkRUMData,
             "enableAutoTrace": params.enableAutoTrace

@@ -33,7 +33,7 @@ export function initializeGuanceSDK() {
 		clientToken: SDKConst.CLIENT_TOKEN,
 		autoSync: true,
 		debug: true,
-		offlinePackage: true,
+		offlinePackage: false,
 		env: 'common',
 		remoteConfiguration: true,
 		remoteConfigMiniUpdateInterval: 600,

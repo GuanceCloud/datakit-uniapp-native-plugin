@@ -8,6 +8,10 @@ function read(relativePath) {
   return fs.readFileSync(path.join(root, relativePath), 'utf8');
 }
 
+function countOccurrences(source, value) {
+  return source.split(value).length - 1;
+}
+
 function assertStaticBridgeExports(relativePath, classes) {
   const source = read(relativePath);
   for (const [className, methods] of Object.entries(classes)) {
@@ -175,6 +179,78 @@ assert.match(
   harmonyNativeEntry,
   /if \(context === undefined\) \{\s+console\.error\('\[GC-UniPlugin\] sdkConfig failed: Harmony application context is unavailable'\);\s+return;\s+\}\s+FTSDK\.install\(config, context\);/
 );
+
+const coreInterfaceSource = read(
+  'Hbuilder_Example/uni_modules/GC-UniPlugin/utssdk/interface.uts'
+);
+assert.strictEqual(
+  countOccurrences(coreInterfaceSource, 'samplerate?: number | null'),
+  3,
+  'RUM, Logger, and Trace UTS configs must expose the legacy samplerate alias'
+);
+
+for (const relativePath of [
+  'Hbuilder_Example/uni_modules/GC-UniPlugin/utssdk/app-android/GCUniPluginNative.kt',
+  'native-projects/native-sdk-hybrid/android/unimoduleGCUniPlugin/src/main/kotlin/GCUniPluginNative.kt'
+]) {
+  const source = read(relativePath);
+  assert.strictEqual(
+    countOccurrences(source, 'firstValue(params, "sampleRate", "samplerate")'),
+    3,
+    `${relativePath} must prefer sampleRate and fall back to samplerate for RUM, Logger, and Trace`
+  );
+  assert.match(
+    source,
+    /val value = params\[key\]\s+if \(value != null\) \{\s+return value/,
+    `${relativePath} must skip null aliases while resolving compatibility keys`
+  );
+}
+
+for (const relativePath of [
+  'Hbuilder_Example/uni_modules/GC-UniPlugin/utssdk/app-ios/GCUniPluginNative.swift',
+  'native-projects/native-sdk-hybrid/ios/HBuilder-uniPluginDemo/UTSFrameworks/unimoduleGCUniPlugin/Sources/GCUniPluginNative.swift'
+]) {
+  const source = read(relativePath);
+  assert.strictEqual(
+    countOccurrences(source, 'firstValue(params, "sampleRate", "samplerate")'),
+    3,
+    `${relativePath} must prefer sampleRate and fall back to samplerate for RUM, Logger, and Trace`
+  );
+  assert.match(
+    source,
+    /if let value = params\[key\], !\(value is NSNull\)/,
+    `${relativePath} must skip null aliases while resolving compatibility keys`
+  );
+}
+
+const generatedAndroidIndex = read(
+  'native-projects/native-sdk-hybrid/android/unimoduleGCUniPlugin/src/main/kotlin/index.kt'
+);
+assert.strictEqual(countOccurrences(generatedAndroidIndex, 'open var samplerate: Number? = null'), 6);
+assert.strictEqual(countOccurrences(generatedAndroidIndex, 'samplerate = params.samplerate'), 3);
+
+const generatedIOSIndex = read(
+  'native-projects/native-sdk-hybrid/ios/HBuilder-uniPluginDemo/UTSFrameworks/unimoduleGCUniPlugin/Sources/index.swift'
+);
+assert.strictEqual(countOccurrences(generatedIOSIndex, 'public var samplerate: NSNumber?'), 6);
+assert.strictEqual(countOccurrences(generatedIOSIndex, '"samplerate": params.samplerate'), 3);
+
+for (const moduleName of ['FTRUMModule', 'FTLogModule', 'FTTracerModule']) {
+  const androidExtensionSource = read(
+    `native-projects/unimp-host-extension/android/GCUniPlugin/src/main/java/com/ft/sdk/uniapp/${moduleName}.java`
+  );
+  assert.match(
+    androidExtensionSource,
+    /Utils\.firstValue\(map, "sampleRate", "samplerate"\)/,
+    `${moduleName}.java must accept both sample-rate spellings`
+  );
+
+  const iosExtensionSource = read(
+    `native-projects/unimp-host-extension/ios/GCUniPlugin/GC-UniPlugin-App/Classes/${moduleName}.m`
+  );
+  assert.match(iosExtensionSource, /primaryKey:@"sampleRate"/);
+  assert.match(iosExtensionSource, /fallbackKey:@"samplerate"/);
+}
 
 for (const relativePath of [
   'Hbuilder_Example/uni_modules/GC-UniPlugin/utssdk/app-ios/index.uts',

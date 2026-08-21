@@ -6,6 +6,8 @@ export type GCMobileConfig = {
 	debug?: boolean | null
 	service?: string | null
 	autoSync?: boolean | null
+	// Android only. Whether the application uses an offline package.
+	offlinePackage?: boolean | null
 	syncPageSize?: number | null
 	syncSleepTime?: number | null
 	enableDataIntegerCompatible?: boolean | null
@@ -64,6 +66,8 @@ export type GCRUMConfig = {
 	iOSAppId?: string | null
 	harmonyAppId?: string | null
 	sampleRate?: number | null
+	// Deprecated. Use sampleRate.
+	samplerate?: number | null
 	sessionOnErrorSampleRate?: number | null
 	enableNativeUserAction?: boolean | null
 	enableNativeUserView?: boolean | null
@@ -85,6 +89,8 @@ export type GCRUMConfig = {
 
 export type GCLoggerConfig = {
 	sampleRate?: number | null
+	// Deprecated. Use sampleRate.
+	samplerate?: number | null
 	enableLinkRumData?: boolean | null
 	enableCustomLog?: boolean | null
 	logCacheLimitCount?: number | null
@@ -95,6 +101,8 @@ export type GCLoggerConfig = {
 
 export type GCTraceConfig = {
 	sampleRate?: number | null
+	// Deprecated. Use sampleRate.
+	samplerate?: number | null
 	traceType?: string | null
 	enableLinkRUMData?: boolean | null
 	enableAutoTrace?: boolean | null

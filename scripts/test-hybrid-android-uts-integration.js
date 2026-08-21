@@ -64,6 +64,9 @@ assertIncludes(app, 'ft-session-replay:0.1.8', 'Android Host app Session Replay 
 assertIncludes(hbuilderReplayConfig, 'ft-session-replay:0.1.8', 'HBuilder Session Replay dependency');
 assertIncludes(packager, 'FT_REPLAY_VERSION:-0.1.8', 'Android release Session Replay default');
 assertIncludes(coreNative, 'fun sdkConfig(json: String?): Boolean', 'core Android initialization result');
+assertIncludes(coreInterface, 'offlinePackage?: boolean | null', 'core UTS Android offline package config');
+assertIncludes(coreGeneratedIndex, 'open var offlinePackage: Boolean? = null', 'generated Android offline package config');
+assertIncludes(coreGeneratedIndex, 'offlinePackage = params.offlinePackage', 'generated Android JS config bridge');
 assertIncludes(coreNative, 'fun setRumConfig(json: String?): Boolean', 'core Android RUM result');
 assertIncludes(coreUtsIndex, 'appendBridgeContextState(params)', 'core Android UTS bridge context');
 assertExcludes(coreUtsIndex, 'GCUniPluginNative.appendBridgeContext(', 'core Android UTS bridge context');
@@ -74,6 +77,11 @@ for (const [label, source] of [
   assertExcludes(source, 'fun appendBridgeContext(json: String?)', label);
   assertExcludes(source, 'fun mergeBridgeContext(', label);
   assertExcludes(source, 'sdk_bridge_info', label);
+  assertIncludes(
+    source,
+    'firstValue(params, "offlinePackage", "offlinePakcage")',
+    `${label} offline package config`
+  );
   assertIncludes(source, 'val appStartTimeNs = FTUtils.getAppStartTimeNs()', `${label} cold-start timing`);
   assertIncludes(source, 'val installTimeNs = System.nanoTime()', `${label} cold-start timing`);
   assertIncludes(

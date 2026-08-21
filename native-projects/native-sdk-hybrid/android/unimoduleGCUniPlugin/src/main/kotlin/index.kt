@@ -20,6 +20,7 @@ open class GCMobileConfig (
     open var debug: Boolean? = null,
     open var service: String? = null,
     open var autoSync: Boolean? = null,
+    open var offlinePackage: Boolean? = null,
     open var syncPageSize: Number? = null,
     open var syncSleepTime: Number? = null,
     open var enableDataIntegerCompatible: Boolean? = null,
@@ -80,6 +81,7 @@ open class GCRUMConfig (
     open var iOSAppId: String? = null,
     open var harmonyAppId: String? = null,
     open var sampleRate: Number? = null,
+    open var samplerate: Number? = null,
     open var sessionOnErrorSampleRate: Number? = null,
     open var enableNativeUserAction: Boolean? = null,
     open var enableNativeUserView: Boolean? = null,
@@ -100,6 +102,7 @@ open class GCRUMConfig (
 ) : UTSObject()
 open class GCLoggerConfig (
     open var sampleRate: Number? = null,
+    open var samplerate: Number? = null,
     open var enableLinkRumData: Boolean? = null,
     open var enableCustomLog: Boolean? = null,
     open var logCacheLimitCount: Number? = null,
@@ -109,6 +112,7 @@ open class GCLoggerConfig (
 ) : UTSObject()
 open class GCTraceConfig (
     open var sampleRate: Number? = null,
+    open var samplerate: Number? = null,
     open var traceType: String? = null,
     open var enableLinkRUMData: Boolean? = null,
     open var enableAutoTrace: Boolean? = null,
@@ -554,6 +558,7 @@ open class GCMobileConfigJSONObject : UTSJSONObject() {
     open var debug: Boolean? = null
     open var service: String? = null
     open var autoSync: Boolean? = null
+    open var offlinePackage: Boolean? = null
     open var syncPageSize: Number? = null
     open var syncSleepTime: Number? = null
     open var enableDataIntegerCompatible: Boolean? = null
@@ -584,6 +589,7 @@ open class GCRUMConfigJSONObject : UTSJSONObject() {
     open var iOSAppId: String? = null
     open var harmonyAppId: String? = null
     open var sampleRate: Number? = null
+    open var samplerate: Number? = null
     open var sessionOnErrorSampleRate: Number? = null
     open var enableNativeUserAction: Boolean? = null
     open var enableNativeUserView: Boolean? = null
@@ -604,6 +610,7 @@ open class GCRUMConfigJSONObject : UTSJSONObject() {
 }
 open class GCLoggerConfigJSONObject : UTSJSONObject() {
     open var sampleRate: Number? = null
+    open var samplerate: Number? = null
     open var enableLinkRumData: Boolean? = null
     open var enableCustomLog: Boolean? = null
     open var logCacheLimitCount: Number? = null
@@ -613,6 +620,7 @@ open class GCLoggerConfigJSONObject : UTSJSONObject() {
 }
 open class GCTraceConfigJSONObject : UTSJSONObject() {
     open var sampleRate: Number? = null
+    open var samplerate: Number? = null
     open var traceType: String? = null
     open var enableLinkRUMData: Boolean? = null
     open var enableAutoTrace: Boolean? = null
@@ -669,7 +677,7 @@ open class mobileAgentByJs : mobileAgent {
     constructor() : super() {}
     companion object {
         fun sdkConfigByJs(params: GCMobileConfigJSONObject) {
-            return mobileAgent.sdkConfig(GCMobileConfig(datakitUrl = params.datakitUrl, datawayUrl = params.datawayUrl, clientToken = params.clientToken, env = params.env, debug = params.debug, service = params.service, autoSync = params.autoSync, syncPageSize = params.syncPageSize, syncSleepTime = params.syncSleepTime, enableDataIntegerCompatible = params.enableDataIntegerCompatible, compressIntakeRequests = params.compressIntakeRequests, enableLimitWithDbSize = params.enableLimitWithDbSize, dbCacheLimit = params.dbCacheLimit, dbDiscardStrategy = params.dbDiscardStrategy, globalContext = params.globalContext, dataModifier = params.dataModifier, lineDataModifier = params.lineDataModifier, remoteConfiguration = params.remoteConfiguration, remoteConfigMiniUpdateInterval = params.remoteConfigMiniUpdateInterval, enableDataFilter = params.enableDataFilter, dataFilters = params.dataFilters))
+            return mobileAgent.sdkConfig(GCMobileConfig(datakitUrl = params.datakitUrl, datawayUrl = params.datawayUrl, clientToken = params.clientToken, env = params.env, debug = params.debug, service = params.service, autoSync = params.autoSync, offlinePackage = params.offlinePackage, syncPageSize = params.syncPageSize, syncSleepTime = params.syncSleepTime, enableDataIntegerCompatible = params.enableDataIntegerCompatible, compressIntakeRequests = params.compressIntakeRequests, enableLimitWithDbSize = params.enableLimitWithDbSize, dbCacheLimit = params.dbCacheLimit, dbDiscardStrategy = params.dbDiscardStrategy, globalContext = params.globalContext, dataModifier = params.dataModifier, lineDataModifier = params.lineDataModifier, remoteConfiguration = params.remoteConfiguration, remoteConfigMiniUpdateInterval = params.remoteConfigMiniUpdateInterval, enableDataFilter = params.enableDataFilter, dataFilters = params.dataFilters))
         }
         fun setDatakitURLByJs(params: GCDatakitURLParamsJSONObject) {
             return mobileAgent.setDatakitURL(GCDatakitURLParams(datakitUrl = params.datakitUrl))
@@ -724,7 +732,7 @@ open class rumByJs : rum {
     constructor() : super() {}
     companion object {
         fun setConfigByJs(params: GCRUMConfigJSONObject) {
-            return rum.setConfig(GCRUMConfig(androidAppId = params.androidAppId, iOSAppId = params.iOSAppId, harmonyAppId = params.harmonyAppId, sampleRate = params.sampleRate, sessionOnErrorSampleRate = params.sessionOnErrorSampleRate, enableNativeUserAction = params.enableNativeUserAction, enableNativeUserView = params.enableNativeUserView, enableNativeUserResource = params.enableNativeUserResource, enableResourceHostIP = params.enableResourceHostIP, enableTrackNativeCrash = params.enableTrackNativeCrash, enableTrackNativeAppANR = params.enableTrackNativeAppANR, enableTrackNativeFreeze = params.enableTrackNativeFreeze, nativeFreezeDurationMs = params.nativeFreezeDurationMs, errorMonitorType = params.errorMonitorType, deviceMonitorType = params.deviceMonitorType, detectFrequency = params.detectFrequency, enableTraceWebView = params.enableTraceWebView, allowWebViewHost = params.allowWebViewHost, globalContext = params.globalContext, rumCacheLimitCount = params.rumCacheLimitCount, rumDiscardStrategy = params.rumDiscardStrategy))
+            return rum.setConfig(GCRUMConfig(androidAppId = params.androidAppId, iOSAppId = params.iOSAppId, harmonyAppId = params.harmonyAppId, sampleRate = params.sampleRate, samplerate = params.samplerate, sessionOnErrorSampleRate = params.sessionOnErrorSampleRate, enableNativeUserAction = params.enableNativeUserAction, enableNativeUserView = params.enableNativeUserView, enableNativeUserResource = params.enableNativeUserResource, enableResourceHostIP = params.enableResourceHostIP, enableTrackNativeCrash = params.enableTrackNativeCrash, enableTrackNativeAppANR = params.enableTrackNativeAppANR, enableTrackNativeFreeze = params.enableTrackNativeFreeze, nativeFreezeDurationMs = params.nativeFreezeDurationMs, errorMonitorType = params.errorMonitorType, deviceMonitorType = params.deviceMonitorType, detectFrequency = params.detectFrequency, enableTraceWebView = params.enableTraceWebView, allowWebViewHost = params.allowWebViewHost, globalContext = params.globalContext, rumCacheLimitCount = params.rumCacheLimitCount, rumDiscardStrategy = params.rumDiscardStrategy))
         }
         fun startActionByJs(params: GCRUMActionParamsJSONObject) {
             return rum.startAction(GCRUMActionParams(actionName = params.actionName, actionType = params.actionType, property = params.property))
@@ -764,7 +772,7 @@ open class loggerByJs : logger {
     constructor() : super() {}
     companion object {
         fun setConfigByJs(params: GCLoggerConfigJSONObject) {
-            return logger.setConfig(GCLoggerConfig(sampleRate = params.sampleRate, enableLinkRumData = params.enableLinkRumData, enableCustomLog = params.enableCustomLog, logCacheLimitCount = params.logCacheLimitCount, discardStrategy = params.discardStrategy, logLevelFilters = params.logLevelFilters, globalContext = params.globalContext))
+            return logger.setConfig(GCLoggerConfig(sampleRate = params.sampleRate, samplerate = params.samplerate, enableLinkRumData = params.enableLinkRumData, enableCustomLog = params.enableCustomLog, logCacheLimitCount = params.logCacheLimitCount, discardStrategy = params.discardStrategy, logLevelFilters = params.logLevelFilters, globalContext = params.globalContext))
         }
         fun loggingByJs(params: GCLoggerLogParamsJSONObject) {
             return logger.logging(GCLoggerLogParams(content = params.content, status = params.status, property = params.property))
@@ -775,7 +783,7 @@ open class tracerByJs : tracer {
     constructor() : super() {}
     companion object {
         fun setConfigByJs(params: GCTraceConfigJSONObject) {
-            return tracer.setConfig(GCTraceConfig(sampleRate = params.sampleRate, traceType = params.traceType, enableLinkRUMData = params.enableLinkRUMData, enableAutoTrace = params.enableAutoTrace))
+            return tracer.setConfig(GCTraceConfig(sampleRate = params.sampleRate, samplerate = params.samplerate, traceType = params.traceType, enableLinkRUMData = params.enableLinkRUMData, enableAutoTrace = params.enableAutoTrace))
         }
         fun getTraceHeaderByJs(params: GCTraceHeaderParamsJSONObject): Any? {
             return tracer.getTraceHeader(GCTraceHeaderParams(url = params.url, key = params.key))
