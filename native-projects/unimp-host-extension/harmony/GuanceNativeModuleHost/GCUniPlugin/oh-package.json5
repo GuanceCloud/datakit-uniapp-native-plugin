@@ -1,6 +1,6 @@
 {
   "name": "@guancecloud/gc-uniplugin",
-  "version": "0.1.0",
+  "version": "0.3.0",
   "description": "Guance native Module bridge for UniMP on HarmonyOS.",
   "main": "src/main/ets/index.ets",
   "author": "Guance",
