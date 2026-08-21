@@ -10,7 +10,7 @@
 		</data>
 		<key>Headers/FTConstants.h</key>
 		<data>
-		HqK0IKqgoUWfx2pMwWuLWOqZUz4=
+		3jEQ/s5oKQCbwNpGAsR51cIVwV0=
 		</data>
 		<key>Headers/FTDataModifier.h</key>
 		<data>
@@ -40,6 +40,10 @@
 		<data>
 		5wfz/ya2XpYbefP/dt0IskNn7Ww=
 		</data>
+		<key>Headers/FTIssueDataProvider.h</key>
+		<data>
+		1OAlmYr4aCoib4jIrXotykR+iBU=
+		</data>
 		<key>Headers/FTLog.h</key>
 		<data>
 		fbzlTgkMn2EzcGqirA8D20Ejepo=
@@ -54,7 +58,7 @@
 		</data>
 		<key>Headers/FTMobileAgent.h</key>
 		<data>
-		/GVfNbGj5RweXXt61EY4yi4eih8=
+		vfpeIqj1mZt/wzx+dLvl3aDykZk=
 		</data>
 		<key>Headers/FTMobileConfig+Private.h</key>
 		<data>
@@ -86,7 +90,7 @@
 		</data>
 		<key>Headers/FTResourceContentModel.h</key>
 		<data>
-		XIHG5DkPwR8BSRekMHX2LBZvZ1E=
+		JcwI8gwT4idr5c79c5W+eEX6xrI=
 		</data>
 		<key>Headers/FTResourceMetricsModel.h</key>
 		<data>
@@ -94,7 +98,7 @@
 		</data>
 		<key>Headers/FTRumConfig.h</key>
 		<data>
-		h6XAM1uMcyotJQqxFj2nEY6hHOs=
+		gjaWXF1mcGzVIJVML4FOC4256F4=
 		</data>
 		<key>Headers/FTRumDatasProtocol.h</key>
 		<data>
@@ -102,11 +106,11 @@
 		</data>
 		<key>Headers/FTSDK.h</key>
 		<data>
-		3rfAloVxrQ1+SyE/8kersy+A4z8=
+		3HK30pNhhyZ39heGskzfrs7q6R8=
 		</data>
 		<key>Headers/FTSDKAgent.h</key>
 		<data>
-		AFBRaHAePTIop0yQkSsxnB+v4cU=
+		Ej8p2mbiyBmzkkKy3nb76+iAzko=
 		</data>
 		<key>Headers/FTSDKConfig+Private.h</key>
 		<data>
@@ -126,7 +130,7 @@
 		</data>
 		<key>Headers/FTURLSessionDelegate.h</key>
 		<data>
-		KzKPrGw8r1o4mwnZr9IYSTlkvoQ=
+		x0E8AFBDMXlWC5aRXEogbL77nQM=
 		</data>
 		<key>Headers/FTURLSessionInterceptor.h</key>
 		<data>
@@ -146,11 +150,11 @@
 		</data>
 		<key>Info.plist</key>
 		<data>
-		d5Rz3+vmpIs6QJKXnoU70itlcmY=
+		Ez+ySjr0kkClo6A6BBbjXLScVXY=
 		</data>
 		<key>Modules/GuanceSDK.swiftmodule/arm64-apple-ios-simulator.abi.json</key>
 		<data>
-		uO8uTsSimhhfJ+ut1nFxHUv9Chk=
+		AiIFuI9R7Hfgdcy5VMK3Ep9hWUE=
 		</data>
 		<key>Modules/GuanceSDK.swiftmodule/arm64-apple-ios-simulator.private.swiftinterface</key>
 		<data>
@@ -166,11 +170,11 @@
 		</data>
 		<key>Modules/GuanceSDK.swiftmodule/arm64-apple-ios-simulator.swiftmodule</key>
 		<data>
-		9V4rigBB9jc0BIWyHIsk2cr7w6A=
+		c7STrmOHVTvR807wJ8HLDx1P1bE=
 		</data>
 		<key>Modules/GuanceSDK.swiftmodule/x86_64-apple-ios-simulator.abi.json</key>
 		<data>
-		uO8uTsSimhhfJ+ut1nFxHUv9Chk=
+		AiIFuI9R7Hfgdcy5VMK3Ep9hWUE=
 		</data>
 		<key>Modules/GuanceSDK.swiftmodule/x86_64-apple-ios-simulator.private.swiftinterface</key>
 		<data>
@@ -186,7 +190,7 @@
 		</data>
 		<key>Modules/GuanceSDK.swiftmodule/x86_64-apple-ios-simulator.swiftmodule</key>
 		<data>
-		83wWmDOI9MbRN0CMlBYaJWp/q+M=
+		kbHpiSEjIdQYX2Q/1zLsusIW9FI=
 		</data>
 		<key>Modules/module.modulemap</key>
 		<data>
@@ -206,7 +210,7 @@
 		</data>
 		<key>PrivateHeaders/FTDateUtil.h</key>
 		<data>
-		P2oHbnIeY1Cka48h7H8OibJa7DM=
+		HfRzgksmkACv45YVi9KXCxdOtLA=
 		</data>
 		<key>PrivateHeaders/FTHTTPClient.h</key>
 		<data>
@@ -318,7 +322,7 @@
 		<dict>
 			<key>hash2</key>
 			<data>
-			HkhERsSqOkn8zCiUQh+qzW5xWNGsamj4jncOn5utXa8=
+			Bj6DZ6pg0XeGf/ACQskHIRMub2SoiEa5K8eak9+gz5Y=
 			</data>
 		</dict>
 		<key>Headers/FTDataModifier.h</key>
@@ -370,6 +374,13 @@
 			RXPZCbRfUdVIQ3gtabYc5CoJIyh3eyg/6PcAIZQrzCk=
 			</data>
 		</dict>
+		<key>Headers/FTIssueDataProvider.h</key>
+		<dict>
+			<key>hash2</key>
+			<data>
+			y6I80lvHNQOrVwcV3Otg/4ABeu6WMF4AdgbJ6i3a/OM=
+			</data>
+		</dict>
 		<key>Headers/FTLog.h</key>
 		<dict>
 			<key>hash2</key>
@@ -395,7 +406,7 @@
 		<dict>
 			<key>hash2</key>
 			<data>
-			ZJoY+qQGv3Qeq1xk8xyr2j3mhXFjuVSGYHJRDTED2bA=
+			cfzphnIfvJXPUVlc4z2ykwM543IO0KMD5cOKPXAcivs=
 			</data>
 		</dict>
 		<key>Headers/FTMobileConfig+Private.h</key>
@@ -451,7 +462,7 @@
 		<dict>
 			<key>hash2</key>
 			<data>
-			PAZxchymlqt5iYw//AVqIFiYMvJgPBgyQdgHg1OWUAY=
+			iTkGbkEvcpdJYWTDPgvycAKKwjdNPqsNSHMXNzkCrbw=
 			</data>
 		</dict>
 		<key>Headers/FTResourceMetricsModel.h</key>
@@ -465,7 +476,7 @@
 		<dict>
 			<key>hash2</key>
 			<data>
-			Ku1T8xhtdVrBpQf7qHfsxaatOKKCF13rZiBfTM2+tpY=
+			Eie3e2DKeMSV3e5uFT7DF/3huzLNU4cQcx2SVpaioiU=
 			</data>
 		</dict>
 		<key>Headers/FTRumDatasProtocol.h</key>
@@ -479,14 +490,14 @@
 		<dict>
 			<key>hash2</key>
 			<data>
-			AFSnwOsvSzPGnBwcJtnJmTIRpYz3WaK5EyUHEQbtlCg=
+			G1Tg92R+Fd8nNROfbuYqlhz8Y6v+XK9W7Eeii49yKjw=
 			</data>
 		</dict>
 		<key>Headers/FTSDKAgent.h</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			BSxwVP7kNZweDA3Niw6Jgzlp9H242pssBkQbVrybjTo=
+			SGf88SyUmJIsSJMIbrEgp7SsWy8fPBjj2w2g5kevAmo=
 			</data>
 		</dict>
 		<key>Headers/FTSDKConfig+Private.h</key>
@@ -521,7 +532,7 @@
 		<dict>
 			<key>hash2</key>
 			<data>
-			aJcFzfWGmgcQ3DnC2Qpejn1V74k4qRuLliJKo5KcKBQ=
+			MYhEiPEYrWMLmhKlgj1lnPsOJpfRawydbMAsX2bJnOg=
 			</data>
 		</dict>
 		<key>Headers/FTURLSessionInterceptor.h</key>
@@ -556,7 +567,7 @@
 		<dict>
 			<key>hash2</key>
 			<data>
-			GG2ARjaWQL/C0U9/qcZ1+g+pdYkpnQ3/m2IhFCrPH0U=
+			77zzt3F9pqttU+sdbYRvASrXfREEHmqICuaWwbuVVr8=
 			</data>
 		</dict>
 		<key>Modules/GuanceSDK.swiftmodule/arm64-apple-ios-simulator.private.swiftinterface</key>
@@ -584,14 +595,14 @@
 		<dict>
 			<key>hash2</key>
 			<data>
-			zjftkFKHb5t+0YIrxWVOYGLRCsD0FLOripkIfSglAOs=
+			W0QlIoYiAjU6Fs1kKjzYs3+Kz17/jFMnxD9sPMjeTZA=
 			</data>
 		</dict>
 		<key>Modules/GuanceSDK.swiftmodule/x86_64-apple-ios-simulator.abi.json</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			GG2ARjaWQL/C0U9/qcZ1+g+pdYkpnQ3/m2IhFCrPH0U=
+			77zzt3F9pqttU+sdbYRvASrXfREEHmqICuaWwbuVVr8=
 			</data>
 		</dict>
 		<key>Modules/GuanceSDK.swiftmodule/x86_64-apple-ios-simulator.private.swiftinterface</key>
@@ -619,7 +630,7 @@
 		<dict>
 			<key>hash2</key>
 			<data>
-			etEyTRYx9ckArBEr4fbRykS8dHWvr7goGycJ7baGwZk=
+			KGIEtuaR8S6N8ieXF6AL7C5Z0cTGIP+yqF57Xj3G1ns=
 			</data>
 		</dict>
 		<key>Modules/module.modulemap</key>
@@ -654,7 +665,7 @@
 		<dict>
 			<key>hash2</key>
 			<data>
-			nMcoeS9CdWiE4+Vw2erWR6tX5CFgWgtZkWntbkstZA8=
+			2/84XklSWycowZmpU4G56jaXH2Xp6cXrlYSbEFUZ68Q=
 			</data>
 		</dict>
 		<key>PrivateHeaders/FTHTTPClient.h</key>

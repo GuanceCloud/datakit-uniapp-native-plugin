@@ -1552,490 +1552,490 @@
   },
   "ConstValues": [
     {
-      "filePath": "\/Users\/hulilei\/Desktop\/work\/ft-sdk-ios\/Sources\/SessionReplay\/Recorder\/SRWireframe\/ViewTreeSnapshot\/ViewsRecorder\/SwiftUI\/DisplayList+Reflection.swift",
+      "filePath": "\/Users\/runner\/work\/datakit-ios\/datakit-ios\/Sources\/SessionReplay\/Recorder\/SRWireframe\/ViewTreeSnapshot\/ViewsRecorder\/SwiftUI\/DisplayList+Reflection.swift",
       "kind": "IntegerLiteral",
       "offset": 3576,
       "length": 1,
       "value": "0"
     },
     {
-      "filePath": "\/Users\/hulilei\/Desktop\/work\/ft-sdk-ios\/Sources\/SessionReplay\/Recorder\/SRWireframe\/ViewTreeSnapshot\/ViewsRecorder\/SwiftUI\/DisplayList+Reflection.swift",
+      "filePath": "\/Users\/runner\/work\/datakit-ios\/datakit-ios\/Sources\/SessionReplay\/Recorder\/SRWireframe\/ViewTreeSnapshot\/ViewsRecorder\/SwiftUI\/DisplayList+Reflection.swift",
       "kind": "StringLiteral",
       "offset": 3602,
       "length": 10,
       "value": "\"identity\""
     },
     {
-      "filePath": "\/Users\/hulilei\/Desktop\/work\/ft-sdk-ios\/Sources\/SessionReplay\/Recorder\/SRWireframe\/ViewTreeSnapshot\/ViewsRecorder\/SwiftUI\/DisplayList+Reflection.swift",
+      "filePath": "\/Users\/runner\/work\/datakit-ios\/datakit-ios\/Sources\/SessionReplay\/Recorder\/SRWireframe\/ViewTreeSnapshot\/ViewsRecorder\/SwiftUI\/DisplayList+Reflection.swift",
       "kind": "StringLiteral",
       "offset": 3672,
       "length": 6,
       "value": "\"clip\""
     },
     {
-      "filePath": "\/Users\/hulilei\/Desktop\/work\/ft-sdk-ios\/Sources\/SessionReplay\/Recorder\/SRWireframe\/ViewTreeSnapshot\/ViewsRecorder\/SwiftUI\/DisplayList+Reflection.swift",
+      "filePath": "\/Users\/runner\/work\/datakit-ios\/datakit-ios\/Sources\/SessionReplay\/Recorder\/SRWireframe\/ViewTreeSnapshot\/ViewsRecorder\/SwiftUI\/DisplayList+Reflection.swift",
       "kind": "StringLiteral",
       "offset": 3798,
       "length": 8,
       "value": "\"filter\""
     },
     {
-      "filePath": "\/Users\/hulilei\/Desktop\/work\/ft-sdk-ios\/Sources\/SessionReplay\/Recorder\/SRWireframe\/ViewTreeSnapshot\/ViewsRecorder\/SwiftUI\/DisplayList+Reflection.swift",
+      "filePath": "\/Users\/runner\/work\/datakit-ios\/datakit-ios\/Sources\/SessionReplay\/Recorder\/SRWireframe\/ViewTreeSnapshot\/ViewsRecorder\/SwiftUI\/DisplayList+Reflection.swift",
       "kind": "StringLiteral",
       "offset": 3896,
       "length": 15,
       "value": "\"platformGroup\""
     },
     {
-      "filePath": "\/Users\/hulilei\/Desktop\/work\/ft-sdk-ios\/Sources\/SessionReplay\/Recorder\/SRWireframe\/ViewTreeSnapshot\/ViewsRecorder\/SwiftUI\/DisplayList+Reflection.swift",
+      "filePath": "\/Users\/runner\/work\/datakit-ios\/datakit-ios\/Sources\/SessionReplay\/Recorder\/SRWireframe\/ViewTreeSnapshot\/ViewsRecorder\/SwiftUI\/DisplayList+Reflection.swift",
       "kind": "IntegerLiteral",
       "offset": 4459,
       "length": 1,
       "value": "0"
     },
     {
-      "filePath": "\/Users\/hulilei\/Desktop\/work\/ft-sdk-ios\/Sources\/SessionReplay\/Recorder\/SRWireframe\/ViewTreeSnapshot\/ViewsRecorder\/SwiftUI\/DisplayList+Reflection.swift",
+      "filePath": "\/Users\/runner\/work\/datakit-ios\/datakit-ios\/Sources\/SessionReplay\/Recorder\/SRWireframe\/ViewTreeSnapshot\/ViewsRecorder\/SwiftUI\/DisplayList+Reflection.swift",
       "kind": "StringLiteral",
       "offset": 4489,
       "length": 7,
       "value": "\"shape\""
     },
     {
-      "filePath": "\/Users\/hulilei\/Desktop\/work\/ft-sdk-ios\/Sources\/SessionReplay\/Recorder\/SRWireframe\/ViewTreeSnapshot\/ViewsRecorder\/SwiftUI\/DisplayList+Reflection.swift",
+      "filePath": "\/Users\/runner\/work\/datakit-ios\/datakit-ios\/Sources\/SessionReplay\/Recorder\/SRWireframe\/ViewTreeSnapshot\/ViewsRecorder\/SwiftUI\/DisplayList+Reflection.swift",
       "kind": "StringLiteral",
       "offset": 4649,
       "length": 6,
       "value": "\"text\""
     },
     {
-      "filePath": "\/Users\/hulilei\/Desktop\/work\/ft-sdk-ios\/Sources\/SessionReplay\/Recorder\/SRWireframe\/ViewTreeSnapshot\/ViewsRecorder\/SwiftUI\/DisplayList+Reflection.swift",
+      "filePath": "\/Users\/runner\/work\/datakit-ios\/datakit-ios\/Sources\/SessionReplay\/Recorder\/SRWireframe\/ViewTreeSnapshot\/ViewsRecorder\/SwiftUI\/DisplayList+Reflection.swift",
       "kind": "StringLiteral",
       "offset": 4769,
       "length": 14,
       "value": "\"platformView\""
     },
     {
-      "filePath": "\/Users\/hulilei\/Desktop\/work\/ft-sdk-ios\/Sources\/SessionReplay\/Recorder\/SRWireframe\/ViewTreeSnapshot\/ViewsRecorder\/SwiftUI\/DisplayList+Reflection.swift",
+      "filePath": "\/Users\/runner\/work\/datakit-ios\/datakit-ios\/Sources\/SessionReplay\/Recorder\/SRWireframe\/ViewTreeSnapshot\/ViewsRecorder\/SwiftUI\/DisplayList+Reflection.swift",
       "kind": "StringLiteral",
       "offset": 4847,
       "length": 7,
       "value": "\"image\""
     },
     {
-      "filePath": "\/Users\/hulilei\/Desktop\/work\/ft-sdk-ios\/Sources\/SessionReplay\/Recorder\/SRWireframe\/ViewTreeSnapshot\/ViewsRecorder\/SwiftUI\/DisplayList+Reflection.swift",
+      "filePath": "\/Users\/runner\/work\/datakit-ios\/datakit-ios\/Sources\/SessionReplay\/Recorder\/SRWireframe\/ViewTreeSnapshot\/ViewsRecorder\/SwiftUI\/DisplayList+Reflection.swift",
       "kind": "StringLiteral",
       "offset": 4945,
       "length": 9,
       "value": "\"drawing\""
     },
     {
-      "filePath": "\/Users\/hulilei\/Desktop\/work\/ft-sdk-ios\/Sources\/SessionReplay\/Recorder\/SRWireframe\/ViewTreeSnapshot\/ViewsRecorder\/SwiftUI\/DisplayList+Reflection.swift",
+      "filePath": "\/Users\/runner\/work\/datakit-ios\/datakit-ios\/Sources\/SessionReplay\/Recorder\/SRWireframe\/ViewTreeSnapshot\/ViewsRecorder\/SwiftUI\/DisplayList+Reflection.swift",
       "kind": "StringLiteral",
       "offset": 5243,
       "length": 7,
       "value": "\"color\""
     },
     {
-      "filePath": "\/Users\/hulilei\/Desktop\/work\/ft-sdk-ios\/Sources\/SessionReplay\/Recorder\/SRWireframe\/ViewTreeSnapshot\/ViewsRecorder\/SwiftUI\/DisplayList+Reflection.swift",
+      "filePath": "\/Users\/runner\/work\/datakit-ios\/datakit-ios\/Sources\/SessionReplay\/Recorder\/SRWireframe\/ViewTreeSnapshot\/ViewsRecorder\/SwiftUI\/DisplayList+Reflection.swift",
       "kind": "IntegerLiteral",
       "offset": 6058,
       "length": 1,
       "value": "0"
     },
     {
-      "filePath": "\/Users\/hulilei\/Desktop\/work\/ft-sdk-ios\/Sources\/SessionReplay\/Recorder\/SRWireframe\/ViewTreeSnapshot\/ViewsRecorder\/SwiftUI\/DisplayList+Reflection.swift",
+      "filePath": "\/Users\/runner\/work\/datakit-ios\/datakit-ios\/Sources\/SessionReplay\/Recorder\/SRWireframe\/ViewTreeSnapshot\/ViewsRecorder\/SwiftUI\/DisplayList+Reflection.swift",
       "kind": "StringLiteral",
       "offset": 6088,
       "length": 8,
       "value": "\"effect\""
     },
     {
-      "filePath": "\/Users\/hulilei\/Desktop\/work\/ft-sdk-ios\/Sources\/SessionReplay\/Recorder\/SRWireframe\/ViewTreeSnapshot\/ViewsRecorder\/SwiftUI\/DisplayList+Reflection.swift",
+      "filePath": "\/Users\/runner\/work\/datakit-ios\/datakit-ios\/Sources\/SessionReplay\/Recorder\/SRWireframe\/ViewTreeSnapshot\/ViewsRecorder\/SwiftUI\/DisplayList+Reflection.swift",
       "kind": "StringLiteral",
       "offset": 6232,
       "length": 9,
       "value": "\"content\""
     },
     {
-      "filePath": "\/Users\/hulilei\/Desktop\/work\/ft-sdk-ios\/Sources\/SessionReplay\/Recorder\/SRWireframe\/ViewTreeSnapshot\/ViewsRecorder\/SwiftUI\/Drawing.swift",
+      "filePath": "\/Users\/runner\/work\/datakit-ios\/datakit-ios\/Sources\/SessionReplay\/Recorder\/SRWireframe\/ViewTreeSnapshot\/ViewsRecorder\/SwiftUI\/Drawing.swift",
       "kind": "StringLiteral",
       "offset": 674,
       "length": 28,
       "value": "\"RBMovedDisplayListContents\""
     },
     {
-      "filePath": "\/Users\/hulilei\/Desktop\/work\/ft-sdk-ios\/Sources\/SessionReplay\/Recorder\/SRWireframe\/ViewTreeSnapshot\/ViewsRecorder\/SwiftUI\/Drawing.swift",
+      "filePath": "\/Users\/runner\/work\/datakit-ios\/datakit-ios\/Sources\/SessionReplay\/Recorder\/SRWireframe\/ViewTreeSnapshot\/ViewsRecorder\/SwiftUI\/Drawing.swift",
       "kind": "StringLiteral",
       "offset": 769,
       "length": 26,
       "value": "\"renderInContext:options:\""
     },
     {
-      "filePath": "\/Users\/hulilei\/Desktop\/work\/ft-sdk-ios\/Sources\/SessionReplay\/Recorder\/SRWireframe\/ViewTreeSnapshot\/ViewsRecorder\/SwiftUI\/Drawing.swift",
+      "filePath": "\/Users\/runner\/work\/datakit-ios\/datakit-ios\/Sources\/SessionReplay\/Recorder\/SRWireframe\/ViewTreeSnapshot\/ViewsRecorder\/SwiftUI\/Drawing.swift",
       "kind": "StringLiteral",
       "offset": 834,
       "length": 14,
       "value": "\"boundingRect\""
     },
     {
-      "filePath": "\/Users\/hulilei\/Desktop\/work\/ft-sdk-ios\/Sources\/SessionReplay\/Recorder\/SRWireframe\/ViewTreeSnapshot\/ViewsRecorder\/SwiftUI\/Drawing.swift",
+      "filePath": "\/Users\/runner\/work\/datakit-ios\/datakit-ios\/Sources\/SessionReplay\/Recorder\/SRWireframe\/ViewTreeSnapshot\/ViewsRecorder\/SwiftUI\/Drawing.swift",
       "kind": "StringLiteral",
       "offset": 892,
       "length": 20,
       "value": "\"rasterizationscale\""
     },
     {
-      "filePath": "\/Users\/hulilei\/Desktop\/work\/ft-sdk-ios\/Sources\/SessionReplay\/Recorder\/SRWireframe\/ViewTreeSnapshot\/ViewsRecorder\/SwiftUI\/Drawing.swift",
+      "filePath": "\/Users\/runner\/work\/datakit-ios\/datakit-ios\/Sources\/SessionReplay\/Recorder\/SRWireframe\/ViewTreeSnapshot\/ViewsRecorder\/SwiftUI\/Drawing.swift",
       "kind": "IntegerLiteral",
       "offset": 942,
       "length": 5,
       "value": "1024"
     },
     {
-      "filePath": "\/Users\/hulilei\/Desktop\/work\/ft-sdk-ios\/Sources\/SessionReplay\/Recorder\/SRWireframe\/ViewTreeSnapshot\/ViewsRecorder\/SwiftUI\/GraphicsFilter+Reflection.swift",
+      "filePath": "\/Users\/runner\/work\/datakit-ios\/datakit-ios\/Sources\/SessionReplay\/Recorder\/SRWireframe\/ViewTreeSnapshot\/ViewsRecorder\/SwiftUI\/GraphicsFilter+Reflection.swift",
       "kind": "IntegerLiteral",
       "offset": 692,
       "length": 1,
       "value": "0"
     },
     {
-      "filePath": "\/Users\/hulilei\/Desktop\/work\/ft-sdk-ios\/Sources\/SessionReplay\/Recorder\/SRWireframe\/ViewTreeSnapshot\/ViewsRecorder\/SwiftUI\/GraphicsFilter+Reflection.swift",
+      "filePath": "\/Users\/runner\/work\/datakit-ios\/datakit-ios\/Sources\/SessionReplay\/Recorder\/SRWireframe\/ViewTreeSnapshot\/ViewsRecorder\/SwiftUI\/GraphicsFilter+Reflection.swift",
       "kind": "StringLiteral",
       "offset": 722,
       "length": 15,
       "value": "\"colorMultiply\""
     },
     {
-      "filePath": "\/Users\/hulilei\/Desktop\/work\/ft-sdk-ios\/Sources\/SessionReplay\/Recorder\/SRWireframe\/ViewTreeSnapshot\/ViewsRecorder\/SwiftUI\/GraphicsImage+Reflection.swift",
+      "filePath": "\/Users\/runner\/work\/datakit-ios\/datakit-ios\/Sources\/SessionReplay\/Recorder\/SRWireframe\/ViewTreeSnapshot\/ViewsRecorder\/SwiftUI\/GraphicsImage+Reflection.swift",
       "kind": "IntegerLiteral",
       "offset": 1262,
       "length": 1,
       "value": "0"
     },
     {
-      "filePath": "\/Users\/hulilei\/Desktop\/work\/ft-sdk-ios\/Sources\/SessionReplay\/Recorder\/SRWireframe\/ViewTreeSnapshot\/ViewsRecorder\/SwiftUI\/GraphicsImage+Reflection.swift",
+      "filePath": "\/Users\/runner\/work\/datakit-ios\/datakit-ios\/Sources\/SessionReplay\/Recorder\/SRWireframe\/ViewTreeSnapshot\/ViewsRecorder\/SwiftUI\/GraphicsImage+Reflection.swift",
       "kind": "StringLiteral",
       "offset": 1292,
       "length": 9,
       "value": "\"cgImage\""
     },
     {
-      "filePath": "\/Users\/hulilei\/Desktop\/work\/ft-sdk-ios\/Sources\/SessionReplay\/Recorder\/SRWireframe\/ViewTreeSnapshot\/ViewsRecorder\/SwiftUI\/GraphicsImage+Reflection.swift",
+      "filePath": "\/Users\/runner\/work\/datakit-ios\/datakit-ios\/Sources\/SessionReplay\/Recorder\/SRWireframe\/ViewTreeSnapshot\/ViewsRecorder\/SwiftUI\/GraphicsImage+Reflection.swift",
       "kind": "StringLiteral",
       "offset": 1386,
       "length": 13,
       "value": "\"vectorLayer\""
     },
     {
-      "filePath": "\/Users\/hulilei\/Desktop\/work\/ft-sdk-ios\/Sources\/SessionReplay\/Recorder\/SRWireframe\/ViewTreeSnapshot\/ViewsRecorder\/SwiftUI\/GraphicsImage+Reflection.swift",
+      "filePath": "\/Users\/runner\/work\/datakit-ios\/datakit-ios\/Sources\/SessionReplay\/Recorder\/SRWireframe\/ViewTreeSnapshot\/ViewsRecorder\/SwiftUI\/GraphicsImage+Reflection.swift",
       "kind": "IntegerLiteral",
       "offset": 1745,
       "length": 1,
       "value": "0"
     },
     {
-      "filePath": "\/Users\/hulilei\/Desktop\/work\/ft-sdk-ios\/Sources\/SessionReplay\/Recorder\/SRWireframe\/ViewTreeSnapshot\/ViewsRecorder\/SwiftUI\/GraphicsImage+Reflection.swift",
+      "filePath": "\/Users\/runner\/work\/datakit-ios\/datakit-ios\/Sources\/SessionReplay\/Recorder\/SRWireframe\/ViewTreeSnapshot\/ViewsRecorder\/SwiftUI\/GraphicsImage+Reflection.swift",
       "kind": "StringLiteral",
       "offset": 1775,
       "length": 8,
       "value": "\"bundle\""
     },
     {
-      "filePath": "\/Users\/hulilei\/Desktop\/work\/ft-sdk-ios\/Sources\/SessionReplay\/Recorder\/SRWireframe\/ViewTreeSnapshot\/ViewsRecorder\/SwiftUI\/ReflectionMirror.swift",
+      "filePath": "\/Users\/runner\/work\/datakit-ios\/datakit-ios\/Sources\/SessionReplay\/Recorder\/SRWireframe\/ViewTreeSnapshot\/ViewsRecorder\/SwiftUI\/ReflectionMirror.swift",
       "kind": "Array",
       "offset": 1799,
       "length": 2,
       "value": "[]"
     },
     {
-      "filePath": "\/Users\/hulilei\/Desktop\/work\/ft-sdk-ios\/Sources\/SessionReplay\/Recorder\/SRWireframe\/ViewTreeSnapshot\/ViewsRecorder\/SwiftUI\/ReflectionMirror.swift",
+      "filePath": "\/Users\/runner\/work\/datakit-ios\/datakit-ios\/Sources\/SessionReplay\/Recorder\/SRWireframe\/ViewTreeSnapshot\/ViewsRecorder\/SwiftUI\/ReflectionMirror.swift",
       "kind": "StringLiteral",
       "offset": 3858,
       "length": 2,
       "value": "\"\""
     },
     {
-      "filePath": "\/Users\/hulilei\/Desktop\/work\/ft-sdk-ios\/Sources\/SessionReplay\/Recorder\/SRWireframe\/ViewTreeSnapshot\/ViewsRecorder\/SwiftUI\/ReflectionMirror.swift",
+      "filePath": "\/Users\/runner\/work\/datakit-ios\/datakit-ios\/Sources\/SessionReplay\/Recorder\/SRWireframe\/ViewTreeSnapshot\/ViewsRecorder\/SwiftUI\/ReflectionMirror.swift",
       "kind": "IntegerLiteral",
       "offset": 4537,
       "length": 1,
       "value": "0"
     },
     {
-      "filePath": "\/Users\/hulilei\/Desktop\/work\/ft-sdk-ios\/Sources\/SessionReplay\/Recorder\/SRWireframe\/ViewTreeSnapshot\/ViewsRecorder\/SwiftUI\/ReflectionMirror.swift",
+      "filePath": "\/Users\/runner\/work\/datakit-ios\/datakit-ios\/Sources\/SessionReplay\/Recorder\/SRWireframe\/ViewTreeSnapshot\/ViewsRecorder\/SwiftUI\/ReflectionMirror.swift",
       "kind": "IntegerLiteral",
       "offset": 4618,
       "length": 1,
       "value": "0"
     },
     {
-      "filePath": "\/Users\/hulilei\/Desktop\/work\/ft-sdk-ios\/Sources\/SessionReplay\/Recorder\/SRWireframe\/ViewTreeSnapshot\/ViewsRecorder\/SwiftUI\/ReflectionMirror.swift",
+      "filePath": "\/Users\/runner\/work\/datakit-ios\/datakit-ios\/Sources\/SessionReplay\/Recorder\/SRWireframe\/ViewTreeSnapshot\/ViewsRecorder\/SwiftUI\/ReflectionMirror.swift",
       "kind": "IntegerLiteral",
       "offset": 8974,
       "length": 1,
       "value": "0"
     },
     {
-      "filePath": "\/Users\/hulilei\/Desktop\/work\/ft-sdk-ios\/Sources\/SessionReplay\/Recorder\/SRWireframe\/ViewTreeSnapshot\/ViewsRecorder\/SwiftUI\/ReflectionMirror.swift",
+      "filePath": "\/Users\/runner\/work\/datakit-ios\/datakit-ios\/Sources\/SessionReplay\/Recorder\/SRWireframe\/ViewTreeSnapshot\/ViewsRecorder\/SwiftUI\/ReflectionMirror.swift",
       "kind": "IntegerLiteral",
       "offset": 8996,
       "length": 5,
       "value": "0x200"
     },
     {
-      "filePath": "\/Users\/hulilei\/Desktop\/work\/ft-sdk-ios\/Sources\/SessionReplay\/Recorder\/SRWireframe\/ViewTreeSnapshot\/ViewsRecorder\/SwiftUI\/ReflectionMirror.swift",
+      "filePath": "\/Users\/runner\/work\/datakit-ios\/datakit-ios\/Sources\/SessionReplay\/Recorder\/SRWireframe\/ViewTreeSnapshot\/ViewsRecorder\/SwiftUI\/ReflectionMirror.swift",
       "kind": "IntegerLiteral",
       "offset": 9020,
       "length": 5,
       "value": "0x201"
     },
     {
-      "filePath": "\/Users\/hulilei\/Desktop\/work\/ft-sdk-ios\/Sources\/SessionReplay\/Recorder\/SRWireframe\/ViewTreeSnapshot\/ViewsRecorder\/SwiftUI\/ReflectionMirror.swift",
+      "filePath": "\/Users\/runner\/work\/datakit-ios\/datakit-ios\/Sources\/SessionReplay\/Recorder\/SRWireframe\/ViewTreeSnapshot\/ViewsRecorder\/SwiftUI\/ReflectionMirror.swift",
       "kind": "IntegerLiteral",
       "offset": 9046,
       "length": 5,
       "value": "0x202"
     },
     {
-      "filePath": "\/Users\/hulilei\/Desktop\/work\/ft-sdk-ios\/Sources\/SessionReplay\/Recorder\/SRWireframe\/ViewTreeSnapshot\/ViewsRecorder\/SwiftUI\/ReflectionMirror.swift",
+      "filePath": "\/Users\/runner\/work\/datakit-ios\/datakit-ios\/Sources\/SessionReplay\/Recorder\/SRWireframe\/ViewTreeSnapshot\/ViewsRecorder\/SwiftUI\/ReflectionMirror.swift",
       "kind": "IntegerLiteral",
       "offset": 9076,
       "length": 5,
       "value": "0x203"
     },
     {
-      "filePath": "\/Users\/hulilei\/Desktop\/work\/ft-sdk-ios\/Sources\/SessionReplay\/Recorder\/SRWireframe\/ViewTreeSnapshot\/ViewsRecorder\/SwiftUI\/ReflectionMirror.swift",
+      "filePath": "\/Users\/runner\/work\/datakit-ios\/datakit-ios\/Sources\/SessionReplay\/Recorder\/SRWireframe\/ViewTreeSnapshot\/ViewsRecorder\/SwiftUI\/ReflectionMirror.swift",
       "kind": "IntegerLiteral",
       "offset": 9114,
       "length": 5,
       "value": "0x204"
     },
     {
-      "filePath": "\/Users\/hulilei\/Desktop\/work\/ft-sdk-ios\/Sources\/SessionReplay\/Recorder\/SRWireframe\/ViewTreeSnapshot\/ViewsRecorder\/SwiftUI\/ReflectionMirror.swift",
+      "filePath": "\/Users\/runner\/work\/datakit-ios\/datakit-ios\/Sources\/SessionReplay\/Recorder\/SRWireframe\/ViewTreeSnapshot\/ViewsRecorder\/SwiftUI\/ReflectionMirror.swift",
       "kind": "IntegerLiteral",
       "offset": 9138,
       "length": 5,
       "value": "0x300"
     },
     {
-      "filePath": "\/Users\/hulilei\/Desktop\/work\/ft-sdk-ios\/Sources\/SessionReplay\/Recorder\/SRWireframe\/ViewTreeSnapshot\/ViewsRecorder\/SwiftUI\/ReflectionMirror.swift",
+      "filePath": "\/Users\/runner\/work\/datakit-ios\/datakit-ios\/Sources\/SessionReplay\/Recorder\/SRWireframe\/ViewTreeSnapshot\/ViewsRecorder\/SwiftUI\/ReflectionMirror.swift",
       "kind": "IntegerLiteral",
       "offset": 9161,
       "length": 5,
       "value": "0x301"
     },
     {
-      "filePath": "\/Users\/hulilei\/Desktop\/work\/ft-sdk-ios\/Sources\/SessionReplay\/Recorder\/SRWireframe\/ViewTreeSnapshot\/ViewsRecorder\/SwiftUI\/ReflectionMirror.swift",
+      "filePath": "\/Users\/runner\/work\/datakit-ios\/datakit-ios\/Sources\/SessionReplay\/Recorder\/SRWireframe\/ViewTreeSnapshot\/ViewsRecorder\/SwiftUI\/ReflectionMirror.swift",
       "kind": "IntegerLiteral",
       "offset": 9187,
       "length": 5,
       "value": "0x302"
     },
     {
-      "filePath": "\/Users\/hulilei\/Desktop\/work\/ft-sdk-ios\/Sources\/SessionReplay\/Recorder\/SRWireframe\/ViewTreeSnapshot\/ViewsRecorder\/SwiftUI\/ReflectionMirror.swift",
+      "filePath": "\/Users\/runner\/work\/datakit-ios\/datakit-ios\/Sources\/SessionReplay\/Recorder\/SRWireframe\/ViewTreeSnapshot\/ViewsRecorder\/SwiftUI\/ReflectionMirror.swift",
       "kind": "IntegerLiteral",
       "offset": 9216,
       "length": 5,
       "value": "0x303"
     },
     {
-      "filePath": "\/Users\/hulilei\/Desktop\/work\/ft-sdk-ios\/Sources\/SessionReplay\/Recorder\/SRWireframe\/ViewTreeSnapshot\/ViewsRecorder\/SwiftUI\/ReflectionMirror.swift",
+      "filePath": "\/Users\/runner\/work\/datakit-ios\/datakit-ios\/Sources\/SessionReplay\/Recorder\/SRWireframe\/ViewTreeSnapshot\/ViewsRecorder\/SwiftUI\/ReflectionMirror.swift",
       "kind": "IntegerLiteral",
       "offset": 9242,
       "length": 5,
       "value": "0x304"
     },
     {
-      "filePath": "\/Users\/hulilei\/Desktop\/work\/ft-sdk-ios\/Sources\/SessionReplay\/Recorder\/SRWireframe\/ViewTreeSnapshot\/ViewsRecorder\/SwiftUI\/ReflectionMirror.swift",
+      "filePath": "\/Users\/runner\/work\/datakit-ios\/datakit-ios\/Sources\/SessionReplay\/Recorder\/SRWireframe\/ViewTreeSnapshot\/ViewsRecorder\/SwiftUI\/ReflectionMirror.swift",
       "kind": "IntegerLiteral",
       "offset": 9276,
       "length": 5,
       "value": "0x305"
     },
     {
-      "filePath": "\/Users\/hulilei\/Desktop\/work\/ft-sdk-ios\/Sources\/SessionReplay\/Recorder\/SRWireframe\/ViewTreeSnapshot\/ViewsRecorder\/SwiftUI\/ReflectionMirror.swift",
+      "filePath": "\/Users\/runner\/work\/datakit-ios\/datakit-ios\/Sources\/SessionReplay\/Recorder\/SRWireframe\/ViewTreeSnapshot\/ViewsRecorder\/SwiftUI\/ReflectionMirror.swift",
       "kind": "IntegerLiteral",
       "offset": 9313,
       "length": 5,
       "value": "0x306"
     },
     {
-      "filePath": "\/Users\/hulilei\/Desktop\/work\/ft-sdk-ios\/Sources\/SessionReplay\/Recorder\/SRWireframe\/ViewTreeSnapshot\/ViewsRecorder\/SwiftUI\/ReflectionMirror.swift",
+      "filePath": "\/Users\/runner\/work\/datakit-ios\/datakit-ios\/Sources\/SessionReplay\/Recorder\/SRWireframe\/ViewTreeSnapshot\/ViewsRecorder\/SwiftUI\/ReflectionMirror.swift",
       "kind": "IntegerLiteral",
       "offset": 9350,
       "length": 5,
       "value": "0x307"
     },
     {
-      "filePath": "\/Users\/hulilei\/Desktop\/work\/ft-sdk-ios\/Sources\/SessionReplay\/Recorder\/SRWireframe\/ViewTreeSnapshot\/ViewsRecorder\/SwiftUI\/ReflectionMirror.swift",
+      "filePath": "\/Users\/runner\/work\/datakit-ios\/datakit-ios\/Sources\/SessionReplay\/Recorder\/SRWireframe\/ViewTreeSnapshot\/ViewsRecorder\/SwiftUI\/ReflectionMirror.swift",
       "kind": "IntegerLiteral",
       "offset": 9385,
       "length": 5,
       "value": "0x400"
     },
     {
-      "filePath": "\/Users\/hulilei\/Desktop\/work\/ft-sdk-ios\/Sources\/SessionReplay\/Recorder\/SRWireframe\/ViewTreeSnapshot\/ViewsRecorder\/SwiftUI\/ReflectionMirror.swift",
+      "filePath": "\/Users\/runner\/work\/datakit-ios\/datakit-ios\/Sources\/SessionReplay\/Recorder\/SRWireframe\/ViewTreeSnapshot\/ViewsRecorder\/SwiftUI\/ReflectionMirror.swift",
       "kind": "IntegerLiteral",
       "offset": 9427,
       "length": 5,
       "value": "0x500"
     },
     {
-      "filePath": "\/Users\/hulilei\/Desktop\/work\/ft-sdk-ios\/Sources\/SessionReplay\/Recorder\/SRWireframe\/ViewTreeSnapshot\/ViewsRecorder\/SwiftUI\/ReflectionMirror.swift",
+      "filePath": "\/Users\/runner\/work\/datakit-ios\/datakit-ios\/Sources\/SessionReplay\/Recorder\/SRWireframe\/ViewTreeSnapshot\/ViewsRecorder\/SwiftUI\/ReflectionMirror.swift",
       "kind": "IntegerLiteral",
       "offset": 9456,
       "length": 5,
       "value": "0x501"
     },
     {
-      "filePath": "\/Users\/hulilei\/Desktop\/work\/ft-sdk-ios\/Sources\/SessionReplay\/Recorder\/SRWireframe\/ViewTreeSnapshot\/ViewsRecorder\/SwiftUI\/ReflectionMirror.swift",
+      "filePath": "\/Users\/runner\/work\/datakit-ios\/datakit-ios\/Sources\/SessionReplay\/Recorder\/SRWireframe\/ViewTreeSnapshot\/ViewsRecorder\/SwiftUI\/ReflectionMirror.swift",
       "kind": "IntegerLiteral",
       "offset": 9478,
       "length": 5,
       "value": "0x502"
     },
     {
-      "filePath": "\/Users\/hulilei\/Desktop\/work\/ft-sdk-ios\/Sources\/SessionReplay\/Recorder\/SRWireframe\/ViewTreeSnapshot\/ViewsRecorder\/SwiftUI\/ReflectionMirror.swift",
+      "filePath": "\/Users\/runner\/work\/datakit-ios\/datakit-ios\/Sources\/SessionReplay\/Recorder\/SRWireframe\/ViewTreeSnapshot\/ViewsRecorder\/SwiftUI\/ReflectionMirror.swift",
       "kind": "IntegerLiteral",
       "offset": 9499,
       "length": 5,
       "value": "0x503"
     },
     {
-      "filePath": "\/Users\/hulilei\/Desktop\/work\/ft-sdk-ios\/Sources\/SessionReplay\/Recorder\/SRWireframe\/ViewTreeSnapshot\/ViewsRecorder\/SwiftUI\/ReflectionMirror.swift",
+      "filePath": "\/Users\/runner\/work\/datakit-ios\/datakit-ios\/Sources\/SessionReplay\/Recorder\/SRWireframe\/ViewTreeSnapshot\/ViewsRecorder\/SwiftUI\/ReflectionMirror.swift",
       "kind": "IntegerLiteral",
       "offset": 9524,
       "length": 5,
       "value": "0x7FF"
     },
     {
-      "filePath": "\/Users\/hulilei\/Desktop\/work\/ft-sdk-ios\/Sources\/SessionReplay\/Recorder\/SRWireframe\/ViewTreeSnapshot\/ViewsRecorder\/SwiftUI\/ShapeResource.swift",
+      "filePath": "\/Users\/runner\/work\/datakit-ios\/datakit-ios\/Sources\/SessionReplay\/Recorder\/SRWireframe\/ViewTreeSnapshot\/ViewsRecorder\/SwiftUI\/ShapeResource.swift",
       "kind": "StringLiteral",
       "offset": 617,
       "length": 15,
       "value": "\"image\/svg+xml\""
     },
     {
-      "filePath": "\/Users\/hulilei\/Desktop\/work\/ft-sdk-ios\/Sources\/SessionReplay\/Recorder\/SRWireframe\/ViewTreeSnapshot\/ViewsRecorder\/SwiftUI\/FTSwiftUIReflection.swift",
+      "filePath": "\/Users\/runner\/work\/datakit-ios\/datakit-ios\/Sources\/SessionReplay\/Recorder\/SRWireframe\/ViewTreeSnapshot\/ViewsRecorder\/SwiftUI\/FTSwiftUIReflection.swift",
       "kind": "IntegerLiteral",
       "offset": 2950,
       "length": 1,
       "value": "0"
     },
     {
-      "filePath": "\/Users\/hulilei\/Desktop\/work\/ft-sdk-ios\/Sources\/SessionReplay\/Recorder\/SRWireframe\/ViewTreeSnapshot\/ViewsRecorder\/SwiftUI\/FTSwiftUIReflection.swift",
+      "filePath": "\/Users\/runner\/work\/datakit-ios\/datakit-ios\/Sources\/SessionReplay\/Recorder\/SRWireframe\/ViewTreeSnapshot\/ViewsRecorder\/SwiftUI\/FTSwiftUIReflection.swift",
       "kind": "IntegerLiteral",
       "offset": 3166,
       "length": 1,
       "value": "0"
     },
     {
-      "filePath": "\/Users\/hulilei\/Desktop\/work\/ft-sdk-ios\/Sources\/SessionReplay\/Recorder\/SRWireframe\/ViewTreeSnapshot\/ViewsRecorder\/SwiftUI\/FTSwiftUIReflection.swift",
+      "filePath": "\/Users\/runner\/work\/datakit-ios\/datakit-ios\/Sources\/SessionReplay\/Recorder\/SRWireframe\/ViewTreeSnapshot\/ViewsRecorder\/SwiftUI\/FTSwiftUIReflection.swift",
       "kind": "IntegerLiteral",
       "offset": 3201,
       "length": 1,
       "value": "0"
     },
     {
-      "filePath": "\/Users\/hulilei\/Desktop\/work\/ft-sdk-ios\/Sources\/SessionReplay\/Recorder\/SRWireframe\/ViewTreeSnapshot\/ViewsRecorder\/SwiftUI\/FTSwiftUIReflection.swift",
+      "filePath": "\/Users\/runner\/work\/datakit-ios\/datakit-ios\/Sources\/SessionReplay\/Recorder\/SRWireframe\/ViewTreeSnapshot\/ViewsRecorder\/SwiftUI\/FTSwiftUIReflection.swift",
       "kind": "IntegerLiteral",
       "offset": 3231,
       "length": 1,
       "value": "1"
     },
     {
-      "filePath": "\/Users\/hulilei\/Desktop\/work\/ft-sdk-ios\/Sources\/SessionReplay\/Recorder\/SRWireframe\/ViewTreeSnapshot\/ViewsRecorder\/SwiftUI\/FTSwiftUIReflection.swift",
+      "filePath": "\/Users\/runner\/work\/datakit-ios\/datakit-ios\/Sources\/SessionReplay\/Recorder\/SRWireframe\/ViewTreeSnapshot\/ViewsRecorder\/SwiftUI\/FTSwiftUIReflection.swift",
       "kind": "IntegerLiteral",
       "offset": 4824,
       "length": 1,
       "value": "1"
     },
     {
-      "filePath": "\/Users\/hulilei\/Desktop\/work\/ft-sdk-ios\/Sources\/SessionReplay\/Recorder\/SRWireframe\/ViewTreeSnapshot\/ViewsRecorder\/SwiftUI\/FTSwiftUIReflection.swift",
+      "filePath": "\/Users\/runner\/work\/datakit-ios\/datakit-ios\/Sources\/SessionReplay\/Recorder\/SRWireframe\/ViewTreeSnapshot\/ViewsRecorder\/SwiftUI\/FTSwiftUIReflection.swift",
       "kind": "IntegerLiteral",
       "offset": 4963,
       "length": 1,
       "value": "0"
     },
     {
-      "filePath": "\/Users\/hulilei\/Desktop\/work\/ft-sdk-ios\/Sources\/SessionReplay\/Recorder\/SRWireframe\/ViewTreeSnapshot\/ViewsRecorder\/SwiftUI\/FTSwiftUIReflection.swift",
+      "filePath": "\/Users\/runner\/work\/datakit-ios\/datakit-ios\/Sources\/SessionReplay\/Recorder\/SRWireframe\/ViewTreeSnapshot\/ViewsRecorder\/SwiftUI\/FTSwiftUIReflection.swift",
       "kind": "IntegerLiteral",
       "offset": 5011,
       "length": 1,
       "value": "0"
     },
     {
-      "filePath": "\/Users\/hulilei\/Desktop\/work\/ft-sdk-ios\/Sources\/SessionReplay\/Recorder\/SRWireframe\/ViewTreeSnapshot\/ViewsRecorder\/SwiftUI\/FTSwiftUIReflection.swift",
+      "filePath": "\/Users\/runner\/work\/datakit-ios\/datakit-ios\/Sources\/SessionReplay\/Recorder\/SRWireframe\/ViewTreeSnapshot\/ViewsRecorder\/SwiftUI\/FTSwiftUIReflection.swift",
       "kind": "IntegerLiteral",
       "offset": 5054,
       "length": 1,
       "value": "0"
     },
     {
-      "filePath": "\/Users\/hulilei\/Desktop\/work\/ft-sdk-ios\/Sources\/SessionReplay\/Recorder\/SRWireframe\/ViewTreeSnapshot\/ViewsRecorder\/SwiftUI\/FTSwiftUIReflection.swift",
+      "filePath": "\/Users\/runner\/work\/datakit-ios\/datakit-ios\/Sources\/SessionReplay\/Recorder\/SRWireframe\/ViewTreeSnapshot\/ViewsRecorder\/SwiftUI\/FTSwiftUIReflection.swift",
       "kind": "IntegerLiteral",
       "offset": 5098,
       "length": 1,
       "value": "0"
     },
     {
-      "filePath": "\/Users\/hulilei\/Desktop\/work\/ft-sdk-ios\/Sources\/SessionReplay\/Recorder\/SRWireframe\/ViewTreeSnapshot\/ViewsRecorder\/SwiftUI\/FTSwiftUIReflection.swift",
+      "filePath": "\/Users\/runner\/work\/datakit-ios\/datakit-ios\/Sources\/SessionReplay\/Recorder\/SRWireframe\/ViewTreeSnapshot\/ViewsRecorder\/SwiftUI\/FTSwiftUIReflection.swift",
       "kind": "IntegerLiteral",
       "offset": 5143,
       "length": 1,
       "value": "0"
     },
     {
-      "filePath": "\/Users\/hulilei\/Desktop\/work\/ft-sdk-ios\/Sources\/SessionReplay\/Recorder\/SRWireframe\/ViewTreeSnapshot\/ViewsRecorder\/SwiftUI\/SwiftUIWireframesBuilder.swift",
+      "filePath": "\/Users\/runner\/work\/datakit-ios\/datakit-ios\/Sources\/SessionReplay\/Recorder\/SRWireframe\/ViewTreeSnapshot\/ViewsRecorder\/SwiftUI\/SwiftUIWireframesBuilder.swift",
       "kind": "IntegerLiteral",
       "offset": 606,
       "length": 1,
       "value": "0"
     },
     {
-      "filePath": "\/Users\/hulilei\/Desktop\/work\/ft-sdk-ios\/Sources\/SessionReplay\/Recorder\/SRWireframe\/ViewTreeSnapshot\/ViewsRecorder\/SwiftUI\/SwiftUIWireframesBuilder.swift",
+      "filePath": "\/Users\/runner\/work\/datakit-ios\/datakit-ios\/Sources\/SessionReplay\/Recorder\/SRWireframe\/ViewTreeSnapshot\/ViewsRecorder\/SwiftUI\/SwiftUIWireframesBuilder.swift",
       "kind": "IntegerLiteral",
       "offset": 630,
       "length": 1,
       "value": "1"
     },
     {
-      "filePath": "\/Users\/hulilei\/Desktop\/work\/ft-sdk-ios\/Sources\/SessionReplay\/Recorder\/SRWireframe\/ViewTreeSnapshot\/ViewsRecorder\/SwiftUI\/SwiftUIWireframesBuilder.swift",
+      "filePath": "\/Users\/runner\/work\/datakit-ios\/datakit-ios\/Sources\/SessionReplay\/Recorder\/SRWireframe\/ViewTreeSnapshot\/ViewsRecorder\/SwiftUI\/SwiftUIWireframesBuilder.swift",
       "kind": "IntegerLiteral",
       "offset": 655,
       "length": 1,
       "value": "2"
     },
     {
-      "filePath": "\/Users\/hulilei\/Desktop\/work\/ft-sdk-ios\/Sources\/SessionReplay\/Recorder\/SRWireframe\/ViewTreeSnapshot\/ViewsRecorder\/SwiftUI\/SwiftUIWireframesBuilder.swift",
+      "filePath": "\/Users\/runner\/work\/datakit-ios\/datakit-ios\/Sources\/SessionReplay\/Recorder\/SRWireframe\/ViewTreeSnapshot\/ViewsRecorder\/SwiftUI\/SwiftUIWireframesBuilder.swift",
       "kind": "IntegerLiteral",
       "offset": 686,
       "length": 1,
       "value": "3"
     },
     {
-      "filePath": "\/Users\/hulilei\/Desktop\/work\/ft-sdk-ios\/Sources\/SessionReplay\/Recorder\/SRWireframe\/ViewTreeSnapshot\/ViewsRecorder\/SwiftUI\/SwiftUIWireframesBuilder.swift",
+      "filePath": "\/Users\/runner\/work\/datakit-ios\/datakit-ios\/Sources\/SessionReplay\/Recorder\/SRWireframe\/ViewTreeSnapshot\/ViewsRecorder\/SwiftUI\/SwiftUIWireframesBuilder.swift",
       "kind": "IntegerLiteral",
       "offset": 757,
       "length": 1,
       "value": "0"
     },
     {
-      "filePath": "\/Users\/hulilei\/Desktop\/work\/ft-sdk-ios\/Sources\/SessionReplay\/Recorder\/SRWireframe\/ViewTreeSnapshot\/ViewsRecorder\/SwiftUI\/SwiftUIWireframesBuilder.swift",
+      "filePath": "\/Users\/runner\/work\/datakit-ios\/datakit-ios\/Sources\/SessionReplay\/Recorder\/SRWireframe\/ViewTreeSnapshot\/ViewsRecorder\/SwiftUI\/SwiftUIWireframesBuilder.swift",
       "kind": "IntegerLiteral",
       "offset": 784,
       "length": 1,
       "value": "1"
     },
     {
-      "filePath": "\/Users\/hulilei\/Desktop\/work\/ft-sdk-ios\/Sources\/SessionReplay\/Recorder\/SRWireframe\/ViewTreeSnapshot\/ViewsRecorder\/SwiftUI\/SwiftUIWireframesBuilder.swift",
+      "filePath": "\/Users\/runner\/work\/datakit-ios\/datakit-ios\/Sources\/SessionReplay\/Recorder\/SRWireframe\/ViewTreeSnapshot\/ViewsRecorder\/SwiftUI\/SwiftUIWireframesBuilder.swift",
       "kind": "IntegerLiteral",
       "offset": 812,
       "length": 1,
       "value": "2"
     },
     {
-      "filePath": "\/Users\/hulilei\/Desktop\/work\/ft-sdk-ios\/Sources\/SessionReplay\/Recorder\/SRWireframe\/ViewTreeSnapshot\/ViewsRecorder\/SwiftUI\/SwiftUIWireframesBuilder.swift",
+      "filePath": "\/Users\/runner\/work\/datakit-ios\/datakit-ios\/Sources\/SessionReplay\/Recorder\/SRWireframe\/ViewTreeSnapshot\/ViewsRecorder\/SwiftUI\/SwiftUIWireframesBuilder.swift",
       "kind": "Array",
       "offset": 951,
       "length": 2,

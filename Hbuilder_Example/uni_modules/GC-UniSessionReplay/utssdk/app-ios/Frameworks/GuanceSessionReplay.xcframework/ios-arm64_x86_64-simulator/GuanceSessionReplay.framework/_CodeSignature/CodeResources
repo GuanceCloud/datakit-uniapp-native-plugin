@@ -6,19 +6,19 @@
 	<dict>
 		<key>Headers/FTRumSessionReplay.h</key>
 		<data>
-		xJtsgil0BAxG6BOGkGBuQHaTiNs=
+		iWCHEnSh5lNXJdtJjG8mTaFaIiM=
 		</data>
 		<key>Headers/FTSessionReplay.h</key>
 		<data>
-		yRtLCzNIejYVz9EV6RdDGykCzsg=
+		r0F9Pid4WVAUwvMtVKXYLeNHuhw=
 		</data>
 		<key>Headers/FTSessionReplayConfig.h</key>
 		<data>
-		nyEojWr7KCK0xEb2i6LzxQvdWN4=
+		vn6w/cFOtMDKHiJLrmr1G3oQLgg=
 		</data>
 		<key>Headers/FTSessionReplayPrivacyOverrides.h</key>
 		<data>
-		EFhwAoaUpXQUHL9l1opPqDKA9FM=
+		FgpuXPGPI1KNjy6Dzc8Xwsu6uDc=
 		</data>
 		<key>Headers/GuanceSessionReplay-Swift.h</key>
 		<data>
@@ -26,7 +26,11 @@
 		</data>
 		<key>Headers/GuanceSessionReplay.h</key>
 		<data>
-		V0lTxTdYtQU7SI2XmQnycSAKNE0=
+		yPM74JMDpFZ+31a4sIpiG/WiwJE=
+		</data>
+		<key>Headers/NSView+FTSRPrivacy.h</key>
+		<data>
+		kaND7oHQgn9X4+5C5JbBPClza40=
 		</data>
 		<key>Headers/UIView+FTSRPrivacy.h</key>
 		<data>
@@ -34,11 +38,11 @@
 		</data>
 		<key>Info.plist</key>
 		<data>
-		Olefk5zRljJfUZurY7lW+zFdmQU=
+		HvCbMVpK3rCqUK3dgLuIEyrBR3U=
 		</data>
 		<key>Modules/GuanceSessionReplay.swiftmodule/arm64-apple-ios-simulator.abi.json</key>
 		<data>
-		w2eUfNtytppzSPHbdWc49sfGA0o=
+		Lg3BC/NSHpzz5MTmAuv0fkF4mdQ=
 		</data>
 		<key>Modules/GuanceSessionReplay.swiftmodule/arm64-apple-ios-simulator.private.swiftinterface</key>
 		<data>
@@ -54,11 +58,11 @@
 		</data>
 		<key>Modules/GuanceSessionReplay.swiftmodule/arm64-apple-ios-simulator.swiftmodule</key>
 		<data>
-		WXPy+imbWYad/Rljll+yOVhBXFk=
+		j4B1A01NF8a4Wz5JEXX7jAKXd0E=
 		</data>
 		<key>Modules/GuanceSessionReplay.swiftmodule/x86_64-apple-ios-simulator.abi.json</key>
 		<data>
-		w2eUfNtytppzSPHbdWc49sfGA0o=
+		Lg3BC/NSHpzz5MTmAuv0fkF4mdQ=
 		</data>
 		<key>Modules/GuanceSessionReplay.swiftmodule/x86_64-apple-ios-simulator.private.swiftinterface</key>
 		<data>
@@ -74,7 +78,7 @@
 		</data>
 		<key>Modules/GuanceSessionReplay.swiftmodule/x86_64-apple-ios-simulator.swiftmodule</key>
 		<data>
-		rQQslGcewkB/IRA/0cYsfr8A7V4=
+		ezNhtRSgo8qZVl0kzKku7xVutTw=
 		</data>
 		<key>Modules/module.modulemap</key>
 		<data>
@@ -91,28 +95,28 @@
 		<dict>
 			<key>hash2</key>
 			<data>
-			o6Vykof9ZHWBKq74j66mY1KZY3lxUg367idt6d5KqWY=
+			3Vy/bTo5m4buJCXarR0VVOQr4S+u3X9p77dC8KFVSEM=
 			</data>
 		</dict>
 		<key>Headers/FTSessionReplay.h</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			0iAPWoObD7rUk5wXLwZm6YUv+U7B2Ngm0P8IaPJEZOI=
+			BgatpJZHF7dREGAVjtZjYjZTHadh0oluLVFNxEZdttA=
 			</data>
 		</dict>
 		<key>Headers/FTSessionReplayConfig.h</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			ZaM5UH6YSiIaarRS2PgeofkPfakorY/K84HVOEJ8pnw=
+			X0pr9nodtZEf17yVY1N+VXteyEo8QDvvsvksdi/kClQ=
 			</data>
 		</dict>
 		<key>Headers/FTSessionReplayPrivacyOverrides.h</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			jJfTXiBgpHY8FXj3TcTyAbqJiSLOfaJbR4sY8414Dok=
+			G3mov5rl1OuNwoD43OMVT9XzD2I2m00xgMXswAc8cUQ=
 			</data>
 		</dict>
 		<key>Headers/GuanceSessionReplay-Swift.h</key>
@@ -126,7 +130,14 @@
 		<dict>
 			<key>hash2</key>
 			<data>
-			oA8DgB5FuTz+BN4xd5hHY3OU7KdFVvVvu6AxqERuQeM=
+			EaxqAFC2eQGlCkhHUL/mKXGlby48nAQqYtuaMW524yM=
+			</data>
+		</dict>
+		<key>Headers/NSView+FTSRPrivacy.h</key>
+		<dict>
+			<key>hash2</key>
+			<data>
+			8WVQ0x6aP25AM8FD32e/oHglSbOOyg/SIyuoYg6vl9g=
 			</data>
 		</dict>
 		<key>Headers/UIView+FTSRPrivacy.h</key>
@@ -140,7 +151,7 @@
 		<dict>
 			<key>hash2</key>
 			<data>
-			95gSciIdf+KmybJ+c8TZI0Vz6o1Ffs5lmJzwVrN9JwQ=
+			FRSh/TPthJZ3NEE52VQFVjSbxxLmvj+HrUxAyMm1Spc=
 			</data>
 		</dict>
 		<key>Modules/GuanceSessionReplay.swiftmodule/arm64-apple-ios-simulator.private.swiftinterface</key>
@@ -168,14 +179,14 @@
 		<dict>
 			<key>hash2</key>
 			<data>
-			2KBghJ9YpXb6PUWfniHb6UGDa6ZJlI/ejlUJGpFfLkc=
+			KeZfJHtbe78Quzazg6Cde8rLRX3mxRPovSDUdVXFlmg=
 			</data>
 		</dict>
 		<key>Modules/GuanceSessionReplay.swiftmodule/x86_64-apple-ios-simulator.abi.json</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			95gSciIdf+KmybJ+c8TZI0Vz6o1Ffs5lmJzwVrN9JwQ=
+			FRSh/TPthJZ3NEE52VQFVjSbxxLmvj+HrUxAyMm1Spc=
 			</data>
 		</dict>
 		<key>Modules/GuanceSessionReplay.swiftmodule/x86_64-apple-ios-simulator.private.swiftinterface</key>
@@ -203,7 +214,7 @@
 		<dict>
 			<key>hash2</key>
 			<data>
-			FfssoYAyVh+/X96iWR2lDO7CFgch8a4DxhSmK+jduf4=
+			5+ffZ3jdhUrNbjfRPg591mW8sHtFOjt450CAZU9PHD8=
 			</data>
 		</dict>
 		<key>Modules/module.modulemap</key>
