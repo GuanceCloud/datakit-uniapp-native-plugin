@@ -106,12 +106,15 @@ The version defaults to `GC-UniPlugin/package.json`; pass a version argument to
 override it. The package contains:
 
 ```text
-GuanceUniApp-iOS-<version>.zip
+GuanceUniApp-<version>.zip
 ├─ unimoduleGCUniPlugin.xcframework
 ├─ GuanceSDK.xcframework
 ├─ unimoduleGCUniSessionReplay.xcframework # omitted when disabled
 └─ GuanceSessionReplay.xcframework          # omitted when disabled
 ```
+
+The ZIP is written to
+`dist/native-sdk-hybrid/ios/GuanceUniApp-<version>.zip`.
 
 The package does not contain DCloud runtime frameworks. The host must use the
 matching DCloud offline SDK and link its own `DCUniBase.framework` and

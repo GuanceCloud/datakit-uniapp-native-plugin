@@ -56,6 +56,9 @@ def configure_target(target, project_dir, sdk_libs, framework_paths, bundle_iden
       'CLANG_ENABLE_MODULES' => 'YES',
       'DEFINES_MODULE' => 'YES',
       'ENABLE_MODULE_VERIFIER' => 'NO',
+      # DCloud's local runtime frameworks expose an x86_64 simulator Swift
+      # module and an arm64 device module, but no arm64 simulator module.
+      'EXCLUDED_ARCHS[sdk=iphonesimulator*]' => 'arm64',
       'FRAMEWORK_SEARCH_PATHS' => [
         '$(inherited)',
         "\"#{relative_path(project_dir, sdk_libs)}\""
@@ -141,8 +144,9 @@ end
 def sync_uts_sources(spec, frameworks_root)
   plugin_root = File.join(frameworks_root, spec[:name])
   sources_root = File.join(plugin_root, 'Sources')
+  use_checked_in_sources = ENV.fetch('GC_UNIAPP_USE_CHECKED_IN_UTS_SOURCES', '0') == '1'
   generated_index = spec[:generated_index]
-  if !File.file?(generated_index) && ENV.fetch('GC_UNIAPP_USE_CHECKED_IN_UTS_SOURCES', '0') == '1'
+  if use_checked_in_sources
     generated_index = spec[:checked_in_generated_index]
     warn "Using checked-in generated UTS source for #{spec[:name]}"
   end

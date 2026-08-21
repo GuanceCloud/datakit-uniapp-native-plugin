@@ -13,3 +13,8 @@ native-sdk-hybrid/
 The library targets produce customer-facing native artifacts. The application
 targets consume those libraries and provide integration verification in the
 same platform build workspace.
+
+The platform packaging scripts write release ZIPs to
+`dist/native-sdk-hybrid/`. The iOS-only archive is
+`ios/GuanceUniApp-<version>.zip`; the Android-only archive is
+`android/GuanceUniApp-Android-<version>.zip`.

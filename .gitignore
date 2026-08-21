@@ -205,4 +205,3 @@ native-projects/unimp-host-extension/harmony/**/.hvigor/
 native-projects/unimp-host-extension/harmony/**/oh_modules/
 native-projects/unimp-host-extension/harmony/**/build/
 native-projects/unimp-host-extension/harmony/**/.idea/
-dist/

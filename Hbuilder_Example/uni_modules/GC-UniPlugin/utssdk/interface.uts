@@ -7,7 +7,9 @@ export type GCMobileConfig = {
 	service?: string | null
 	autoSync?: boolean | null
 	// Android only. Whether the application uses an offline package.
+	// #ifdef APP-ANDROID
 	offlinePackage?: boolean | null
+	// #endif
 	syncPageSize?: number | null
 	syncSleepTime?: number | null
 	enableDataIntegerCompatible?: boolean | null

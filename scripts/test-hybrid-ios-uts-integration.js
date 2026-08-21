@@ -53,16 +53,19 @@ for (const relativePath of [
 
 const generator = read(`${host}/scripts/generate_guance_uts_frameworks.rb`);
 const packageScript = read(`${host}/scripts/package_guance_uniapp_ios.sh`);
+const coreInterface = read('Hbuilder_Example/uni_modules/GC-UniPlugin/utssdk/interface.uts');
 assert(packageScript.includes('repository_root="$(cd "$host_root/../../../.." && pwd)"'));
 assert(packageScript.includes('dcloud_sdk_libs="${DCLOUD_SDK_LIBS_DIR:-$host_root/../SDK/Libs}"'));
 assert(generator.includes("repository_root = File.expand_path('../../../..', host_root)"));
 assert(generator.includes("ENV.fetch('GUANCE_SESSION_REPLAY', '1') != '0'"));
 assert(generator.includes("'BUILD_LIBRARY_FOR_DISTRIBUTION' => 'YES'"));
+assert(generator.includes("'EXCLUDED_ARCHS[sdk=iphonesimulator*]' => 'arm64'"));
 assert(generator.includes("'OTHER_LDFLAGS' => ['$(inherited)', '-ObjC']"));
 assert(generator.includes('native_source'));
 assert(generator.includes('GuanceSDK.xcframework'));
 assert(generator.includes('GuanceSessionReplay.xcframework'));
 assert(generator.includes('FileUtils.cp(spec[:native_source]'));
+assert(coreInterface.includes('// #ifdef APP-ANDROID\n\tofflinePackage?: boolean | null\n\t// #endif'));
 assert(generator.includes("find_or_create_group(project, 'Guance Local Frameworks')"));
 for (const bridgeToken of [
   'host_native_source',
@@ -75,12 +78,19 @@ for (const bridgeToken of [
 }
 
 assert(packageScript.includes('DCLOUD_SDK_LIBS_DIR'));
+assert(packageScript.includes('package_name="GuanceUniApp-$version"'));
+assert(packageScript.includes('dist/native-sdk-hybrid/ios'));
+assertNotIncludes(packageScript, 'GuanceUniApp-iOS-$version', 'iOS release ZIP name');
 assert(packageScript.includes('build_uts_framework unimoduleGCUniPlugin'));
 assert(packageScript.includes('build_uts_framework unimoduleGCUniSessionReplay'));
 assert(packageScript.includes('GUANCE_SESSION_REPLAY'));
 assert(packageScript.includes('GuanceSDK.xcframework'));
 assert(packageScript.includes('GuanceSessionReplay.xcframework'));
 assert(packageScript.includes('/usr/bin/ditto -c -k --keepParent'));
+assert(packageScript.includes("find \"$package_root\" -name '.DS_Store' -delete"));
+assert(packageScript.includes('COPYFILE_DISABLE=1'));
+assert(packageScript.includes('--norsrc'));
+assert(packageScript.includes('rm -f "$archive_path"'));
 assertNotIncludes(packageScript, 'GuanceUniAppHostBridge', 'release ZIP package script');
 
 const coreProject = read(`${core}/unimoduleGCUniPlugin.xcodeproj/project.pbxproj`);
@@ -88,6 +98,7 @@ const replayProject = read(`${replay}/unimoduleGCUniSessionReplay.xcodeproj/proj
 for (const project of [coreProject, replayProject]) {
   assert(project.includes('productType = "com.apple.product-type.framework";'));
   assert(project.includes('BUILD_LIBRARY_FOR_DISTRIBUTION = YES;'));
+  assert(project.includes('"EXCLUDED_ARCHS[sdk=iphonesimulator*]" = arm64;'));
   assert(project.includes('DCUniBase.framework'));
   assert(project.includes('DCloudUTSFoundation.framework'));
   assert(project.includes('GuanceSDK.xcframework'));
@@ -115,6 +126,7 @@ assert(coreIndex.includes('GCUniPluginNative.sdkConfig'));
 assert(coreIndex.includes('GCUniPluginNative.setDatakitURL'));
 assert(coreIndex.includes('GCUniPluginNative.setDatawayURL'));
 assert(coreIndex.includes('GCUniPluginNative.updateRemoteConfigWithMiniUpdateInterval'));
+assertNotIncludes(coreIndex, 'offlinePackage', 'generated iOS core UTS source');
 assert(replayIndex.includes('GCSessionReplayNative.setConfig'));
 assertNotIncludes(coreIndex, 'GCUniPluginHostNative', 'generated core UTS source');
 assertNotIncludes(replayIndex, 'GCSessionReplayHostNative', 'generated Session Replay UTS source');

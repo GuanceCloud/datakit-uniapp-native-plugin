@@ -46,7 +46,8 @@ build_root="$host_root/build/GuanceUniApp-Android"
 staging_root="$build_root/staging"
 package_name="GuanceUniApp-Android-$version"
 package_root="$staging_root/$package_name"
-archive_path="$build_root/$package_name.zip"
+output_dir="$repository_root/dist/native-sdk-hybrid/android"
+archive_path="$output_dir/$package_name.zip"
 template_root="$host_root/distribution"
 
 case "$version" in
@@ -105,7 +106,7 @@ if [[ "$include_session_replay" == "1" ]]; then
 fi
 
 rm -rf "$build_root"
-mkdir -p "$package_root"
+mkdir -p "$package_root" "$output_dir"
 
 cp "$core_aar" "$package_root/unimoduleGCUniPlugin.aar"
 if [[ "$include_session_replay" == "1" ]]; then
@@ -136,6 +137,7 @@ render_template "$template_root/ReleaseManifest.json.template" "$package_root/Re
   shasum -a 256 ./*.aar > checksums.txt
 )
 
+rm -f "$archive_path"
 (cd "$staging_root" && /usr/bin/zip -X -r "$archive_path" "$package_name" >/dev/null)
 
 echo "Created $archive_path"

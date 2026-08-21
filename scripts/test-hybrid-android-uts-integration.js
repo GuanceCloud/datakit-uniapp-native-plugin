@@ -129,5 +129,8 @@ assertIncludes(syncSources, "sync_module 'GC-UniPlugin' 'unimoduleGCUniPlugin'",
 assertIncludes(syncSources, "sync_module 'GC-UniSessionReplay' 'unimoduleGCUniSessionReplay'", 'source synchronization script');
 assertIncludes(packager, 'unimoduleGCUniPlugin-release.aar', 'Android packager');
 assertIncludes(packager, 'GUANCE_BUILD_UTS_MODULES', 'Android packager');
+assertIncludes(packager, 'package_name="GuanceUniApp-Android-$version"', 'Android release ZIP name');
+assertIncludes(packager, 'dist/native-sdk-hybrid/android', 'Android release output');
+assertIncludes(packager, 'rm -f "$archive_path"', 'Android release ZIP replacement');
 
 console.log('hybrid Android UTS integration checks passed');

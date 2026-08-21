@@ -29,9 +29,10 @@ dcloud_sdk_libs="${DCLOUD_SDK_LIBS_DIR:-$host_root/../SDK/Libs}"
 include_session_replay="${GUANCE_SESSION_REPLAY:-1}"
 build_root="$host_root/build/GuanceUniApp-iOS"
 staging_root="$build_root/staging"
-package_name="GuanceUniApp-iOS-$version"
+package_name="GuanceUniApp-$version"
 package_root="$staging_root/$package_name"
-archive_path="$build_root/$package_name.zip"
+output_dir="$repository_root/dist/native-sdk-hybrid/ios"
+archive_path="$output_dir/$package_name.zip"
 core_sdk_artifact="$repository_root/Hbuilder_Example/uni_modules/GC-UniPlugin/utssdk/app-ios/Frameworks/GuanceSDK.xcframework"
 session_replay_artifact="$repository_root/Hbuilder_Example/uni_modules/GC-UniSessionReplay/utssdk/app-ios/Frameworks/GuanceSessionReplay.xcframework"
 
@@ -65,7 +66,7 @@ if [[ "$include_session_replay" != "0" && "$include_session_replay" != "1" ]]; t
 fi
 
 rm -rf "$build_root"
-mkdir -p "$build_root" "$staging_root"
+mkdir -p "$build_root" "$staging_root" "$output_dir"
 
 DCLOUD_SDK_LIBS_DIR="$dcloud_sdk_libs" \
 GUANCE_SESSION_REPLAY="$include_session_replay" \
@@ -124,6 +125,8 @@ if [[ -n "$session_uts_artifact" ]]; then
   cp -R "$session_replay_artifact" "$package_root/GuanceSessionReplay.xcframework"
 fi
 
-(cd "$staging_root" && /usr/bin/ditto -c -k --keepParent "$package_name" "$archive_path")
+find "$package_root" -name '.DS_Store' -delete
+rm -f "$archive_path"
+(cd "$staging_root" && COPYFILE_DISABLE=1 /usr/bin/ditto -c -k --keepParent --norsrc "$package_name" "$archive_path")
 
 echo "Created $archive_path"
